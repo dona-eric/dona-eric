@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+/* ================================
+   DESIGN TOKENS — FLAT THEME
+================================ */
+
+:root {
+    /* Light mode (flat black & white) */
+    --background: 0 0% 100%;        /* white */
+    --foreground: 0 0% 10%;         /* black text */
+    --muted-foreground: 0 0% 40%;
+    --border: 0 0% 85%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 10%;
+
+    --primary: 0 0% 10%;            /* black accent */
+    --primary-foreground: 0 0% 100%; /* white on black */
+
+    --accent: 0 0% 60%;
+    --destructive: 0 76% 58%;
+
+    --input: 0 0% 95%;
+    --ring: 0 0% 10%;
+
+    --radius: 0.75rem;
+
+    --gradient-primary: none;
+    --gradient-subtle: none;
+    --glow-primary: none;
+    --glow-accent: none;
+
+    --transition-smooth: all 220ms cubic-bezier(.2, .9, .3, 1);
+}
+
+/* ================================
+   DARK MODE
+================================ */
+
+.dark {
+    font-family: 'Inter', 'Poppins', 'Montserrat', Arial, free-serif;
+    transition: background 0.2s, color 0.2s;
+
+    --background: 0 0% 10%;         /* black */
+    --foreground: 0 0% 100%;        /* white */
+    --muted-foreground: 0 0% 60%;
+    --border: 0 0% 25%;
+
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%;           /* white accent */
+    --primary-foreground: 0 0% 10%; /* black text on white */
+
+    --accent: 0 0% 60%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 100%;
+}
+
+/* ================================
+   GLOBAL TYPOGRAPHY
+================================ */
+
+body {
+    font-family: 'Inter','Montserrat',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', Free-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    font-family: 'Inter', 'Montserrat', Arial, Free-serif;
+    border-color: hsl(var(--border));
+}
+
+h1 {
+    font-size: clamp(2rem, 4.2vw, 3rem);
+    line-height: 1.06;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    line-height: 1.08;
+}
+
+h3 {
+    font-size: clamp(1.125rem, 2.6vw, 1.5rem);
+    line-height: 1.1;
+}
+
+/* Span styling */
+span {
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ================================
+   CARDS & UI COMPONENTS
+================================ */
+
+.glass-card {
+    background-color: rgba(255, 255, 255, 0.02);
+    color: hsl(var(--card-foreground));
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    letter-spacing: -0.01em;
+}
+
+.glass-card-hover {
+    transition: var(--transition-smooth);
+    border-color: rgba(255, 255, 255, 0.05);
+    opacity: 0.85;
+}
+
+.section-unified {
+    color: hsl(var(--primary));
+    border-radius: calc(var(--radius) + 0.25rem);
+    padding: 4rem 5%;
+    border: 1px solid hsl(var(--border));
+}
+
+/* Text accents */
+.text-gradient {
+    color: hsl(var(--primary));
+    opacity: 0.85;
+}
+
+.text-gradient-accent {
+    color: hsl(var(--accent));
+}
+
+/* Buttons */
+.btn-primary {
+    padding: 0.75rem 1.25rem;
+    color: hsl(var(--primary-foreground));
+    font-weight: 700;
+    border-radius: 0.75rem;
+    background: hsl(var(--primary));
+    border: none;
+    box-shadow: none;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.btn-secondary {
+    padding: 0.65rem 1.1rem;
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    border-radius: 0.75rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: none;
+    transition: var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ================================
+   LAYOUT HELPERS
+================================ */
+
+.section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+    .section-padding {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+    }
+}
+
+.container-custom {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+    max-width: 78rem;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .container-custom {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-custom {
+        padding: 0 2rem;
+    }
+}
+
+.text-muted-foreground { color: hsl(var(--muted-foreground)); }
+.border-border { border: 1px solid hsl(var(--border)); }
+.bg-background { background-color: hsl(var(--background)); }
+.text-foreground { color: hsl(var(--foreground)); }
+
+/* ================================
+   ANIMATIONS
+================================ */
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 20px hsl(263 70% 50% / 0.3); }
+    to   { box-shadow: 0 0 40px hsl(263 70% 50% / 0.6); }
+}
+
+/* ===== SUPPRESSION COMPLÈTE DES SOULIGNEMENTS & BLOCS BLANCS INDÉSIRABLES ===== */
+
+/* Supprime tout fond sur les balises inline */
+span, strong, mark, em {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* Évite tout fond blanc sur les textes en gradient */
+.text-gradient,
+.text-gradient span,
+h1 span,
+h2 span,
+h3 span {
+    background: none !important;
+    background-color: transparent !important;
+    color: inherit !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Couleur de sélection propre */
+::selection {
+    background-color: rgba(147, 51, 234, 0.3); /* équivalent Tailwind bg-purple-500/30 */
+    color: white;
+}
+::-moz-selection {
+    background-color: rgba(147, 51, 234, 0.3);
+    color: white;
+}
