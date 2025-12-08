@@ -1,17 +1,7 @@
 // src/pages/About.jsx
 import React from "react";
 import { motion } from "framer-motion";
-import { 
-  Brain, 
-  Rocket, 
-  Target, 
-  Zap, 
-  Award, 
-  GraduationCap,
-  Code2,
-  Globe,
-  Users,
-  TrendingUp
+import { Brain, Rocket, Target, Zap, Award, GraduationCap,Code2, Globe,Users,TrendingUp
 } from "lucide-react";
 
 const SKILLS = [
@@ -95,8 +85,8 @@ export default function About() {
             Je transforme des <span className="text-white font-bold">idées complexes</span> en{" "}
             <span className="text-white font-bold">systèmes IA qui tournent en production</span>.
             <br /><br />
-            Du fine-tuning de Llama 3 au déploiement d’un RAG médical critique,
-            je construis des solutions qui <span className="text-purple-400 font-bold">changent la donne</span>.
+            Des données brutes, je les transformes en résultats exploitables et en business.
+            Je construis des solutions qui <span className="text-purple-400 font-bold">changent la donne</span>.
           </p>
         </motion.div>
 

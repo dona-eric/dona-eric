@@ -57,7 +57,7 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-500">WhatsApp</p>
-                  <a href="https://wa.me/2290141730240" target="_blank" rel="noopener noreferrer" className="text-slate-200 hover:text-emerald-400 font-medium transition">+229 01 41 73 02 40</a>
+                  <a href="https://wa.me/2290141730240" target="_blank" rel="noopener noreferrer" className="text-slate-200 hover:text-emerald-400 font-medium transition">+229 01~41~73~02~40</a>
                 </div>
               </div>
               {/* LinkedIn */}
@@ -67,7 +67,7 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-500">LinkedIn</p>
-                  <a href="https://linkedin.com/in/dona-erick" target="_blank" rel="noopener noreferrer" className="text-slate-200 hover:text-blue-400 font-medium transition">linkedin.com/in/dona-erick</a>
+                  <a href="https://linkedin.com/in/dona-erick" target="_blank" rel="noopener noreferrer" className="text-slate-200 hover:text-blue-400 font-medium transition">@dona-erick</a>
                 </div>
               </div>
               {/* Location */}

@@ -57,7 +57,7 @@ export default function Hero() {
               </Link>
 
               <a
-                href="/cv.pdf"
+                href="https://drive.google.com/file/d/1KRnhQJWRPLeAaaz9kXvy8WJZmEByjnBb/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 px-8 py-4 border border-zinc-700 text-white font-medium rounded-full hover:border-zinc-500 hover:bg-white/5 transition-all duration-300 backdrop-blur"
