@@ -162,7 +162,7 @@ expertise = {
 
 ---
 
-### 🚗 [SafeRoute Bénin](https://github.com/dona-eric/saferoute-benin)
+### 🚗 [SafeRoute Bénin](https://github.com/dona-eric/afridrive)
 > Application de sécurité routière communautaire
 
 **Stack**: `React Native` `Node.js` `MongoDB` `ML` `Maps API`  
