@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live-purple?style=for-the-badge&logo=react)](https://votre-portfolio.com)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live-purple?style=for-the-badge&logo=react)](https://donerick.vercel.app)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/dona-erick)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=for-the-badge&logo=github)](https://github.com/dona-eric)
 [![Email](https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail)](mailto:donaerickoulodji@gmail.com)
@@ -11,7 +11,7 @@
 
 *Transformant les données en solutions intelligentes qui créent un impact réel*
 
-🌍 Abomey-Calavi, Bénin | 💼 Freelance & Consulting | 🎯 Disponible pour projets
+🌍 Abomey-Calavi, Bénin | 💼 Freelance & Open to Work | 🎯 Disponible pour projets
 
 </div>
 
