@@ -141,7 +141,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {projects.map((proj, i) => (
               <motion.div
                 key={i}
@@ -190,7 +190,7 @@ const About = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
     </>

@@ -1,140 +1,261 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Download, Github, Linkedin } from "lucide-react";
+import { 
+  ArrowRight, 
+  Download, 
+  Github, 
+  Linkedin, 
+  Sparkles,
+  Zap,
+  Target,
+  TrendingUp
+} from "lucide-react";
 import heroImage from "../assets/team-eric.jpg";
 
 export default function Hero() {
+  const stats = [
+    { icon: Zap, value: "7+", label: "Modèles en production" },
+    { icon: Target, value: "90%", label: "Précision moyenne" },
+    { icon: TrendingUp, value: "Afrique", label: "Impact local prioritaire" },
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Fond subtil avec effet profondeur */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-zinc-950 to-black" />
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-900/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-900/20 rounded-full blur-3xl animate-pulse delay-1000" />
+      {/* Background avec mesh gradient animé */}
+      <div className="absolute inset-0 -z-10 bg-mesh">
+        {/* Orbes lumineux animés */}
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-[120px] animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-pink-600/20 rounded-full blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-600/10 rounded-full blur-[140px] animate-float" style={{ animationDelay: '4s' }} />
       </div>
 
-      <div className="container-custom px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Texte – sobre, puissant, pro */}
+      <div className="container-custom px-6 py-20">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          
+          {/* Colonne gauche : Texte */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-8 text-center lg:text-left"
+            className="space-y-10 text-center lg:text-left"
           >
+            {/* Badge animé */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full group cursor-default"
+            >
+              <Sparkles className="w-4 h-4 text-purple-400 group-hover:rotate-12 transition-transform duration-300" />
+              <span className="text-sm font-semibold text-purple-300">Disponible pour mission</span>
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            </motion.div>
+
             {/* Titre principal */}
-            <div className="space-y-3">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white">
-                Dona Éric
-                <span className="block text-5xl md:text-7xl lg:text-6xl font-light text-white-400 mt-2">
+            <div className="space-y-4">
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight"
+              >
+                <span className="text-white">Dona Éric</span>
+                <br />
+                <span className="text-gradient text-4xl md:text-5xl lg:text-6xl font-light">
                   KOULODJI
                 </span>
-              </h1>
-              <div className="h-1 w-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-6 mx-auto lg:mx-0" />
+              </motion.h1>
+              
+              {/* Ligne décorative animée */}
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "8rem" }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-full mx-auto lg:mx-0"
+              />
             </div>
 
-            {/* Métier – sobre et classe */}
-            <p className="text-2xl md:text-3xl font-medium text-zinc-300">
-              Ingénieur Machine Learning
-              <span className="text-white-500"> • </span>
-              Data Scientist
-            </p>
+            {/* Sous-titre */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="space-y-3"
+            >
+              <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-zinc-300">
+                Ingénieur Machine Learning
+              </p>
+              <p className="text-xl md:text-2xl font-medium text-zinc-500">
+                Data Scientist • Spécialiste IA
+              </p>
+            </motion.div>
 
-            {/* Description – directe, impactante */}
-            <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Je conçois et déploie des modèles d'intelligence artificielle qui réponds à vos besoins concrets.
-            </p>
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto lg:mx-0"
+            >
+              Je conçois et déploie des{" "}
+              <span className="text-white font-semibold">modèles d'intelligence artificielle</span>{" "}
+              qui répondent à vos besoins concrets et génèrent un{" "}
+              <span className="text-gradient font-semibold">impact mesurable</span>.
+            </motion.p>
 
-            {/* CTA – épurés, professionnels */}
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-6">
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-wrap gap-4 justify-center lg:justify-start pt-6"
+            >
               <Link
                 to="/projects"
-                className="group flex items-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-zinc-200 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="group btn-primary inline-flex items-center gap-3 px-8 py-4 text-lg"
               >
-                Voir mes projets
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition" />
+                <span>Voir mes projets</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <a
-                href="https://drive.google.com/file/d/1KRnhQJWRPLeAaaz9kXvy8WJZmEByjnBb/view?usp=drive_link"
+                href="/cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 px-8 py-4 border border-zinc-700 text-white font-medium rounded-full hover:border-zinc-500 hover:bg-white/5 transition-all duration-300 backdrop-blur"
+                className="btn-secondary inline-flex items-center gap-3 px-8 py-4 text-lg"
               >
                 <Download className="w-5 h-5" />
-                Télécharger CV
+                <span>Télécharger CV</span>
               </a>
+            </motion.div>
 
-              <div className="flex gap-3">
-                <a
-                  href="https://github.com/dona-eric"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 bg-white/10 backdrop-blur rounded-full hover:bg-white/20 transition"
-                  aria-label="GitHub"
-                >
-                  <Github className="w-6 h-6 text-white" />
-                </a>
-                <a
-                  href="https://linkedin.com/in/dona-erick"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 bg-white/10 backdrop-blur rounded-full hover:bg-white/20 transition"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="w-6 h-6 text-white" />
-                </a>
-              </div>
-            </div>
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              className="flex gap-4 justify-center lg:justify-start"
+            >
+              <a
+                href="https://github.com/dona-eric"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 glass rounded-full hover-scale hover-glow group"
+                aria-label="GitHub"
+              >
+                <Github className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
+              </a>
+              <a
+                href="https://linkedin.com/in/dona-erick"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 glass rounded-full hover-scale hover-glow group"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
+              </a>
+            </motion.div>
 
-            {/* Stats discrètes */}
-            <div className="flex flex-wrap gap-8 justify-center lg:justify-start pt-10 text-sm text-white-500">
-              <div>
-                <div className="text-2xl font-bold text-white">7+</div>
-                <div>Modèles en production</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white">90%</div>
-                <div>Précision moyenne</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white">Afrique</div>
-                <div>Impact local prioritaire</div>
-              </div>
-            </div>
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="grid grid-cols-3 gap-6 pt-10"
+            >
+              {stats.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={index} className="text-center lg:text-left group">
+                    <div className="flex items-center gap-2 justify-center lg:justify-start mb-2">
+                      <Icon className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform" />
+                      <div className="text-2xl md:text-3xl font-black text-gradient">
+                        {stat.value}
+                      </div>
+                    </div>
+                    <div className="text-sm text-zinc-500">{stat.label}</div>
+                  </div>
+                );
+              })}
+            </motion.div>
           </motion.div>
 
-          {/* Photo – élégante, moderne, pro */}
+          {/* Colonne droite : Photo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex justify-center"
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex justify-center lg:justify-end"
           >
             <div className="relative group">
-              {/* Halo subtil */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-full blur-3xl group-hover:blur-xl transition duration-1000" />
+              {/* Halo lumineux principal */}
+              <div className="absolute -inset-8 bg-gradient-to-r from-purple-600/30 via-pink-600/30 to-cyan-600/30 rounded-full blur-[60px] group-hover:blur-[80px] transition-all duration-1000 animate-pulse" />
               
-              {/* Cadre photo */}
-              <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-zinc-800 shadow-2xl">
-                <img
-                  src={heroImage}
-                  alt="Dona Éric KOULODJI"
-                  className="w-full h-130 object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                />
-                {/* Overlay discret */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
+              {/* Anneaux orbitaux */}
+              <div className="absolute -inset-4 rounded-full border-2 border-purple-500/20 animate-pulse" />
+              <div className="absolute -inset-8 rounded-full border border-pink-500/10 animate-pulse" style={{ animationDelay: '1s' }} />
+              
+              {/* Conteneur photo */}
+              <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[450px] lg:h-[450px]">
+                {/* Border gradient animé */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 p-1 animate-glow">
+                  <div className="w-full h-full rounded-full bg-black p-2">
+                    <div className="relative w-full h-full rounded-full overflow-hidden">
+                      <img
+                        src={heroImage}
+                        alt="Dona Éric KOULODJI"
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110"
+                      />
+                      {/* Overlay gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Particules flottantes */}
+                <div className="absolute top-10 -right-4 w-3 h-3 rounded-full bg-purple-500 blur-sm animate-float" />
+                <div className="absolute bottom-20 -left-4 w-2 h-2 rounded-full bg-pink-500 blur-sm animate-float" style={{ animationDelay: '1s' }} />
+                <div className="absolute top-1/2 -right-6 w-2 h-2 rounded-full bg-cyan-500 blur-sm animate-float" style={{ animationDelay: '2s' }} />
               </div>
 
-              {/* Badge discret */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full text-sm font-medium shadow-lg">
-                Disponible pour mission
-              </div>
+              {/* Badge status flottant */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 }}
+                className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 glass rounded-full backdrop-blur-xl shadow-2xl border-2 border-white/20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                    <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
+                  </div>
+                  <span className="text-sm font-bold text-white whitespace-nowrap">
+                    Disponible immédiatement
+                  </span>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2"
+        >
+          <div className="w-1.5 h-3 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
