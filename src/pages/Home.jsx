@@ -95,15 +95,13 @@ export default function Home() {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://wa.me/2290141730240"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/signup"
                 className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-bold text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 relative overflow-hidden"
               >
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
                 <Send className="w-6 h-6 group-hover:translate-x-1 transition-transform relative z-10" />
-                <span className="relative z-10">Démarrer une conversation</span>
+                <span className="relative z-10">Réserver ma place</span>
               </motion.a>
 
               <motion.a
@@ -167,11 +165,11 @@ export default function Home() {
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                   <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
                 </div>
-                <div className="text-left">
+                <div className="text-right">
                   <p className="text-base font-bold text-white">
                     Actuellement disponible pour nouveaux projets
                   </p>
-                  <p className="text-sm text-green-300">
+                  <p className="text-sm text-green-100">
                     Freelance • Consulting • Collaborations long terme
                   </p>
                 </div>
@@ -192,7 +190,7 @@ export default function Home() {
               <p className="text-sm text-zinc-500 mb-4">
                 Vous préférez un autre moyen de contact ?
               </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm">
+              <div className="flex flex-wrap justify-center gap-4 text-sm ">
                 <a 
                   href="https://linkedin.com/in/dona-erick" 
                   target="_blank" 
@@ -218,6 +216,8 @@ export default function Home() {
               </div>
             </motion.div>
           </motion.div>
+
+          <div className="h-20 md:h-24" />
 
           {/* Decorative elements */}
           <div className="absolute top-20 left-10 w-20 h-20 border-2 border-purple-500/20 rounded-full animate-float" />
@@ -252,6 +252,7 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
+        <div className="h-20 md:h-24" />
       </section>
     </main>
   );

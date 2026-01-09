@@ -46,11 +46,41 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-black border-t border-white/5 overflow-hidden">
-      {/* Background effects */}
+    <footer className="relative border-t border-white/5 overflow-hidden">
+      {/* Background mesh grid violet/rose */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-900/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-900/10 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 bg-black" />
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 40px,
+                rgba(168, 85, 247, 0.08) 40px,
+                rgba(168, 85, 247, 0.08) 41px
+              ),
+              repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 40px,
+                rgba(236, 72, 153, 0.08) 40px,
+                rgba(236, 72, 153, 0.08) 41px
+              ),
+              radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 50%)
+            `,
+            backgroundSize: '40px 40px, 40px 40px, 100% 100%, 100% 100%'
+          }}
+        />
+        {/* Vignette */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%)'
+          }}
+        />
       </div>
 
       {/* Main Footer Content */}
@@ -170,7 +200,7 @@ const Footer = () => {
         <div className="border-t border-white/5 mb-12" />
 
         {/* Status Badge - Centré */}
-        <div className="flex justify-center mb-12">
+        {/* <div className="flex justify-center mb-12">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -181,22 +211,22 @@ const Footer = () => {
               <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
               <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
             </div>
-            {/* <div className="text-left">
+            <div className="text-left">
               <p className="text-sm font-bold text-white">
                 Actuellement disponible pour nouveaux projets
               </p>
               <p className="text-xs text-green-300">
                 Freelance • Consulting • Collaborations long terme
               </p>
-            </div> */}
+            </div>
           </motion.div>
-        </div>
+        </div> */}
 
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Copyright */}
-            <div className="flex items-center gap-2 text-sm text-zinc-500">
+            <div className="flex items-center gap-2 text-sm text-zinc-500 text-center md:text-right">
               <span>© {currentYear} Dona Éric</span>
               <span>•</span>
               <span className="flex items-center gap-1">

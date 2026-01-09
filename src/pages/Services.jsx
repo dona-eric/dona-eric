@@ -128,7 +128,7 @@ const ServiceMainCard = ({ service, index }) => {
                 transition={{ delay: 0.1 * i }}
                 className="flex items-start gap-3 group/item"
               >
-                <CheckCircle2 className={`w-5 h-5 mt-0.5 text-${service.gradient.split('-')[1]}-400 flex-shrink-0 group-hover/item:scale-110 transition-transform`} />
+                <CheckCircle2 className="w-5 h-5 mt-0.5 text-purple-400 flex-shrink-0 group-hover/item:scale-110 transition-transform" />
                 <span className="text-zinc-400 group-hover/item:text-white transition-colors">
                   {feature}
                 </span>
@@ -143,10 +143,10 @@ const ServiceMainCard = ({ service, index }) => {
 
 export default function Services() {
   return (
-    <div className="min-h-screen">
+    <div className="bg-mesh text-white">
       {/* Hero Section */}
       <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-mesh">
+        <div className="absolute inset-0 -z-10">
           <div className="absolute top-20 left-20 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px] animate-float" />
           <div className="absolute bottom-20 right-20 w-[600px] h-[600px] bg-pink-900/20 rounded-full blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
         </div>
@@ -159,43 +159,67 @@ export default function Services() {
             className="text-center max-w-5xl mx-auto"
           >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-sm font-semibold text-purple-300 mb-8">
-              <Sparkles className="w-4 h-4" />
-              <span>Services Premium</span>
-            </div>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full mb-12 group cursor-default"
+            >
+              <Sparkles className="w-4 h-4 text-purple-400 group-hover:rotate-12 transition-transform duration-300" />
+              <span className="text-sm font-semibold text-purple-300">Services Premium</span>
+            </motion.div>
 
-            {/* Titre */}
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] mb-8">
+            {/* Titre avec animation rotation */}
+            <motion.h1
+              initial={{ opacity: 0, rotateY: -180 }}
+              animate={{ opacity: 1, rotateY: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] mb-8"
+              style={{ transformStyle: "preserve-3d" }}
+            >
               Mes domaines
               <br />
-              <span className="text-gradient">d'expertise</span>
-            </h1>
+              <span className="text-gradient text-5xl md:text-6xl lg:text-7xl font-light">
+                d'expertise
+              </span>
+            </motion.h1>
 
             {/* Description */}
-            <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-12">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
+            >
               Je transforme vos défis data en solutions IA concrètes, 
               <span className="text-white font-semibold"> déployées</span> et 
               <span className="text-white font-semibold"> mesurables</span>.
-            </p>
+            </motion.p>
 
             {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-12 mt-16">
-              <div className="text-center">
-                <div className="text-5xl font-black text-gradient mb-2">7+</div>
-                <div className="text-sm text-zinc-500 uppercase tracking-wider">Modèles en prod</div>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-black text-gradient mb-2">90%</div>
-                <div className="text-sm text-zinc-500 uppercase tracking-wider">Précision moyenne</div>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-black text-gradient mb-2">24h</div>
-                <div className="text-sm text-zinc-500 uppercase tracking-wider">Temps de réponse</div>
-              </div>
-            </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-wrap justify-center gap-12 mt-16"
+            >
+              {[
+                { value: "7+", label: "Modèles en prod" },
+                { value: "90%", label: "Précision moyenne" },
+                { value: "24h", label: "Temps de réponse" }
+              ].map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-5xl font-black text-gradient mb-2">{stat.value}</div>
+                  <div className="text-sm text-zinc-500 uppercase tracking-wider">{stat.label}</div>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </section>
+
+      {/* ESPACEUR */}
+      <div className="h-32 md:h-48" />
 
       {/* Services principaux */}
       <section className="py-20 relative">
@@ -207,6 +231,9 @@ export default function Services() {
           </div>
         </div>
       </section>
+
+      {/* ESPACEUR */}
+      <div className="h-32 md:h-48" />
 
       {/* Processus */}
       <section className="py-24 relative overflow-hidden">
@@ -221,9 +248,17 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+            {/* Titre avec animation rotation */}
+            <motion.h2
+              initial={{ opacity: 0, rotateY: -180 }}
+              whileInView={{ opacity: 1, rotateY: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-4xl md:text-5xl font-black text-white mb-6"
+              style={{ transformStyle: "preserve-3d" }}
+            >
               Mon processus de travail
-            </h2>
+            </motion.h2>
             <p className="text-xl text-zinc-400">
               Une approche structurée pour garantir des résultats de qualité
             </p>
@@ -261,48 +296,110 @@ export default function Services() {
         </div>
       </section>
 
+      {/* ESPACEUR */}
+      <div className="h-32 md:h-48" />
+
       {/* CTA Final */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="py-32 relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-pink-900/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-900/20 rounded-full blur-[120px] animate-pulse" />
         </div>
 
         <div className="container-custom px-6">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
+            className="max-w-4xl mx-auto text-center"
           >
-            <div className="relative p-1 rounded-3xl bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600">
-              <div className="p-12 md:p-16 rounded-[calc(1.5rem-4px)] bg-black text-center">
-                <Rocket className="w-16 h-16 text-purple-400 mx-auto mb-6" />
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-                  Prêt à démarrer votre projet ?
-                </h2>
-                <p className="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto">
-                  Discutons de vos objectifs et voyons comment je peux vous aider à les atteindre
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="https://wa.me/2290141730240"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary inline-flex items-center gap-3"
-                  >
-                    <span>Discuter sur WhatsApp</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="mailto:donaerickoulodji@gmail.com"
-                    className="btn-secondary inline-flex items-center gap-3"
-                  >
-                    <span>Envoyer un email</span>
-                  </a>
-                </div>
+            {/* Titre avec animation rotation */}
+            <motion.h2
+              initial={{ opacity: 0, rotateY: -180 }}
+              whileInView={{ opacity: 1, rotateY: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-12 leading-[1.1]"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              Prêt à démarrer
+              <br />
+              <span className="text-gradient">votre projet ?</span>
+            </motion.h2>
+
+            {/* ESPACEUR */}
+            <div className="h-12" />
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto"
+            >
+              Discutons de vos objectifs et voyons comment je peux vous aider à les atteindre
+            </motion.p>
+
+            {/* ESPACEUR */}
+            <div className="h-16" />
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
+            >
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://wa.me/2290141730240"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-3 px-8 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-bold text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+                <span className="relative z-10">Discuter sur WhatsApp</span>
+                <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+              </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="mailto:donaerickoulodji@gmail.com"
+                className="inline-flex items-center gap-3 px-8 py-5 glass border-2 border-white/20 text-white font-semibold text-lg rounded-full hover:bg-white/10 transition-all duration-300"
+              >
+                <span>Envoyer un email</span>
+              </motion.a>
+            </motion.div>
+
+            {/* Status Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.7 }}
+              className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30"
+            >
+              {/* <div className="relative">
+                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
               </div>
-            </div>
+              <div className="text-left">
+                <p className="text-base font-bold text-white">
+                  Actuellement disponible pour nouveaux projets
+                </p>
+                <p className="text-sm text-green-300">
+                  Freelance • Consulting • Collaborations long terme
+                </p>
+              </div> */}
+            </motion.div>
           </motion.div>
+
+          {/* Decorative elements */}
+          <div className="absolute top-20 left-10 w-20 h-20 border-2 border-purple-500/20 rounded-full animate-float" />
+          <div className="absolute bottom-20 right-10 w-32 h-32 border-2 border-pink-500/20 rounded-full animate-float" style={{ animationDelay: '1s' }} />
         </div>
       </section>
     </div>

@@ -103,7 +103,7 @@ export default function Hero() {
               qui répondent à vos besoins concrets et génèrent un{" "}
               <span className="text-gradient font-semibold">impact mesurable</span>.
             </motion.p>
-
+            <div className="h-10 md:h-15" />
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -113,22 +113,24 @@ export default function Hero() {
             >
               <Link
                 to="/projects"
-                className="group btn-primary inline-flex items-center gap-3 px-8 py-4 text-lg"
+                className="group btn-primary inline-flex items-center p-4 glass rounded-full hover-scale hover-glow group"
               >
                 <span>Voir mes projets</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform " />
               </Link>
 
               <a
                 href="/cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary inline-flex items-center gap-3 px-8 py-4 text-lg"
+                className="btn-secondary inline-flex items-center p-4 glass rounded-full hover-scale hover-glow group"
               >
                 <Download className="w-5 h-5" />
                 <span>Télécharger CV</span>
               </a>
             </motion.div>
+            
+            <div className="h-10 md:h-12" />
 
             {/* Social Links */}
             <motion.div
@@ -156,6 +158,7 @@ export default function Hero() {
                 <Linkedin className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
               </a>
             </motion.div>
+            <div className="h-10 md:h-12" />
 
             {/* Stats */}
             <motion.div

@@ -241,7 +241,7 @@ Je suis **actuellement disponible** pour nouveaux projets (Freelance, Consulting
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/2290141730240)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:donaerickoulodji@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/dona-erick)
-[![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=todoist&logoColor=white)](https://votre-portfolio.com)
+[![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=todoist&logoColor=white)](https://donerick.vercel.app)
 
 **⏱️ Temps de réponse garanti : 24h**
 
@@ -322,7 +322,7 @@ La plupart de mes projets sont sous licence **MIT** - voir les fichiers LICENSE 
 
 ### ⭐ Si mon travail vous inspire, n'hésitez pas à star mes repos !
 
-**Fait avec ❤️ en Afrique**
+**Fait avec ❤️ par Dona Eric**
 
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=dona-eric.dona-eric)
 
