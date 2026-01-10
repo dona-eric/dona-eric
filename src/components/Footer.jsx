@@ -84,7 +84,7 @@ const Footer = () => {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div className="max-w-6xl mx-auto px-6 py-16 text-right">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
           {/* Brand Column */}
@@ -95,12 +95,10 @@ const Footer = () => {
               </h3>
             </Link>
             <p className="text-sm text-zinc-400 leading-relaxed mb-6">
-              Ingénieur ML & Data Scientist spécialisé en IA, 
-              transformant vos données en solutions intelligentes.
-            </p>
+              Ingénieur ML & Data Scientist </p>
             
             {/* Location */}
-            <div className="flex items-center gap-2 text-sm text-zinc-500">
+            <div className="flex items-center gap-2 text-sm text-zinc-500 text-right">
               <MapPin className="w-4 h-4 text-purple-400" />
               <span>Abomey-Calavi, Bénin</span>
             </div>
@@ -108,15 +106,15 @@ const Footer = () => {
 
           {/* Navigation Links */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-6 uppercase tracking-wider">
+            <h4 className="text-sm font-bold text-white mb-6 uppercase tracking-wider text-right">
               Navigation
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 text-right">
               {navigation.map((item) => (
                 <li key={item.path}>
                   <Link
                     to={item.path}
-                    className="text-sm text-zinc-400 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                    className="text-sm text-zinc-400 hover:text-white transition-colors duration-200 text-right flex items-center gap-2 group"
                   >
                     <span className="w-1 h-1 rounded-full bg-purple-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {item.name}

@@ -7,7 +7,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=for-the-badge&logo=github)](https://github.com/dona-eric)
 [![Email](https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail)](mailto:donaerickoulodji@gmail.com)
 
-**Ingénieur Machine Learning • Data Scientist • Spécialiste IA**
+**Ingénieur Machine Learning • Data Scientist • AI Enthusiast**
 
 *Transformant les données en solutions intelligentes qui créent un impact réel*
 
@@ -15,7 +15,7 @@
 
 </div>
 
----
+
 
 ## 🚀 À Propos
 
@@ -33,7 +33,7 @@ Je suis un **Ingénieur Machine Learning** passionné par l'intelligence artific
 - 🤖 **Machine Learning & IA** → Spécialisation avancée
 - 📚 **Formation continue** → Toujours à jour avec les dernières technologies
 
----
+
 
 ## 💼 Compétences Techniques
 
@@ -72,7 +72,7 @@ expertise = {
 - **Backend**: Node.js, Express, Python
 - **Mobile**: React Native (basics)
 
----
+
 
 ## 🏆 Projets Phares
 
@@ -92,7 +92,6 @@ expertise = {
 - Interface Streamlit déployée pour journalistes
 - API FastAPI pour intégration tierce
 
----
 
 ### 💪 [CoachAI](https://github.com/dona-eric/CoachAI) - Générateur IA de Programmes Sportifs
 > Application LLM qui génère des entraînements personnalisés et plans nutritionnels
@@ -110,7 +109,7 @@ expertise = {
 - Recommandations nutritionnelles basées sur profil
 - Intégration Groq pour inférence rapide
 
----
+
 
 ### 💳 [Credit Risk Engine](https://github.com/dona-eric/Hack2Hiere_TechTech_DataScience_20) - Scoring Crédit Bancaire
 > Modèle prédictif avec explicabilité SHAP déployé en fintech
@@ -128,7 +127,7 @@ expertise = {
 - API FastAPI déployée en production
 - Monitoring MLflow pour drift detection
 
----
+
 
 ### 🧠 [RAG Document Intelligence](https://huggingface.co/spaces/donerick/Projects)
 > Recherche sémantique dans tous types de documents
@@ -145,7 +144,7 @@ expertise = {
 - Retrieval optimisé avec LangChain
 - Interface Gradio interactive
 
----
+
 
 ### ⚡ [EV Dashboard Pro](https://github.com/dona-eric/dashboard-ve)
 > Optimisation de recharge véhicules électriques
@@ -160,7 +159,7 @@ expertise = {
 - Dashboard interactif Plotly
 - Conteneurisé avec Docker
 
----
+
 
 ### 🚗 [SafeRoute Bénin](https://github.com/dona-eric/afridrive)
 > Application de sécurité routière communautaire
@@ -175,7 +174,7 @@ expertise = {
 - Prédiction zones à risque avec ML
 - Intégration Google Maps
 
----
+
 
 ## 📈 GitHub Stats
 
@@ -189,7 +188,6 @@ expertise = {
 
 </div>
 
----
 
 ## 🎯 Ce Qui Me Drive
 
@@ -205,7 +203,6 @@ Formateur, mentor, contributeur open-source. Je construis l'écosystème IA afri
 ### 🚀 Exécution Rapide
 Du prototype en 48h au modèle en production. Je livre des solutions qui marchent, pas juste des notebooks Jupyter.
 
----
 
 ## 🎓 Services & Formations
 
@@ -228,7 +225,6 @@ Du prototype en 48h au modèle en production. Je livre des solutions qui marchen
 > *"Formation complète et pratique. J'ai déployé mon premier modèle en production en 6 semaines."*  
 > — Étudiant Bootcamp ML 2024
 
----
 
 ## 📫 Me Contacter
 
@@ -247,14 +243,14 @@ Je suis **actuellement disponible** pour nouveaux projets (Freelance, Consulting
 
 </div>
 
----
+
 
 ## 📊 Activité Récente
 
 <!--START_SECTION:activity-->
 <!--END_SECTION:activity-->
 
----
+
 
 ## 🏅 Certifications & Reconnaissances
 
@@ -263,7 +259,6 @@ Je suis **actuellement disponible** pour nouveaux projets (Freelance, Consulting
 - 🏆 **Hackathon Winner** - Hack2Hire TechTech DataScience 2020
 - 📜 **MLOps Professional** - Google Cloud
 
----
 
 ## 💡 Fun Facts
 
@@ -288,7 +283,6 @@ me.say_hi()
 - 📚 Toujours en train d'apprendre (actuellement: Advanced RAG techniques)
 - 🎯 Objectif 2026: Former 100+ data scientists africains
 
----
 
 ## 📝 Derniers Articles & Tutoriels
 
@@ -299,7 +293,6 @@ me.say_hi()
 - 🎯 SHAP: Rendre vos modèles ML explicables
 <!-- BLOG-POST-LIST:END -->
 
----
 
 ## 🤝 Contribuer
 
@@ -316,7 +309,6 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 
 La plupart de mes projets sont sous licence **MIT** - voir les fichiers LICENSE individuels.
 
----
 
 <div align="center">
 
@@ -326,7 +318,8 @@ La plupart de mes projets sont sous licence **MIT** - voir les fichiers LICENSE 
 
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=dona-eric.dona-eric)
 
----
+
+
 
 *"L'IA doit servir l'humain, pas le remplacer."*
 

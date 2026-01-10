@@ -346,7 +346,7 @@ export default function ContactForm() {
             >
               {/* Info Card */}
               <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300">
-                <h3 className="text-2xl font-bold text-white mb-4">Contact Information</h3>
+                <h3 className="text-xl font-bold text-white mb-4">Contact Information</h3>
                 <p className="text-zinc-400 mb-8 leading-relaxed">
                   Feel free to reach out through any of these channels. I'm always open to discussing new projects, creative ideas, or opportunities.
                 </p>
@@ -380,7 +380,7 @@ export default function ContactForm() {
                 </div>
 
                 {/* Social Links */}
-                <div className="mt-8 pt-6 border-t border-white/10">
+                {/* <div className="mt-8 pt-6 border-t border-white/10">
                   <p className="text-sm text-zinc-500 mb-4">Connect with me</p>
                   <div className="flex gap-3">
                     <motion.a
@@ -402,11 +402,11 @@ export default function ContactForm() {
                       <Linkedin className="w-5 h-5 text-zinc-400 hover:text-white transition-colors" />
                     </motion.a>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Availability Card */}
-              <div className="p-8 rounded-3xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30">
+              {/* <div className="p-8 rounded-3xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="relative">
                     <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
@@ -424,7 +424,7 @@ export default function ContactForm() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </motion.div>
           </div>
         </div>

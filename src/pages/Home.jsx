@@ -160,16 +160,16 @@ export default function Home() {
               transition={{ delay: 0.6 }}
               className="text-center mb-20"
             >
-              <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30">
+              <div className="inline-flex items-center gap-6 px-6 py-4 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30">
                 <div className="relative">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                   <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
                 </div>
-                <div className="text-right">
-                  <p className="text-base font-bold text-white">
+                <div className="text-right/150">
+                  <p className="text-base font-bold text-white/150">
                     Actuellement disponible pour nouveaux projets
                   </p>
-                  <p className="text-sm text-green-100">
+                  <p className="text-sm text-white/200">
                     Freelance • Consulting • Collaborations long terme
                   </p>
                 </div>

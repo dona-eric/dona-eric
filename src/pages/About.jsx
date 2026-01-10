@@ -345,10 +345,10 @@ export default function About() {
               transition={{ delay: 0.5 }}
               className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30"
             >
-              <div className="relative">
+              {/* <div className="relative">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                 <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
-              </div>
+              </div> */}
               {/* <div className="text-left">
                 <p className="text-base font-bold text-white">
                   Actuellement disponible pour nouveaux projets

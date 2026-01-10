@@ -74,20 +74,20 @@ const Navigation = () => {
               whileHover={{ scale: 1.05 }}
               className="text-xl font-black text-gradient relative"
             >
-              Dona Éric
+              DE
               <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-4">
             {NAVIGATION.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className="relative group px-4 py-2"
+                className="relative group px-2 py-3"
               >
-                <span className={`text-sm font-semibold transition-colors duration-300 relative z-10 ${
+                <span className={`text-lg font-semibold transition-colors duration-300 relative z-10 ${
                   isActive(item.path)
                     ? "text-white"
                     : "text-zinc-400 group-hover:text-white"

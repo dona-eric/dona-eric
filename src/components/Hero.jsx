@@ -6,6 +6,7 @@ import {
   Download, 
   Github, 
   Linkedin, 
+  Twitter,
   Sparkles,
   Zap,
   Target,
@@ -87,7 +88,7 @@ export default function Hero() {
                 Ingénieur Machine Learning
               </p>
               <p className="text-xl md:text-2xl font-medium text-zinc-500">
-                Data Scientist • Spécialiste IA
+                Data Scientist • AI Enthusiast
               </p>
             </motion.div>
 
@@ -157,6 +158,25 @@ export default function Hero() {
               >
                 <Linkedin className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
               </a>
+              <a
+                href="https://twitter.com/ericschrodinger"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 glass rounded-full hover-scale hover-glow group"
+                aria-label="Twitter"
+              >
+                <Twitter className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
+              </a>
+              {/* <a
+                href="https://medium.com/@koulodjiric"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 glass rounded-full hover-scale hover-glow group"
+                aria-label="Medium"
+              >
+                <Medium className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
+              </a> */}
+
             </motion.div>
             <div className="h-10 md:h-12" />
 
@@ -208,7 +228,7 @@ export default function Hero() {
                       <img
                         src={heroImage}
                         alt="Dona Éric KOULODJI"
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110"
+                        className="w-150 h-180 object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110"
                       />
                       {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
