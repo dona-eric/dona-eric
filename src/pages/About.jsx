@@ -29,14 +29,14 @@ const ACHIEVEMENTS = [
   { value: "7+", label: "Modèles en production", icon: Brain },
   { value: "90%", label: "Précision moyenne", icon: Target },
   { value: "24h", label: "Réponse garantie", icon: Zap },
-  { value: "3", label: "Continents touchés", icon: TrendingUp },
+  { value: "3", label: "Pays touchés", icon: TrendingUp },
 ];
 
 const VALUES = [
   {
     icon: Zap,
     title: "Excellence technique",
-    desc: "Je ne livre que des systèmes robustes, monitorés, et qui tiennent la charge."
+    desc: "Je ne livre que des systèmes robustes, monitorés, et qui tiennent la masse."
   },
   {
     icon: Users,
@@ -88,7 +88,7 @@ export default function About() {
             >
               Dona Éric
               <br />
-              <span className="text-gradient text-5xl md:text-6xl lg:text-7xl font-light">
+              <span className="text-gradient text-4xl md:text-5xl lg:text-6xl font-light">
                 KOULODJI
               </span>
             </motion.h1>
@@ -99,7 +99,7 @@ export default function About() {
               transition={{ delay: 0.4 }}
               className="text-xl md:text-2xl text-zinc-400"
             >
-              Ingénieur Machine Learning • Spécialiste LLM & MLOps • Bénin
+              Ingénieur Machine Learning • Spécialisé MLOps • Bénin
             </motion.p>
           </motion.div>
         </div>
@@ -119,11 +119,11 @@ export default function About() {
             className="max-w-4xl mx-auto text-center"
           >
             <p className="text-xl md:text-2xl leading-relaxed text-zinc-300">
-              Je transforme des <span className="text-white font-bold">idées complexes</span> en{" "}
-              <span className="text-white font-bold">systèmes IA qui tournent en production</span>.
+              Je transforme vos <span className="text-white font-bold">idées de projet ML et IA</span> en{" "}
+              <span className="text-white font-bold">systèmes qui tournent en production</span>.
               <br /><br />
-              Du fine-tuning de Llama 3 au déploiement d'un RAG médical critique,
-              je construis des solutions qui <span className="text-gradient font-bold">changent la donne</span>.
+              Du développement RAG Complets au Fine-tuning,
+              je construis des solutions qui <span className="text-gradient font-bold">accélère votre productivité au quotidien</span>.
             </p>
           </motion.div>
         </div>

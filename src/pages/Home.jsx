@@ -169,9 +169,9 @@ export default function Home() {
                   <p className="text-base font-bold text-white/150">
                     Actuellement disponible pour nouveaux projets
                   </p>
-                  <p className="text-sm text-white/200">
-                    Freelance • Consulting • Collaborations long terme
-                  </p>
+                  {/* <p className="text-sm text-white/200">
+                    Freelance • Collaborations long terme
+                  </p> */}
                 </div>
               </div>
             </motion.div>
