@@ -455,7 +455,7 @@ export default function Services() {
             </p>
 
             <div className="cta-btns" style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 32 }}>
-              <a href="https://wa.me/2290141730240" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer"
                 className="cta-primary" style={{
                   display: "inline-flex", alignItems: "center", gap: 10,
                   padding: "15px 32px", borderRadius: 6,

@@ -138,36 +138,6 @@ export default function Home() {
         <Hero />
 
         {/* ══════════════════════════════════════ */}
-        {/* ABOUT — composant existant             */}
-        {/* ══════════════════════════════════════ */}
-        {/* <About /> */}
-
-        {/* ── Separator ── */}
-        {/* <div style={{
-          maxWidth: 1160, margin: "0 auto", padding: "0 24px"
-        }}>
-          <div style={{
-            height: 1, margin: "80px 0",
-            background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.18), transparent)"
-          }} />
-        </div> */}
-
-        {/* ══════════════════════════════════════ */}
-        {/* SERVICES — composant existant          */}
-        {/* ══════════════════════════════════════ */}
-        {/* <section id="services" style={{ position: "relative", zIndex: 1 }}>
-          <Services />
-        </section> */}
-
-        {/* ── Separator ──
-        <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{
-            height: 1, margin: "80px 0",
-            background: "linear-gradient(90deg, transparent, rgba(99,102,241,0.18), transparent)"
-          }} />
-        </div> */}
-
-        {/* ══════════════════════════════════════ */}
         {/* CTA SECTION                            */}
         {/* ══════════════════════════════════════ */}
         <section id="contact" style={{ position: "relative", zIndex: 1 }}>
@@ -280,22 +250,13 @@ export default function Home() {
                 <span style={{ color: "#475569" }}>// </span>other_channels
               </div>
               <div className="alt-links" style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-                <SocialChip href="https://linkedin.com/in/dona-erick" label="LinkedIn" />
-                <SocialChip href="https://github.com/dona-eric" label="GitHub" />
+                <SocialChip href="https://medium.com/@koulodjiric" label="Medium" />
                 <SocialChip href="https://wa.me/+2290151344289" label="WhatsApp" />
-                <SocialChip href="https://twitter.com/ericschrodinger" label="Twitter/X" />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── Separator ── */}
-        <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{
-            height: 1,
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)"
-          }} />
-        </div>
 
         {/* ══════════════════════════════════════ */}
         {/* TRUST SECTION                          */}
