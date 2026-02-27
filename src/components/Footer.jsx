@@ -6,7 +6,7 @@ const SOCIALS = [
   { label: "GitHub",   href: "https://github.com/dona-eric",           icon: "⌥" },
   { label: "LinkedIn", href: "https://linkedin.com/in/dona-erick",      icon: "◈" },
   { label: "Twitter",  href: "https://twitter.com/ericschrodinger",     icon: "✕" },
-  { label: "WhatsApp", href: "https://wa.me/2290141730240",             icon: "✉" },
+  { label: "WhatsApp", href: "https://wa.me/2290151344289",             icon: "✉" },
 ];
 
 const QUICK_LINKS = [
@@ -249,7 +249,7 @@ const Footer = () => {
             <span style={{
               fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: "#334155"
             }}>
-              © {year} Dona Éric KOULODJI · Built with precision in 🌍 Afrique
+              © {year} dona-eric.koulodji · Data Science & ML Engineer · Abomey-Calavi · BÉNIN
             </span>
 
             <div style={{ display: "flex", gap: 20, alignItems: "center" }}>

@@ -11,6 +11,7 @@ const Skills = lazy(() => import("./pages/Skills"));
 const Projects = lazy(() => import("./pages/Projects"));
 const Services = lazy(() => import("./pages/Services"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Blog = lazy(() => import ("./pages/Blog"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Scroll to top on route change
@@ -37,6 +38,7 @@ export default function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog/>}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

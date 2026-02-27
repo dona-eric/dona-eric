@@ -1,3 +1,5 @@
+import { path } from "framer-motion/client";
+
 // Portfolio Constants & Configuration
 export const PORTFOLIO = {
   name: "Dona Eric",
@@ -24,6 +26,7 @@ export const NAVIGATION = [
   { name: "Projects", path: "/projects" },
   { name: "Services", path: "/services" },
   { name: "Contact", path: "/contact" },
+  {name: "Blogs", path: "/blog"}
 ];
 
 export const CTA_BUTTON = {
