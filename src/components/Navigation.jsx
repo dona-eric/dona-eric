@@ -1,254 +1,270 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Sparkles } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
 import { NAVIGATION } from "../config/constants";
 
-
 const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen]   = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location]);
+  useEffect(() => { setIsOpen(false); }, [location]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const fn = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className={`sticky top-0 z-50 w-full transition-all duration-300 relative overflow-hidden ${
-      scrolled 
-        ? "backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-purple-500/10" 
-        : "backdrop-blur-md border-b border-white/5"
-    }`}>
-      {/* Background mesh grid violet/rose */}
-      <div className="absolute inset-0 -z-10 opacity-95">
-        <div className="absolute inset-0 bg-black" />
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 40px,
-                rgba(168, 85, 247, 0.1) 40px,
-                rgba(168, 85, 247, 0.1) 41px
-              ),
-              repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 40px,
-                rgba(236, 72, 153, 0.1) 40px,
-                rgba(236, 72, 153, 0.1) 41px
-              ),
-              radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.2) 0%, transparent 50%),
-              radial-gradient(circle at 80% 50%, rgba(236, 72, 153, 0.2) 0%, transparent 50%)
-            `,
-            backgroundSize: '40px 40px, 40px 40px, 100% 100%, 100% 100%'
-          }}
-        />
-        {/* Vignette subtle */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%)'
-          }}
-        />
-      </div>
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          
-          {/* Logo avec gradient */}
-          <Link to="/" className="flex items-center gap-2 group relative">
-            <motion.span 
-              whileHover={{ scale: 1.05 }}
-              className="text-xl font-black text-gradient relative"
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        .nav-link-text  { transition: color 0.2s ease; }
+        .nav-link:hover .nav-link-text { color: #00d4ff !important; }
+        .nav-link:hover .nav-link-bar  { opacity: 1 !important; }
+        .cta-nav:hover  {
+          background: linear-gradient(135deg,#0891b2,#4338ca) !important;
+          transform: translateY(-1px);
+          box-shadow: 0 8px 24px rgba(0,212,255,0.2) !important;
+        }
+        .mob-link:hover { background: rgba(0,212,255,0.06) !important; border-color: rgba(0,212,255,0.2) !important; }
+        .mob-link:hover .mob-link-text { color: #00d4ff !important; }
+        @keyframes pulseDot { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
+      `}</style>
+
+      <nav style={{
+        position: "sticky", top: 0, zIndex: 50, width: "100%",
+        transition: "all 0.3s ease",
+        background: scrolled
+          ? "rgba(4,7,12,0.97)"
+          : "rgba(6,10,15,0.92)",
+        borderBottom: `1px solid ${scrolled ? "rgba(0,212,255,0.12)" : "rgba(255,255,255,0.05)"}`,
+        backdropFilter: "blur(20px)",
+        boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.4)" : "none"
+      }}>
+
+        {/* Subtle grid overlay */}
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
+          backgroundImage: `
+            linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px"
+        }} />
+
+        {/* Bottom gradient line on scroll */}
+        <div style={{
+          position: "absolute", bottom: 0, left: 0, right: 0, height: 1,
+          background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent)",
+          opacity: scrolled ? 1 : 0, transition: "opacity 0.3s"
+        }} />
+
+        <div style={{
+          maxWidth: 1160, margin: "0 auto", padding: "0 24px",
+          position: "relative", zIndex: 1
+        }}>
+          <div style={{
+            display: "flex", alignItems: "center",
+            justifyContent: "space-between", height: 68
+          }}>
+
+            {/* ── Logo ── */}
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <div style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 15, fontWeight: 700, letterSpacing: "0.05em"
+              }}>
+                <span style={{ color: "#475569" }}>{"<"}</span>
+                <span style={{
+                  background: "linear-gradient(135deg, #00d4ff, #6366f1)",
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+                }}>DEK</span>
+                <span style={{ color: "#475569" }}>{" />"}</span>
+              </div>
+            </Link>
+
+            {/* ── Desktop nav ── */}
+            <div style={{
+              display: "flex", alignItems: "center", gap: 4,
+              fontFamily: "'JetBrains Mono', monospace"
+            }} className="desktop-nav">
+              {NAVIGATION.map((item) => {
+                const active = isActive(item.path);
+                return (
+                  <Link key={item.path} to={item.path}
+                    className="nav-link"
+                    style={{
+                      position: "relative", padding: "8px 14px",
+                      borderRadius: 4, textDecoration: "none",
+                      background: active ? "rgba(0,212,255,0.08)" : "transparent",
+                      border: `1px solid ${active ? "rgba(0,212,255,0.25)" : "transparent"}`,
+                      transition: "all 0.2s ease"
+                    }}>
+                    <span className="nav-link-text" style={{
+                      fontSize: 12, fontWeight: 500, letterSpacing: "0.06em",
+                      color: active ? "#00d4ff" : "#64748b"
+                    }}>{item.name}</span>
+                    {/* Active dot */}
+                    {active && (
+                      <span style={{
+                        position: "absolute", top: 5, right: 5,
+                        width: 4, height: 4, borderRadius: "50%",
+                        background: "#00d4ff",
+                        boxShadow: "0 0 6px #00d4ff"
+                      }} />
+                    )}
+                    {/* Hover underbar */}
+                    <div className="nav-link-bar" style={{
+                      position: "absolute", bottom: 0, left: "20%", right: "20%",
+                      height: 1, borderRadius: 1,
+                      background: "linear-gradient(90deg, transparent, #00d4ff, transparent)",
+                      opacity: 0, transition: "opacity 0.2s"
+                    }} />
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* ── CTA ── */}
+            <div className="desktop-cta" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              {/* Availability dot */}
+              <div style={{
+                display: "flex", alignItems: "center", gap: 6,
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 10, color: "#22c55e", letterSpacing: "0.08em"
+              }}>
+                <span style={{
+                  width: 6, height: 6, borderRadius: "50%", background: "#22c55e",
+                  animation: "pulseDot 2s ease infinite", display: "inline-block"
+                }} />
+                open_to_work
+              </div>
+
+              <a href="/contact" className="cta-nav" style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                padding: "8px 18px", borderRadius: 4,
+                background: "linear-gradient(135deg, #0e7490, #4338ca)",
+                color: "#f0f9ff", textDecoration: "none",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 12, fontWeight: 600, letterSpacing: "0.06em",
+                transition: "all 0.25s ease",
+                boxShadow: "0 2px 12px rgba(0,212,255,0.1)"
+              }}>
+                hire_me() →
+              </a>
+            </div>
+
+            {/* ── Mobile burger ── */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              style={{
+                display: "none", padding: "8px", borderRadius: 4,
+                background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
+                color: "#64748b", cursor: "pointer", lineHeight: 0,
+                transition: "all 0.2s"
+              }}
+              className="mobile-burger"
+              aria-label="Toggle menu"
             >
-              DE
-              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </motion.span>
-          </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-4">
-            {NAVIGATION.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="relative group px-2 py-3"
-              >
-                <span className={`text-lg font-semibold transition-colors duration-300 relative z-10 ${
-                  isActive(item.path)
-                    ? "text-white"
-                    : "text-zinc-400 group-hover:text-white"
-                }`}>
-                  {item.name}
-                </span>
-                
-                {/* Active indicator avec animation */}
-                {isActive(item.path) && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-white/10 backdrop-blur-xl rounded-xl border border-white/20"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                {isOpen ? (
+                  <>
+                    <line x1="2" y1="2" x2="16" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <line x1="16" y1="2" x2="2" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </>
+                ) : (
+                  <>
+                    <line x1="2" y1="5"  x2="16" y2="5"  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <line x1="2" y1="9"  x2="16" y2="9"  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <line x1="2" y1="13" x2="16" y2="13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </>
                 )}
-
-                {/* Hover effect */}
-                {!isActive(item.path) && (
-                  <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                )}
-              </Link>
-            ))}
+              </svg>
+            </button>
           </div>
 
-          {/* CTA Button avec gradient */}
-          <div className="hidden md:block">
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="/signup"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-bold text-sm rounded-full overflow-hidden shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-            >
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-              <Sparkles className="w-4 h-4 relative z-10 group-hover:rotate-12 transition-transform" />
-              <span className="relative z-10">Prendre RDV</span>
-            </motion.a>
-          </div>
+          {/* ── Mobile menu ── */}
+          {isOpen && (
+            <div style={{
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+              padding: "16px 0 20px", display: "none"
+            }} className="mobile-menu">
+              <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 16 }}>
+                {NAVIGATION.map((item) => {
+                  const active = isActive(item.path);
+                  return (
+                    <Link key={item.path} to={item.path}
+                      className="mob-link"
+                      style={{
+                        display: "flex", alignItems: "center", gap: 12,
+                        padding: "12px 14px", borderRadius: 4, textDecoration: "none",
+                        background: active ? "rgba(0,212,255,0.08)" : "transparent",
+                        border: `1px solid ${active ? "rgba(0,212,255,0.25)" : "transparent"}`,
+                        transition: "all 0.2s ease"
+                      }}>
+                      <span style={{
+                        width: 5, height: 5, borderRadius: "50%",
+                        background: active ? "#00d4ff" : "rgba(255,255,255,0.15)",
+                        boxShadow: active ? "0 0 6px #00d4ff" : "none",
+                        flexShrink: 0
+                      }} />
+                      <span className="mob-link-text" style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: 13, fontWeight: 500,
+                        color: active ? "#00d4ff" : "#64748b",
+                        letterSpacing: "0.06em", transition: "color 0.2s"
+                      }}>{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </div>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2.5 text-white hover:bg-white/10 rounded-xl transition-colors relative"
-          >
-            <AnimatePresence mode="wait">
-              {isOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X size={24} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu size={24} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+              {/* Mobile CTA */}
+              <a href="https://wa.me/2290141730240" target="_blank" rel="noopener noreferrer"
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  padding: "13px", borderRadius: 4, textDecoration: "none",
+                  background: "linear-gradient(135deg, #0e7490, #4338ca)",
+                  color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 13, fontWeight: 600, letterSpacing: "0.05em",
+                  marginBottom: 12
+                }}>
+                ✉ WhatsApp → démarrer
+              </a>
+
+              {/* Mobile availability */}
+              <div style={{
+                display: "flex", justifyContent: "center",
+                alignItems: "center", gap: 8,
+                padding: "8px", borderRadius: 4,
+                background: "rgba(34,197,94,0.07)",
+                border: "1px solid rgba(34,197,94,0.2)",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 11, color: "#22c55e"
+              }}>
+                <span style={{
+                  width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
+                  animation: "pulseDot 2s ease infinite", display: "inline-block"
+                }} />
+                Disponible pour projets · open=True
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Mobile Menu avec animations sophistiquées */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden border-t border-white/10 overflow-hidden"
-            >
-              <motion.div 
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                exit={{ y: -20 }}
-                className="py-6 space-y-2"
-              >
-                {NAVIGATION.map((item, index) => (
-                  <motion.div
-                    key={item.path}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Link
-                      to={item.path}
-                      className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
-                        isActive(item.path)
-                          ? "bg-white/10 backdrop-blur-xl border border-white/20 text-white"
-                          : "text-zinc-400 hover:text-white hover:bg-white/5"
-                      }`}
-                    >
-                      {/* Active indicator dot */}
-                      <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        isActive(item.path) 
-                          ? "bg-gradient-to-r from-purple-500 to-pink-500" 
-                          : "bg-transparent group-hover:bg-white/30"
-                      }`} />
-                      <span className="font-semibold">{item.name}</span>
-                    </Link>
-                  </motion.div>
-                ))}
-
-                {/* Mobile CTA */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: NAVIGATION.length * 0.05 }}
-                  className="pt-4"
-                >
-                  <a
-                    href="https://wa.me/2290141730240"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-bold rounded-xl shadow-lg hover:shadow-purple-500/50 transition-all duration-300 group"
-                  >
-                    <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                    <span>Démarrer une conversation</span>
-                  </a>
-                </motion.div>
-
-                {/* Mobile status badge */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="pt-4 flex justify-center"
-                >
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30">
-                    <div className="relative">
-                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                      <div className="absolute inset-0 w-2 h-2 bg-green-400 rounded-full animate-ping" />
-                    </div>
-                    <span className="text-xs font-semibold text-green-300">
-                      Disponible pour projets
-                    </span>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Decorative gradient line */}
-      <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent transition-opacity duration-300 ${
-        scrolled ? "opacity-100" : "opacity-0"
-      }`} />
-    </nav>
+        {/* Responsive styles */}
+        <style>{`
+          @media (max-width: 768px) {
+            .desktop-nav  { display: none !important; }
+            .desktop-cta  { display: none !important; }
+            .mobile-burger{ display: block !important; }
+            .mobile-menu  { display: flex !important; flex-direction: column; }
+          }
+        `}</style>
+      </nav>
+    </>
   );
 };
 

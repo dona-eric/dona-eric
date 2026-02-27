@@ -1,403 +1,493 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { 
-  Brain, 
-  Database, 
-  Code2, 
-  Sparkles, 
-  CheckCircle2,
-  Award,
-  GraduationCap,
-  TrendingUp
-} from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 
-const skillCategories = [
+// ─── Hooks ────────────────────────────────────────────────────────────────────
+const useFadeIn = (delay = 0) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(24px)";
+    el.style.transition = `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`;
+    const t = setTimeout(() => { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }, 60);
+    return () => clearTimeout(t);
+  }, [delay]);
+  return ref;
+};
+
+const useScrollFade = (delay = 0) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(28px)";
+    el.style.transition = `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; obs.disconnect(); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [delay]);
+  return ref;
+};
+
+// ─── Skill bar ────────────────────────────────────────────────────────────────
+function SkillBar({ name, level, color, delay }) {
+  const wrapRef = useRef(null);
+  const barRef  = useRef(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const bar  = barRef.current;
+    if (!wrap || !bar) return;
+    wrap.style.opacity = "0";
+    wrap.style.transition = `opacity 0.5s ease ${delay}s`;
+    bar.style.width = "0%";
+    bar.style.transition = `width 1.1s cubic-bezier(0.4,0,0.2,1) ${delay + 0.1}s`;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        wrap.style.opacity = "1";
+        bar.style.width = level + "%";
+        obs.disconnect();
+      }
+    }, { threshold: 0.2 });
+    obs.observe(wrap);
+    return () => obs.disconnect();
+  }, [level, delay]);
+
+  return (
+    <div ref={wrapRef} style={{ marginBottom: 14 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: "#cbd5e1" }}>{name}</span>
+        <span style={{ fontFamily: "monospace", fontSize: 11, color: color }}>{level}%</span>
+      </div>
+      <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
+        <div ref={barRef} style={{
+          height: "100%", borderRadius: 2,
+          background: `linear-gradient(90deg, ${color}88, ${color})`,
+          boxShadow: `0 0 8px ${color}55`
+        }} />
+      </div>
+    </div>
+  );
+}
+
+// ─── Cert card ────────────────────────────────────────────────────────────────
+function CertCard({ cert, delay }) {
+  const ref = useScrollFade(delay);
+  const [hov, setHov] = useState(false);
+  return (
+    <div ref={ref}
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        padding: "24px 28px",
+        background: hov ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+        border: `1px solid ${hov ? cert.color + "50" : "rgba(255,255,255,0.08)"}`,
+        borderRadius: 10, transition: "all 0.3s ease",
+        transform: hov ? "translateY(-3px)" : "none",
+        position: "relative", overflow: "hidden"
+      }}>
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: 2,
+        background: `linear-gradient(90deg, transparent, ${cert.color}, transparent)`,
+        opacity: hov ? 1 : 0.3, transition: "opacity 0.3s"
+      }} />
+      <div style={{
+        fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
+        color: cert.color, letterSpacing: "0.12em", marginBottom: 10
+      }}>{cert.tag}</div>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#f1f5f9", marginBottom: 4 }}>{cert.title}</h3>
+      <div style={{ fontFamily: "monospace", fontSize: 12, color: "#64748b", marginBottom: 6 }}>{cert.institution}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontFamily: "monospace", fontSize: 11, color: "#475569" }}>{cert.field}</span>
+        <span style={{
+          fontFamily: "monospace", fontSize: 10, color: cert.color,
+          background: cert.color + "15", padding: "2px 8px", borderRadius: 3,
+          border: `1px solid ${cert.color}30`
+        }}>{cert.year}</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Stat card ────────────────────────────────────────────────────────────────
+function StatCard({ v, l, c, note, delay }) {
+  const ref = useScrollFade(delay);
+  return (
+    <div ref={ref} style={{
+      padding: "20px 16px", textAlign: "center",
+      background: "rgba(255,255,255,0.03)",
+      border: "1px solid rgba(255,255,255,0.07)",
+      borderRadius: 8, position: "relative", overflow: "hidden"
+    }}>
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: 2,
+        background: `linear-gradient(90deg, transparent, ${c}, transparent)`
+      }} />
+      <div style={{
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: 36, fontWeight: 700, color: c, lineHeight: 1
+      }}>{v}</div>
+      <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 8, fontWeight: 500 }}>{l}</div>
+      <div style={{ fontSize: 10, color: "#475569", marginTop: 4, fontFamily: "monospace" }}>{note}</div>
+    </div>
+  );
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const SKILL_COLS = [
   {
-    title: "Machine Learning & AI",
-    icon: Brain,
-    gradient: "from-indigo-600 to-indigo-900",
+    tag: "// ml_core",
+    title: "ML & Deep Learning",
+    accent: "#00d4ff",
     skills: [
-      "TensorFlow & Keras",
-      "PyTorch",
-      "Scikit-learn",
-      "XGBoost & LightGBM",
-      "NLP (BERT, Transformers)",
-      "Computer Vision",
-      "Deep Learning",
-      "Reinforcement Learning",
-    ],
+      { name: "Scikit-Learn · XGBoost · LightGBM", level: 90 },
+      { name: "PyTorch",                            level: 82 },
+      { name: "TensorFlow / Keras",                 level: 78 },
+      { name: "Time Series (Prophet, ARIMA)",        level: 85 },
+      { name: "Computer Vision (YOLO, SAM)",         level: 80 },
+    ]
   },
   {
-    title: "Data Science",
-    icon: Database,
-    gradient: "from-violet-600 to-violet-900",
+    tag: "// llm_genai",
+    title: "LLM & GenAI",
+    accent: "#a78bfa",
     skills: [
-      "Data Analysis",
-      "Data Visualization",
-      "Statistical Modeling",
-      "Feature Engineering",
-      "Time Series Analysis",
-      "A/B Testing",
-      "Pandas & NumPy",
-      "SQL & Databases",
-    ],
+      { name: "Fine-tuning (Llama 3, Mistral, Phi)", level: 84 },
+      { name: "RAG · ChromaDB · Pinecone",           level: 86 },
+      { name: "LangChain · LlamaIndex",              level: 87 },
+      { name: "Prompt Engineering",                  level: 90 },
+      { name: "Groq · HuggingFace Hub",              level: 85 },
+    ]
   },
   {
-    title: "Software Engineering",
-    icon: Code2,
-    gradient: "from-pink-600 to-pink-900",
+    tag: "// mlops_deploy",
+    title: "MLOps & Infra",
+    accent: "#22c55e",
     skills: [
-      "Python",
-      "JavaScript & React",
-      "FastAPI & Flask",
-      "Docker & Kubernetes",
-      "Git & CI/CD",
-      "REST APIs",
-      "Cloud Deployment",
-      "System Design",
-    ],
+      { name: "Docker · Kubernetes",                 level: 76 },
+      { name: "MLflow · Experiment Tracking",        level: 80 },
+      { name: "FastAPI · REST APIs",                 level: 85 },
+      { name: "CI/CD (GitHub Actions)",              level: 74 },
+      { name: "GCP · AWS · Vercel",                  level: 72 },
+    ]
+  },
+  {
+    tag: "// data_eng",
+    title: "Data & Analytics",
+    accent: "#f59e0b",
+    skills: [
+      { name: "Python · Pandas · NumPy",             level: 92 },
+      { name: "SQL · PostgreSQL",                    level: 82 },
+      { name: "Plotly · Streamlit · Dash",           level: 88 },
+      { name: "Airflow · Spark",                     level: 68 },
+      { name: "Statistical Modeling · A/B Testing",  level: 83 },
+    ]
   },
 ];
 
-const certifications = [
+const CERTS = [
   {
-    title: "Master's Degree",
-    institution: "University of Benin",
-    field: "Physics & AI",
-    year: "2023",
-    gradient: "from-purple-600 to-pink-600"
+    tag: "// education",
+    title: "Licence en Physique",
+    institution: "Université d'Abomey-Calavi",
+    field: "Physique théorique & Mathématiques",
+    year: "2025",
+    color: "#6366f1",
   },
   {
+    tag: "// certification",
     title: "Machine Learning Specialization",
-    institution: "DeepLearning.AI",
-    field: "TensorFlow & Deep Learning",
-    year: "2022",
-    gradient: "from-blue-600 to-cyan-600"
+    institution: "DeepLearning.AI / Coursera",
+    field: "Andrew Ng · Supervised & Unsupervised ML",
+    year: "2024",
+    color: "#00d4ff",
   },
   {
+    tag: "// certification",
+    title: "Deep Learning Specialization",
+    institution: "DeepLearning.AI",
+    field: "CNN · RNN · NLP · Deployment",
+    year: "2024",
+    color: "#a78bfa",
+  },
+  {
+    tag: "// certification",
     title: "Data Science Professional",
     institution: "Coursera",
-    field: "Advanced Analytics",
-    year: "2021",
-    gradient: "from-emerald-600 to-teal-600"
-  },
-  {
-    title: "Cloud Architecture",
-    institution: "AWS",
-    field: "Solutions Architect Associate",
-    year: "2023",
-    gradient: "from-orange-600 to-red-600"
+    field: "Advanced Analytics & Feature Engineering",
+    year: "Décembre 2025",
+    color: "#22c55e",
   },
 ];
 
+const TOOLS = [
+  "Python", "PyTorch", "TensorFlow", "Scikit-Learn",
+  "LangChain", "LlamaIndex", "FastAPI", "Streamlit",
+  "Docker", "MLflow", "Airflow", "PostgreSQL",
+  "Git", "Linux", "GCP", "HuggingFace",
+];
+
+const STATS = [
+  { v: "3+",  l: "Modèles en prod",  c: "#00d4ff", note: "Live & monitored"   },
+  { v: "90%", l: "Précision moyenne", c: "#a78bfa", note: "Across ML projects" },
+  { v: "50+", l: "Étudiants formés",  c: "#22c55e", note: "BJ · FR · Online"   },
+  { v: "3",   l: "Pays d'impact",     c: "#f59e0b", note: "BJ · FR · CA"        },
+];
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Skills() {
+  const heroRef  = useFadeIn(0.1);
+  const toolsRef = useScrollFade(0);
+  const ctaRef   = useScrollFade(0);
+
   return (
-    <div className="bg-mesh text-white">
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 left-20 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px] animate-float" />
-          <div className="absolute bottom-20 right-20 w-[600px] h-[600px] bg-pink-900/20 rounded-full blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
-        </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #060a0f; }
+        @keyframes gridFloat { 0%,100%{opacity:.03}50%{opacity:.07} }
+        @keyframes pulseDot  { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
+        .tool-pill:hover { border-color:rgba(0,212,255,0.3)!important; color:#00d4ff!important; }
+        .cta-btn:hover   { background:linear-gradient(135deg,#0891b2,#4338ca)!important; transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,212,255,0.25)!important; }
+        .cta-btn { transition: all 0.25s ease; }
+        a { text-decoration: none; }
+        @media (max-width: 900px) {
+          .skills-grid { grid-template-columns: 1fr 1fr !important; }
+          .certs-grid  { grid-template-columns: 1fr !important; }
+          .stats-grid  { grid-template-columns: repeat(2,1fr) !important; }
+        }
+        @media (max-width: 560px) {
+          .skills-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
 
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-5xl mx-auto"
-          >
-            {/* Badge */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full mb-12 group cursor-default"
-            >
-              <Sparkles className="w-4 h-4 text-purple-400 group-hover:rotate-12 transition-transform duration-300" />
-              <span className="text-sm font-semibold text-purple-300">Compétences</span>
-            </motion.div>
+      <div style={{
+        minHeight: "100vh", background: "#060a0f",
+        color: "#e2e8f0", fontFamily: "'Space Grotesk', sans-serif",
+        position: "relative", overflow: "hidden"
+      }}>
+        {/* Grid bg */}
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+          backgroundImage: `
+            linear-gradient(rgba(0,212,255,0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,212,255,0.035) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px", animation: "gridFloat 8s ease infinite"
+        }} />
+        <div style={{
+          position: "fixed", top: "-5%", right: "-5%", width: 600, height: 600,
+          background: "radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%)",
+          pointerEvents: "none", zIndex: 0
+        }} />
+        <div style={{
+          position: "fixed", bottom: "5%", left: "-10%", width: 500, height: 500,
+          background: "radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%)",
+          pointerEvents: "none", zIndex: 0
+        }} />
 
-            {/* Titre avec animation rotation */}
-            <motion.h1
-              initial={{ opacity: 0, rotateY: -180 }}
-              animate={{ opacity: 1, rotateY: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] mb-8"
-              style={{ transformStyle: "preserve-3d" }}
-            >
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 1160, margin: "0 auto", padding: "80px 24px 120px" }}>
+
+          {/* ══ HERO ══ */}
+          <div ref={heroRef} style={{ marginBottom: 80 }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "6px 16px", borderRadius: 4, marginBottom: 32,
+              background: "rgba(0,212,255,0.07)", border: "1px solid rgba(0,212,255,0.25)",
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+              color: "#00d4ff", letterSpacing: "0.05em"
+            }}>
+              <span style={{
+                width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
+                animation: "pulseDot 2s ease infinite", display: "inline-block"
+              }} />
+              skills.scan() → stack_loaded
+            </div>
+
+            <h1 style={{
+              fontSize: "clamp(40px, 7vw, 78px)", fontWeight: 700,
+              lineHeight: 1.05, letterSpacing: "-0.03em",
+              color: "#f8fafc", marginBottom: 20
+            }}>
               Expertise
               <br />
-              <span className="text-gradient text-5xl md:text-6xl lg:text-7xl font-light">
-                Technique
-              </span>
-            </motion.h1>
+              <span style={{
+                background: "linear-gradient(135deg, #00d4ff 0%, #6366f1 100%)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+              }}>Technique.</span>
+            </h1>
 
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
-            >
-              Une combinaison puissante de{" "}
-              <span className="text-white font-semibold">Machine Learning</span>,{" "}
-              <span className="text-white font-semibold">Data Science</span> et{" "}
-              <span className="text-white font-semibold">Software Engineering</span>{" "}
-              pour créer des solutions robustes et scalables.
-            </motion.p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ESPACEUR */}
-      <div className="h-32 md:h-48" />
-
-      {/* Skills Grid */}
-      <section className="py-20 relative">
-        <div className="container-custom px-6">
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {skillCategories.map((category, idx) => {
-              const Icon = category.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.7 }}
-                  className="group"
-                >
-                  <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 h-full">
-                    <div className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${category.gradient} mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-10 h-10 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-gradient transition-all duration-300">
-                      {category.title}
-                    </h3>
-                    <ul className="space-y-3">
-                      {category.skills.map((skill, i) => (
-                        <motion.li
-                          key={skill}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.05 }}
-                          className="flex items-center gap-3 text-zinc-300 group/item"
-                        >
-                          <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0 group-hover/item:scale-110 transition-transform" />
-                          <span className="group-hover/item:text-white transition-colors">{skill}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ESPACEUR */}
-      <div className="h-32 md:h-48" />
-
-      {/* Certifications */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent" />
-        </div>
-
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto mb-20"
-          >
-            {/* Titre avec animation rotation */}
-            <motion.h2
-              initial={{ opacity: 0, rotateY: -180 }}
-              whileInView={{ opacity: 1, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-4xl md:text-5xl font-black text-white mb-6"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              Formations & Certifications
-            </motion.h2>
-            <p className="text-xl text-zinc-400">
-              Apprentissage continu et validation professionnelle
+            <p style={{ maxWidth: 560, color: "#94a3b8", fontSize: 16, lineHeight: 1.85 }}>
+              Stack d'un <strong style={{ color: "#e2e8f0" }}>AI Builder</strong> complet —
+              de la donnée brute jusqu'au modèle en production,
+              avec la rigueur d'un physicien et la praticité d'un ingénieur.
             </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {certifications.map((cert, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.6 }}
-                className="group"
-              >
-                <div className="relative p-8 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden">
-                  {/* Gradient background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${cert.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                  
-                  <div className="relative z-10">
-                    {/* Icon badge */}
-                    <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${cert.gradient} mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                      <GraduationCap className="w-6 h-6 text-white" />
-                    </div>
-
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-gradient transition-all duration-300">
-                      {cert.title}
-                    </h3>
-                    <p className="text-purple-400 text-base mb-2 font-medium">{cert.institution}</p>
-                    <p className="text-zinc-400 text-sm mb-3">{cert.field}</p>
-                    <div className="flex items-center gap-2 text-zinc-500 text-xs">
-                      <Award className="w-4 h-4" />
-                      <span>{cert.year}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
           </div>
-        </div>
-      </section>
 
-      {/* ESPACEUR */}
-      <div className="h-32 md:h-48" />
-
-      {/* Stats Section */}
-      <section className="py-20 relative">
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <motion.h3
-              initial={{ opacity: 0, rotateY: -180 }}
-              whileInView={{ opacity: 1, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-3xl md:text-4xl font-black text-white mb-16"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              En chiffres
-            </motion.h3>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { icon: TrendingUp, value: "7+", label: "Modèles en prod" },
-                { icon: Award, value: "90%", label: "Précision moyenne" },
-                { icon: GraduationCap, value: "50+", label: "Étudiants formés" },
-                { icon: Brain, value: "3", label: "Continents" }
-              ].map((stat, index) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all group"
-                  >
-                    <Icon className="w-10 h-10 text-purple-400 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-                    <div className="text-4xl md:text-5xl font-black text-gradient mb-2">
-                      {stat.value}
-                    </div>
-                    <div className="text-xs text-zinc-500 uppercase tracking-wider">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                );
-              })}
+          {/* ══ SKILL BARS ══ */}
+          <div style={{ marginBottom: 88 }}>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#475569", letterSpacing: "0.15em", marginBottom: 8
+            }}>
+              <span style={{ color: "#00d4ff" }}>// </span>skills.proficiency[]
             </div>
-          </motion.div>
+            <h2 style={{
+              fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 700,
+              color: "#f1f5f9", marginBottom: 40, letterSpacing: "-0.02em"
+            }}>Stack complet</h2>
+
+            <div className="skills-grid" style={{
+              display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20
+            }}>
+              {SKILL_COLS.map((col, ci) => (
+                <div key={ci} style={{
+                  padding: "28px 22px",
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  borderRadius: 10, position: "relative"
+                }}>
+                  <div style={{
+                    position: "absolute", top: 0, left: 0, right: 0, height: 2,
+                    background: `linear-gradient(90deg, transparent, ${col.accent}, transparent)`
+                  }} />
+                  <div style={{
+                    fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
+                    color: col.accent, letterSpacing: "0.14em", marginBottom: 10
+                  }}>{col.tag}</div>
+                  <h3 style={{
+                    fontSize: 14, fontWeight: 700, color: "#f1f5f9",
+                    marginBottom: 22, fontFamily: "'Space Grotesk', sans-serif"
+                  }}>{col.title}</h3>
+                  {col.skills.map((s, si) => (
+                    <SkillBar
+                      key={si} name={s.name} level={s.level}
+                      color={col.accent} delay={ci * 0.08 + si * 0.06}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ══ TOOLS ══ */}
+          <div ref={toolsRef} style={{ marginBottom: 88 }}>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#475569", letterSpacing: "0.15em", marginBottom: 8
+            }}>
+              <span style={{ color: "#00d4ff" }}>// </span>tools.daily_use[]
+            </div>
+            <h2 style={{
+              fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 700,
+              color: "#f1f5f9", marginBottom: 28, letterSpacing: "-0.02em"
+            }}>Outils quotidiens</h2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              {TOOLS.map((t, i) => (
+                <span key={i} className="tool-pill" style={{
+                  padding: "6px 16px", borderRadius: 4,
+                  background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)",
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+                  color: "#94a3b8", letterSpacing: "0.04em",
+                  transition: "all 0.2s", cursor: "default"
+                }}>{t}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* ══ CERTS ══ */}
+          <div style={{ marginBottom: 88 }}>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#475569", letterSpacing: "0.15em", marginBottom: 8
+            }}>
+              <span style={{ color: "#00d4ff" }}>// </span>education.certifications[]
+            </div>
+            <h2 style={{
+              fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 700,
+              color: "#f1f5f9", marginBottom: 32, letterSpacing: "-0.02em"
+            }}>Formation & Certifications</h2>
+
+            <div className="certs-grid" style={{
+              display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16
+            }}>
+              {CERTS.map((c, i) => <CertCard key={i} cert={c} delay={i * 0.1} />)}
+            </div>
+          </div>
+
+          {/* ══ STATS ══ */}
+          <div style={{ marginBottom: 88 }}>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#475569", letterSpacing: "0.15em", marginBottom: 32
+            }}>
+              <span style={{ color: "#00d4ff" }}>// </span>metrics.key_numbers
+            </div>
+            <div className="stats-grid" style={{
+              display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16
+            }}>
+              {STATS.map((s, i) => <StatCard key={i} {...s} delay={i * 0.1} />)}
+            </div>
+          </div>
+
+          {/* ══ CTA ══ */}
+          <div ref={ctaRef} style={{
+            textAlign: "center", padding: "56px 24px",
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderRadius: 16, position: "relative", overflow: "hidden"
+          }}>
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: 2,
+              background: "linear-gradient(90deg, transparent, #00d4ff, #6366f1, transparent)"
+            }} />
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#475569", letterSpacing: "0.15em", marginBottom: 16
+            }}>
+              <span style={{ color: "#00d4ff" }}>// </span>skills.apply_to_your_project()
+            </div>
+            <h2 style={{
+              fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 700,
+              color: "#f1f5f9", marginBottom: 12, letterSpacing: "-0.02em"
+            }}>
+              Ces compétences pour{" "}
+              <span style={{
+                background: "linear-gradient(135deg, #00d4ff, #6366f1)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+              }}>votre projet ?</span>
+            </h2>
+            <p style={{ color: "#64748b", fontFamily: "monospace", fontSize: 13, marginBottom: 36 }}>
+              /* Discutons — réponse garantie sous 24h */
+            </p>
+            <a href="/contact" className="cta-btn" style={{
+              display: "inline-flex", alignItems: "center", gap: 10,
+              padding: "14px 32px", borderRadius: 6,
+              background: "linear-gradient(135deg, #0e7490, #4338ca)",
+              color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
+              fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
+              boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
+            }}>
+              initiate_contact() →
+            </a>
+            <div style={{
+              marginTop: 28, display: "inline-flex", alignItems: "center", gap: 10,
+              padding: "8px 18px", borderRadius: 4,
+              background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.2)",
+              fontFamily: "monospace", fontSize: 11
+            }}>
+              <span style={{
+                width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
+                display: "block", animation: "pulseDot 2s ease infinite"
+              }} />
+              <span style={{ color: "#22c55e" }}>Disponible · Freelance · Contract</span>
+            </div>
+          </div>
+
         </div>
-      </section>
-
-      {/* ESPACEUR */}
-      <div className="h-32 md:h-48" />
-
-      {/* CTA Final */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-900/20 rounded-full blur-[120px] animate-pulse" />
-        </div>
-
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <motion.p
-              initial={{ opacity: 0, rotateY: -180 }}
-              whileInView={{ opacity: 1, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-3xl md:text-4xl text-zinc-400 mb-12"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              Besoin de ces compétences pour{" "}
-              <span className="text-white font-bold">votre projet</span> ?
-            </motion.p>
-
-            <div className="h-12" />
-
-            <motion.a
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="/contact"
-              className="group inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-bold text-xl rounded-full hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-              <span className="relative z-10">Discutons-en</span>
-              <TrendingUp className="w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform" />
-            </motion.a>
-
-            <div className="h-20" />
-
-            {/* Status Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30"
-            >
-              {/* <div className="relative">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
-              </div>
-              <div className="text-left">
-                <p className="text-base font-bold text-white">
-                  Disponible pour nouveaux projets
-                </p>
-                <p className="text-sm text-green-300">
-                  Freelance • Consulting • Long terme
-                </p>
-              </div> */}
-            </motion.div>
-          </motion.div>
-
-          {/* Decorative elements */}
-          <div className="absolute top-20 left-10 w-20 h-20 border-2 border-purple-500/20 rounded-full animate-float" />
-          <div className="absolute bottom-20 right-10 w-32 h-32 border-2 border-pink-500/20 rounded-full animate-float" style={{ animationDelay: '1s' }} />
-        </div>
-      </section>
-    </div>
+      </div>
+    </>
   );
 }

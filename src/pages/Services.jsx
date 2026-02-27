@@ -1,407 +1,502 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { 
-  LineChart, 
-  Brain, 
-  Presentation, 
-  Cpu,
-  Sparkles,
-  Rocket,
-  CheckCircle2,
-  ArrowRight
-} from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 
-const mainServices = [
+// ─── Hooks ────────────────────────────────────────────────────────────────────
+const useFadeIn = (delay = 0) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(24px)";
+    el.style.transition = `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`;
+    const t = setTimeout(() => { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }, 60);
+    return () => clearTimeout(t);
+  }, [delay]);
+  return ref;
+};
+
+const useScrollFade = (delay = 0) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(28px)";
+    el.style.transition = `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; obs.disconnect(); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [delay]);
+  return ref;
+};
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const SERVICES = [
   {
+    id: "data",
+    tag: "service_01",
     title: "Data Analysis & Intelligence",
-    description: "Analyse approfondie, modélisation statistique avancée et dashboards décisionnels interactifs qui transforment vos données en insights actionnables.",
-    icon: LineChart,
-    gradient: "from-purple-500 to-purple-700",
+    subtitle: "Insights actionnables · Dashboards décisionnels",
+    description: "Analyse approfondie, modélisation statistique avancée et dashboards interactifs qui transforment vos données brutes en décisions éclairées.",
+    accent: "#00d4ff",
     features: [
       "Exploration et nettoyage de données complexes",
       "Dashboards interactifs (Plotly, Streamlit, Power BI)",
       "Modélisation statistique et tests d'hypothèses",
-      "Reporting automatisé et visualisations sur-mesure"
-    ]
+      "Reporting automatisé et visualisations sur-mesure",
+    ],
+    deliverable: "Dashboard · Rapport · API données",
+    timeline: "1 – 3 semaines",
   },
   {
+    id: "ml",
+    tag: "service_02",
     title: "Machine Learning & IA",
-    description: "Conception, entraînement et déploiement de modèles IA performants adaptés à vos besoins métier spécifiques.",
-    icon: Brain,
-    gradient: "from-indigo-500 to-blue-600",
+    subtitle: "Modèles en production · LLM · Computer Vision",
+    description: "Conception, entraînement et déploiement de modèles IA performants — du fine-tuning LLM aux systèmes RAG, en passant par la vision par ordinateur.",
+    accent: "#a78bfa",
     features: [
-      "Fine-tuning de LLMs (Llama, Mistral, GPT)",
-      "Systèmes RAG avec bases vectorielles",
-      "Computer Vision (détection, segmentation)",
-      "Modèles prédictifs (churn, scoring, forecast)"
-    ]
+      "Fine-tuning de LLMs (Llama 3, Mistral, Phi-3, GPT)",
+      "Systèmes RAG avec bases vectorielles (Chroma, Pinecone)",
+      "Computer Vision (détection YOLO, segmentation SAM)",
+      "Modèles prédictifs (churn, scoring, séries temporelles)",
+    ],
+    deliverable: "Modèle · API REST · Documentation",
+    timeline: "2 – 8 semaines",
   },
   {
+    id: "mlops",
+    tag: "service_03",
+    title: "MLOps & Déploiement",
+    subtitle: "De l'expérience à la production · CI/CD · Monitoring",
+    description: "Mise en production robuste de vos modèles ML avec pipelines automatisés, monitoring de drift et infrastructure scalable sur cloud.",
+    accent: "#22c55e",
+    features: [
+      "Dockerisation et orchestration (Docker, Kubernetes)",
+      "MLflow pour le tracking d'expériences et versioning",
+      "CI/CD pour déploiement continu (GitHub Actions)",
+      "Monitoring de drift et alerting en production",
+    ],
+    deliverable: "Pipeline · Infrastructure · Monitoring",
+    timeline: "2 – 6 semaines",
+  },
+  {
+    id: "training",
+    tag: "service_04",
     title: "Formations & Bootcamps",
-    description: "Programmes intensifs orientés pratique en Data Science, Machine Learning et MLOps pour vos équipes.",
-    icon: Presentation,
-    gradient: "from-pink-500 to-rose-600",
+    subtitle: "Data Science · ML · MLOps · Équipes & individus",
+    description: "Programmes intensifs orientés pratique pour monter en compétence rapidement — du Python de base aux LLMs en production.",
+    accent: "#f59e0b",
     features: [
-      "Bootcamps de 2 à 12 semaines",
-      "Python, PyTorch, TensorFlow, Scikit-learn",
-      "MLOps complet (Docker, MLflow, CI/CD)",
-      "Projets réels et certification finale"
-    ]
-  },
-  {
-    title: "Conseil & Mentorat",
-    description: "Accompagnement stratégique et technique pour structurer vos projets IA et développer vos équipes data.",
-    icon: Cpu,
-    gradient: "from-emerald-500 to-teal-600",
-    features: [
-      "Audit de maturité IA et data",
-      "Roadmap stratégique et priorisation",
-      "Choix d'architecture et stack technique",
-      "Mentorat technique et leadership"
-    ]
+      "Bootcamps de 2 à 12 semaines (individuel ou équipe)",
+      "Python, PyTorch, TensorFlow, Scikit-Learn",
+      "MLOps complet (Docker, MLflow, FastAPI, CI/CD)",
+      "Projets réels avec données client + certification",
+    ],
+    deliverable: "Curriculum · Projets · Certificat",
+    timeline: "Sur mesure",
   },
 ];
 
-const processSteps = [
+const PROCESS = [
   {
-    number: "01",
-    title: "Découverte",
-    description: "Analyse de vos besoins, objectifs métier et contraintes techniques"
+    step: "01",
+    title: "Discovery",
+    desc: "Analyse de vos besoins, objectifs métier et contraintes techniques. Audit de vos données existantes.",
+    accent: "#00d4ff",
   },
   {
-    number: "02",
-    title: "Stratégie",
-    description: "Définition de l'approche, choix des technologies et planning"
+    step: "02",
+    title: "Strategy",
+    desc: "Définition de l'approche, choix des technologies, architecture et planning détaillé.",
+    accent: "#a78bfa",
   },
   {
-    number: "03",
-    title: "Développement",
-    description: "Implémentation itérative avec feedback continu et ajustements"
+    step: "03",
+    title: "Build",
+    desc: "Implémentation itérative avec feedback continu, tests rigoureux et ajustements.",
+    accent: "#22c55e",
   },
   {
-    number: "04",
-    title: "Déploiement",
-    description: "Mise en production, monitoring, documentation et formation"
-  }
+    step: "04",
+    title: "Deploy",
+    desc: "Mise en production, monitoring, documentation complète et formation de vos équipes.",
+    accent: "#f59e0b",
+  },
 ];
 
-const ServiceMainCard = ({ service, index }) => {
-  const Icon = service.icon;
-  
+// ─── Service Card ──────────────────────────────────────────────────────────────
+function ServiceCard({ service, delay }) {
+  const ref = useScrollFade(delay);
+  const [hov, setHov] = useState(false);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: index * 0.15 }}
-      className="group relative"
-    >
-      <div className="relative h-full p-10 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden transition-all duration-500 hover:border-white/25 hover:bg-white/8 hover:shadow-2xl">
-        
-        {/* Gradient background animé */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-20 blur-3xl transition-all duration-700`} />
-        
-        <div className="relative z-10">
-          {/* Header avec icône */}
-          <div className="flex items-start gap-6 mb-8">
-            <div className={`p-5 rounded-2xl bg-gradient-to-br ${service.gradient} shadow-2xl group-hover:scale-110 transition-transform duration-500`}>
-              <Icon className="w-10 h-10 text-white" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-3xl font-bold text-white mb-3 group-hover:text-gradient transition-all duration-300">
-                {service.title}
-              </h3>
-              <p className="text-zinc-400 text-lg leading-relaxed group-hover:text-zinc-300 transition-colors">
-                {service.description}
-              </p>
-            </div>
-          </div>
+    <div ref={ref}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        background: hov ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+        border: `1px solid ${hov ? service.accent + "50" : "rgba(255,255,255,0.08)"}`,
+        borderRadius: 12, overflow: "hidden",
+        transition: "all 0.3s ease",
+        transform: hov ? "translateY(-4px)" : "translateY(0)",
+        boxShadow: hov ? `0 20px 60px ${service.accent}12` : "none",
+        display: "flex", flexDirection: "column"
+      }}>
 
-          {/* Features list */}
-          <div className="space-y-3 mt-8">
-            {service.features.map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 * i }}
-                className="flex items-start gap-3 group/item"
-              >
-                <CheckCircle2 className="w-5 h-5 mt-0.5 text-purple-400 flex-shrink-0 group-hover/item:scale-110 transition-transform" />
-                <span className="text-zinc-400 group-hover/item:text-white transition-colors">
-                  {feature}
-                </span>
-              </motion.div>
-            ))}
+      {/* Top accent bar */}
+      <div style={{
+        height: 2,
+        background: `linear-gradient(90deg, transparent, ${service.accent}, transparent)`,
+        opacity: hov ? 1 : 0.35, transition: "opacity 0.3s"
+      }} />
+
+      <div style={{ padding: "32px 32px 28px", flexGrow: 1, display: "flex", flexDirection: "column" }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 20 }}>
+          <div style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+            color: service.accent, letterSpacing: "0.15em", marginBottom: 10
+          }}>
+            // {service.tag}
+          </div>
+          <h3 style={{
+            fontSize: 22, fontWeight: 700, color: "#f1f5f9",
+            marginBottom: 6, fontFamily: "'Space Grotesk', sans-serif",
+            letterSpacing: "-0.01em"
+          }}>{service.title}</h3>
+          <div style={{
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+            color: "#475569", letterSpacing: "0.05em"
+          }}>{service.subtitle}</div>
+        </div>
+
+        {/* Description */}
+        <p style={{
+          fontSize: 14, color: "#64748b", lineHeight: 1.8, marginBottom: 24
+        }}>{service.description}</p>
+
+        {/* Features */}
+        <div style={{ flexGrow: 1, marginBottom: 24 }}>
+          {service.features.map((f, i) => (
+            <div key={i} style={{
+              display: "flex", alignItems: "flex-start", gap: 10,
+              marginBottom: 10
+            }}>
+              <span style={{
+                width: 5, height: 5, borderRadius: "50%",
+                background: service.accent, flexShrink: 0, marginTop: 7,
+                boxShadow: `0 0 6px ${service.accent}80`
+              }} />
+              <span style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 12, color: "#94a3b8", lineHeight: 1.6
+              }}>{f}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Meta footer */}
+        <div style={{
+          padding: "14px 16px", borderRadius: 6,
+          background: service.accent + "0a",
+          border: `1px solid ${service.accent}20`,
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          flexWrap: "wrap", gap: 8
+        }}>
+          <div>
+            <div style={{ fontFamily: "monospace", fontSize: 10, color: "#475569", marginBottom: 3, letterSpacing: "0.1em" }}>LIVRABLE</div>
+            <div style={{ fontFamily: "monospace", fontSize: 12, color: service.accent }}>{service.deliverable}</div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontFamily: "monospace", fontSize: 10, color: "#475569", marginBottom: 3, letterSpacing: "0.1em" }}>TIMELINE</div>
+            <div style={{ fontFamily: "monospace", fontSize: 12, color: "#94a3b8" }}>{service.timeline}</div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
-};
+}
 
-export default function Services() {
+// ─── Process Step ──────────────────────────────────────────────────────────────
+function ProcessStep({ step, isLast, delay }) {
+  const ref = useScrollFade(delay);
   return (
-    <div className="bg-mesh text-white">
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 left-20 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px] animate-float" />
-          <div className="absolute bottom-20 right-20 w-[600px] h-[600px] bg-pink-900/20 rounded-full blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
-        </div>
+    <div ref={ref} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1, position: "relative" }}>
+      {/* Connector line */}
+      {!isLast && (
+        <div style={{
+          position: "absolute", top: 28, left: "60%", right: "-40%",
+          height: 1,
+          background: `linear-gradient(90deg, ${step.accent}40, transparent)`,
+          zIndex: 0
+        }} />
+      )}
 
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-5xl mx-auto"
-          >
+      {/* Number circle */}
+      <div style={{
+        width: 56, height: 56, borderRadius: "50%",
+        border: `2px solid ${step.accent}50`,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: step.accent + "0d", marginBottom: 20, zIndex: 1,
+        boxShadow: `0 0 20px ${step.accent}15`
+      }}>
+        <span style={{
+          fontFamily: "'JetBrains Mono', monospace", fontSize: 14,
+          fontWeight: 700, color: step.accent
+        }}>{step.step}</span>
+      </div>
+
+      <h4 style={{
+        fontFamily: "'JetBrains Mono', monospace", fontSize: 14,
+        fontWeight: 700, color: "#f1f5f9", marginBottom: 10, textAlign: "center"
+      }}>{step.title}</h4>
+      <p style={{
+        fontSize: 13, color: "#64748b", lineHeight: 1.7,
+        textAlign: "center", maxWidth: 200
+      }}>{step.desc}</p>
+    </div>
+  );
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+export default function Services() {
+  const heroRef    = useFadeIn(0.1);
+  const processRef = useScrollFade(0);
+  const ctaRef     = useScrollFade(0);
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #060a0f; }
+        @keyframes gridFloat { 0%,100%{opacity:.03}50%{opacity:.07} }
+        @keyframes pulseDot  { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
+        .cta-primary:hover   { background:linear-gradient(135deg,#0891b2,#4338ca)!important; transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,212,255,0.25)!important; }
+        .cta-secondary:hover { border-color:rgba(0,212,255,0.4)!important; color:#00d4ff!important; transform:translateY(-2px); }
+        .cta-primary, .cta-secondary { transition: all 0.25s ease; }
+        a { text-decoration: none; }
+        @media (max-width: 900px) {
+          .services-grid { grid-template-columns: 1fr !important; }
+          .process-row   { flex-direction: column !important; align-items: center !important; gap: 32px !important; }
+          .cta-btns      { flex-direction: column !important; align-items: center !important; }
+          .stats-row     { flex-wrap: wrap !important; }
+        }
+      `}</style>
+
+      <div style={{
+        minHeight: "100vh", background: "#060a0f",
+        color: "#e2e8f0", fontFamily: "'Space Grotesk', sans-serif",
+        position: "relative", overflow: "hidden"
+      }}>
+
+        {/* Grid bg */}
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+          backgroundImage: `
+            linear-gradient(rgba(0,212,255,0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,212,255,0.035) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px", animation: "gridFloat 8s ease infinite"
+        }} />
+        <div style={{
+          position: "fixed", top: "-5%", right: "-5%", width: 600, height: 600,
+          background: "radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%)",
+          pointerEvents: "none", zIndex: 0
+        }} />
+        <div style={{
+          position: "fixed", bottom: "5%", left: "-10%", width: 500, height: 500,
+          background: "radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%)",
+          pointerEvents: "none", zIndex: 0
+        }} />
+
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 1160, margin: "0 auto", padding: "80px 24px 120px" }}>
+
+          {/* ══ HERO ══ */}
+          <div ref={heroRef} style={{ marginBottom: 80 }}>
+
             {/* Badge */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full mb-12 group cursor-default"
-            >
-              <Sparkles className="w-4 h-4 text-purple-400 group-hover:rotate-12 transition-transform duration-300" />
-              <span className="text-sm font-semibold text-purple-300">Services Premium</span>
-            </motion.div>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "6px 16px", borderRadius: 4, marginBottom: 32,
+              background: "rgba(0,212,255,0.07)", border: "1px solid rgba(0,212,255,0.25)",
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+              color: "#00d4ff", letterSpacing: "0.05em"
+            }}>
+              <span style={{
+                width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
+                animation: "pulseDot 2s ease infinite", display: "inline-block"
+              }} />
+              services.available() → {SERVICES.length} expertises · status=open
+            </div>
 
-            {/* Titre avec animation rotation */}
-            <motion.h1
-              initial={{ opacity: 0, rotateY: -180 }}
-              animate={{ opacity: 1, rotateY: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] mb-8"
-              style={{ transformStyle: "preserve-3d" }}
-            >
+            <h1 style={{
+              fontSize: "clamp(40px, 7vw, 78px)", fontWeight: 700,
+              lineHeight: 1.05, letterSpacing: "-0.03em", color: "#f8fafc",
+              marginBottom: 20
+            }}>
               Mes domaines
               <br />
-              <span className="text-gradient text-5xl md:text-6xl lg:text-7xl font-light">
-                d'expertise
-              </span>
-            </motion.h1>
+              <span style={{
+                background: "linear-gradient(135deg, #00d4ff 0%, #6366f1 100%)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+              }}>d'expertise.</span>
+            </h1>
 
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
-            >
-              Je transforme vos défis data en solutions IA concrètes, 
-              <span className="text-white font-semibold"> déployées</span> et 
-              <span className="text-white font-semibold"> mesurables</span>.
-            </motion.p>
+            <p style={{ maxWidth: 580, color: "#94a3b8", fontSize: 16, lineHeight: 1.85, marginBottom: 48 }}>
+              Je transforme vos défis data en solutions IA{" "}
+              <strong style={{ color: "#e2e8f0" }}>déployées</strong> et{" "}
+              <strong style={{ color: "#e2e8f0" }}>mesurables</strong> —
+              pas des prototypes, des systèmes utilisés en production.
+            </p>
 
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap justify-center gap-12 mt-16"
-            >
+            {/* Stats inline */}
+            <div className="stats-row" style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>
               {[
-                { value: "7+", label: "Modèles en prod" },
-                { value: "90%", label: "Précision moyenne" },
-                { value: "24h", label: "Temps de réponse" }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-5xl font-black text-gradient mb-2">{stat.value}</div>
-                  <div className="text-sm text-zinc-500 uppercase tracking-wider">{stat.label}</div>
+                { v: "7+",   l: "Modèles en prod",    c: "#00d4ff" },
+                { v: "90%",  l: "Précision moyenne",  c: "#a78bfa" },
+                { v: "24h",  l: "Temps de réponse",   c: "#22c55e" },
+                { v: "3",    l: "Pays touchés",        c: "#f59e0b" },
+              ].map((s, i) => (
+                <div key={i} style={{ textAlign: "center" }}>
+                  <div style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: 34, fontWeight: 700, color: s.c, lineHeight: 1
+                  }}>{s.v}</div>
+                  <div style={{ fontSize: 11, color: "#475569", fontFamily: "monospace", marginTop: 6, letterSpacing: "0.1em" }}>{s.l}</div>
                 </div>
               ))}
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ESPACEUR */}
-      <div className="h-32 md:h-48" />
-
-      {/* Services principaux */}
-      <section className="py-20 relative">
-        <div className="container-custom px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-            {mainServices.map((service, index) => (
-              <ServiceMainCard key={index} service={service} index={index} />
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* ESPACEUR */}
-      <div className="h-32 md:h-48" />
+          {/* ══ SERVICES GRID ══ */}
+          <div style={{ marginBottom: 96 }}>
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#475569", letterSpacing: "0.15em", marginBottom: 8
+            }}>
+              <span style={{ color: "#00d4ff" }}>// </span>services.list[]
+            </div>
+            <h2 style={{
+              fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 700,
+              color: "#f1f5f9", marginBottom: 40, letterSpacing: "-0.02em"
+            }}>Ce que je livre</h2>
 
-      {/* Processus */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent" />
-        </div>
-
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto mb-20"
-          >
-            {/* Titre avec animation rotation */}
-            <motion.h2
-              initial={{ opacity: 0, rotateY: -180 }}
-              whileInView={{ opacity: 1, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-4xl md:text-5xl font-black text-white mb-6"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              Mon processus de travail
-            </motion.h2>
-            <p className="text-xl text-zinc-400">
-              Une approche structurée pour garantir des résultats de qualité
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="relative group"
-              >
-                <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-300">
-                  <div className="text-6xl font-black text-gradient mb-6 opacity-50">
-                    {step.number}
-                  </div>
-                  <h4 className="text-xl font-bold text-white mb-3">
-                    {step.title}
-                  </h4>
-                  <p className="text-zinc-400 text-sm leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-                
-                {/* Connecteur */}
-                {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-white/20 to-transparent" />
-                )}
-              </motion.div>
-            ))}
+            <div className="services-grid" style={{
+              display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 20
+            }}>
+              {SERVICES.map((s, i) => (
+                <ServiceCard key={s.id} service={s} delay={i * 0.1} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* ESPACEUR */}
-      <div className="h-32 md:h-48" />
+          {/* ══ PROCESS ══ */}
+          <div style={{ marginBottom: 96 }}>
+            <div ref={processRef}>
+              <div style={{
+                fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+                color: "#475569", letterSpacing: "0.15em", marginBottom: 8
+              }}>
+                <span style={{ color: "#00d4ff" }}>// </span>workflow.steps[]
+              </div>
+              <h2 style={{
+                fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 700,
+                color: "#f1f5f9", marginBottom: 12, letterSpacing: "-0.02em"
+              }}>Mon processus de travail</h2>
+              <p style={{ color: "#64748b", fontSize: 14, fontFamily: "monospace", marginBottom: 52 }}>
+                /* Approche structurée · Itérations courtes · Résultats mesurables */
+              </p>
+            </div>
 
-      {/* CTA Final */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-900/20 rounded-full blur-[120px] animate-pulse" />
-        </div>
+            <div className="process-row" style={{ display: "flex", gap: 0, alignItems: "flex-start" }}>
+              {PROCESS.map((step, i) => (
+                <ProcessStep key={i} step={step} isLast={i === PROCESS.length - 1} delay={i * 0.12} />
+              ))}
+            </div>
+          </div>
 
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            {/* Titre avec animation rotation */}
-            <motion.h2
-              initial={{ opacity: 0, rotateY: -180 }}
-              whileInView={{ opacity: 1, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-12 leading-[1.1]"
-              style={{ transformStyle: "preserve-3d" }}
-            >
+          {/* ══ CTA ══ */}
+          <div ref={ctaRef} style={{
+            textAlign: "center", padding: "64px 24px",
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderRadius: 16, position: "relative", overflow: "hidden"
+          }}>
+            <div style={{
+              position: "absolute", top: 0, left: 0, right: 0, height: 2,
+              background: "linear-gradient(90deg, transparent, #00d4ff, #6366f1, transparent)"
+            }} />
+
+            <div style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#475569", letterSpacing: "0.15em", marginBottom: 20
+            }}>
+              <span style={{ color: "#00d4ff" }}>// </span>project.start()
+            </div>
+
+            <h2 style={{
+              fontSize: "clamp(24px, 4vw, 46px)", fontWeight: 700,
+              color: "#f1f5f9", marginBottom: 14, letterSpacing: "-0.02em"
+            }}>
               Prêt à démarrer
               <br />
-              <span className="text-gradient">votre projet ?</span>
-            </motion.h2>
+              <span style={{
+                background: "linear-gradient(135deg, #00d4ff, #6366f1)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+              }}>votre projet ?</span>
+            </h2>
 
-            {/* ESPACEUR */}
-            <div className="h-12" />
+            <p style={{ color: "#64748b", fontFamily: "monospace", fontSize: 13, marginBottom: 40 }}>
+              /* Discutons de vos objectifs — réponse garantie sous 24h */
+            </p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto"
-            >
-              Discutons de vos objectifs et voyons comment je peux vous aider à les atteindre
-            </motion.p>
+            <div className="cta-btns" style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 32 }}>
+              <a href="https://wa.me/2290141730240" target="_blank" rel="noopener noreferrer"
+                className="cta-primary" style={{
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  padding: "15px 32px", borderRadius: 6,
+                  background: "linear-gradient(135deg, #0e7490, #4338ca)",
+                  color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
+                  boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
+                }}>
+                ✉ WhatsApp → discuter
+              </a>
+              <a href="mailto:donaerickoulodji@gmail.com"
+                className="cta-secondary" style={{
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  padding: "15px 32px", borderRadius: 6, background: "transparent",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 14, fontWeight: 500, letterSpacing: "0.05em"
+                }}>
+                send_email()
+              </a>
+            </div>
 
-            {/* ESPACEUR */}
-            <div className="h-16" />
+            {/* Availability */}
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 10,
+              padding: "10px 20px", borderRadius: 4,
+              background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.25)",
+              fontFamily: "monospace", fontSize: 12
+            }}>
+              <span style={{
+                width: 6, height: 6, borderRadius: "50%", background: "#22c55e",
+                display: "inline-block", animation: "pulseDot 2s ease infinite"
+              }} />
+              <span style={{ color: "#22c55e" }}>Disponible pour nouveaux projets</span>
+              <span style={{ color: "#334155" }}>·</span>
+              <span style={{ color: "#475569" }}>Freelance · Contract · Long terme</span>
+            </div>
+          </div>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
-            >
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="https://wa.me/2290141730240"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 px-8 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-bold text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-                <span className="relative z-10">Discuter sur WhatsApp</span>
-                <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
-
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="mailto:donaerickoulodji@gmail.com"
-                className="inline-flex items-center gap-3 px-8 py-5 glass border-2 border-white/20 text-white font-semibold text-lg rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                <span>Envoyer un email</span>
-              </motion.a>
-            </motion.div>
-
-            {/* Status Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.7 }}
-              className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30"
-            >
-              {/* <div className="relative">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
-              </div>
-              <div className="text-left">
-                <p className="text-base font-bold text-white">
-                  Actuellement disponible pour nouveaux projets
-                </p>
-                <p className="text-sm text-green-300">
-                  Freelance • Consulting • Collaborations long terme
-                </p>
-              </div> */}
-            </motion.div>
-          </motion.div>
-
-          {/* Decorative elements */}
-          <div className="absolute top-20 left-10 w-20 h-20 border-2 border-purple-500/20 rounded-full animate-float" />
-          <div className="absolute bottom-20 right-10 w-32 h-32 border-2 border-pink-500/20 rounded-full animate-float" style={{ animationDelay: '1s' }} />
         </div>
-      </section>
-    </div>
+      </div>
+    </>
   );
 }

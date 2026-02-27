@@ -141,56 +141,6 @@ const About = () => {
             </p>
           </motion.div>
 
-          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            {projects.map((proj, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.2 }}
-                className="group relative bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${proj.color} opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
-                
-                <div className="relative p-10">
-                  <h3 className="text-3xl font-black text-white mb-3">{proj.title}</h3>
-                  <p className="text-lg text-purple-300 mb-6">{proj.tagline}</p>
-                  
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center gap-3 text-sm text-gray-400">
-                      <Zap className="w-4 h-4 text-yellow-400" />
-                      <span>{proj.stack}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm font-semibold text-green-400">
-                      <Target className="w-4 h-4" />
-                      <span>{proj.impact}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4">
-                    <a
-                      href={proj.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full transition backdrop-blur"
-                    >
-                      <Github className="w-5 h-5" /> Code
-                    </a>
-                    {proj.demo && (
-                      <a
-                        href={proj.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:scale-105 transition"
-                      >
-                        <ExternalLink className="w-5 h-5" /> Live Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div> */}
         </div>
       </section>
     </>

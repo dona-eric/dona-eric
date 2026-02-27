@@ -1,259 +1,327 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
-import About from "../components/About";
-import Services from "../components/Services";
-import { Send, Mail, Sparkles } from "lucide-react";
 
-export default function Home() {
+
+// ─── Scroll fade hook ─────────────────────────────────────────────────────────
+const useScrollFade = (delay = 0) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(28px)";
+    el.style.transition = `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+        obs.disconnect();
+      }
+    }, { threshold: 0.12 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [delay]);
+  return ref;
+};
+
+// ─── Social link ──────────────────────────────────────────────────────────────
+function SocialChip({ href, label }) {
+  const [hov, setHov] = useState(false);
   return (
-    <main className="bg-mesh text-white">
-      {/* Hero Section */}
-      <Hero />
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        padding: "7px 20px", borderRadius: 4,
+        background: hov ? "rgba(0,212,255,0.08)" : "rgba(255,255,255,0.03)",
+        border: `1px solid ${hov ? "rgba(0,212,255,0.35)" : "rgba(255,255,255,0.09)"}`,
+        fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+        color: hov ? "#00d4ff" : "#64748b",
+        transition: "all 0.2s ease", textDecoration: "none"
+      }}>
+      {label}
+    </a>
+  );
+}
 
-      {/* About Section */}
-      <About />
+// ─── Stat card ────────────────────────────────────────────────────────────────
+function StatCard({ value, label, delay }) {
+  const ref = useScrollFade(delay);
+  return (
+    <div ref={ref} style={{
+      padding: "20px 16px", textAlign: "center",
+      background: "rgba(255,255,255,0.03)",
+      border: "1px solid rgba(255,255,255,0.07)",
+      borderRadius: 8, position: "relative", overflow: "hidden"
+    }}>
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, height: 2,
+        background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.45), transparent)"
+      }} />
+      <div style={{
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: 30, fontWeight: 700, color: "#00d4ff", lineHeight: 1, marginBottom: 8
+      }}>{value}</div>
+      <div style={{ fontSize: 11, color: "#475569", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+        {label}
+      </div>
+    </div>
+  );
+}
 
-      {/* ESPACEUR AUGMENTÉ ENTRE ABOUT ET SERVICES */}
-      <div className="h-32 md:h-48" />
+// ─── Trust badge ─────────────────────────────────────────────────────────────
+function TrustBadge({ icon, label, delay }) {
+  const ref = useScrollFade(delay);
+  return (
+    <div ref={ref} style={{
+      padding: "14px 24px", borderRadius: 6,
+      background: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.07)",
+      display: "flex", alignItems: "center", gap: 10,
+      fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "#64748b"
+    }}>
+      <span style={{ fontSize: 18 }}>{icon}</span>
+      {label}
+    </div>
+  );
+}
 
-      {/* Services Section */}
-      <section id="services" className="relative">
-        <Services />
-      </section>
+// ─── Main ─────────────────────────────────────────────────────────────────────
+export default function Home() {
+  const ctaHeaderRef  = useScrollFade(0);
+  const ctaTitleRef   = useScrollFade(0.15);
+  const ctaDescRef    = useScrollFade(0.25);
+  const ctaBtnsRef    = useScrollFade(0.35);
+  const ctaStatusRef  = useScrollFade(0.5);
+  const ctaAltsRef    = useScrollFade(0.65);
+  const trustRef      = useScrollFade(0);
 
-      {/* ESPACEUR AUGMENTÉ ENTRE SERVICES ET CONTACT */}
-      <div className="h-32 md:h-48" />
+  const stats = [
+    { value: "24h",  label: "Réponse garantie" },
+    { value: "90%",  label: "Précision moyenne" },
+    { value: "5+",   label: "Modèles prod." },
+    { value: "3",    label: "Pays touchés" },
+  ];
 
-      {/* Contact CTA Section - Centré et épuré */}
-      <section id="contact" className="py-32 relative overflow-hidden">
-        {/* Background sophistiqué */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-900/20 rounded-full blur-[120px] animate-pulse" />
-        </div>
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        * { box-sizing: border-box; }
+        @keyframes gridFloat { 0%,100%{opacity:.03}50%{opacity:.07} }
+        @keyframes pulseDot  { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
+        .btn-primary:hover  { background:linear-gradient(135deg,#0891b2,#4338ca)!important; transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,212,255,0.25)!important; }
+        .btn-secondary:hover{ border-color:rgba(0,212,255,0.4)!important; color:#00d4ff!important; transform:translateY(-2px); }
+        .btn-primary, .btn-secondary { transition: all 0.25s ease; }
+        a { text-decoration: none; }
+        @media (max-width: 700px) {
+          .cta-btns   { flex-direction: column !important; }
+          .stats-grid { grid-template-columns: repeat(2,1fr) !important; }
+          .trust-grid { flex-direction: column !important; align-items:center !important; }
+          .alt-links  { flex-direction: column !important; align-items:center !important; }
+        }
+      `}</style>
 
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
-          >
-            {/* Header */}
-            <div className="text-center mb-24">
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full mb-16 group cursor-default"
-              >
-                <Sparkles className="w-4 h-4 text-purple-400 group-hover:rotate-12 transition-transform duration-300" />
-                <span className="text-sm font-semibold text-purple-300">Discutons de votre projet</span>
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              </motion.div>
+      <main style={{ background: "#060a0f", color: "#e2e8f0", fontFamily: "'Space Grotesk', sans-serif" }}>
 
-              {/* Titre avec animation de rotation 360° */}
-              <motion.h2
-                initial={{ opacity: 0, rotateY: -180 }}
-                whileInView={{ opacity: 1, rotateY: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-14 leading-[1.1]"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                Prêt à transformer
-                <br />
-                <span className="text-gradient">vos idées en réalité ?</span>
-              </motion.h2>
-              
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="text-xl md:text-2xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
-              >
-                Que vous ayez besoin d'<span className="text-white font-semibold">analyse de données</span>, 
-                de solutions de <span className="text-white font-semibold">machine learning</span>, 
-                ou de <span className="text-white font-semibold">conseil en IA</span>, 
-                je suis là pour vous accompagner.
-              </motion.p>
+        {/* ── Shared grid background ── */}
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+          backgroundImage: `
+            linear-gradient(rgba(0,212,255,0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,212,255,0.035) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px", animation: "gridFloat 8s ease infinite"
+        }} />
+
+        {/* ══════════════════════════════════════ */}
+        {/* HERO — composant existant              */}
+        {/* ══════════════════════════════════════ */}
+        <Hero />
+
+        {/* ══════════════════════════════════════ */}
+        {/* ABOUT — composant existant             */}
+        {/* ══════════════════════════════════════ */}
+        {/* <About /> */}
+
+        {/* ── Separator ── */}
+        {/* <div style={{
+          maxWidth: 1160, margin: "0 auto", padding: "0 24px"
+        }}>
+          <div style={{
+            height: 1, margin: "80px 0",
+            background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.18), transparent)"
+          }} />
+        </div> */}
+
+        {/* ══════════════════════════════════════ */}
+        {/* SERVICES — composant existant          */}
+        {/* ══════════════════════════════════════ */}
+        {/* <section id="services" style={{ position: "relative", zIndex: 1 }}>
+          <Services />
+        </section> */}
+
+        {/* ── Separator ──
+        <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
+          <div style={{
+            height: 1, margin: "80px 0",
+            background: "linear-gradient(90deg, transparent, rgba(99,102,241,0.18), transparent)"
+          }} />
+        </div> */}
+
+        {/* ══════════════════════════════════════ */}
+        {/* CTA SECTION                            */}
+        {/* ══════════════════════════════════════ */}
+        <section id="contact" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{
+            position: "absolute", top: "20%", left: "50%",
+            transform: "translateX(-50%)",
+            width: 700, height: 700, pointerEvents: "none",
+            background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)"
+          }} />
+
+          <div style={{ maxWidth: 860, margin: "0 auto", padding: "80px 24px 100px", textAlign: "center" }}>
+
+            {/* Badge */}
+            <div ref={ctaHeaderRef} style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "6px 18px", borderRadius: 4, marginBottom: 36,
+              background: "rgba(0,212,255,0.07)", border: "1px solid rgba(0,212,255,0.25)",
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
+              color: "#00d4ff", letterSpacing: "0.05em"
+            }}>
+              <span style={{
+                width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
+                animation: "pulseDot 2s ease infinite", display: "inline-block"
+              }} />
+              collaboration.init() → status=open
             </div>
 
-            {/* ESPACEUR AUGMENTÉ ENTRE DESCRIPTION ET CTA */}
-            <div className="h-20 md:h-24" />
+            {/* Title */}
+            <h2 ref={ctaTitleRef} style={{
+              fontSize: "clamp(32px, 5.5vw, 62px)", fontWeight: 700,
+              lineHeight: 1.1, letterSpacing: "-0.03em",
+              color: "#f8fafc", marginBottom: 20
+            }}>
+              Prêt à transformer
+              <br />
+              <span style={{
+                background: "linear-gradient(135deg, #00d4ff 0%, #6366f1 100%)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+              }}>vos données en impact ?</span>
+            </h2>
 
-            {/* CTA Buttons - Centré */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-24"
-            >
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="/signup"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-bold text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 relative overflow-hidden"
-              >
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-                <Send className="w-6 h-6 group-hover:translate-x-1 transition-transform relative z-10" />
-                <span className="relative z-10">Réserver ma place</span>
-              </motion.a>
-
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="mailto:donaerickoulodji@gmail.com"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-5 glass border-2 border-white/20 text-white font-semibold text-lg rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                <Mail className="w-6 h-6 group-hover:scale-110 transition-transform" />
-                <span>Envoyer un email</span>
-              </motion.a>
-            </motion.div>
-
-            {/* ESPACEUR ENTRE CTA ET STATS */}
-            <div className="h-16 md:h-20" />
-
-            {/* Stats Grid - Centré */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-24"
-            >
-              {[
-                { value: "24h", label: "Temps de réponse", color: "purple" },
-                { value: "90%", label: "Satisfaction client", color: "pink" },
-                { value: "7+", label: "Projets livrés", color: "cyan" }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 + index * 0.1 }}
-                  className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all group"
-                >
-                  <div className={`text-3xl md:text-4xl font-black text-gradient mb-2`}>
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-zinc-500 uppercase tracking-wider">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* ESPACEUR ENTRE STATS ET STATUS BADGE */}
-            <div className="h-16 md:h-20" />
-
-            {/* Status Badge - Centré */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="text-center mb-20"
-            >
-              <div className="inline-flex items-center gap-6 px-6 py-4 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30">
-                <div className="relative">
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                  <div className="absolute inset-0 w-3 h-3 bg-green-400 rounded-full animate-ping" />
-                </div>
-                <div className="text-right/150">
-                  <p className="text-base font-bold text-white/150">
-                    Actuellement disponible pour nouveaux projets
-                  </p>
-                  {/* <p className="text-sm text-white/200">
-                    Freelance • Collaborations long terme
-                  </p> */}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ESPACEUR ENTRE STATUS BADGE ET LIENS ALTERNATIFS */}
-            <div className="h-12 md:h-16" />
-
-            {/* Alternative contact methods - Discret */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.8 }}
-              className="text-center"
-            >
-              <p className="text-sm text-zinc-500 mb-4">
-                Vous préférez un autre moyen de contact ?
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm ">
-                <a 
-                  href="https://linkedin.com/in/dona-erick" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:border-white/20 transition-all"
-                >
-                  LinkedIn
-                </a>
-                <a 
-                  href="https://github.com/dona-eric" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:border-white/20 transition-all"
-                >
-                  GitHub
-                </a>
-                <a 
-                  href="tel:+2290141730240"
-                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:border-white/20 transition-all"
-                >
-                  +229 01 41 73 02 40
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <div className="h-20 md:h-24" />
-
-          {/* Decorative elements */}
-          <div className="absolute top-20 left-10 w-20 h-20 border-2 border-purple-500/20 rounded-full animate-float" />
-          <div className="absolute bottom-20 right-10 w-32 h-32 border-2 border-pink-500/20 rounded-full animate-float" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 right-20 w-16 h-16 border-2 border-cyan-500/20 rounded-full animate-float" style={{ animationDelay: '2s' }} />
-        </div>
-      </section>
-
-      {/* Optional: Testimonial Teaser ou Trust Badges */}
-      <section className="py-16 relative">
-        <div className="container-custom px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <p className="text-sm text-zinc-500 mb-6 uppercase tracking-wider">
-              Ils me font confiance
+            {/* Description */}
+            <p ref={ctaDescRef} style={{
+              maxWidth: 620, margin: "0 auto 52px",
+              color: "#94a3b8", fontSize: 16, lineHeight: 1.85
+            }}>
+              Que vous ayez besoin d'<strong style={{ color: "#e2e8f0" }}>analyse de données</strong>,
+              de solutions de <strong style={{ color: "#e2e8f0" }}>machine learning</strong>,
+              ou d'un <strong style={{ color: "#e2e8f0" }}>système IA de bout en bout</strong> —
+              je transforme le problème métier en système qui tourne.
             </p>
-            <div className="flex flex-wrap justify-center gap-8 items-center opacity-40 grayscale hover:opacity-70 hover:grayscale-0 transition-all duration-500">
-              {/* Placeholder pour logos partenaires */}
-              <div className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-zinc-400 text-sm font-medium">
-                🏢 Entreprises Tech
+
+            {/* CTA Buttons */}
+            <div ref={ctaBtnsRef} className="cta-btns" style={{
+              display: "flex", gap: 14, justifyContent: "center",
+              flexWrap: "wrap", marginBottom: 56
+            }}>
+              <a href="/contact" className="btn-primary" style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                padding: "15px 32px", borderRadius: 6,
+                background: "linear-gradient(135deg, #0e7490, #4338ca)",
+                color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
+                boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
+              }}>
+                initiate_contact() →
+              </a>
+              <a href="mailto:donaerickoulodji@gmail.com" className="btn-secondary" style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                padding: "15px 32px", borderRadius: 6,
+                background: "transparent",
+                border: "1px solid rgba(255,255,255,0.15)",
+                color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 14, fontWeight: 500, letterSpacing: "0.05em"
+              }}>
+                ✉ send_email()
+              </a>
+            </div>
+
+            {/* Stats mini-row */}
+            <div className="stats-grid" style={{
+              display: "grid", gridTemplateColumns: "repeat(4,1fr)",
+              gap: 12, maxWidth: 720, margin: "0 auto 56px"
+            }}>
+              {stats.map((s, i) => <StatCard key={i} {...s} delay={0.4 + i * 0.08} />)}
+            </div>
+
+            {/* Availability badge */}
+            <div ref={ctaStatusRef} style={{
+              display: "inline-flex", alignItems: "center", gap: 12,
+              padding: "12px 24px", borderRadius: 6, marginBottom: 48,
+              background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.25)",
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 13
+            }}>
+              <span style={{
+                width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
+                animation: "pulseDot 2s ease infinite", display: "inline-block"
+              }} />
+              <span style={{ color: "#22c55e" }}>Disponible pour nouveaux projets</span>
+              <span style={{ color: "#334155", margin: "0 4px" }}>·</span>
+              <span style={{ color: "#475569" }}>Freelance · Contract · Long terme</span>
+            </div>
+
+            {/* Alt contact links */}
+            <div ref={ctaAltsRef}>
+              <div style={{
+                fontFamily: "monospace", fontSize: 11, color: "#334155",
+                letterSpacing: "0.12em", marginBottom: 14
+              }}>
+                <span style={{ color: "#475569" }}>// </span>other_channels
               </div>
-              <div className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-zinc-400 text-sm font-medium">
-                🎓 Institutions Académiques
-              </div>
-              <div className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-zinc-400 text-sm font-medium">
-                🚀 Startups Africaines
+              <div className="alt-links" style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+                <SocialChip href="https://linkedin.com/in/dona-erick" label="LinkedIn" />
+                <SocialChip href="https://github.com/dona-eric" label="GitHub" />
+                <SocialChip href="https://wa.me/+2290151344289" label="WhatsApp" />
+                <SocialChip href="https://twitter.com/ericschrodinger" label="Twitter/X" />
               </div>
             </div>
-          </motion.div>
+          </div>
+        </section>
+
+        {/* ── Separator ── */}
+        <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 24px" }}>
+          <div style={{
+            height: 1,
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)"
+          }} />
         </div>
-        <div className="h-20 md:h-24" />
-      </section>
-    </main>
+
+        {/* ══════════════════════════════════════ */}
+        {/* TRUST SECTION                          */}
+        {/* ══════════════════════════════════════ */}
+        <section style={{ position: "relative", zIndex: 1, padding: "64px 24px 80px" }}>
+          <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
+
+            <div ref={trustRef} style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              color: "#334155", letterSpacing: "0.15em", marginBottom: 28
+            }}>
+              <span style={{ color: "#475569" }}>// </span>clients.trusted_by[]
+            </div>
+
+            <div className="trust-grid" style={{
+              display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap"
+            }}>
+              <TrustBadge icon="🏢" label="Entreprises Tech" delay={0.1} />
+              <TrustBadge icon="🚀" label="Startups Africaines" delay={0.2} />
+              <TrustBadge icon="🎓" label="Institutions académiques" delay={0.3} />
+              <TrustBadge icon="🌍" label="Clients internationaux" delay={0.4} />
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </>
   );
 }
