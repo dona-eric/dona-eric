@@ -62,9 +62,10 @@ function RoleTypewriter() {
 function TerminalBoot() {
   const lines = [
     { text: "$ python init_profile.py --name='Dona Éric KOULODJI'", delay: 0 },
-    { text: "> Loading expertise: ML, LLM, MLOps, Computer Vision...", delay: 0.6 },
-    { text: "> Physics BSc backbone detected ✓", delay: 1.1 },
-    { text: "> Status: AVAILABLE_FOR_HIRE :: open=True", delay: 1.6 },
+    { text: "> Loading expertise: Machine Learning, LLM, MLOps, Computer Vision...", delay: 0.6 },
+    { text: "> Physics BSc backbone", delay: 1.1 },
+    { text: "> Data Science"},
+    { text: "> Status: AVAILABLE_FOR_HIRING :: open=True", delay: 1.6 },
   ];
   const [visible, setVisible] = useState(0);
   useEffect(() => {
@@ -275,7 +276,7 @@ export default function Hero() {
                 Je conçois et déploie des{" "}
                 <strong style={{ color: "#e2e8f0" }}>systèmes d'intelligence artificielle</strong>{" "}
                 qui répondent à des besoins métier concrets — de l'exploration des données
-                jusqu'au déploiement en production. Formé en physique, converti en data.
+                jusqu'au déploiement en production. Formé en Data Science & Applied Machine Learning at Physics.
               </p>
 
               {/* Terminal boot */}
@@ -408,7 +409,7 @@ export default function Hero() {
                   letterSpacing: "0.12em", marginBottom: 12
                 }}>// current_stack</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
-                  {["Python", "PyTorch", "FastAPI", "Docker", "LangChain", "MLflow"].map(t => (
+                  {["Python", "PyTorch", "FastAPI", "Docker", "LangChain", "MLflow", "RAG", "Automatisation"].map(t => (
                     <span key={t} style={{
                       padding: "4px 12px", borderRadius: 3,
                       background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)",
