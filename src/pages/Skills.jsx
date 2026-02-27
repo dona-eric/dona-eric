@@ -32,7 +32,7 @@ const useScrollFade = (delay = 0) => {
   return ref;
 };
 
-// ─── Skill bar ────────────────────────────────────────────────────────────────
+// --------- Skill bar -----------------------
 function SkillBar({ name, level, color, delay }) {
   const wrapRef = useRef(null);
   const barRef  = useRef(null);
@@ -143,7 +143,7 @@ const SKILL_COLS = [
     accent: "#00d4ff",
     skills: [
       { name: "Scikit-Learn · XGBoost · LightGBM", level: 90 },
-      { name: "PyTorch",                            level: 82 },
+      { name: "PyTorch",                            level: 60},
       { name: "TensorFlow / Keras",                 level: 78 },
       { name: "Time Series (Prophet, ARIMA)",        level: 85 },
       { name: "Computer Vision (YOLO, SAM)",         level: 80 },
@@ -220,6 +220,23 @@ const CERTS = [
     year: "Décembre 2025",
     color: "#22c55e",
   },
+
+  {
+    tag: "// certification",
+    title: "Create LLMs Application with Prompt Engineering",
+    institution: "NVIDIA",
+    year: "Novembre 2025",
+    color: "#22c55e",
+  },
+
+  {
+    tag: "// certification",
+    title: "Build RAG Agentic",
+    institution: "NVIDIA",
+    field: "",
+    year: "Janvier 2026",
+    color: "#a78bfa",
+  }
 ];
 
 const TOOLS = [
