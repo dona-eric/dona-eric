@@ -712,16 +712,6 @@ export default function About() {
           </div>
 
         </div>
-
-        {/* Footer */}
-        <div style={{
-          position: "relative", zIndex: 1,
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          padding: "24px", textAlign: "center",
-          fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: "#334155"
-        }}>
-          dona-erick.koulodji © {new Date().getFullYear()} · Data Science & ML Engineering · Abomey-Calavi, Bénin
-        </div>
       </div>
     </>
   );
