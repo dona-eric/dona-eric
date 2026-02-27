@@ -15,11 +15,11 @@ import time
 from pathlib import Path
 import httpx
 import feedparser
-from services.cache_service import CacheService
+from redis_cache import CacheService
 
 # ── Config ────────────────────────────────────────────────────────────────────
 MEDIUM_USERNAME    = "koulodjiric"
-LINKEDIN_JSON_PATH = Path(__file__).parent.parent / "data" / "linkedin_posts.json"
+LINKEDIN_JSON_PATH = Path(__file__).parent / "linkedin_posts.json"
 
 W_VIEWS    = 0.40
 W_LIKES    = 0.30
