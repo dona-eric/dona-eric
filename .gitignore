@@ -26,3 +26,4 @@ dist-ssr
 .vscode
 Backend/__pycache__/
 Backend/env/
+.env.production

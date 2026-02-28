@@ -30,7 +30,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # restrict to your domain in prod
+    allow_origins=["https://dona-eric.vercel.app"]
     allow_methods=["GET"],
     allow_headers=["*"],
 )
