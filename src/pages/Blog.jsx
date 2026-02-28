@@ -715,7 +715,7 @@ export default function Blog() {
       setPosts(data.posts || []);
       setCachedAt(data.cached_at);
     } catch (err) {
-      setError("Impossible de charger les articles. Vérifie que le backend tourne.");
+      setError("En cours");
       console.error("[Blog]", err);
     } finally {
       setLoading(false);
@@ -920,7 +920,7 @@ export default function Blog() {
               /* Notifications automatiques dès qu'un article est publié */
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-              <a href="https://medium.com/@donaerickoulodji" target="_blank" rel="noopener noreferrer"
+              <a href="https://medium.com/@koulodjiric" target="_blank" rel="noopener noreferrer"
                 className="cta-btn" style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   padding: "12px 24px", borderRadius: 6,

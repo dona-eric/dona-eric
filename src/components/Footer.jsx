@@ -57,7 +57,6 @@ const EXPERTISE = [
   "Deep Learning",
   "LLM / RAG",
   "MLOps",
-  "Computer Vision",
   "Data Science",
 ];
 

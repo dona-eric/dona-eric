@@ -222,7 +222,7 @@ const Navigation = () => {
               </div>
 
               {/* Mobile CTA */}
-              <a href="https://wa.me/2290141730240" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/+2290141730240" target="_blank" rel="noopener noreferrer"
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                   padding: "13px", borderRadius: 4, textDecoration: "none",
@@ -248,7 +248,7 @@ const Navigation = () => {
                   width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
                   animation: "pulseDot 2s ease infinite", display: "inline-block"
                 }} />
-                Disponible pour projets · open=True
+                Disponible pour projets · Open=True
               </div>
             </div>
           )}

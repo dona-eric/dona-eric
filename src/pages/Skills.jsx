@@ -242,14 +242,14 @@ const CERTS = [
 const TOOLS = [
   "Python", "PyTorch", "TensorFlow", "Scikit-Learn",
   "LangChain", "LlamaIndex", "FastAPI", "Streamlit",
-  "Docker", "MLflow", "Airflow", "PostgreSQL",
-  "Git", "Linux", "GCP", "HuggingFace",
+  "Docker", "MLflow", "Airflow", "PostgreSQL","Apache Spark",
+  "Git", "Linux", "GCP", "HuggingFace", "React/ Nextjs"
 ];
 
 const STATS = [
-  { v: "3+",  l: "Modèles en prod",  c: "#00d4ff", note: "Live & monitored"   },
+  { v: "5+",  l: "Modèles en prod",  c: "#00d4ff", note: "Live & monitored"   },
   { v: "90%", l: "Précision moyenne", c: "#a78bfa", note: "Across ML projects" },
-  { v: "50+", l: "Étudiants formés",  c: "#22c55e", note: "BJ · FR · Online"   },
+  { v: "08+", l: "Étudiants accompagnés",  c: "#22c55e", note: "BJ · FR · Online"   },
   { v: "3",   l: "Pays d'impact",     c: "#f59e0b", note: "BJ · FR · CA"        },
 ];
 

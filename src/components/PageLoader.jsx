@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const BOOT_LINES = [
-  { text: "$ initializing portfolio.exe...", delay: 0,    color: "#00d4ff" },
+  { text: "$ initializing portfolio.exe...", delay: 500,    color: "#00d4ff" },
   { text: "> loading modules: ML · LLM · MLOps", delay: 400,  color: "#94a3b8" },
   { text: "> connecting to data layer...",       delay: 800,  color: "#94a3b8" },
   { text: "> profile: DONA_ERIC_KOULODJI",       delay: 1200, color: "#a78bfa" },
@@ -195,7 +195,7 @@ export default function PageLoader() {
             }}>
               <span style={{
                 width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
-                display: "inline-block", animation: "pulseDot 2s ease infinite"
+                display: "inline-block", animation: "pulseDot 5s ease infinite"
               }} />
               AVAILABLE_FOR_HIRE :: status=open
             </div>
