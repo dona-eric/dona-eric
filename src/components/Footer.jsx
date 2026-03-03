@@ -49,7 +49,7 @@ const QUICK_LINKS = [
   { label: "Projects", href: "/projects" },
   { label: "Services", href: "/services" },
   { label: "Blog",     href: "/blog"     },
-  { label: "Contact",  href: "/contact"  },
+  { label: "Contacts",  href: "/contact"  },
 ];
 
 const EXPERTISE = [
@@ -154,14 +154,20 @@ const Footer = () => {
             <div className="footer-brand">
               {/* Logo */}
               <div style={{ marginBottom: 14 }}>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 16, fontWeight: 700 }}>
-                  <span style={{ color: "#334155" }}>{"<"}</span>
-                  <span style={{
-                    background: "linear-gradient(135deg, #00d4ff, #6366f1)",
-                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-                  }}>DEK</span>
-                  <span style={{ color: "#334155" }}>{" />"}</span>
-                </span>
+                <Link to="/" style={{ textDecoration: "none" }}>
+                              <div style={{
+                                fontFamily: "'JetBrains Mono', monospace",
+                                fontSize: 15, fontWeight: 700, letterSpacing: "0.05em"
+                              }}>
+                                <span style={{ color: "#475569" }}>{"<"}</span>
+                                <span style={{
+                                  background: "linear-gradient(135deg, #00d4ff, #6366f1)",
+                                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+                                }}>DEK</span>
+                                <span style={{ color: "#475569" }}>{" />"}</span>
+                              </div>
+                            </Link>
+                
               </div>
 
               {/* Name + role */}

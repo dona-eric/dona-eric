@@ -1,3 +1,4 @@
+import { desc } from "framer-motion/client";
 import React, { useEffect, useRef, useState } from "react";
 
 // ─── Fade-in hook ─────────────────────────────────────────────────────────────
@@ -131,14 +132,14 @@ function SkillBar({ name, level, category, delay }) {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const SKILLS = [
-  { name: "Fine-tuning LLM (Llama 3, Mistral, Phi-3)", level: 85, category: "llm" },
-  { name: "RAG & Vector Databases (Chroma, Pinecone)", level: 82, category: "llm" },
-  { name: "Computer Vision (YOLO, SAM)", level: 80, category: "ml" },
-  { name: "Time Series & Predictive Modeling", level: 88, category: "ml" },
-  { name: "Prompt Engineering & Agentic Systems", level: 87, category: "llm" },
-  { name: "MLOps (Docker, MLflow, FastAPI, CI/CD)", level: 78, category: "ops" },
-  { name: "Data Pipelines (Airflow, Spark, Kubernetes)", level: 75, category: "ops" },
-  { name: "Cloud Deployment (GCP, AWS, Vercel)", level: 76, category: "ops" },
+  { name: "Fine-tuning LLM (Llama 3, Mistral, Phi-3)", level: 50, category: "llm" },
+  { name: "RAG & Vector Databases (Chroma, Pinecone)", level: 60, category: "llm" },
+  { name: "Computer Vision (YOLO, SAM)", level: 40, category: "ml" },
+  { name: "Time Series & Predictive Modeling", level: 60, category: "ml" },
+  { name: "Prompt Engineering & Agentic Systems", level: 80, category: "llm" },
+  { name: "MLOps (Docker, MLflow, FastAPI, CI/CD)", level: 79, category: "ops" },
+  { name: "Data Pipelines (Airflow, Spark, Kubernetes)", level: 65, category: "ops" },
+  { name: "Cloud Deployment (GCP, AWS, Vercel)", level: 45, category: "ops" },
   { name: "LangChain · LlamaIndex · Hugging Face", level: 86, category: "llm" },
 ];
 
@@ -178,6 +179,21 @@ const LEGEND = [
 ];
 
 const EXPERIENCES = [
+  {
+    role: "Data Scientist",
+    type: "Partial time",
+    company: "Sirius Club Association",
+    location: "Presential",
+    period: "04-06 Octobre 2025",
+    accent: "#00d4fa",
+    status: "done",
+    tasks: [
+    {tag: "Data Architecture", desc: "Collecte des données sur la qualité de l'air en Amérique du Nord, les données météorologiques et spatiales depuis les plateformes de la NASA"},
+      {tag: "Pipeline ML", desc: "Construction de pipeline d'ingestion, traitement des données via FastAPI pour la modélisation prédictive"},
+      {tag: "Modelisation", desc: "Développement de modèle XGBOOST avec 80% de précision sur 110 votes contre RandomForest avec 95% de précision et un risque d'overfitting avec ce dernier pour prédire la qualité d'air et déterminer l'indice de la qualité d'air que nous consommons."}
+    ]
+  },
+
   {
     role: "AI & Data Engineer",
     type: "Part-time",
@@ -513,14 +529,14 @@ export default function About() {
                 fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
                 color: "#6366f1", letterSpacing: "0.15em", marginBottom: 24
               }}>
-                // journey.md
+                // carreer_formations.md
               </div>
 
               {[
-                { year: "2020–2023", label: "Licence Physique", detail: "Université d'Abomey-Calavi • Base mathématique & modélisation" },
-                { year: "2023", label: "Pivot → Data Science", detail: "Autodidacte intensif · Python · ML · Stats" },
-                { year: "2024", label: "Premiers projets pro", detail: "Modèles en production · Clients réels · 3 pays" },
-                { year: "Now →", label: "ML Engineering", detail: "MLOps · LLM · Systèmes scalables · Ingénieur cible" },
+                { year: "Currently →", label: "Machine Learning Engineer", detail: "MLOps · LLM · Systèmes scalables · Ingénieur cible" },
+                { year: "Janv-Mai 2025", label: "Data Science Applied certifed at World Quant University", detail: "Data Science · Python · ML · Stats • Computer Vision" },
+                { year: "Avr-Sept 2024", label: "Data Science Certified", detail: "Analyse de données • Python • Machine Learning • LLMs "},
+                { year: "2020-2024", label: "Licence Physique Fondamentale", detail: "Université d'Abomey-Calavi • Base mathématique & modélisation" },
               ].map((item, i) => (
                 <div key={i} style={{
                   display: "flex", gap: 20, marginBottom: 28, position: "relative"

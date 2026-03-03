@@ -140,7 +140,7 @@ const CAT_MAP = {
 
 const ALL_CATS = ["all", "ml", "nlp", "llm"];
 
-// ─── Project Card ──────────────────────────────────────────────────────────────
+// PROJECTS
 function ProjectCard({ project, delay, featured }) {
   const ref = useScrollFade(delay);
   const [hov, setHov] = useState(false);
@@ -288,7 +288,7 @@ function ProjectCard({ project, delay, featured }) {
   );
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+// ─── Main 
 export default function Projects() {
   const heroRef  = useFadeIn(0.1);
   const filterRef = useFadeIn(0.3);

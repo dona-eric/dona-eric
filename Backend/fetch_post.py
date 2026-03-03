@@ -1,13 +1,3 @@
-"""
-FeedService
-───────────
-• Medium   → RSS auto-fetch   (https://medium.com/feed/@username)
-• LinkedIn → JSON manuel      (data/linkedin_posts.json)
-
-Scoring : views×0.40 + likes×0.30 + freshness×0.20 + comments×0.10
-Cache   : TTL 6h
-"""
-
 import asyncio
 import json
 import re
@@ -17,9 +7,8 @@ import httpx
 import feedparser
 from redis_cache import CacheService
 
-# ── Config ────────────────────────────────────────────────────────────────────
 MEDIUM_USERNAME    = "koulodjiric"
-LINKEDIN_JSON_PATH = Path(__file__).parent / "linkedin_posts.json"
+LINKEDIN_JSON_PATH = Path(__file__).parent / "data/linkedin_posts.json"
 
 W_VIEWS    = 0.40
 W_LIKES    = 0.30
@@ -27,7 +16,6 @@ W_FRESH    = 0.20
 W_COMMENTS = 0.10
 
 FRESHNESS_WINDOW_DAYS = 90
-# ─────────────────────────────────────────────────────────────────────────────
 
 
 class FeedService:
