@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const useFadeIn = (delay = 0) => {
   const ref = useRef(null);
@@ -178,9 +179,9 @@ export default function Hero() {
 
               {/* CTAs */}
               <div ref={ctaRef} className="cta-row" style={{ display:"flex", flexWrap:"wrap", gap:12 }}>
-                <a href="/projects" className="btn-primary" style={{ display:"inline-flex", alignItems:"center", gap:10, padding:"13px 26px", borderRadius:6, background:"linear-gradient(135deg,#0e7490,#4338ca)", color:"#f0f9ff", fontFamily:"'JetBrains Mono',monospace", fontSize:13, fontWeight:600, letterSpacing:"0.05em", boxShadow:"0 4px 20px rgba(0,212,255,0.12)" }}>
+                <Link to="/projects" className="btn-primary" style={{ display:"inline-flex", alignItems:"center", gap:10, padding:"13px 26px", borderRadius:6, background:"linear-gradient(135deg,#0e7490,#4338ca)", color:"#f0f9ff", fontFamily:"'JetBrains Mono',monospace", fontSize:13, fontWeight:600, letterSpacing:"0.05em", boxShadow:"0 4px 20px rgba(0,212,255,0.12)" }}>
                   view_projects() →
-                </a>
+                </Link>
                 <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ display:"inline-flex", alignItems:"center", gap:10, padding:"13px 26px", borderRadius:6, background:"transparent", border:"1px solid rgba(255,255,255,0.15)", color:"#94a3b8", fontFamily:"'JetBrains Mono',monospace", fontSize:13, fontWeight:500, letterSpacing:"0.05em" }}>
                   ↓ download_resume.pdf
                 </a>
