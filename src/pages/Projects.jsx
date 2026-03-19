@@ -378,7 +378,7 @@ export default function Projects() {
               <span style={{
                 background: "linear-gradient(135deg, #00d4ff 0%, #6366f1 100%)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-              }}>tournent vraiment.</span>
+              }}>tournent en Production.</span>
             </h1>
 
             <p style={{ maxWidth: 580, color: "#94a3b8", fontSize: 16, lineHeight: 1.8 }}>

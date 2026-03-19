@@ -83,7 +83,7 @@ const About = () => {
             </p>
             <p className="text-lg text-white-300 mt-6 max-w-3xl mx-auto">
               De la Physique théorique et des mathématiques au Machine Learning et IA, j’ai choisi de mettre mes compétences en analyse, impact, prise de décision au service de l’humain. 
-              Aujourd’hui, je développe, je conçois et je déploie des modèles d'IA en production capable de créer un impact conséquent sur le marché et dans les industries..
+              Aujourd’hui, je développe, je conçois et je déploie des modèles de <span> Machine Learning</span> en production capable de créer un impact mesurable sur le marché et dans les industries..
             </p>
           </motion.div>
         </div>

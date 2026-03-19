@@ -58,6 +58,7 @@ const EXPERTISE = [
   "LLM / RAG",
   "MLOps",
   "Data Science",
+  "Fine Tuning"
 ];
 
 function SocialBtn({ item }) {

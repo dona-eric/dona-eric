@@ -1,5 +1,5 @@
 import React from "react";
-import { COMPONENT_CLASSES } from "../../config/styles";
+import { COMPONENT_CLASSES } from "@tailwindcss/vite";
 
 export const Button = ({ 
   variant = "primary", 

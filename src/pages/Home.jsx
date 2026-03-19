@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
-
+import AIChat from "../components/AIChat";
 
 // ─── Scroll fade hook ─────────────────────────────────────────────────────────
 const useScrollFade = (delay = 0) => {
@@ -98,7 +98,7 @@ export default function Home() {
   const stats = [
     { value: "24h",  label: "Réponse garantie" },
     { value: "90%",  label: "Précision moyenne" },
-    { value: "5+",   label: "Modèles prod." },
+    { value: "4+",   label: "Modèles prod." },
     { value: "3",    label: "Pays touchés" },
   ];
 
@@ -282,6 +282,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/*======================  */}
+        {/* SECTION AICHAT */}
+          {/* <AIChat /> */}
       </main>
     </>
   );

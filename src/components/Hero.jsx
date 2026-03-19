@@ -172,8 +172,8 @@ export default function Hero() {
               {/* Description */}
               <p ref={descRef} className="desc-text" style={{ color:"#94a3b8", fontSize:15, lineHeight:1.85, maxWidth:500 }}>
                 Je conçois et déploie des{" "}
-                <strong style={{ color:"#e2e8f0" }}>systèmes d'intelligence artificielle</strong>{" "}
-                qui répondent à des besoins métier concrets — de l'exploration des données
+                <strong style={{ color:"#e2e8f0" }}>modèles de Machine Learning et d'intelligence artificielle</strong>{" "}
+                qui répondent à des besoins métier concrets du marché ou des entreprises. De l'exploration des données
                 jusqu'au déploiement en production. Formé en Physique, reconverti en Data & ML.
               </p>
 
