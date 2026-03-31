@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
 import AIChat from "../components/AIChat";
-<Helmet>
-  <title>Ma page qui parle de moi Dona Eric, Data scientist, Machine Learning Engineer and AI Systems Builder</title>
-  <meta name="description" content="Découvrez AfriDrive, mes modèles de détection d'images réelles vs IA et mes travaux en MLOps." />
-</Helmet>
+
 // ─── Scroll fade hook ─────────────────────────────────────────────────────────
 const useScrollFade = (delay = 0) => {
   const ref = useRef(null);

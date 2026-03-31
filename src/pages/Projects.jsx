@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-<Helmet>
-  <title>Mes Projets IA & Computer Vision & Machine Learning | Dona Eric</title>
-  <meta name="description" content="Découvrez AfriDrive, mes modèles de détection d'images réelles vs IA et mes travaux en MLOps." />
-</Helmet>
+
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 const useFadeIn = (delay = 0) => {
   const ref = useRef(null);

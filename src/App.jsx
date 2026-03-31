@@ -28,7 +28,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       <Helmet>
-        <title>Don Erick | Data Scientist & Machine Learning Engineer Portfolio</title>
+        <title>Dona Eric Data Scientist & Machine Learning Engineer</title>
         <meta name="description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning, Deep Learning et MLOps. Expert Python et déploiement de modèles IA au Bénin." />
         
         {/* Open Graph / Facebook / LinkedIn */}
@@ -40,8 +40,10 @@ export default function App() {
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Don Eric | Data Scientist & ML Engineer" />
-        <meta name="twitter:description" content="Découvrez mon portfolio et mes projets IA." />
+        <meta name="twitter:site" content="@EricSchrodinger" /> {/* Optionnel */}
+        <meta name="twitter:title" content="Dona Eric | Data Scientist & ML Engineer" />
+        <meta name="twitter:description" content="Portfolio de Don Erick : Projets avancés en Machine Learning et IA." />
+        <meta name="twitter:image" content="https://donerick.vercel.app/og-image.png" />
       </Helmet>
 
       <ScrollToTop />

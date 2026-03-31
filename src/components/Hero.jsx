@@ -158,7 +158,15 @@ export default function Hero() {
                 <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:11, color:"#475569", letterSpacing:"0.15em", marginBottom:10 }}>
                   <span style={{ color:"#6366f1" }}>// </span>profile.init()
                 </div>
-                <h1 style={{ fontSize:"clamp(40px,6.5vw,80px)", fontWeight:700, lineHeight:1.02, letterSpacing:"-0.03em", color:"#f8fafc" }}>
+                {/* On transforme le div en h1 pour le SEO */}
+                <h1 style={{ 
+                  fontSize:"clamp(40px,6.5vw,80px)", 
+                  fontWeight:700, 
+                  lineHeight:1.02, 
+                  letterSpacing:"-0.03em", 
+                  color:"#f8fafc",
+                  margin: 0 // Reset de la marge par défaut du h1
+                }}>
                   Dona Éric<br />
                   <span style={{ background:"linear-gradient(135deg,#00d4ff 0%,#6366f1 100%)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>KOULODJI</span>
                 </h1>
@@ -171,10 +179,10 @@ export default function Hero() {
 
               {/* Description */}
               <p ref={descRef} className="desc-text" style={{ color:"#94a3b8", fontSize:15, lineHeight:1.85, maxWidth:500 }}>
-                Je conçois et déploie des{" "}
-                <strong style={{ color:"#e2e8f0" }}>modèles de Machine Learning et d'intelligence artificielle</strong>{" "}
-                qui répondent à des besoins métier concrets du marché ou des entreprises. De l'exploration des données
-                jusqu'au déploiement en production. Formé en Physique, reconverti en Data & ML.
+                Spécialisé en <strong style={{ color:"#e2e8f0" }}>Data Science et Machine Learning</strong>, 
+                je conçois et déploie des modèles d'intelligence artificielle (NLP, Computer Vision) 
+                qui répondent à des besoins métier concrets. De l'exploration des données jusqu'au 
+                déploiement <strong style={{ color:"#e2e8f0" }}>MLOps</strong> en production.
               </p>
 
               {/* CTAs */}
