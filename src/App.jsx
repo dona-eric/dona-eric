@@ -28,7 +28,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       <Helmet>
-        <title>Dona Eric Data Scientist & Machine Learning Engineer</title>
+        <title>Dona Eric | Machine Learning Engineer</title>
         <meta name="description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning, Deep Learning et MLOps. Expert Python et déploiement de modèles IA au Bénin." />
         
         {/* Open Graph / Facebook / LinkedIn */}

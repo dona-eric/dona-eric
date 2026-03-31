@@ -4,11 +4,15 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  
-  <url><loc>https://donerick.vercel.app/</loc></url>
-  <url><loc>https://donerick.vercel.app/about</loc></url>
-  <url><loc>https://donerick.vercel.app/projects</loc></url>
-  <url><loc>https://donerick.vercel.app/blog</loc></url>
-  <lastmod>2026-03-31T09:51:23+00:00</lastmod>
+
+    <url><loc>https://www.linkedin.com/in/dona-erick<loc></url>
+    <url><loc>https://www.github.com/dona-eric<loc></url>
+
+    <url><loc>https://donerick.vercel.app/</loc></url>
+    <url><loc>https://donerick.vercel.app/about</loc></url>
+    <url><loc>https://donerick.vercel.app/projects</loc></url>
+    <url><loc>https://donerick.vercel.app/blog</loc></url>
+    <lastmod>2026-03-31T09:51:23+00:00</lastmod>
+    <url><loc>https://www.linkedin.com/in/dona-erick<loc></url>
 
 </urlset>
