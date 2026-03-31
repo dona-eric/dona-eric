@@ -20,13 +20,13 @@ export const SOCIAL_LINKS = [
 ];
 
 export const NAVIGATION = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Skills", path: "/skills" },
-  { name: "Projects", path: "/projects" },
-  { name: "Services", path: "/services" },
-  { name: "Contact", path: "/contact" },
-  {name: "Blogs", path: "/blog"}
+  { name: "home", path: "/" },
+  { name: "about", path: "/about" },
+  { name: "skills", path: "/skills" },
+  { name: "projects", path: "/projects" },
+  { name: "services", path: "/services" },
+  { name: "blog", path: "/blog" },
+  { name: "contact", path: "/contact" },
 ];
 
 export const CTA_BUTTON = {

@@ -142,7 +142,7 @@ const Navigation = () => {
                 open_to_work
               </div>
 
-              <a href="/contact" className="cta-nav" style={{
+              <Link href="/contact" className="cta-nav" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 padding: "8px 18px", borderRadius: 4,
                 background: "linear-gradient(135deg, #0e7490, #4338ca)",
@@ -153,7 +153,7 @@ const Navigation = () => {
                 boxShadow: "0 2px 12px rgba(0,212,255,0.1)"
               }}>
                 hire_me() →
-              </a>
+              </Link>
             </div>
 
             {/* ── Mobile burger ── */}
@@ -222,7 +222,7 @@ const Navigation = () => {
               </div>
 
               {/* Mobile CTA */}
-              <a href="https://wa.me/+2290141730240" target="_blank" rel="noopener noreferrer"
+              <Link href="https://wa.me/+2290141730240" target="_blank" rel="noopener noreferrer"
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                   padding: "13px", borderRadius: 4, textDecoration: "none",
@@ -232,7 +232,7 @@ const Navigation = () => {
                   marginBottom: 12
                 }}>
                 ✉ WhatsApp → démarrer
-              </a>
+              </Link>
 
               {/* Mobile availability */}
               <div style={{
