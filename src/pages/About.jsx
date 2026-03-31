@@ -1,6 +1,9 @@
 import { desc } from "framer-motion/client";
 import React, { useEffect, useRef, useState } from "react";
-
+<Helmet>
+  <title>Ma page qui parle de moi Dona Eric, Data scientist, Machine Learning Engineer and AI Systems Builder</title>
+  <meta name="description" content="Découvrez Dona Eirc, mes modèles de détection d'images réelles vs IA et mes travaux en MLOps." />
+</Helmet>
 // ─── Fade-in hook ─────────────────────────────────────────────────────────────
 const useFadeIn = (delay = 0) => {
   const ref = useRef(null);
