@@ -1,4 +1,3 @@
-import { desc } from "framer-motion/client";
 import React, { useEffect, useRef, useState } from "react";
 
 // ─── Fade-in hook ─────────────────────────────────────────────────────────────
@@ -130,44 +129,44 @@ function SkillBar({ name, level, category, delay }) {
   );
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
-const SKILLS = [
-  { name: "Fine-tuning LLM (Llama 3, Mistral, Phi-3)", level: 50, category: "llm" },
-  { name: "RAG & Vector Databases (Chroma, Pinecone)", level: 60, category: "llm" },
-  { name: "Computer Vision (YOLO, SAM)", level: 40, category: "ml" },
-  { name: "Time Series & Predictive Modeling", level: 60, category: "ml" },
-  { name: "Prompt Engineering & Agentic Systems", level: 80, category: "llm" },
-  { name: "MLOps (Docker, MLflow, FastAPI, CI/CD)", level: 79, category: "ops" },
-  { name: "Data Pipelines (Airflow, Spark, Kubernetes)", level: 65, category: "ops" },
-  { name: "Cloud Deployment (GCP, AWS, Vercel)", level: 45, category: "ops" },
-  { name: "LangChain · LlamaIndex · Hugging Face", level: 86, category: "llm" },
-];
+// // ─── Data ─────────────────────────────────────────────────────────────────────
+// const SKILLS = [
+//   { name: "Fine-tuning LLM (Llama 3, Mistral, Phi-3)", level: 50, category: "llm" },
+//   { name: "RAG & Vector Databases (Chroma, Pinecone)", level: 60, category: "llm" },
+//   { name: "Computer Vision (YOLO, SAM)", level: 40, category: "ml" },
+//   { name: "Time Series & Predictive Modeling", level: 60, category: "ml" },
+//   { name: "Prompt Engineering & Agentic Systems", level: 80, category: "llm" },
+//   { name: "MLOps (Docker, MLflow, FastAPI, CI/CD)", level: 79, category: "ops" },
+//   { name: "Data Pipelines (Airflow, Spark, Kubernetes)", level: 65, category: "ops" },
+//   { name: "Cloud Deployment (GCP, AWS, Vercel)", level: 45, category: "ops" },
+//   { name: "LangChain · LlamaIndex · Hugging Face", level: 86, category: "llm" },
+// ];
 
 const STATS = [
-  { value: "4", suffix: "+", label: "Modèles en production", note: "Live & monitored" },
+  { value: "5", suffix: "+", label: "Modèles en production", note: "Live & monitored" },
   { value: "90", suffix: "%", label: "Précision moyenne", note: "Across ML projects" },
   { value: "3", suffix: "", label: "Pays touchés", note: "BJ · FR · CA" },
-  { value: "12", suffix: "+", label: "Projets livrés", note: "Data → Deploy" },
+  { value: "6", suffix: "+", label: "Projets livrés", note: "Data → Deploy" },
 ];
 
 const VALUES = [
   {
-    tag: "01",
-    title: "Excellence technique",
-    desc: "Je ne livre que des systèmes robustes, monitorés, et qui tiennent en production — pas des POC oubliés dans un notebook.",
-    color: "#00d4ff",
+    tag: "01", color: "#00d4ff",
+    title: "Livraison garantie",
+    desc: "Pas de réunions infinies. Un cahier des charges, un délai, un système qui tourne. Je livre en semaines, pas en trimestres.",
+    proof: "→ 12+ projets livrés · 0 POC abandonné"
   },
   {
-    tag: "02",
-    title: "Impact réel",
-    desc: "Des solutions utilisées tous les jours par de vraies personnes. Chaque modèle doit répondre à un problème métier concret.",
-    color: "#a78bfa",
+    tag: "02", color: "#a78bfa",
+    title: "Production-first",
+    desc: "Chaque ligne de code est pensée pour le cloud, le monitoring et le scaling dès le départ — pas retrofittée après coup.",
+    proof: "→ Docker · MLflow · CI/CD · GCP / AWS"
   },
   {
-    tag: "03",
-    title: "Partage & Écosystème",
-    desc: "Formations, mentorat, open-source : je contribue activement à construire l'écosystème IA africain.",
-    color: "#22c55e",
+    tag: "03", color: "#22c55e",
+    title: "Interlocuteur unique",
+    desc: "Data, ML, déploiement, agents IA — je gère l'ensemble de la chaîne. Vous parlez à une seule personne, vous recevez un système complet.",
+    proof: "→ Du notebook au endpoint en production"
   },
 ];
 
@@ -445,14 +444,12 @@ export default function About() {
               marginBottom: 28, borderRadius: 2
             }} />
 
-            <p style={{
-              maxWidth: 620, color: "#94a3b8", fontSize: 17,
-              lineHeight: 1.8, marginBottom: 36
-            }}>
-              Je transforme des <strong style={{ color: "#e2e8f0" }}>données brutes</strong> en{" "}
-              <strong style={{ color: "#e2e8f0" }}>décisions intelligentes</strong>. Formé en physique,
-              reconverti en data, passionné par les systèmes ML qui tiennent en production —
-              pas juste dans un Jupyter Notebook.
+            <p style={{ maxWidth: 620, color: "#94a3b8", fontSize: 17, lineHeight: 1.8, marginBottom: 36 }}>
+              Je prends votre problème métier et je livre un{" "}
+              <strong style={{ color: "#e2e8f0" }}>système IA opérationnel</strong> — agent autonome,
+              modèle ML en prod, ou pipeline RAG clé-en-main. Formé en physique, je modélise
+              rigoureusement avant de coder. Résultat :{" "}
+              <strong style={{ color: "#00d4ff" }}>des solutions qui scalent, pas des POC qui dorment.</strong>
             </p>
 
             {/* Availability tags */}
@@ -511,8 +508,8 @@ export default function About() {
           {/* ══════════════ BIO / PARCOURS ══════════════ */}
           <div ref={bioRef} style={{
             marginBottom: 100,
-            display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32,
-            alignItems: "start"
+            display: "flex", gridTemplateColumns: "1fr 3fr", gap: 32,
+            alignItems: "center"
           }} className="skills-grid">
 
             {/* Left: story */}
@@ -566,38 +563,6 @@ export default function About() {
                 </div>
               ))}
             </div>
-
-            {/* Right: stack */}
-            <div style={{
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 12, padding: "36px 32px", position: "relative"
-            }}>
-              <div style={{
-                position: "absolute", top: 0, left: 0, right: 0, height: 2,
-                background: "linear-gradient(90deg, transparent, #00d4ff, transparent)"
-              }} />
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                color: "#00d4ff", letterSpacing: "0.15em", marginBottom: 20
-              }}>
-                // stack.expertise[]
-              </div>
-
-              {/* Legend */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 28 }}>
-                {LEGEND.map(l => (
-                  <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ width: 8, height: 8, borderRadius: "50%", background: l.color, display: "inline-block" }} />
-                    <span style={{ fontSize: 11, fontFamily: "monospace", color: "#64748b" }}>{l.label}</span>
-                  </div>
-                ))}
-              </div>
-
-              {SKILLS.map((s, i) => (
-                <SkillBar key={i} name={s.name} level={s.level} category={s.category} delay={i * 0.06} />
-              ))}
-            </div>
           </div>
 
           {/* ══════════════ EXPERIENCES ══════════════ */}
@@ -638,11 +603,12 @@ export default function About() {
             }}>
               <span style={{ color: "#00d4ff" }}>// </span>values.core
             </div>
-            <h2 style={{
-              fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700,
-              color: "#f1f5f9", marginBottom: 48, letterSpacing: "-0.02em"
-            }}>
-              Ce qui me drive
+            <h2>
+              Pourquoi travailler<br />
+              <span style={{
+                background: "linear-gradient(135deg, #00d4ff, #6366f1)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+              }}>avec moi ?</span>
             </h2>
 
             <div className="values-grid" style={{
@@ -677,6 +643,12 @@ export default function About() {
                       fontSize: 18, fontWeight: 600, color: "#f1f5f9", marginBottom: 14
                     }}>{v.title}</h3>
                     <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.75 }}>{v.desc}</p>
+                    <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.75, marginBottom: 12 }}>{v.desc}</p>
+                    <div style={{
+                      fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+                      color: v.color, letterSpacing: "0.04em", opacity: 0.8
+                    }}>{v.proof}
+                    </div>
                   </div>
                 );
               })}
@@ -688,43 +660,52 @@ export default function About() {
             textAlign: "center", padding: "72px 24px",
             background: "rgba(255,255,255,0.02)",
             border: "1px solid rgba(255,255,255,0.07)",
-            borderRadius: 16, position: "relative", overflow: "hidden"
-          }}>
-            <div style={{
-              position: "absolute", top: 0, left: 0, right: 0, height: 2,
-              background: "linear-gradient(90deg, transparent, #00d4ff, #6366f1, transparent)"
-            }} />
-            <div style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-              color: "#475569", letterSpacing: "0.15em", marginBottom: 20
-            }}>
-              <span style={{ color: "#00d4ff" }}>// </span>ready_to_collaborate()
+            borderRadius: 16, position: "relative", overflow: "hidden"}}>
+              <div style={{
+                  position: "absolute", top: 0, left: 0, right: 0, height: 2,
+                  background: "linear-gradient(90deg, transparent, #00d4ff, #6366f1, transparent)"
+                }} />
+              <div style={{
+                fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+                color: "#475569", letterSpacing: "0.15em", marginBottom: 20
+              }}>
+                <span style={{ color: "#00d4ff" }}>// </span>ready_to_collaborate()
             </div>
-            <h2 style={{
-              fontSize: "clamp(24px, 4vw, 42px)", fontWeight: 700,
-              color: "#f1f5f9", marginBottom: 16, letterSpacing: "-0.02em"
-            }}>
-              Prêt à travailler avec quelqu'un<br />
-              qui <span style={{
-                background: "linear-gradient(135deg, #00d4ff, #6366f1)",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-              }}>livre vraiment</span> ?
+            <h2 style={{ fontSize: "clamp(24px,4vw,42px)", fontWeight: 700, color: "#f1f5f9", marginBottom: 16, letterSpacing: "-0.02em" }}>
+              1 slot disponible.<br />
+              <span style={{ background: "linear-gradient(135deg,#00d4ff,#6366f1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Votre projet démarre quand ?
+              </span>
             </h2>
-            <p style={{ color: "#64748b", fontSize: 15, fontFamily: "monospace", marginBottom: 40 }}>
-              /* Pas de POC. Des solutions en production. */
+            <p style={{ color: "#64748b", fontSize: 15, fontFamily: "monospace", marginBottom: 16 }}>
+              /* Réponse sous 24h · Devis gratuit · Démarrage sous 48h */
             </p>
-            <a href="/contact" className="cta-btn" style={{
-              display: "inline-flex", alignItems: "center", gap: 12,
-              padding: "16px 36px",
-              background: "linear-gradient(135deg, #0e7490, #4338ca)",
-              borderRadius: 6, color: "#f0f9ff",
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
-              transition: "all 0.25s ease",
-              boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
-            }}>
-              initiate_contact() →
-            </a>
+            <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
+                className="cta-btn" style={{
+                  display: "inline-flex", alignItems: "center", gap: 12,
+                  padding: "16px 36px",
+                  background: "linear-gradient(135deg, #0e7490, #4338ca)",
+                  borderRadius: 6, color: "#f0f9ff",
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
+                  transition: "all 0.25s ease",
+                  boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
+                }}>
+                Démarrer mon projet →
+              </a>
+              <a href="mailto:donaerickoulodji@gmail.com"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  padding: "16px 28px", borderRadius: 6, background: "transparent",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 14, fontWeight: 500, letterSpacing: "0.05em",
+                  transition: "all 0.25s ease"
+                }}>
+                ✉ Poser une question
+              </a>
+            </div>
           </div>
 
         </div>

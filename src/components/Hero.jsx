@@ -19,8 +19,12 @@ const useFadeIn = (delay = 0) => {
 };
 
 function RoleTypewriter() {
-  const roles = ["Data Scientist","ML Engineer","AI Systems Builder","MLOps Practitioner","Physics-Trained Mind"];
-  const [roleIdx, setRoleIdx] = useState(0);
+const roles = [
+  "Je déploie des modèles ML en production",
+  "Je construis des agents IA sur mesure",
+  "RAG · AI Agents · Cloud MLOps",
+  "Votre data, transformée en levier opérationnel",
+];  const [roleIdx, setRoleIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [deleting, setDeleting] = useState(false);
   useEffect(() => {
@@ -79,10 +83,11 @@ export default function Hero() {
   const photoRef  = useFadeIn(0.4);
 
   const stats = [
-    { value:"5+",   label:"Modèles en prod",  note:"Live & monitored",   color:"#00d4ff" },
-    { value:"90%",  label:"Précision moyenne", note:"Across ML projects", color:"#a78bfa" },
-    { value:"3",    label:"Pays touchés",      note:"BJ · FR · CA",       color:"#22c55e" },
-    { value:"<24h", label:"Réponse garantie",  note:"Mon – Sun",           color:"#f59e0b" },
+    { value:"5+",   label:"Systèmes IA livrés",    note:"En prod, pas en POC",      color:"#00d4ff" },
+    { value:"90%",  label:"Précision moyenne",      note:"Sur projets ML réels",     color:"#a78bfa" },
+    { value:"3×",   label:"Valeur métier générée",  note:"ROI moyen observé",        color:"#22c55e" },
+    { value:"<24h", label:"Première réponse",       note:"On discute dès aujourd'hui",color:"#f59e0b" },
+
   ];
 
   return (
@@ -147,10 +152,18 @@ export default function Hero() {
 
               {/* Badge */}
               <div ref={badgeRef} className="badge-row" style={{ display:"flex", width:"fit-content" }}>
-                <div style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"6px 16px", borderRadius:4, background:"rgba(0,212,255,0.07)", border:"1px solid rgba(0,212,255,0.25)", fontFamily:"'JetBrains Mono',monospace", fontSize:11, color:"#00d4ff", letterSpacing:"0.05em" }}>
-                  <span style={{ width:7, height:7, borderRadius:"50%", background:"#22c55e", animation:"pulseDot 2s ease infinite", display:"inline-block", flexShrink:0 }} />
-                  Disponible · Bénin · Remote OK
-                </div>
+                  <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
+                    style={{ textDecoration:"none" }}>
+                    <div style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"6px 16px",
+                      borderRadius:4, background:"rgba(0,212,255,0.07)", 
+                      border:"1px solid rgba(0,212,255,0.25)",
+                      fontFamily:"'JetBrains Mono',monospace", fontSize:11, 
+                      color:"#00d4ff", letterSpacing:"0.05em", cursor:"pointer" }}>
+                      <span style={{ width:7, height:7, borderRadius:"50%", background:"#22c55e",
+                        animation:"pulseDot 2s ease infinite", display:"inline-block", flexShrink:0 }} />
+                      Disponible · Remote · Prenons 10 min →
+                    </div>
+                  </a>
               </div>
 
               {/* Name */}
@@ -178,20 +191,20 @@ export default function Hero() {
               </div>
 
               {/* Description */}
-              <p ref={descRef} className="desc-text" style={{ color:"#94a3b8", fontSize:15, lineHeight:1.85, maxWidth:500 }}>
-                Spécialisé en <strong style={{ color:"#e2e8f0" }}>Data Science et Machine Learning</strong>, 
-                je conçois et déploie des modèles d'intelligence artificielle (NLP, Computer Vision) 
-                qui répondent à des besoins métier concrets. De l'exploration des données jusqu'au 
-                déploiement <strong style={{ color:"#e2e8f0" }}>MLOps</strong> en production.
+              <p ref={descRef} className="desc-text" style={{ color:"#94a3b8", fontSize:16, lineHeight:1.85, maxWidth:500 }}>
+                Je transforme vos problématiques métier en {" "}
+                <strong style={{ color:"#e2e8f0" }}>systèmes IA de production (ML, RAG, Agents AI)</strong> — 
+                Mon standard : zéro code dormant, {" "}
+                <strong style={{ color:"#e2e8f0" }}>uniquement des solutions cloud-deployed, monitorées et créatrices de valeur.</strong>.
               </p>
 
               {/* CTAs */}
               <div ref={ctaRef} className="cta-row" style={{ display:"flex", flexWrap:"wrap", gap:12 }}>
                 <Link to="/projects" className="btn-primary" style={{ display:"inline-flex", alignItems:"center", gap:10, padding:"13px 26px", borderRadius:6, background:"linear-gradient(135deg,#0e7490,#4338ca)", color:"#f0f9ff", fontFamily:"'JetBrains Mono',monospace", fontSize:13, fontWeight:600, letterSpacing:"0.05em", boxShadow:"0 4px 20px rgba(0,212,255,0.12)" }}>
-                  view_projects() →
+                  vor_mes_projects_live() →
                 </Link>
                 <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ display:"inline-flex", alignItems:"center", gap:10, padding:"13px 26px", borderRadius:6, background:"transparent", border:"1px solid rgba(255,255,255,0.15)", color:"#94a3b8", fontFamily:"'JetBrains Mono',monospace", fontSize:13, fontWeight:500, letterSpacing:"0.05em" }}>
-                  ↓ download_resume.pdf
+                  ↓ télécharger_mon_profil.pdf
                 </a>
               </div>
 
@@ -203,7 +216,7 @@ export default function Hero() {
                 <SocialBtn href="https://linkedin.com/in/dona-erick" label="LinkedIn" color="#a78bfa"
                   icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>}
                 />
-                <SocialBtn href="https://twitter.com/ericschrodinger" label="Twitter / X" color="#64748b"
+                <SocialBtn href="https://x.com/EricSchrodinger" label="Twitter / X" color="#64748b"
                   icon={<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>}
                 />
               </div>
@@ -236,7 +249,7 @@ export default function Hero() {
 
                 <div style={{ width:"100%", height:"100%", borderRadius:"50%", background:"linear-gradient(135deg,#0e7490 0%,#4338ca 100%)", padding:3, animation:"photoGlow 4s ease infinite" }}>
                   <div style={{ width:"100%", height:"100%", borderRadius:"50%", background:"#0a0e17", padding:5, overflow:"hidden" }}>
-                    <img src="/eric.jpg" alt="Dona Éric KOULODJI"
+                    <img src="/dona.JPG" alt="Dona Éric KOULODJI"
                       style={{ width:"100%", height:"100%", borderRadius:"50%", objectFit:"cover", filter:"grayscale(20%) contrast(1.05)" }} />
                   </div>
                 </div>

@@ -1,5 +1,3 @@
-import { path } from "framer-motion/client";
-
 // Portfolio Constants & Configuration
 export const PORTFOLIO = {
   name: "Dona Eric",
@@ -8,15 +6,15 @@ export const PORTFOLIO = {
   description: "Specialized in Machine Learning, Data Science, and AI. Building impactful, data-driven solutions for organizations and innovators.",
   location: "Abomey-Calavi, Benin",
   email: "donaerickoulodji@gmail.com",
-  phone: "+229 01 41 73 02 40",
+  phone: "+22901417302400",
 };
 
 export const SOCIAL_LINKS = [
   { name: "LinkedIn", url: "https://linkedin.com/in/dona-erick", icon: "linkedin" },
-  { name: "GitHub", url: "https://github.com", icon: "github" },
-  { name: "Twitter", url: "https://twitter.com", icon: "twitter" },
+  { name: "GitHub", url: "https://github.com/dona-eric", icon: "github" },
+  { name: "Twitter", url: "https://twitter.com/ericschrodinger", icon: "twitter" },
   { name: "Email", url: "mailto:donaerickoulodji@gmail.com", icon: "mail" },
-  { name: "WhatsApp", url: "https://wa.me/2290141730240", icon: "phone" },
+  { name: "WhatsApp", url: "https://wa.me/22901417302400", icon: "phone" },
 ];
 
 export const NAVIGATION = [
@@ -31,54 +29,15 @@ export const NAVIGATION = [
 
 export const CTA_BUTTON = {
   label: "Start a Project",
-  url: "https://wa.me/2290141730240",
+  url: "https://wa.me/22901417302400",
 };
 
-export const SKILLS = [
-  {
-    category: "Machine Learning",
-    items: ["TensorFlow", "PyTorch", "Scikit-learn", "XGBoost", "Neural Networks"],
-  },
-  {
-    category: "Data Science",
-    items: ["Python", "Data Analysis", "Statistical Modeling", "Visualization", "Big Data"],
-  },
-  {
-    category: "AI & NLP",
-    items: ["LLMs", "NLP", "Computer Vision", "Groq API", "RAG Systems"],
-  },
-  {
-    category: "Full Stack",
-    items: ["React", "Node.js", "SQL", "MongoDB", "API Development"],
-  },
-];
-
-export const PROJECTS = [
-  {
-    id: 1,
-    title: "AI Chat Assistant",
-    description: "Real-time AI-powered chat with advanced NLP capabilities",
-    category: "AI",
-    tech: ["React", "Groq API", "Python"],
-    link: "/projects",
-  },
-  {
-    id: 2,
-    title: "ML Model Deployment",
-    description: "Production-ready machine learning pipeline",
-    category: "ML",
-    tech: ["TensorFlow", "Flask", "Docker"],
-    link: "/projects",
-  },
-  {
-    id: 3,
-    title: "Data Analytics Dashboard",
-    description: "Real-time analytics with interactive visualizations",
-    category: "Data Science",
-    tech: ["React", "D3.js", "Python"],
-    link: "/projects",
-  },
-];
+// ⚠️  DEPRECATED: Skills and Projects are now defined directly in their respective page components
+// Skills.jsx -> SKILL_COLS contains all skill data
+// Projects.jsx -> PROJECTS array contains all project data
+// To add/update skills: Edit Skills.jsx
+// To add/update projects: Edit Projects.jsx
+// These arrays are kept below for reference only (legacy)
 
 export const SERVICES = [
   {

@@ -98,7 +98,7 @@ export default function Home() {
   const stats = [
     { value: "24h",  label: "Réponse garantie" },
     { value: "90%",  label: "Précision moyenne" },
-    { value: "4+",   label: "Modèles prod." },
+    { value: "5+",   label: "Modèles prod." },
     { value: "3",    label: "Pays touchés" },
   ];
 
@@ -162,7 +162,7 @@ export default function Home() {
                 width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
                 animation: "pulseDot 2s ease infinite", display: "inline-block"
               }} />
-              collaboration.init() → status=open
+              🔥 3 projets livrés ce trimestre · 1 slot disponible
             </div>
 
             {/* Title */}
@@ -171,49 +171,52 @@ export default function Home() {
               lineHeight: 1.1, letterSpacing: "-0.03em",
               color: "#f8fafc", marginBottom: 20
             }}>
-              Prêt à transformer
-              <br />
+              Votre concurrent a déjà<br />
               <span style={{
                 background: "linear-gradient(135deg, #00d4ff 0%, #6366f1 100%)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-              }}>vos données en impact ?</span>
+              }}>son IA en production.</span>
             </h2>
-
             {/* Description */}
             <p ref={ctaDescRef} style={{
               maxWidth: 620, margin: "0 auto 52px",
               color: "#94a3b8", fontSize: 16, lineHeight: 1.85
             }}>
-              Que vous ayez besoin d'<strong style={{ color: "#e2e8f0" }}>analyse de données</strong>,
-              de solutions de <strong style={{ color: "#e2e8f0" }}>machine learning</strong>,
-              ou d'un <strong style={{ color: "#e2e8f0" }}>système IA de bout en bout</strong> —
-              je transforme le problème métier en système qui tourne.
+              Pendant que votre équipe analyse encore les options, 
+              je livre un{" "}
+              <strong style={{ color: "#e2e8f0" }}>agent IA opérationnel</strong>,{" "}
+              un <strong style={{ color: "#e2e8f0" }}>pipeline ML en production</strong>{" "}
+              ou un <strong style={{ color: "#e2e8f0" }}>système RAG clé-en-main</strong> —
+              en semaines, pas en mois. Zéro POC qui dort. Zéro réunion inutile.{" "}
+              <strong style={{ color: "#00d4ff" }}>Du concret, livré, vous etes gagnants d'une solution durable</strong>
             </p>
 
             {/* CTA Buttons */}
+            
+    {/* CTA Buttons */}
             <div ref={ctaBtnsRef} className="cta-btns" style={{
               display: "flex", gap: 14, justifyContent: "center",
-              flexWrap: "wrap", marginBottom: 56
+              flexWrap: "wrap", marginBottom: 40
             }}>
-              <a href="/contact" className="btn-primary" style={{
-                display: "inline-flex", alignItems: "center", gap: 10,
-                padding: "15px 32px", borderRadius: 6,
-                background: "linear-gradient(135deg, #0e7490, #4338ca)",
-                color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
-                boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
-              }}>
-                initiate_contact() →
+              <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
+                className="btn-primary" style={{
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  padding: "15px 32px", borderRadius: 6,
+                  background: "linear-gradient(135deg, #0e7490, #4338ca)",
+                  color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
+                  boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
+                }}>
+                Démarrer mon projet →
               </a>
               <a href="mailto:donaerickoulodji@gmail.com" className="btn-secondary" style={{
                 display: "inline-flex", alignItems: "center", gap: 10,
-                padding: "15px 32px", borderRadius: 6,
-                background: "transparent",
+                padding: "15px 32px", borderRadius: 6, background: "transparent",
                 border: "1px solid rgba(255,255,255,0.15)",
                 color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace",
                 fontSize: 14, fontWeight: 500, letterSpacing: "0.05em"
               }}>
-                ✉ send_email()
+                ✉ Me décrire mon besoin
               </a>
             </div>
 
@@ -225,22 +228,26 @@ export default function Home() {
               {stats.map((s, i) => <StatCard key={i} {...s} delay={0.4 + i * 0.08} />)}
             </div>
 
-            {/* Availability badge */}
+            {/* Garanties */}
             <div ref={ctaStatusRef} style={{
-              display: "inline-flex", alignItems: "center", gap: 12,
-              padding: "12px 24px", borderRadius: 6, marginBottom: 48,
-              background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.25)",
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 13
+              display: "flex", flexWrap: "wrap", gap: 24,
+              justifyContent: "center", marginBottom: 48
             }}>
-              <span style={{
-                width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
-                animation: "pulseDot 2s ease infinite", display: "inline-block"
-              }} />
-              <span style={{ color: "#22c55e" }}>Disponible pour nouveaux projets</span>
-              <span style={{ color: "#334155", margin: "0 4px" }}>·</span>
-              <span style={{ color: "#475569" }}>Freelance · Contract · Long terme</span>
+              {[
+                "Réponse sous 24h",
+                "Livraison en semaines",
+                "Code propre · Documenté",
+                "Remote · Freelance · Contract"
+              ].map((g) => (
+                <span key={g} style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 12, color: "#475569",
+                  display: "flex", alignItems: "center", gap: 7
+                }}>
+                  <span style={{ color: "#22c55e", fontSize: 14 }}>✓</span> {g}
+                </span>
+              ))}
             </div>
-
             {/* Alt contact links */}
             <div ref={ctaAltsRef}>
               <div style={{

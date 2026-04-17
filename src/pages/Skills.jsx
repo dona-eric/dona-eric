@@ -9,7 +9,10 @@ const useFadeIn = (delay = 0) => {
     el.style.opacity = "0";
     el.style.transform = "translateY(24px)";
     el.style.transition = `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`;
-    const t = setTimeout(() => { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }, 60);
+    const t = setTimeout(() => {
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+    }, 60);
     return () => clearTimeout(t);
   }, [delay]);
   return ref;
@@ -23,63 +26,59 @@ const useScrollFade = (delay = 0) => {
     el.style.opacity = "0";
     el.style.transform = "translateY(28px)";
     el.style.transition = `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; obs.disconnect(); }
-    }, { threshold: 0.1 });
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
     obs.observe(el);
     return () => obs.disconnect();
   }, [delay]);
   return ref;
 };
 
-// --------- Skill bar -----------------------
-function SkillBar({ name, level, color, delay }) {
-  const wrapRef = useRef(null);
-  const barRef  = useRef(null);
-
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    const bar  = barRef.current;
-    if (!wrap || !bar) return;
-    wrap.style.opacity = "0";
-    wrap.style.transition = `opacity 0.5s ease ${delay}s`;
-    bar.style.width = "0%";
-    bar.style.transition = `width 1.1s cubic-bezier(0.4,0,0.2,1) ${delay + 0.1}s`;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        wrap.style.opacity = "1";
-        bar.style.width = level + "%";
-        obs.disconnect();
-      }
-    }, { threshold: 0.2 });
-    obs.observe(wrap);
-    return () => obs.disconnect();
-  }, [level, delay]);
-
+// ─── Skill Pill — remplace SkillBar, zéro % ────────────────────────────────
+function SkillPill({ name, color }) {
+  const [hov, setHov] = useState(false);
   return (
-    <div ref={wrapRef} style={{ marginBottom: 14 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: "#cbd5e1" }}>{name}</span>
-        <span style={{ fontFamily: "monospace", fontSize: 11, color: color }}>{level}%</span>
-      </div>
-      <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
-        <div ref={barRef} style={{
-          height: "100%", borderRadius: 2,
-          background: `linear-gradient(90deg, ${color}88, ${color})`,
-          boxShadow: `0 0 8px ${color}55`
-        }} />
-      </div>
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 8,
+        padding: "8px 14px", borderRadius: 4,
+        background: hov ? color + "18" : color + "0a",
+        border: `1px solid ${hov ? color + "55" : color + "25"}`,
+        transition: "all 0.2s ease", cursor: "default"
+      }}
+    >
+      <span style={{
+        width: 5, height: 5, borderRadius: "50%",
+        background: color, display: "inline-block",
+        boxShadow: `0 0 5px ${color}`
+      }} />
+      <span style={{
+        fontFamily: "'JetBrains Mono', monospace",
+        fontSize: 12, color: "#cbd5e1"
+      }}>{name}</span>
     </div>
   );
 }
 
-// ─── Cert card ────────────────────────────────────────────────────────────────
+// ─── Cert Card ────────────────────────────────────────────────────────────────
 function CertCard({ cert, delay }) {
   const ref = useScrollFade(delay);
   const [hov, setHov] = useState(false);
   return (
-    <div ref={ref}
-      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <div
+      ref={ref}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
       style={{
         padding: "24px 28px",
         background: hov ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
@@ -87,7 +86,8 @@ function CertCard({ cert, delay }) {
         borderRadius: 10, transition: "all 0.3s ease",
         transform: hov ? "translateY(-3px)" : "none",
         position: "relative", overflow: "hidden"
-      }}>
+      }}
+    >
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, height: 2,
         background: `linear-gradient(90deg, transparent, ${cert.color}, transparent)`,
@@ -97,8 +97,12 @@ function CertCard({ cert, delay }) {
         fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
         color: cert.color, letterSpacing: "0.12em", marginBottom: 10
       }}>{cert.tag}</div>
-      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#f1f5f9", marginBottom: 4 }}>{cert.title}</h3>
-      <div style={{ fontFamily: "monospace", fontSize: 12, color: "#64748b", marginBottom: 6 }}>{cert.institution}</div>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#f1f5f9", marginBottom: 4 }}>
+        {cert.title}
+      </h3>
+      <div style={{ fontFamily: "monospace", fontSize: 12, color: "#64748b", marginBottom: 6 }}>
+        {cert.institution}
+      </div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontFamily: "monospace", fontSize: 11, color: "#475569" }}>{cert.field}</span>
         <span style={{
@@ -111,7 +115,7 @@ function CertCard({ cert, delay }) {
   );
 }
 
-// ─── Stat card ────────────────────────────────────────────────────────────────
+// ─── Stat Card ────────────────────────────────────────────────────────────────
 function StatCard({ v, l, c, note, delay }) {
   const ref = useScrollFade(delay);
   return (
@@ -135,55 +139,55 @@ function StatCard({ v, l, c, note, delay }) {
   );
 }
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+// ─── Données ──────────────────────────────────────────────────────────────────
 const SKILL_COLS = [
   {
     tag: "// ml_core",
     title: "ML & Deep Learning",
     accent: "#00d4ff",
     skills: [
-      { name: "Scikit-Learn · XGBoost · LightGBM", level: 90 },
-      { name: "PyTorch",                            level: 60},
-      { name: "TensorFlow / Keras",                 level: 78 },
-      { name: "Time Series (Prophet, ARIMA)",        level: 85 },
-      { name: "Computer Vision (YOLO, SAM)",         level: 80 },
-    ]
+      "Scikit-Learn · XGBoost · LightGBM",
+      "PyTorch",
+      "TensorFlow / Keras",
+      "Time Series (Prophet, ARIMA)",
+      "Computer Vision (YOLO, SAM)",
+    ],
   },
   {
     tag: "// llm_genai",
     title: "LLM & GenAI",
     accent: "#a78bfa",
     skills: [
-      { name: "Fine-tuning (Llama 3, Mistral, Phi)", level: 84 },
-      { name: "RAG · ChromaDB · Pinecone",           level: 86 },
-      { name: "LangChain · LlamaIndex",              level: 87 },
-      { name: "Prompt Engineering",                  level: 90 },
-      { name: "Groq · HuggingFace Hub",              level: 85 },
-    ]
+      "Fine-tuning (Llama 3, Mistral, Phi)",
+      "RAG · ChromaDB · Pinecone",
+      "LangChain · LlamaIndex",
+      "Prompt Engineering",
+      "Groq · HuggingFace Hub",
+    ],
   },
   {
     tag: "// mlops_deploy",
     title: "MLOps & Infra",
     accent: "#22c55e",
     skills: [
-      { name: "Docker · Kubernetes",                 level: 76 },
-      { name: "MLflow · Experiment Tracking",        level: 80 },
-      { name: "FastAPI · REST APIs",                 level: 85 },
-      { name: "CI/CD (GitHub Actions)",              level: 74 },
-      { name: "GCP · AWS · Vercel",                  level: 72 },
-    ]
+      "Docker · Kubernetes",
+      "MLflow · Experiment Tracking",
+      "FastAPI · REST APIs",
+      "CI/CD (GitHub Actions)",
+      "GCP · AWS · Vercel",
+    ],
   },
   {
     tag: "// data_eng",
     title: "Data & Analytics",
     accent: "#f59e0b",
     skills: [
-      { name: "Python · Pandas · NumPy",             level: 92 },
-      { name: "SQL · PostgreSQL",                    level: 82 },
-      { name: "Plotly · Streamlit · Dash",           level: 88 },
-      { name: "Airflow · Spark",                     level: 68 },
-      { name: "Statistical Modeling · A/B Testing",  level: 83 },
-    ]
+      "Python · Pandas · NumPy",
+      "SQL · PostgreSQL",
+      "Plotly · Streamlit · Dash",
+      "Airflow · Spark",
+      "Statistical Modeling · A/B Testing",
+    ],
   },
 ];
 
@@ -220,37 +224,37 @@ const CERTS = [
     year: "Décembre 2025",
     color: "#22c55e",
   },
-
   {
     tag: "// certification",
     title: "Create LLMs Application with Prompt Engineering",
     institution: "NVIDIA",
+    field: "LLMs · Prompt Design · Production Apps",
     year: "Novembre 2025",
     color: "#22c55e",
   },
-
   {
     tag: "// certification",
     title: "Build RAG Agentic",
     institution: "NVIDIA",
-    field: "",
+    field: "Agentic RAG · Vector Search · Pipelines",
     year: "Janvier 2026",
     color: "#a78bfa",
-  }
+  },
 ];
 
 const TOOLS = [
   "Python", "PyTorch", "TensorFlow", "Scikit-Learn",
   "LangChain", "LlamaIndex", "FastAPI", "Streamlit",
-  "Docker", "MLflow", "Airflow", "PostgreSQL","Apache Spark",
-  "Git", "Linux", "GCP", "HuggingFace", "React/ Nextjs"
+  "Docker", "MLflow", "Airflow", "PostgreSQL", "Apache Spark",
+  "Git", "Linux", "GCP", "HuggingFace", "React / Next.js",
 ];
 
+// Stats repositionnées pour convaincre, pas juste informer
 const STATS = [
-  { v: "5+",  l: "Modèles en prod",  c: "#00d4ff", note: "Live & monitored"   },
-  { v: "90%", l: "Précision moyenne", c: "#a78bfa", note: "Across ML projects" },
-  { v: "08+", l: "Étudiants accompagnés",  c: "#22c55e", note: "BJ · FR · Online"   },
-  { v: "3",   l: "Pays d'impact",     c: "#f59e0b", note: "BJ · FR · CA"        },
+  { v: "5+",   l: "Systèmes IA livrés",     c: "#00d4ff", note: "En prod, pas en notebook" },
+  { v: "90%",  l: "Précision moyenne ML",    c: "#a78bfa", note: "Sur projets réels" },
+  { v: "<48h", l: "Démarrage projet",        c: "#22c55e", note: "Après premier contact" },
+  { v: "4",    l: "Domaines maîtrisés",      c: "#f59e0b", note: "ML · LLM · MLOps · Data" },
 ];
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -265,16 +269,19 @@ export default function Skills() {
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #060a0f; }
-        @keyframes gridFloat { 0%,100%{opacity:.03}50%{opacity:.07} }
-        @keyframes pulseDot  { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
-        .tool-pill:hover { border-color:rgba(0,212,255,0.3)!important; color:#00d4ff!important; }
-        .cta-btn:hover   { background:linear-gradient(135deg,#0891b2,#4338ca)!important; transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,212,255,0.25)!important; }
-        .cta-btn { transition: all 0.25s ease; }
+        @keyframes gridFloat { 0%,100%{opacity:.03} 50%{opacity:.07} }
+        @keyframes pulseDot  { 0%,100%{box-shadow:0 0 6px #22c55e} 50%{box-shadow:0 0 14px #22c55e} }
+        .tool-pill:hover  { border-color:rgba(0,212,255,0.3)!important; color:#00d4ff!important; }
+        .btn-primary:hover  { background:linear-gradient(135deg,#0891b2,#4338ca)!important; transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,212,255,0.25)!important; }
+        .btn-secondary:hover{ border-color:rgba(0,212,255,0.4)!important; color:#00d4ff!important; transform:translateY(-2px); }
+        .btn-primary, .btn-secondary { transition: all 0.25s ease; }
         a { text-decoration: none; }
+
         @media (max-width: 900px) {
           .skills-grid { grid-template-columns: 1fr 1fr !important; }
           .certs-grid  { grid-template-columns: 1fr !important; }
           .stats-grid  { grid-template-columns: repeat(2,1fr) !important; }
+          .cta-btns    { flex-direction: column !important; align-items: stretch !important; }
         }
         @media (max-width: 560px) {
           .skills-grid { grid-template-columns: 1fr !important; }
@@ -286,7 +293,8 @@ export default function Skills() {
         color: "#e2e8f0", fontFamily: "'Space Grotesk', sans-serif",
         position: "relative", overflow: "hidden"
       }}>
-        {/* Grid bg */}
+
+        {/* ── Fond grille ── */}
         <div style={{
           position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
           backgroundImage: `
@@ -305,10 +313,17 @@ export default function Skills() {
           pointerEvents: "none", zIndex: 0
         }} />
 
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 1160, margin: "0 auto", padding: "80px 24px 120px" }}>
+        <div style={{
+          position: "relative", zIndex: 1, maxWidth: 1160,
+          margin: "0 auto", padding: "80px 24px 120px"
+        }}>
 
-          {/* ══ HERO ══ */}
-          <div ref={heroRef} style={{ marginBottom: 80 }}>
+          {/* ══════════════════════════════════════ */}
+          {/* HERO                                   */}
+          {/* ══════════════════════════════════════ */}
+          <div ref={heroRef} style={{ marginBottom: 88 }}>
+
+            {/* Badge */}
             <div style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "6px 16px", borderRadius: 4, marginBottom: 32,
@@ -320,41 +335,52 @@ export default function Skills() {
                 width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
                 animation: "pulseDot 2s ease infinite", display: "inline-block"
               }} />
-              skills.scan() → stack_loaded
+              stack.scan() → prêt_à_livrer
             </div>
 
+            {/* Titre impactant */}
             <h1 style={{
               fontSize: "clamp(40px, 7vw, 78px)", fontWeight: 700,
               lineHeight: 1.05, letterSpacing: "-0.03em",
               color: "#f8fafc", marginBottom: 20
             }}>
-              Expertise
-              <br />
+              L'arsenal qui livre.<br />
               <span style={{
                 background: "linear-gradient(135deg, #00d4ff 0%, #6366f1 100%)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-              }}>Technique.</span>
+              }}>Pas des slides.</span>
             </h1>
 
             <p style={{ maxWidth: 560, color: "#94a3b8", fontSize: 16, lineHeight: 1.85 }}>
-              Stack d'un <strong style={{ color: "#e2e8f0" }}>AI Builder</strong> complet —
-              de la donnée brute jusqu'au modèle en production,
-              avec la rigueur d'un physicien et la praticité d'un ingénieur.
+              Chaque outil listé ici a servi à{" "}
+              <strong style={{ color: "#e2e8f0" }}>livrer un système en production</strong> —
+              pas à remplir un CV. Du pipeline de données jusqu'à l'agent IA déployé sur le cloud,{" "}
+              <strong style={{ color: "#00d4ff" }}>de bout en bout.</strong>
             </p>
           </div>
 
-          {/* ══ SKILL BARS ══ */}
+          {/* ══════════════════════════════════════ */}
+          {/* STACK — PILLS (plus de barres %)       */}
+          {/* ══════════════════════════════════════ */}
           <div style={{ marginBottom: 88 }}>
             <div style={{
               fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
               color: "#475569", letterSpacing: "0.15em", marginBottom: 8
             }}>
-              <span style={{ color: "#00d4ff" }}>// </span>skills.proficiency[]
+              <span style={{ color: "#00d4ff" }}>// </span>stack.je_livre_avec[]
             </div>
             <h2 style={{
               fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 700,
-              color: "#f1f5f9", marginBottom: 40, letterSpacing: "-0.02em"
-            }}>Stack complet</h2>
+              color: "#f1f5f9", marginBottom: 6, letterSpacing: "-0.02em"
+            }}>
+              Ce avec quoi je livre
+            </h2>
+            <p style={{
+              fontFamily: "monospace", fontSize: 12, color: "#475569",
+              marginBottom: 40, fontStyle: "italic"
+            }}>
+              /* Utilisé en production — pas en tutoriel */
+            </p>
 
             <div className="skills-grid" style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20
@@ -376,20 +402,23 @@ export default function Skills() {
                   }}>{col.tag}</div>
                   <h3 style={{
                     fontSize: 14, fontWeight: 700, color: "#f1f5f9",
-                    marginBottom: 22, fontFamily: "'Space Grotesk', sans-serif"
+                    marginBottom: 20, fontFamily: "'Space Grotesk', sans-serif"
                   }}>{col.title}</h3>
-                  {col.skills.map((s, si) => (
-                    <SkillBar
-                      key={si} name={s.name} level={s.level}
-                      color={col.accent} delay={ci * 0.08 + si * 0.06}
-                    />
-                  ))}
+
+                  {/* Pills — remplace les barres avec % */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {col.skills.map((name, si) => (
+                      <SkillPill key={si} name={name} color={col.accent} />
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ══ TOOLS ══ */}
+          {/* ══════════════════════════════════════ */}
+          {/* OUTILS QUOTIDIENS                      */}
+          {/* ══════════════════════════════════════ */}
           <div ref={toolsRef} style={{ marginBottom: 88 }}>
             <div style={{
               fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
@@ -401,11 +430,13 @@ export default function Skills() {
               fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 700,
               color: "#f1f5f9", marginBottom: 28, letterSpacing: "-0.02em"
             }}>Outils quotidiens</h2>
+
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
               {TOOLS.map((t, i) => (
                 <span key={i} className="tool-pill" style={{
                   padding: "6px 16px", borderRadius: 4,
-                  background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)",
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.09)",
                   fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
                   color: "#94a3b8", letterSpacing: "0.04em",
                   transition: "all 0.2s", cursor: "default"
@@ -414,7 +445,9 @@ export default function Skills() {
             </div>
           </div>
 
-          {/* ══ CERTS ══ */}
+          {/* ══════════════════════════════════════ */}
+          {/* CERTIFICATIONS                         */}
+          {/* ══════════════════════════════════════ */}
           <div style={{ marginBottom: 88 }}>
             <div style={{
               fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
@@ -434,24 +467,28 @@ export default function Skills() {
             </div>
           </div>
 
-          {/* ══ STATS ══ */}
+          {/* ══════════════════════════════════════ */}
+          {/* STATS — orientées décision client      */}
+          {/* ══════════════════════════════════════ */}
           <div style={{ marginBottom: 88 }}>
             <div style={{
               fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
               color: "#475569", letterSpacing: "0.15em", marginBottom: 32
             }}>
-              <span style={{ color: "#00d4ff" }}>// </span>metrics.key_numbers
+              <span style={{ color: "#00d4ff" }}>// </span>metrics.pourquoi_moi[]
             </div>
             <div className="stats-grid" style={{
-              display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 16
+              display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16
             }}>
               {STATS.map((s, i) => <StatCard key={i} {...s} delay={i * 0.1} />)}
             </div>
           </div>
 
-          {/* ══ CTA ══ */}
+          {/* ══════════════════════════════════════ */}
+          {/* CTA — direct, avec urgence             */}
+          {/* ══════════════════════════════════════ */}
           <div ref={ctaRef} style={{
-            textAlign: "center", padding: "56px 24px",
+            textAlign: "center", padding: "64px 24px",
             background: "rgba(255,255,255,0.02)",
             border: "1px solid rgba(255,255,255,0.07)",
             borderRadius: 16, position: "relative", overflow: "hidden"
@@ -460,46 +497,95 @@ export default function Skills() {
               position: "absolute", top: 0, left: 0, right: 0, height: 2,
               background: "linear-gradient(90deg, transparent, #00d4ff, #6366f1, transparent)"
             }} />
+
+            {/* Badge urgence */}
             <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "6px 16px", borderRadius: 4, marginBottom: 28,
+              background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.3)",
               fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-              color: "#475569", letterSpacing: "0.15em", marginBottom: 16
+              color: "#f59e0b", letterSpacing: "0.06em"
             }}>
-              <span style={{ color: "#00d4ff" }}>// </span>skills.apply_to_your_project()
+              <span style={{
+                width: 6, height: 6, borderRadius: "50%", background: "#f59e0b",
+                display: "inline-block", animation: "pulseDot 2s ease infinite"
+              }} />
+              1 slot disponible · Démarrage sous 48h
             </div>
+
             <h2 style={{
-              fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 700,
+              fontSize: "clamp(22px, 3.5vw, 42px)", fontWeight: 700,
               color: "#f1f5f9", marginBottom: 12, letterSpacing: "-0.02em"
             }}>
-              Ces compétences pour{" "}
+              Vous avez le problème.<br />
               <span style={{
                 background: "linear-gradient(135deg, #00d4ff, #6366f1)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-              }}>votre projet ?</span>
+              }}>J'ai le système.</span>
             </h2>
-            <p style={{ color: "#64748b", fontFamily: "monospace", fontSize: 13, marginBottom: 36 }}>
-              /* Discutons — réponse garantie sous 24h */
+
+            <p style={{
+              color: "#64748b", fontFamily: "monospace", fontSize: 13, marginBottom: 40
+            }}>
+              /* Réponse sous 24h · Devis gratuit · Zéro engagement */
             </p>
-            <a href="/contact" className="cta-btn" style={{
-              display: "inline-flex", alignItems: "center", gap: 10,
-              padding: "14px 32px", borderRadius: 6,
-              background: "linear-gradient(135deg, #0e7490, #4338ca)",
-              color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
-              boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
+
+            {/* Deux boutons — action principale + alternative */}
+            <div className="cta-btns" style={{
+              display: "flex", gap: 14, justifyContent: "center",
+              flexWrap: "wrap", marginBottom: 36
             }}>
-              initiate_contact() →
-            </a>
+              <a
+                href="https://wa.me/+2290151344289"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  padding: "15px 32px", borderRadius: 6,
+                  background: "linear-gradient(135deg, #0e7490, #4338ca)",
+                  color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
+                  boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
+                }}
+              >
+                Démarrer mon projet →
+              </a>
+              <a
+                href="mailto:donaerickoulodji@gmail.com"
+                className="btn-secondary"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 10,
+                  padding: "15px 28px", borderRadius: 6,
+                  background: "transparent",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 14, fontWeight: 500, letterSpacing: "0.05em"
+                }}
+              >
+                ✉ Poser une question
+              </a>
+            </div>
+
+            {/* Garanties inline */}
             <div style={{
-              marginTop: 28, display: "inline-flex", alignItems: "center", gap: 10,
-              padding: "8px 18px", borderRadius: 4,
-              background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.2)",
-              fontFamily: "monospace", fontSize: 11
+              display: "flex", flexWrap: "wrap", gap: 20,
+              justifyContent: "center"
             }}>
-              <span style={{
-                width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
-                display: "block", animation: "pulseDot 2s ease infinite"
-              }} />
-              <span style={{ color: "#22c55e" }}>Disponible · Freelance · Contract</span>
+              {[
+                "Réponse sous 24h",
+                "Livraison en semaines",
+                "Code documenté",
+                "Remote · Freelance · Contract",
+              ].map((g) => (
+                <span key={g} style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 11, color: "#475569",
+                  display: "flex", alignItems: "center", gap: 6
+                }}>
+                  <span style={{ color: "#22c55e", fontSize: 13 }}>✓</span> {g}
+                </span>
+              ))}
             </div>
           </div>
 

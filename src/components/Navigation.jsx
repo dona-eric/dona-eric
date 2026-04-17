@@ -20,7 +20,7 @@ const Navigation = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
         .nav-link-text  { transition: color 0.2s ease; }
         .nav-link:hover .nav-link-text { color: #00d4ff !important; }
         .nav-link:hover .nav-link-bar  { opacity: 1 !important; }
@@ -142,7 +142,7 @@ const Navigation = () => {
                 open_to_work
               </div>
 
-              <Link href="/contact" className="cta-nav" style={{
+              <Link to="https://wa.me/+2290151344289" className="cta-nav" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 padding: "8px 18px", borderRadius: 4,
                 background: "linear-gradient(135deg, #0e7490, #4338ca)",
@@ -222,7 +222,7 @@ const Navigation = () => {
               </div>
 
               {/* Mobile CTA */}
-              <Link href="https://wa.me/+2290141730240" target="_blank" rel="noopener noreferrer"
+              <Link href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                   padding: "13px", borderRadius: 4, textDecoration: "none",

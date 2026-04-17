@@ -49,7 +49,7 @@ const QUICK_LINKS = [
   { label: "Projects", href: "/projects" },
   { label: "Services", href: "/services" },
   { label: "Blog",     href: "/blog"     },
-  { label: "Contacts",  href: "/contact"  },
+  { label: "Contact",  href: "/contact"  },
 ];
 
 const EXPERTISE = [

@@ -1,7 +1,9 @@
+import { color, delay } from "framer-motion";
 import React, { useEffect, useState } from "react";
 
 const BOOT_LINES = [
-  { text: "$ initializing portfolio.exe...", delay: 500,    color: "#00d4ff" },
+  { text: "$ initializing portfolio.sh...", delay: 1200,    color: "#00d4ff" },
+  { text: "$ cmd: SUDO APT-GET UPDATE PROJECTS_MONEY...", delay:3600, color: "#a87fbe"},
   { text: "> loading modules: ML · LLM · MLOps", delay: 400,  color: "#94a3b8" },
   { text: "> connecting to data layer...",       delay: 800,  color: "#94a3b8" },
   { text: "> profile: DONA_ERIC_KOULODJI",       delay: 1200, color: "#a78bfa" },

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 
-// ─── Hooks ────────────────────────────────────────────────────────────────────
 const useFadeIn = (delay = 0) => {
   const ref = useRef(null);
   useEffect(() => {
@@ -32,7 +31,6 @@ const useScrollFade = (delay = 0) => {
   return ref;
 };
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
     id: "veritaai",
@@ -123,6 +121,21 @@ const PROJECTS = [
     category: "ml",
     accent: "#ef4444",
     featured: false,
+  },
+  {
+    id: "askbenin",
+    title: "AskBenin",
+    subtitle: "IA RAG pour souveraineté numérique béninoise",
+    description: "Plateforme d'Intelligence Artificielle agentic RAG qui comprend la culture, traditions et histoire du Bénin. Permet aux citoyens de dialoguer avec une IA consciente des nuances locales—pas juste une simple interface de chat.",
+    stack: ["LangChain", "LangGraph", "Torch", "FastAPI", "Python", "Next.js", "RAG", "Groq", "HuggingFace"],
+    impact: "Indexation 10K docs",
+    impactDetail: "Culture béninoise · Souveraineté numérique",
+    github: "https://github.com/askbeninn",
+    demo: null,
+    status: "wip",
+    category: "llm",
+    accent: "#f59e0b",
+    featured: true,
   },
 ];
 
