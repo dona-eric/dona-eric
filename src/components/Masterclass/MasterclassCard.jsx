@@ -1,20 +1,22 @@
-/**
- * ─────────────────────────────────────────────────────────────────
- *  COMPOSANT — MasterclassCard.jsx
- *  Carte pour afficher les masterclasses passées et à venir.
- *  Les passées affichent "Inscriptions closes".
- * ─────────────────────────────────────────────────────────────────
- */
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { isOpen, formatDate } from "../../config/masterclasses.config";
 import RegistrationForm from "./RegistrationForm";
 
 export default function MasterclassCard({ masterclass }) {
   const [showForm, setShowForm] = useState(false);
   const open = isOpen(masterclass);
+  
+  // Détection mobile
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 600);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { title, subtitle, date, time, format, theme, themeColor, image, imageAlt,
-          price, speaker, type, duration, seats } = masterclass;
+          price, speaker, type, duration } = masterclass;
 
   const typeLabel = type === "webinaire" ? "Webinaire" : "Masterclass";
   const typeIcon  = type === "webinaire" ? "🎙️" : "🎓";
@@ -27,26 +29,17 @@ export default function MasterclassCard({ masterclass }) {
         overflow: "hidden",
         border: "1px solid #E5E7EB",
         boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-        transition: "transform 0.2s, box-shadow 0.2s",
+        transition: "transform 0.2s",
         opacity: open ? 1 : 0.85,
         display: "flex",
         flexDirection: "column",
-      }}
-      onMouseEnter={(e) => {
-        if (open) {
-          e.currentTarget.style.transform = "translateY(-4px)";
-          e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,0,0,0.12)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)";
+        height: "100%", // Pour que toutes les cartes aient la même hauteur
       }}>
 
-        {/* Image */}
+        {/* Image - Hauteur réduite sur mobile pour gagner de la place */}
         <div style={{
           position: "relative",
-          height: "180px",
+          height: isMobile ? "150px" : "180px",
           background: `linear-gradient(135deg, ${themeColor}22, ${themeColor}44)`,
           overflow: "hidden",
         }}>
@@ -56,66 +49,46 @@ export default function MasterclassCard({ masterclass }) {
               filter: open ? "none" : "grayscale(60%)",
             }} />
           ) : (
-            <div style={{
-              display: "flex", alignItems: "center", justifyContent: "center",
-              height: "100%", fontSize: "64px",
-            }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: "48px" }}>
               {typeIcon}
             </div>
           )}
 
-          {/* Badge type */}
+          {/* Badges repositionnés pour mobile */}
           <div style={{
-            position: "absolute", top: "12px", left: "12px",
-            padding: "4px 10px", borderRadius: "6px", fontSize: "12px",
+            position: "absolute", top: "10px", left: "10px",
+            padding: "4px 8px", borderRadius: "6px", fontSize: "10px",
             fontWeight: "700", background: themeColor, color: "#fff",
-            textTransform: "uppercase", letterSpacing: "0.5px",
           }}>
-            {typeIcon} {typeLabel}
-          </div>
-
-          {/* Badge statut */}
-          <div style={{
-            position: "absolute", top: "12px", right: "12px",
-            padding: "4px 10px", borderRadius: "6px", fontSize: "12px",
-            fontWeight: "700",
-            background: open ? "#D1FAE5" : "#FEE2E2",
-            color: open ? "#065F46" : "#991B1B",
-          }}>
-            {open ? "🟢 Ouvert" : "🔴 Terminé"}
+            {typeLabel}
           </div>
         </div>
 
         {/* Contenu */}
-        <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column" }}>
-          {/* Thème */}
-          <span style={{
-            fontSize: "12px", fontWeight: "700", color: themeColor,
-            textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "8px",
-            display: "block",
-          }}>
+        <div style={{ padding: isMobile ? "16px" : "20px 24px", flex: 1, display: "flex", flexDirection: "column" }}>
+          <span style={{ fontSize: "11px", fontWeight: "700", color: themeColor, textTransform: "uppercase", marginBottom: "6px" }}>
             {theme}
           </span>
 
-          {/* Titre */}
           <h3 style={{
-            margin: "0 0 6px", fontSize: "15px", fontWeight: "800",
+            margin: "0 0 8px", fontSize: isMobile ? "17px" : "18px", fontWeight: "800",
             color: "#111827", lineHeight: "1.3",
           }}>
             {title}
           </h3>
 
-          {/* Sous-titre */}
           <p style={{
             margin: "0 0 16px", fontSize: "14px", color: "#6B7280", lineHeight: "1.5",
           }}>
             {subtitle}
           </p>
 
-          {/* Infos rapides */}
+          {/* Infos rapides - Adaptation Grid */}
           <div style={{
-            display: "grid", gridTemplateColumns: "1fr 1fr",
-            gap: "8px", marginBottom: "20px",
+            display: "grid", 
+            gridTemplateColumns: "1fr 1fr", // Garde 2 colonnes même sur mobile
+            gap: "10px", 
+            marginBottom: "20px",
           }}>
             {[
               { icon: "📅", label: formatDate(date).split(" ").slice(0, 3).join(" ") },
@@ -123,12 +96,9 @@ export default function MasterclassCard({ masterclass }) {
               { icon: "⏱️", label: duration },
               { icon: "💻", label: format },
             ].map(({ icon, label }) => (
-              <div key={label} style={{
-                display: "flex", alignItems: "center", gap: "6px",
-                fontSize: "13px", color: "#4B5563",
-              }}>
-                <span>{icon}</span>
-                <span style={{ fontWeight: "500" }}>{label}</span>
+              <div key={label} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "#4B5563" }}>
+                <span style={{ flexShrink: 0 }}>{icon}</span>
+                <span style={{ fontWeight: "600", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{label}</span>
               </div>
             ))}
           </div>
@@ -136,27 +106,17 @@ export default function MasterclassCard({ masterclass }) {
           {/* Speaker */}
           <div style={{
             display: "flex", alignItems: "center", gap: "10px",
-            paddingTop: "16px", borderTop: "1px solid #F3F4F6",
+            paddingTop: "14px", borderTop: "1px solid #F3F4F6",
             marginBottom: "20px",
           }}>
-            <div style={{
-              width: "36px", height: "36px", borderRadius: "50%",
-              background: `${themeColor}22`, border: `2px solid ${themeColor}44`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              overflow: "hidden", flexShrink: 0,
-            }}>
-              {speaker.avatar
-                ? <img src={speaker.avatar} alt={speaker.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                : <span style={{ fontSize: "16px" }}>👤</span>
+            <div style={{ width: "32px", height: "32px", borderRadius: "50%", overflow: "hidden", flexShrink: 0 }}>
+              {speaker.avatar 
+                ? <img src={speaker.avatar} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                : <span style={{ background: "#eee", display: "block", textAlign: "center" }}>👤</span>
               }
             </div>
-            <div>
-              <p style={{ margin: 0, fontSize: "14px", fontWeight: "700", color: "#111827" }}>
-                {speaker.name}
-              </p>
-              <p style={{ margin: 0, fontSize: "12px", color: "#6B7280" }}>
-                {speaker.title}
-              </p>
+            <div style={{ overflow: "hidden" }}>
+              <p style={{ margin: 0, fontSize: "13px", fontWeight: "700", color: "#111827", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{speaker.name}</p>
             </div>
           </div>
 
@@ -166,24 +126,18 @@ export default function MasterclassCard({ masterclass }) {
               <button
                 onClick={() => setShowForm(true)}
                 style={{
-                  width: "100%", padding: "13px",
+                  width: "100%", padding: "14px",
                   background: themeColor, color: "#fff",
                   border: "none", borderRadius: "10px",
                   cursor: "pointer", fontWeight: "700", fontSize: "15px",
-                  transition: "opacity 0.2s",
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.9"}
-                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
               >
                 🎯 S'inscrire {price}
               </button>
             ) : (
               <div style={{
-                width: "100%", padding: "13px",
-                background: "#F3F4F6", color: "#9CA3AF",
-                border: "1px solid #E5E7EB", borderRadius: "10px",
-                textAlign: "center", fontSize: "14px", fontWeight: "600",
-                boxSizing: "border-box",
+                width: "100%", padding: "12px", background: "#F3F4F6", 
+                color: "#9CA3AF", borderRadius: "10px", textAlign: "center", fontSize: "13px",
               }}>
                 🔒 Inscriptions closes
               </div>
@@ -192,9 +146,9 @@ export default function MasterclassCard({ masterclass }) {
         </div>
       </article>
 
-      {/* Modal formulaire */}
+      {/* Modal adaptée au mobile */}
       {showForm && (
-        <Modal title={title} color={themeColor} onClose={() => setShowForm(false)}>
+        <Modal title={title} color={themeColor} onClose={() => setShowForm(false)} isMobile={isMobile}>
           <RegistrationForm masterclass={masterclass} onClose={() => setShowForm(false)} />
         </Modal>
       )}
@@ -202,49 +156,47 @@ export default function MasterclassCard({ masterclass }) {
   );
 }
 
-//  Modal 
-function Modal({ title, color, onClose, children }) {
+function Modal({ title, color, onClose, children, isMobile }) {
   return (
     <div
       style={{
         position: "fixed", inset: 0, zIndex: 9999,
-        background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "20px",
+        background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)",
+        display: "flex", alignItems: isMobile ? "flex-end" : "center", // Sur mobile, la modal "monte" du bas
+        justifyContent: "center",
       }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div style={{
-        background: "#fff", borderRadius: "20px",
-        width: "100%", maxWidth: "560px",
-        maxHeight: "90vh", overflow: "hidden",
+        background: "#fff", 
+        borderRadius: isMobile ? "20px 20px 0 0" : "20px",
+        width: "100%", 
+        maxWidth: "560px",
+        height: isMobile ? "92vh" : "auto", 
+        maxHeight: isMobile ? "92vh" : "90vh",
+        overflow: "hidden",
         display: "flex", flexDirection: "column",
-        boxShadow: "0 24px 64px rgba(0,0,0,0.25)",
+        boxShadow: "0 -10px 25px rgba(0,0,0,0.2)",
       }}>
-        {/* Modal header */}
+        {/* Header Modal */}
         <div style={{
-          padding: "20px 28px",
-          borderBottom: "1px solid #E5E7EB",
+          padding: "16px 20px", borderBottom: "1px solid #E5E7EB",
           display: "flex", justifyContent: "space-between", alignItems: "center",
-          background: `${color}08`,
+          background: `${color}05`,
         }}>
-          <div>
-            <p style={{ margin: "0 0 2px", fontSize: "12px", color: color, fontWeight: "700", textTransform: "uppercase" }}>
-              Inscription
-            </p>
-            <h3 style={{ margin: 0, fontSize: "18px", color: "#111827", fontWeight: "800" }}>
+          <div style={{ overflow: "hidden" }}>
+            <h3 style={{ margin: 0, fontSize: "16px", color: "#111827", fontWeight: "800", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
               {title}
             </h3>
           </div>
           <button onClick={onClose} style={{
-            width: "36px", height: "36px", borderRadius: "50%",
-            background: "#F3F4F6", border: "none", cursor: "pointer",
-            fontSize: "20px", display: "flex", alignItems: "center", justifyContent: "center",
+            width: "32px", height: "32px", borderRadius: "50%",
+            background: "#F3F4F6", border: "none", fontSize: "20px",
           }}>×</button>
         </div>
 
-        {/* Modal body scrollable */}
-        <div style={{ padding: "28px", overflowY: "auto", flex: 1 }}>
+        {/* Body Modal */}
+        <div style={{ padding: "20px", overflowY: "auto", flex: 1 }}>
           {children}
         </div>
       </div>
