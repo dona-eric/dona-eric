@@ -22,7 +22,7 @@ export const NAVIGATION = [
   { name: "about", path: "/about" },
   { name: "skills", path: "/skills" },
   { name: "projects", path: "/projects" },
-  { name: "services", path: "/services" },
+  { name: "masterclass", path: "/formations" },
   { name: "blog", path: "/blog" },
   { name: "contact", path: "/contact" },
 ];
@@ -32,12 +32,6 @@ export const CTA_BUTTON = {
   url: "https://wa.me/22901417302400",
 };
 
-// ⚠️  DEPRECATED: Skills and Projects are now defined directly in their respective page components
-// Skills.jsx -> SKILL_COLS contains all skill data
-// Projects.jsx -> PROJECTS array contains all project data
-// To add/update skills: Edit Skills.jsx
-// To add/update projects: Edit Projects.jsx
-// These arrays are kept below for reference only (legacy)
 
 export const SERVICES = [
   {
