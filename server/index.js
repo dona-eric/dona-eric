@@ -14,8 +14,6 @@ app.use(helmet());
 app.use(cors({
   origin: [
     "https://donerick.onrender.com",
-    "http://localhost:5173",
-    "http://localhost:3000",
     "https://donerick.vercel.app",
     process.env.FRONTEND_URL,
   ].filter(Boolean),
@@ -37,5 +35,5 @@ app.get("/api/health", (_, res) => res.json({ status: "ok" }));
 app.listen(PORT, async () => {
   await initDatabase();
   startReminderScheduler();
-  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+  console.log(`🚀 Serveur démarré sur https://donerick.onrender.com`);
 });

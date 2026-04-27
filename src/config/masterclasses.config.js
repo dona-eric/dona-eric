@@ -1,11 +1,3 @@
-/**
- * ╔══════════════════════════════════════════════════════════════╗
- * ║         FICHIER DE CONFIGURATION DES MASTERCLASSES           ║
- * ║  ➜ C'est le SEUL fichier à modifier pour chaque nouvelle     ║
- * ║    Masterclass ou Webinaire. Les anciennes restent visibles.  ║
- * ╚══════════════════════════════════════════════════════════════╝
- */
-
 export const MASTERCLASSES = [
 
   // ─────────────────────────────────────────────────────────────

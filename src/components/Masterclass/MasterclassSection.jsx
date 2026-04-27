@@ -1,15 +1,3 @@
-/**
- * ─────────────────────────────────────────────────────────────────
- *  COMPOSANT PRINCIPAL — MasterclassSection.jsx
- *
- *  ➜ C'est CE composant que vous ajoutez dans votre portfolio.
- *  ➜ Il gère tout : hero du masterclass actif + grille des passés.
- *
- *  Usage dans votre App.jsx ou page Portfolio :
- *    import MasterclassSection from "./components/Masterclass/MasterclassSection";
- *    <MasterclassSection />
- * ─────────────────────────────────────────────────────────────────
- */
 import React from "react";
 import { useState } from "react";
 import { MASTERCLASSES, getFeatured, isOpen} from "../../config/masterclasses.config";

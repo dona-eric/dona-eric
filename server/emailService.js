@@ -1,18 +1,3 @@
-/**
- * ─────────────────────────────────────────────────────────────────
- *  EMAIL SERVICE — emailService.js
- *  Transport : Nodemailer + Gmail SMTP (ou autre)
- *  Déclenché : automatiquement à chaque inscription réussie
- * ─────────────────────────────────────────────────────────────────
- *
- *  CONFIG REQUISE dans .env :
- *  EMAIL_USER=votre-email@gmail.com
- *  EMAIL_PASS=xxxx-xxxx-xxxx-xxxx   ← mot de passe d'application Gmail
- *  EMAIL_FROM=Votre Nom <votre-email@gmail.com>
- *
- *  Pour Gmail : Compte → Sécurité → Validation en 2 étapes → Mots de passe d'application
- */
-
 import nodemailer from "nodemailer";
 import { formatDate } from "../src/config/masterclasses.config.js";
 
