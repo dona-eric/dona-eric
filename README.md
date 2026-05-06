@@ -1,320 +1,217 @@
-# 👋 Salut, moi c'est Dona Éric KOULODJI
-
 <div align="center">
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live-purple?style=for-the-badge&logo=react)](https://donerick.vercel.app)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/dona-erick)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=for-the-badge&logo=github)](https://github.com/dona-eric)
-[![Email](https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail)](mailto:donaerickoulodji@gmail.com)
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Dona%20Éric%20KOULODJI&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32&desc=ML%20Engineer%20•%20Data%20Scientist%20•%20AI%20for%20Africa&descAlignY=55&descSize=16" width="100%"/>
 
-**Ingénieur Machine Learning • Data Scientist • AI Enthusiast**
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live-a855f7?style=for-the-badge&logo=vercel&logoColor=white)](https://donerick.vercel.app)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/dona-erick)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/dona-eric)
+[![Email](https://img.shields.io/badge/Email-Contact-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:donaerickoulodji@gmail.com)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/+2290151344289)
 
-*Transformant les données en solutions intelligentes qui créent un impact réel*
-
-🌍 Abomey-Calavi, Bénin | 💼 Freelance & Open to Work | 🎯 Disponible pour projets
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=3000&pause=800&color=a855f7&center=true&vCenter=true&multiline=false&width=600&lines=Transforming+data+into+intelligent+solutions+%F0%9F%9A%80;7%2B+models+in+production+%E2%80%A2+90%25+avg+accuracy;Building+Africa%27s+AI+ecosystem%2C+one+model+at+a+time+%F0%9F%8C%8D" alt="Typing SVG" />
 
 </div>
 
 
 
-## 🚀 À Propos
+## ⚡ À Propos
 
-Je suis un **Ingénieur Machine Learning** passionné par l'intelligence artificielle et son potentiel à résoudre des problèmes concrets. De la physique théorique au ML, j'ai choisi de mettre mes compétences en analyse et prise de décision au service de l'impact social.
+ML Engineer passionné, de la physique théorique à l'IA appliquée. Je construis des systèmes ML robustes qui passent du notebook à la production et qui créent un impact réel, particulièrement en Afrique.
 
-**Ce qui me distingue :**
-- 🎯 **7+ modèles en production** utilisés quotidiennement
-- 📊 **90% de précision moyenne** sur mes modèles déployés
-- ⚡ **Réponse sous 24h** garantie
-- 🌍 **Impact sur 3 continents** (Afrique, Europe, Amérique)
+<div align="center">
 
-### 🎓 Parcours Académique
+| 🎯 Modèles en production | 📊 Précision moyenne | ⚡ Réponse garantie | 🌍 Continents atteints |
+|:---:|:---:|:---:|:---:|
+| **5+** | **90%** | **< 24h** | **3** |
 
-- 🔬 **Physique & Mathématiques** → Solides bases en analyse et modélisation
-- 🤖 **Machine Learning & IA** → Spécialisation avancée
-- 📚 **Formation continue** → Toujours à jour avec les dernières technologies
+</div>
+
+**Physique & Maths** → Solides bases analytiques &nbsp;|&nbsp; **ML & IA** → Spécialisation avancée &nbsp;|&nbsp; **Formation continue** → Toujours à jour
 
 
 
-## 💼 Compétences Techniques
 
-### 🧠 Machine Learning & Deep Learning
+## 🧠 Stack Technique
 
 ```python
 expertise = {
-    "LLM & NLP": ["Fine-tuning Llama 3", "Mistral", "Phi-3", "BERT", "Transformers"],
-    "RAG Systems": ["LangChain", "LlamaIndex", "ChromaDB", "Pinecone", "Vector Embeddings"],
+    "LLM & NLP":       ["Fine-tuning Llama 3", "Mistral", "Phi-3", "BERT", "Transformers"],
+    "RAG Systems":     ["LangChain", "LlamaIndex", "ChromaDB", "Pinecone", "Embeddings"],
     "Computer Vision": ["YOLO", "Segment Anything", "OCR", "Object Detection"],
-    "Time Series": ["Prophet", "ARIMA", "XGBoost", "Forecasting"],
-    "ML Classique": ["Scikit-Learn", "XGBoost", "LightGBM", "Random Forest"],
-    "Explicabilité": ["SHAP", "LIME", "Model Interpretability"]
+    "Time Series":     ["Prophet", "ARIMA", "XGBoost", "Forecasting"],
+    "ML Classique":    ["Scikit-Learn", "XGBoost", "LightGBM", "Random Forest"],
+    "Explicabilité":   ["SHAP", "LIME", "Model Interpretability"],
 }
 ```
 
-### 🛠️ MLOps & Déploiement
+**MLOps & Déploiement**
 
-- **Containerization**: Docker, Kubernetes basics
-- **API Development**: FastAPI, Flask, Streamlit
-- **ML Tracking**: MLflow, Weights & Biases
-- **CI/CD**: GitHub Actions, GitLab CI
-- **Monitoring**: Prometheus, Grafana
-- **Cloud**: GCP, AWS, Vercel
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
+![MLflow](https://img.shields.io/badge/MLflow-0194E2?style=flat-square&logo=mlflow&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+![GCP](https://img.shields.io/badge/GCP-4285F4?style=flat-square&logo=googlecloud&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-FF9900?style=flat-square&logo=amazonaws&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
 
-### 📊 Data Engineering & Analysis
+**Data & Full-Stack**
 
-- **Frameworks**: Pandas, NumPy, Polars
-- **Visualization**: Plotly, Dash, Matplotlib, Seaborn
-- **Databases**: PostgreSQL, MongoDB, Supabase
-- **Big Data**: Apache Spark (basics), Airflow
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
 
-### 💻 Stack Full-Stack
-
-- **Frontend**: React, Next.js, Tailwind CSS
-- **Backend**: Node.js, Express, Python
-- **Mobile**: React Native (basics)
-
-
+---
 
 ## 🏆 Projets Phares
 
-### 🛡️ [VeritaAI](https://github.com/dona-eric/veritaai) - Détection de Fake News
+### [VeritaAI](https://github.com/dona-eric/veritaai) — Détection de Fake News
 > Système RAG + BERT pour analyser l'authenticité des informations en temps réel
 
-**Stack**: `BERT` `Transformers` `FastAPI` `Streamlit` `Supabase`  
-**Impact**: 90% de précision • Utilisé par 3 médias africains  
-**Status**: 🟢 En production
+`BERT` `Transformers` `FastAPI` `Streamlit` `Supabase` &nbsp;|&nbsp; 🟢 En production
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live-success?style=flat-square)](https://verita-ai.streamlit.app)
-[![GitHub](https://img.shields.io/badge/Code-GitHub-black?style=flat-square&logo=github)](https://github.com/dona-eric/veritaai)
+**Impact** : 90% de précision • Utilisé par **3 médias africains**
 
-**Highlights:**
-- Fine-tuning de BERT sur corpus francophone africain
+- Fine-tuning BERT sur corpus francophone africain
 - Pipeline RAG pour fact-checking automatique
-- Interface Streamlit déployée pour journalistes
-- API FastAPI pour intégration tierce
+- API FastAPI disponible pour intégrations tierces
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live-22c55e?style=flat-square)](https://verita-ai.streamlit.app) [![GitHub](https://img.shields.io/badge/Code-GitHub-181717?style=flat-square&logo=github)](https://github.com/dona-eric/veritaai)
 
-### 💪 [CoachAI](https://github.com/dona-eric/CoachAI) - Générateur IA de Programmes Sportifs
-> Application LLM qui génère des entraînements personnalisés et plans nutritionnels
+---
 
-**Stack**: `OpenAI` `GroqCloud` `RAG` `Streamlit` `LangChain`  
-**Impact**: 20% de temps gagné pour les coachs sportifs  
-**Status**: 🟢 En production
+### [Credit Risk Engine](https://github.com/dona-eric/Hack2Hiere_TechTech_DataScience_20) — Scoring Crédit Bancaire
+> Modèle prédictif avec explicabilité SHAP déployé chez une fintech béninoise
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live-success?style=flat-square)](https://coach-ai.streamlit.app)
-[![GitHub](https://img.shields.io/badge/Code-GitHub-black?style=flat-square&logo=github)](https://github.com/dona-eric/CoachAI)
+`Scikit-Learn` `FastAPI` `SHAP` `Streamlit` `MLflow` &nbsp;|&nbsp; 🟢 En production
 
-**Features:**
-- Génération automatique de programmes d'entraînement
-- Plans de récupération personnalisés
-- Recommandations nutritionnelles basées sur profil
-- Intégration Groq pour inférence rapide
+**Impact** : +15% de précision vs baseline • Monitoring de drift en temps réel
 
+- Feature engineering avancé + Logistic Regression optimisée
+- Explicabilité complète avec SHAP values (exigence réglementaire)
+- Drift detection via MLflow
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live-22c55e?style=flat-square)](https://risk-score.streamlit.app) [![GitHub](https://img.shields.io/badge/Code-GitHub-181717?style=flat-square&logo=github)](https://github.com/dona-eric/Hack2Hiere_TechTech_DataScience_20)
 
-### 💳 [Credit Risk Engine](https://github.com/dona-eric/Hack2Hiere_TechTech_DataScience_20) - Scoring Crédit Bancaire
-> Modèle prédictif avec explicabilité SHAP déployé en fintech
+---
 
-**Stack**: `Scikit-Learn` `FastAPI` `SHAP` `Streamlit` `MLflow`  
-**Impact**: Déployé chez une fintech béninoise • +15% précision  
-**Status**: 🟢 En production
+### 💪 [CoachAI](https://github.com/dona-eric/CoachAI) — Générateur IA de Programmes Sportifs
+> LLM qui génère des entraînements personnalisés et plans nutritionnels
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live-success?style=flat-square)](https://risk-score.streamlit.app)
-[![GitHub](https://img.shields.io/badge/Code-GitHub-black?style=flat-square&logo=github)](https://github.com/dona-eric/Hack2Hiere_TechTech_DataScience_20)
+`OpenAI` `GroqCloud` `RAG` `Streamlit` `LangChain` &nbsp;|&nbsp; 🟢 En production
 
-**Technical Stack:**
-- Logistic Regression optimisée + Feature Engineering
-- Explicabilité complète avec SHAP values
-- API FastAPI déployée en production
-- Monitoring MLflow pour drift detection
+**Impact** : -20% du temps de préparation pour les coachs
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live-22c55e?style=flat-square)](https://coach-ai.streamlit.app) [![GitHub](https://img.shields.io/badge/Code-GitHub-181717?style=flat-square&logo=github)](https://github.com/dona-eric/CoachAI)
 
+---
 
-### 🧠 [RAG Document Intelligence](https://huggingface.co/spaces/donerick/Projects)
-> Recherche sémantique dans tous types de documents
+### [AskBenin](https://github.com/dona-eric) — La Plateforme Intelligente du Bénin
+> Chat IA tout-en-un pour accéder à toutes les informations sur le Bénin et sa diaspora
 
-**Stack**: `Groq` `LangChain` `ChromaDB` `Gradio` `Llama 3`  
-**Impact**: Réponses en <2s sur 1000+ documents  
-**Status**: 🟢 En production
+`RAG` `LLM` `LangChain` `FastAPI` `Next.js` &nbsp;|&nbsp; 🟡 En cours de développement
 
-[![Live Demo](https://img.shields.io/badge/Demo-HuggingFace-yellow?style=flat-square)](https://huggingface.co/spaces/donerick/Projects)
+**Vision** : Un seul endroit pour tout savoir sur le Bénin — culture, histoire, services publics, économie, diaspora — grâce à un chat intelligent alimenté par l'IA
 
-**Capabilities:**
-- Support multi-format (PDF, Word, Excel)
-- Vector embeddings avec ChromaDB
-- Retrieval optimisé avec LangChain
-- Interface Gradio interactive
+- Chat IA contextuel sur toutes les thématiques béninoises
+- Accès centralisé : institutions, culture, économie, diaspora mondiale
+- Base de connaissances RAG enrichie en continu
+- Conçu pour les Béninois au pays **et** à l'étranger 🌍
 
+> ⚡ *En cours — watch the repo pour suivre l'avancement !*
 
+---
 
-### ⚡ [EV Dashboard Pro](https://github.com/dona-eric/dashboard-ve)
-> Optimisation de recharge véhicules électriques
+### [AQI Cotonou](https://aqi-cotonou.netlify.app/) — Surveillance Qualité de l'Air
+> Dashboard temps réel de surveillance des PM2.5, PM10, Ozone & NO₂ à Cotonou avec analyses IA
 
-**Stack**: `Prophet` `XGBoost` `Plotly Dash` `Docker`  
-**Impact**: -30% sur facture énergétique moyenne  
-**Status**: ✅ Terminé
+`Time Series` `Prophet` `Plotly` `Netlify` &nbsp;|&nbsp; 🟢 En production
 
-**Features:**
-- Prédiction de consommation avec Prophet
-- Optimisation tarifaire temps réel
-- Dashboard interactif Plotly
-- Conteneurisé avec Docker
+**Impact** : Premier outil public de monitoring de la qualité de l'air au Bénin • **5 256 enregistrements horaires** analysés
 
+- 📊 **8 indicateurs clés** en temps réel : AQI, PM2.5, PM10, Ozone, NO₂, rapport PM2.5/PM10...
+- 🚨 **Alertes dépassement OMS** — PM2.5 à 18.47 µg/m³ vs seuil OMS 12 µg/m³ (détecté & affiché)
+- 🧠 **Analyses IA** : séries temporelles, distributions, corrélations, pics & épisodes critiques
+- 🌙 Interface dark mode soignée, responsive, avec jauge visuelle par polluant
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live-22c55e?style=flat-square)](https://aqi-cotonou.netlify.app/)
 
-### 🚗 [SafeRoute Bénin](https://github.com/dona-eric/afridrive)
-> Application de sécurité routière communautaire
+---
 
-**Stack**: `React Native` `Node.js` `MongoDB` `ML` `Maps API`  
-**Impact**: Réduction ciblée des accidents  
-**Status**: 🟡 En cours
+### Autres projets
 
-**Features:**
-- Alertes temps réel d'accidents
-- Crowdsourcing communautaire
-- Prédiction zones à risque avec ML
-- Intégration Google Maps
+| Projet | Description | Stack | Status |
+|--------|-------------|-------|--------|
+| [RAG Document Intelligence](https://huggingface.co/spaces/donerick/Projects) | Recherche sémantique multi-format, réponses <2s sur 1000+ docs | Groq · LangChain · ChromaDB · Llama 3 | 🟢 Prod |
+| [EV Dashboard Pro](https://github.com/dona-eric/dashboard-ve) | Optimisation recharge véhicules électriques (-30% facture) | Prophet · XGBoost · Plotly Dash · Docker | ✅ Terminé |
+| [SafeRoute Bénin](https://github.com/dona-eric/afridrive) | Sécurité routière communautaire + prédiction zones à risque | React Native · Node.js · MongoDB · ML | 🟡 En cours |
 
-
+----
 
 ## 📈 GitHub Stats
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=dona-eric&show_icons=true&theme=tokyonight&hide_border=true)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=dona-eric&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=dona-eric&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117)
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=dona-eric&layout=compact&theme=tokyonight&hide_border=true)
-
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=dona-eric&theme=tokyonight&hide_border=true)
-
-</div>
-
-
-## 🎯 Ce Qui Me Drive
-
-### ⚡ Excellence Technique
-Je ne livre que des systèmes robustes, monitorés, et qui tiennent la charge. Du prototype au déploiement, chaque ligne de code est pensée pour la production.
-
-### 🌍 Impact Social
-L'IA doit servir l'humain. Tous mes projets visent à améliorer la santé, l'éducation ou l'accès à l'information, particulièrement en Afrique.
-
-### 👥 Partage de Connaissance
-Formateur, mentor, contributeur open-source. Je construis l'écosystème IA africain à travers des bootcamps et du mentorat individuel.
-
-### 🚀 Exécution Rapide
-Du prototype en 48h au modèle en production. Je livre des solutions qui marchent, pas juste des notebooks Jupyter.
-
-
-## 🎓 Services & Formations
-
-### 💼 Consulting & Développement
-
-- 🤖 **Fine-tuning & RAG**: Adaptation de LLMs pour vos cas d'usage
-- 🚀 **MLOps & Déploiement**: Pipeline complet du notebook à la production
-- 👁️ **Computer Vision**: Détection, segmentation, OCR
-- 📊 **Prédictif & Scoring**: Modèles avec explicabilité (SHAP)
-- 🛡️ **Audit & Conseil IA**: Roadmap stratégique et optimisation
-
-### 📚 Formations
-
-- 🎯 **Bootcamp ML intensif** (8-12 semaines)
-- 🧠 **Formation RAG & Fine-tuning LLM**
-- 🏗️ **MLOps & Production Masterclass**
-- 👨‍🏫 **Mentorat 1-to-1 personnalisé** (3 mois)
-
-**Témoignages:**
-> *"Formation complète et pratique. J'ai déployé mon premier modèle en production en 6 semaines."*  
-> — Étudiant Bootcamp ML 2024
-
-
-## 📫 Me Contacter
-
-<div align="center">
-
-### 💬 Discutons de votre projet !
-
-Je suis **actuellement disponible** pour nouveaux projets (Freelance, Consulting, Long terme)
-
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/2290141730240)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:donaerickoulodji@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/dona-erick)
-[![Portfolio](https://img.shields.io/badge/Portfolio-FF5722?style=for-the-badge&logo=todoist&logoColor=white)](https://donerick.vercel.app)
-
-**⏱️ Temps de réponse garanti : 24h**
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=dona-eric&theme=tokyonight&hide_border=true&background=0d1117)
 
 </div>
 
+----
 
+## 🎓 Certifications
 
-## 📊 Activité Récente
+- 🏅 **Machine Learning Specialization** — Stanford / Coursera
+- 🏅 **Deep Learning Specialization** — DeepLearning.AI
+- 🏅 **MLOps Professional** — Google Cloud
+- 🏆 **Hackathon Winner** — Hack2Hire TechTech DataScience 2020
 
-<!--START_SECTION:activity-->
-<!--END_SECTION:activity-->
-
-
-
-## 🏅 Certifications & Reconnaissances
-
-- 🎓 **Machine Learning Specialization** - Stanford (Coursera)
-- 🤖 **Deep Learning Specialization** - DeepLearning.AI
-- 🏆 **Hackathon Winner** - Hack2Hire TechTech DataScience 2020
-- 📜 **MLOps Professional** - Google Cloud
-
+---
 
 ## 💡 Fun Facts
 
 ```python
 class DonaEric:
     def __init__(self):
-        self.name = "Dona Éric KOULODJI"
-        self.role = "ML Engineer & Data Scientist"
-        self.location = "Bénin 🇧🇯"
+        self.name      = "Dona Éric KOULODJI"
+        self.role      = "ML Engineer & Data Scientist"
+        self.location  = "Abomey-Calavi, Bénin 🇧🇯"
         self.languages = ["Python", "JavaScript", "French", "English"]
-        self.interests = ["AI Research", "Teaching", "Open Source"]
-        
+        self.currently = "Advanced RAG techniques + LLM Agents"
+        self.goal_2026 = "Former 100+ data scientists africains 🌍"
+
     def say_hi(self):
         print("Transformons vos données en solutions intelligentes ! 🚀")
 
 me = DonaEric()
 me.say_hi()
 ```
+----
 
-- 🔥 Je transforme du café en code ML depuis 2020
-- 🌍 Passionné par l'impact de l'IA en Afrique
-- 📚 Toujours en train d'apprendre (actuellement: Advanced RAG techniques)
-- 🎯 Objectif 2026: Former 100+ data scientists africains
-
-
-## 📝 Derniers Articles & Tutoriels
-
-<!-- BLOG-POST-LIST:START -->
-- 🧠 Comment fine-tuner Llama 3 avec LoRA en 2024
-- 🚀 RAG System: Du prototype à la production en 7 jours
-- 📊 MLOps complet: Pipeline CI/CD pour modèles ML
-- 🎯 SHAP: Rendre vos modèles ML explicables
-<!-- BLOG-POST-LIST:END -->
-
-
-## 🤝 Contribuer
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
-
-- 🐛 Signaler des bugs
-- 💡 Proposer de nouvelles fonctionnalités
-- 📖 Améliorer la documentation
-- ⭐ Star les repos qui vous intéressent
-
----
-
-## 📜 License
-
-La plupart de mes projets sont sous licence **MIT** - voir les fichiers LICENSE individuels.
-
+## 📫 Contact
 
 <div align="center">
 
-### ⭐ Si mon travail vous inspire, n'hésitez pas à star mes repos !
+### 💼 Disponible pour nouveaux projets — Freelance · Consulting · Long terme
 
-**Fait avec ❤️ par Dona Eric**
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/+2290151344289)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:donaerickoulodji@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/dona-erick)
+[![Portfolio](https://img.shields.io/badge/Portfolio-a855f7?style=for-the-badge&logo=vercel&logoColor=white)](https://donerick.vercel.app)
+
+**⏱️ Réponse garantie sous 24h**
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
+
+</div>
+
+<div align="center">
+
+*Fait avec ❤️ par Dona Eric*
 
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=dona-eric.dona-eric)
 
