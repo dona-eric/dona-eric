@@ -12,12 +12,6 @@
 
 </div>
 
-## 🎥 Aperçu du Portfolio
-
-<div align="center">
-  <img src="assets/portfolio_demo.webp" alt="Aperçu du Portfolio" width="800" />
-</div>
-
 ## ⚡ À Propos
 
 ML Engineer passionné, de la physique théorique à l'IA appliquée. Je construis des systèmes ML robustes qui passent du notebook à la production et qui créent un impact réel, particulièrement en Afrique.
