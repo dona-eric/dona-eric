@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 // Set this to your deployed backend URL (or localhost for dev)
-const API_BASE = import.meta.env.VITE_API_URL ;
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 const useFadeIn = (delay = 0) => {

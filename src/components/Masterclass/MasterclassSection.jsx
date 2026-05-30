@@ -12,7 +12,7 @@ export default function MasterclassSection() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+        const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
         const res = await fetch(`${apiUrl}/masterclasses`);
         if (res.ok) {
           const data = await res.json();
