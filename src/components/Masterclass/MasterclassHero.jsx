@@ -1,22 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { isOpen, formatDate } from "../../config/masterclasses.config";
 import { useRegistration } from "../../hooks/useRegistration";
-import RegistrationForm from "./RegistrationForm";
 
 export default function MasterclassHero({ masterclass }) {
-  const [showForm, setShowForm]   = useState(false);
   const [countdown, setCountdown] = useState({});
   const { seats } = useRegistration(masterclass.id);
   const open = isOpen(masterclass);
-
-  // Détection mobile simple
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 992);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const {
     title, subtitle, date, time, duration, format, theme, themeColor, accentColor,
@@ -43,13 +33,13 @@ export default function MasterclassHero({ masterclass }) {
   const typeLabel = type === "webinaire" ? "Webinaire" : "Masterclass";
 
   return (
-    <section style={{
+    <section className="glass" style={{
       position: "relative",
-      borderRadius: isMobile ? "16px" : "24px",
+      borderRadius: "24px",
       overflow: "hidden",
-      background: "#0F0F1A",
       marginBottom: "40px",
-      minHeight: isMobile ? "auto" : "520px",
+      minHeight: "520px",
+      padding: 0
     }}>
 
       {/* Background & Overlays */}
@@ -58,59 +48,64 @@ export default function MasterclassHero({ masterclass }) {
           position: "absolute", inset: 0,
           backgroundImage: `url(${image})`,
           backgroundSize: "cover", backgroundPosition: "center",
-          opacity: 0.2,
+          opacity: 0.15,
         }} />
       )}
       <div style={{
         position: "absolute", inset: 0,
-        background: `linear-gradient(135deg, ${themeColor}EE 0%, #0F0F1A 100%)`,
+        background: `linear-gradient(135deg, ${themeColor}60 0%, transparent 100%)`,
       }} />
 
-      {/* Conteneur Principal Flexible */}
       <div style={{
         position: "relative", zIndex: 2,
-        padding: isMobile ? "32px 20px" : "56px",
+        padding: "48px",
         display: "flex",
-        flexDirection: isMobile ? "column" : "row", // Empilage vertical sur mobile
-        gap: isMobile ? "32px" : "48px",
+        flexDirection: "row", 
+        gap: "48px",
+        flexWrap: "wrap"
       }}>
 
         {/* COLONNE GAUCHE (Textes) */}
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
-            <Chip bg={`${themeColor}33`} color="#fff">{typeLabel}</Chip>
-            <Chip bg={open ? "#10B98133" : "#EF444433"} color={open ? "#10B981" : "#EF4444"}>
+        <div style={{ flex: "1 1 400px" }}>
+          <div style={{ display: "flex", gap: "12px", marginBottom: "24px", flexWrap: "wrap" }}>
+            <Chip bg={`${themeColor}15`} color={themeColor} border={themeColor}>{typeLabel}</Chip>
+            <Chip bg={open ? "rgba(16,185,129,0.1)" : "rgba(239,68,68,0.1)"} color={open ? "#10b981" : "#ef4444"} border={open ? "#10b981" : "#ef4444"}>
               {open ? "Ouvert" : "Clos"}
             </Chip>
-            <Chip bg="#FFFFFF11" color="#fff">{price}</Chip>
+            <Chip bg="rgba(255,255,255,0.05)" color="#ffffff" border="#ffffff">{price}</Chip>
           </div>
 
           <h2 style={{
-            margin: "0 0 16px",
-            fontSize: isMobile ? "28px" : "44px",
-            fontWeight: "900",
-            color: "#fff",
-            lineHeight: "1.2",
+            margin: "0 0 20px",
+            fontSize: "clamp(32px, 5vw, 48px)",
+            fontWeight: "800",
+            color: "#ffffff",
+            lineHeight: "1.1",
+            fontFamily: "'Space Grotesk', sans-serif"
           }}>
             {title}
           </h2>
 
           <p style={{
-            margin: "0 0 28px",
-            color: "rgba(255,255,255,0.8)",
-            fontSize: isMobile ? "15px" : "17px",
-            lineHeight: "1.6",
+            margin: "0 0 32px",
+            color: "#94a3b8",
+            fontSize: "16px",
+            lineHeight: "1.7",
             maxWidth: "600px",
+            fontFamily: "'Inter', sans-serif"
           }}>
             {subtitle}
           </p>
 
-          {/* Grid d'infos adaptée au mobile */}
           <div style={{ 
             display: "grid", 
-            gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(auto-fill, minmax(140px, 1fr))", 
+            gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", 
             gap: "16px", 
-            marginBottom: "32px" 
+            marginBottom: "40px",
+            background: "rgba(255,255,255,0.02)",
+            padding: "20px",
+            borderRadius: "12px",
+            border: "1px solid rgba(255,255,255,0.05)"
           }}>
             {[
               { icon: "📅", val: formatDate(date) },
@@ -118,61 +113,77 @@ export default function MasterclassHero({ masterclass }) {
               { icon: "⏱️", val: duration },
               { icon: "💻", val: format },
             ].map(({ icon, val }) => (
-              <div key={val} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span>{icon}</span>
-                <span style={{ color: "#fff", fontWeight: "600", fontSize: "14px" }}>{val}</span>
+              <div key={val} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <span style={{ opacity: 0.8 }}>{icon}</span>
+                <span style={{ color: "#e2e8f0", fontWeight: "600", fontSize: "14px", fontFamily: "'Inter', sans-serif" }}>{val}</span>
               </div>
             ))}
           </div>
 
-          {/* CTA Mobile Full Width */}
           {open ? (
-            <button
-              onClick={() => setShowForm(true)}
+            <Link
+              to={`/formations/${masterclass.id}`}
               style={{
-                width: isMobile ? "100%" : "auto",
-                padding: "18px 40px",
-                background: accentColor || "#fff",
-                color: accentColor ? "#fff" : themeColor,
-                border: "none", borderRadius: "12px",
-                cursor: "pointer", fontWeight: "800", fontSize: "16px",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
+                padding: "16px 36px",
+                background: themeColor,
+                color: "#000000",
+                border: "none", borderRadius: "8px",
+                cursor: "pointer", fontWeight: "700", fontSize: "16px",
+                fontFamily: "'Inter', sans-serif", textDecoration: "none",
+                boxShadow: `0 4px 20px ${themeColor}40`,
+                transition: "all 0.3s ease",
+                display: "inline-block", boxSizing: "border-box"
               }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-2px)"}
+              onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
             >
-              🎯 Je m'inscris maintenant
-            </button>
+              Voir les détails & S'inscrire →
+            </Link>
           ) : (
-            <div style={{ color: "#94A3B8", fontWeight: "700" }}>🔒 Inscriptions closes</div>
+            <Link
+              to={`/formations/${masterclass.id}`}
+              style={{ 
+                color: "#64748b", fontWeight: "600", fontFamily: "'Inter', sans-serif", 
+                padding: "16px 36px", background: "rgba(255,255,255,0.03)", 
+                borderRadius: "8px", display: "inline-block", border: "1px solid rgba(255,255,255,0.05)",
+                textDecoration: "none" 
+              }}>
+              🔒 Inscriptions closes ({seats ? seats.registered : "..."} inscrits)
+            </Link>
           )}
         </div>
 
         {/* COLONNE DROITE (Countdown + Objectifs) */}
         <div style={{ 
-          width: isMobile ? "100%" : "320px", 
+          flex: "1 1 320px",
           display: "flex", 
           flexDirection: "column", 
-          gap: "20px" 
+          gap: "24px" 
         }}>
           
-          {/* Countdown (Plus compact sur mobile) */}
+          {/* Countdown */}
           {open && !countdown.expired && countdown.days !== undefined && (
             <div style={{
-              background: "rgba(255,255,255,0.08)",
-              borderRadius: "16px", padding: "16px", textAlign: "center",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "rgba(255,255,255,0.02)",
+              borderRadius: "16px", padding: "24px", textAlign: "center",
+              border: "1px solid rgba(255,255,255,0.05)",
             }}>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
                 {[
-                  { val: countdown.days, label: "J" },
-                  { val: countdown.hours, label: "H" },
-                  { val: countdown.minutes, label: "M" },
-                  { val: countdown.seconds, label: "S" },
+                  { val: countdown.days, label: "Jours" },
+                  { val: countdown.hours, label: "Heures" },
+                  { val: countdown.minutes, label: "Minutes" },
+                  { val: countdown.seconds, label: "Secondes" },
                 ].map(({ val, label }) => (
                   <div key={label}>
-                    <div style={{ background: themeColor, color: "#fff", borderRadius: "8px", padding: "8px 0", fontSize: "18px", fontWeight: "900" }}>
+                    <div style={{ 
+                      background: "rgba(255,255,255,0.05)", border: `1px solid ${themeColor}30`, 
+                      color: themeColor, borderRadius: "8px", padding: "12px 0", 
+                      fontSize: "24px", fontWeight: "800", fontFamily: "'Space Grotesk', sans-serif" 
+                    }}>
                       {String(val).padStart(2, "0")}
                     </div>
-                    <div style={{ fontSize: "10px", color: "#94A3B8", marginTop: "4px" }}>{label}</div>
+                    <div style={{ fontSize: "11px", color: "#64748b", marginTop: "8px", textTransform: "uppercase", fontWeight: "600", letterSpacing: "0.05em" }}>{label}</div>
                   </div>
                 ))}
               </div>
@@ -181,71 +192,49 @@ export default function MasterclassHero({ masterclass }) {
 
           {/* Objectifs */}
           <div style={{
-            background: "rgba(255,255,255,0.05)",
-            borderRadius: "16px", padding: "20px",
-            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(255,255,255,0.02)",
+            borderRadius: "16px", padding: "24px",
+            border: "1px solid rgba(255,255,255,0.05)",
           }}>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", fontWeight: "700", textTransform: "uppercase", marginBottom: "12px" }}>
-              🎯 Ce que vous allez apprendre
+            <p style={{ color: "#00d4ff", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", marginBottom: "16px", letterSpacing: "0.1em", fontFamily: "'Space Grotesk', sans-serif" }}>
+              // Objectifs d'apprentissage
             </p>
             {objectives.slice(0, 4).map((obj, i) => (
-              <div key={i} style={{ display: "flex", gap: "10px", marginBottom: "8px" }}>
-                <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: themeColor, fontSize: "10px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", flexShrink: 0 }}>
+              <div key={i} style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
+                <div style={{ width: "20px", height: "20px", borderRadius: "4px", background: themeColor + "20", border: `1px solid ${themeColor}50`, fontSize: "10px", display: "flex", alignItems: "center", justifyContent: "center", color: themeColor, flexShrink: 0, fontWeight: "700" }}>
                   {i + 1}
                 </div>
-                <p style={{ margin: 0, color: "#CBD5E1", fontSize: "13px" }}>{obj}</p>
+                <p style={{ margin: 0, color: "#cbd5e1", fontSize: "14px", lineHeight: "1.5", fontFamily: "'Inter', sans-serif" }}>{obj}</p>
               </div>
             ))}
           </div>
 
           {/* Speaker */}
           <div style={{
-            background: "rgba(255,255,255,0.05)",
-            borderRadius: "16px", padding: "12px 16px",
-            display: "flex", alignItems: "center", gap: "12px",
+            background: "rgba(255,255,255,0.02)",
+            borderRadius: "16px", padding: "16px 20px",
+            display: "flex", alignItems: "center", gap: "16px",
+            border: "1px solid rgba(255,255,255,0.05)"
           }}>
-            <div style={{ width: "40px", height: "40px", borderRadius: "50%", overflow: "hidden", border: `2px solid ${themeColor}` }}>
+            <div style={{ width: "48px", height: "48px", borderRadius: "50%", overflow: "hidden", border: `2px solid ${themeColor}` }}>
               <img src={speaker.avatar} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
             <div style={{ overflow: "hidden" }}>
-              <p style={{ margin: 0, color: "#fff", fontSize: "14px", fontWeight: "700" }}>{speaker.name}</p>
-              <p style={{ margin: 0, color: "#94A3B8", fontSize: "11px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{speaker.title}</p>
+              <p style={{ margin: 0, color: "#ffffff", fontSize: "15px", fontWeight: "700", fontFamily: "'Space Grotesk', sans-serif" }}>{speaker.name}</p>
+              <p style={{ margin: 0, color: "#64748b", fontSize: "12px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{speaker.title}</p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Modal d'inscription */}
-      {showForm && (
-        <div style={{
-          position: "fixed", inset: 0, zIndex: 9999,
-          background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)",
-          display: "flex", alignItems: "center", justifyContent: "center", padding: isMobile ? "0" : "20px",
-        }}>
-          <div style={{
-            background: "#fff", width: "100%", height: isMobile ? "100%" : "auto", 
-            maxWidth: "560px", borderRadius: isMobile ? "0" : "20px", overflow: "hidden"
-          }}>
-            {/* Header Modal */}
-            <div style={{ padding: "20px", borderBottom: "1px solid #eee", display: "flex", justifyContent: "space-between" }}>
-              <span style={{ fontWeight: "800" }}>Inscription</span>
-              <button onClick={() => setShowForm(false)} style={{ border: "none", background: "none", fontSize: "24px" }}>×</button>
-            </div>
-            <div style={{ padding: "20px", overflowY: "auto", height: isMobile ? "calc(100% - 70px)" : "auto" }}>
-              <RegistrationForm masterclass={masterclass} onClose={() => setShowForm(false)} />
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
 
-function Chip({ bg, color, children }) {
+export function Chip({ bg, color, border, children }) {
   return (
     <span style={{
-      padding: "4px 10px", borderRadius: "100px", fontSize: "11px",
-      fontWeight: "700", background: bg, color, whiteSpace: "nowrap"
+      padding: "6px 12px", borderRadius: "6px", fontSize: "11px",
+      fontWeight: "700", background: bg, color, border: `1px solid ${border}40`, whiteSpace: "nowrap", textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "'Inter', sans-serif"
     }}>
       {children}
     </span>

@@ -37,15 +37,14 @@ const useScrollFade = (delay = 0) => {
 };
 
 // ─── Source config ────────────────────────────────────────────────────────────
+// ─── Source config ────────────────────────────────────────────────────────────
 const SOURCE_META = {
   medium:   { label: "Medium",   color: "#00d4ff", icon: "M" },
-  linkedin: { label: "LinkedIn", color: "#a78bfa", icon: "in" },
 };
 
 const FILTERS = [
   { key: "all",      label: "Tous" },
   { key: "medium",   label: "Medium" },
-  { key: "linkedin", label: "LinkedIn" },
 ];
 
 // ─── Skeleton card ────────────────────────────────────────────────────────────
@@ -243,7 +242,7 @@ export default function Blog() {
     setLoading(true);
     setError(null);
     try {
-      const res  = await fetch(`${API_BASE}/api/posts?source=${source}&limit=20`);
+      const res  = await fetch(`${API_BASE}/posts?source=${source}&limit=20`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setPosts(data.posts || []);
@@ -322,7 +321,7 @@ export default function Blog() {
                 width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
                 animation: "pulseDot 2s ease infinite", display: "inline-block"
               }} />
-              blog.fetch() → Medium + LinkedIn · auto-sync 6h
+              blog.fetch() → Medium · auto-sync 6h
             </div>
 
             <h1 style={{
@@ -339,7 +338,7 @@ export default function Blog() {
 
             <p style={{ maxWidth: 560, color: "#94a3b8", fontSize: 16, lineHeight: 1.85, marginBottom: 40 }}>
               Articles triés automatiquement par <strong style={{ color: "#e2e8f0" }}>vues · likes · fraîcheur</strong>.
-              Mis à jour toutes les 6h depuis Medium & LinkedIn.
+              Mis à jour toutes les 6h depuis Medium.
             </p>
 
             {/* Stats */}
@@ -465,16 +464,7 @@ export default function Blog() {
                 }}>
                 follow_medium() →
               </a>
-              <a href="https://linkedin.com/in/dona-erick" target="_blank" rel="noopener noreferrer"
-                className="cta-btn" style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  padding: "12px 24px", borderRadius: 6,
-                  background: "rgba(167,139,250,0.1)", border: "1px solid rgba(167,139,250,0.3)",
-                  color: "#a78bfa", fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 13, fontWeight: 600, letterSpacing: "0.05em"
-                }}>
-                follow_linkedin() →
-              </a>
+
             </div>
           </div>
         </div>

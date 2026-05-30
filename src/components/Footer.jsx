@@ -127,15 +127,6 @@ const Footer = () => {
         fontFamily: "'Space Grotesk', sans-serif"
       }}>
 
-        {/* Grid bg */}
-        <div style={{
-          position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
-          backgroundImage: `
-            linear-gradient(rgba(0,212,255,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,212,255,0.02) 1px, transparent 1px)`,
-          backgroundSize: "48px 48px"
-        }} />
-
         {/* Top accent */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: 1,

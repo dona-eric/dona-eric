@@ -12,7 +12,11 @@
 
 </div>
 
+## 🎥 Aperçu du Portfolio
 
+<div align="center">
+  <img src="assets/portfolio_demo.webp" alt="Aperçu du Portfolio" width="800" />
+</div>
 
 ## ⚡ À Propos
 

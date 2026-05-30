@@ -12,7 +12,8 @@ const Skills = lazy(() => import("./pages/Skills"));
 const Projects = lazy(() => import("./pages/Projects"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
-const MasterClass= lazy(() => import('./components/Masterclass/MasterclassSection'));
+const MasterClass = lazy(() => import('./components/Masterclass/MasterclassSection'));
+const MasterclassDetails = lazy(() => import("./pages/MasterclassDetails"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Scroll to top on route change
@@ -59,6 +60,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog/>}/>
             <Route path="/formations" element={<MasterClass/>}/>
+            <Route path="/formations/:id" element={<MasterclassDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

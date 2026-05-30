@@ -1,94 +1,88 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { isOpen, formatDate } from "../../config/masterclasses.config";
-import RegistrationForm from "./RegistrationForm";
+import { useRegistration } from "../../hooks/useRegistration";
 
 export default function MasterclassCard({ masterclass }) {
   const [showForm, setShowForm] = useState(false);
+  const { seats } = useRegistration(masterclass.id);
   const open = isOpen(masterclass);
   
-  // Détection mobile
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 600);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   const { title, subtitle, date, time, format, theme, themeColor, image, imageAlt,
           price, speaker, type, duration } = masterclass;
 
   const typeLabel = type === "webinaire" ? "Webinaire" : "Masterclass";
-  const typeIcon  = type === "webinaire" ? "🎙️" : "🎓";
 
   return (
     <>
-      <article style={{
-        background: "#fff",
+      <article className="glass" style={{
         borderRadius: "16px",
         overflow: "hidden",
-        border: "1px solid #E5E7EB",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-        transition: "transform 0.2s",
-        opacity: open ? 1 : 0.85,
+        transition: "all 0.3s ease",
         display: "flex",
         flexDirection: "column",
-        height: "100%", // Pour que toutes les cartes aient la même hauteur
-      }}>
-
-        {/* Image - Hauteur réduite sur mobile pour gagner de la place */}
+        height: "100%",
+        position: "relative",
+        padding: 0
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.borderColor = themeColor;
+        e.currentTarget.style.boxShadow = `0 16px 40px ${themeColor}20`;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.borderColor = "var(--glass-border)";
+        e.currentTarget.style.boxShadow = "none";
+      }}
+      >
+        {/* Top border accent */}
         <div style={{
-          position: "relative",
-          height: isMobile ? "150px" : "180px",
-          background: `linear-gradient(135deg, ${themeColor}22, ${themeColor}44)`,
-          overflow: "hidden",
-        }}>
-          {image ? (
-            <img src={image} alt={imageAlt} style={{
-              width: "100%", height: "100%", objectFit: "cover",
-              filter: open ? "none" : "grayscale(60%)",
-            }} />
-          ) : (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: "48px" }}>
-              {typeIcon}
-            </div>
-          )}
+          height: 3,
+          background: `linear-gradient(90deg, transparent, ${themeColor}, transparent)`,
+          opacity: 0.8
+        }} />
 
-          {/* Badges repositionnés pour mobile */}
-          <div style={{
-            position: "absolute", top: "10px", left: "10px",
-            padding: "4px 8px", borderRadius: "6px", fontSize: "10px",
-            fontWeight: "700", background: themeColor, color: "#fff",
-          }}>
-            {typeLabel}
+        <div style={{ padding: "24px", flex: 1, display: "flex", flexDirection: "column" }}>
+          
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
+            <span style={{
+              padding: "4px 10px", borderRadius: 4, fontSize: 11,
+              fontFamily: "'Inter', sans-serif", fontWeight: 600, color: themeColor,
+              background: themeColor + "15", border: `1px solid ${themeColor}30`, textTransform: "uppercase"
+            }}>{theme}</span>
+            <span style={{
+              padding: "4px 10px", borderRadius: 4, fontSize: 11,
+              fontFamily: "'Inter', sans-serif", fontWeight: 600, color: open ? "#10b981" : "#f59e0b",
+              background: open ? "rgba(16,185,129,0.1)" : "rgba(245,158,11,0.1)", 
+              border: `1px solid ${open ? "rgba(16,185,129,0.3)" : "rgba(245,158,11,0.3)"}`, textTransform: "uppercase"
+            }}>
+              {typeLabel}
+            </span>
           </div>
-        </div>
-
-        {/* Contenu */}
-        <div style={{ padding: isMobile ? "16px" : "20px 24px", flex: 1, display: "flex", flexDirection: "column" }}>
-          <span style={{ fontSize: "11px", fontWeight: "700", color: themeColor, textTransform: "uppercase", marginBottom: "6px" }}>
-            {theme}
-          </span>
 
           <h3 style={{
-            margin: "0 0 8px", fontSize: isMobile ? "17px" : "18px", fontWeight: "800",
-            color: "#111827", lineHeight: "1.3",
+            margin: "0 0 8px", fontSize: "20px", fontWeight: "700",
+            color: "#ffffff", lineHeight: "1.3", fontFamily: "'Space Grotesk', sans-serif"
           }}>
             {title}
           </h3>
 
           <p style={{
-            margin: "0 0 16px", fontSize: "14px", color: "#6B7280", lineHeight: "1.5",
+            margin: "0 0 20px", fontSize: "14px", color: "#94a3b8", lineHeight: "1.6", flexGrow: 1
           }}>
             {subtitle}
           </p>
 
-          {/* Infos rapides - Adaptation Grid */}
           <div style={{
             display: "grid", 
-            gridTemplateColumns: "1fr 1fr", // Garde 2 colonnes même sur mobile
-            gap: "10px", 
-            marginBottom: "20px",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "12px", 
+            marginBottom: "24px",
+            padding: "16px",
+            background: "rgba(255,255,255,0.02)",
+            borderRadius: "8px",
+            border: "1px solid rgba(255,255,255,0.05)"
           }}>
             {[
               { icon: "📅", label: formatDate(date).split(" ").slice(0, 3).join(" ") },
@@ -96,110 +90,66 @@ export default function MasterclassCard({ masterclass }) {
               { icon: "⏱️", label: duration },
               { icon: "💻", label: format },
             ].map(({ icon, label }) => (
-              <div key={label} style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "#4B5563" }}>
-                <span style={{ flexShrink: 0 }}>{icon}</span>
-                <span style={{ fontWeight: "600", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{label}</span>
+              <div key={label} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#e2e8f0" }}>
+                <span style={{ flexShrink: 0, opacity: 0.8 }}>{icon}</span>
+                <span style={{ fontWeight: "500", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{label}</span>
               </div>
             ))}
           </div>
 
           {/* Speaker */}
           <div style={{
-            display: "flex", alignItems: "center", gap: "10px",
-            paddingTop: "14px", borderTop: "1px solid #F3F4F6",
-            marginBottom: "20px",
+            display: "flex", alignItems: "center", gap: "12px",
+            paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.05)",
+            marginBottom: "24px",
           }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "50%", overflow: "hidden", flexShrink: 0 }}>
+            <div style={{ width: "36px", height: "36px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: `1px solid ${themeColor}50` }}>
               {speaker.avatar 
                 ? <img src={speaker.avatar} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                : <span style={{ background: "#eee", display: "block", textAlign: "center" }}>👤</span>
+                : <span style={{ background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>👤</span>
               }
             </div>
             <div style={{ overflow: "hidden" }}>
-              <p style={{ margin: 0, fontSize: "13px", fontWeight: "700", color: "#111827", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{speaker.name}</p>
+              <p style={{ margin: 0, fontSize: "14px", fontWeight: "600", color: "#ffffff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{speaker.name}</p>
             </div>
           </div>
 
           {/* CTA */}
           <div style={{ marginTop: "auto" }}>
             {open ? (
-              <button
-                onClick={() => setShowForm(true)}
+              <Link
+                to={`/formations/${masterclass.id}`}
                 style={{
+                  display: "block",
                   width: "100%", padding: "14px",
-                  background: themeColor, color: "#fff",
-                  border: "none", borderRadius: "10px",
+                  background: themeColor, color: "#000000",
+                  border: "none", borderRadius: "8px",
                   cursor: "pointer", fontWeight: "700", fontSize: "15px",
+                  fontFamily: "'Inter', sans-serif", textDecoration: "none", textAlign: "center",
+                  transition: "all 0.2s ease", boxSizing: "border-box",
+                  boxShadow: `0 4px 15px ${themeColor}40`
                 }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-2px)"}
+                onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
               >
-                🎯 S'inscrire {price}
-              </button>
+                Voir les détails & S'inscrire
+              </Link>
             ) : (
-              <div style={{
-                width: "100%", padding: "12px", background: "#F3F4F6", 
-                color: "#9CA3AF", borderRadius: "10px", textAlign: "center", fontSize: "13px",
-              }}>
-                🔒 Inscriptions closes
-              </div>
+              <Link
+                to={`/formations/${masterclass.id}`}
+                style={{
+                  display: "block",
+                  width: "100%", padding: "14px", background: "rgba(255,255,255,0.03)", 
+                  color: "#64748b", borderRadius: "8px", textAlign: "center", fontSize: "14px",
+                  fontFamily: "'Inter', sans-serif", fontWeight: "500", border: "1px solid rgba(255,255,255,0.05)",
+                  textDecoration: "none", boxSizing: "border-box"
+                }}>
+                🔒 Inscriptions closes ({seats ? seats.registered : "..."} inscrits)
+              </Link>
             )}
           </div>
         </div>
       </article>
-
-      {/* Modal adaptée au mobile */}
-      {showForm && (
-        <Modal title={title} color={themeColor} onClose={() => setShowForm(false)} isMobile={isMobile}>
-          <RegistrationForm masterclass={masterclass} onClose={() => setShowForm(false)} />
-        </Modal>
-      )}
     </>
-  );
-}
-
-function Modal({ title, color, onClose, children, isMobile }) {
-  return (
-    <div
-      style={{
-        position: "fixed", inset: 0, zIndex: 9999,
-        background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)",
-        display: "flex", alignItems: isMobile ? "flex-end" : "center", // Sur mobile, la modal "monte" du bas
-        justifyContent: "center",
-      }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      <div style={{
-        background: "#fff", 
-        borderRadius: isMobile ? "20px 20px 0 0" : "20px",
-        width: "100%", 
-        maxWidth: "560px",
-        height: isMobile ? "92vh" : "auto", 
-        maxHeight: isMobile ? "92vh" : "90vh",
-        overflow: "hidden",
-        display: "flex", flexDirection: "column",
-        boxShadow: "0 -10px 25px rgba(0,0,0,0.2)",
-      }}>
-        {/* Header Modal */}
-        <div style={{
-          padding: "16px 20px", borderBottom: "1px solid #E5E7EB",
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          background: `${color}05`,
-        }}>
-          <div style={{ overflow: "hidden" }}>
-            <h3 style={{ margin: 0, fontSize: "16px", color: "#111827", fontWeight: "800", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-              {title}
-            </h3>
-          </div>
-          <button onClick={onClose} style={{
-            width: "32px", height: "32px", borderRadius: "50%",
-            background: "#F3F4F6", border: "none", fontSize: "20px",
-          }}>×</button>
-        </div>
-
-        {/* Body Modal */}
-        <div style={{ padding: "20px", overflowY: "auto", flex: 1 }}>
-          {children}
-        </div>
-      </div>
-    </div>
   );
 }

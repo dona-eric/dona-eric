@@ -5,6 +5,8 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { initDatabase } from "./database.js";
 import registrationRoutes from "./routes/registrations.js";
+import masterclassesRoutes from "./routes/masterclasses.js";
+import postsRoutes from "./routes/posts.js";
 import { startReminderScheduler } from "./reminderScheduler.js";
 
 const app = express();
@@ -13,6 +15,7 @@ const PORT = process.env.PORT || 3001;
 app.use(helmet());
 app.use(cors({
   origin: [
+    "http://localhost:5173",
     "https://donerick.onrender.com",
     "https://donerick.vercel.app",
     process.env.FRONTEND_URL,
@@ -29,9 +32,10 @@ const limiter = rateLimit({
 app.use("/api/register", limiter);
 
 app.use("/api", registrationRoutes);
+app.use("/api/masterclasses", masterclassesRoutes);
+app.use("/api/posts", postsRoutes);
 app.get("/api/health", (_, res) => res.json({ status: "ok" }));
 
-// ── Un seul app.listen ──────────────────────────────────────────
 app.listen(PORT, async () => {
   await initDatabase();
   startReminderScheduler();

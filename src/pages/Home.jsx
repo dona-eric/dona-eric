@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
-import AIChat from "../components/AIChat";
 
-// ─── Scroll fade hook ─────────────────────────────────────────────────────────
 const useScrollFade = (delay = 0) => {
   const ref = useRef(null);
   useEffect(() => {
@@ -24,275 +22,209 @@ const useScrollFade = (delay = 0) => {
   return ref;
 };
 
-// ─── Social link ──────────────────────────────────────────────────────────────
-function SocialChip({ href, label }) {
-  const [hov, setHov] = useState(false);
-  return (
-    <a href={href} target="_blank" rel="noopener noreferrer"
-      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{
-        padding: "7px 20px", borderRadius: 4,
-        background: hov ? "rgba(0,212,255,0.08)" : "rgba(255,255,255,0.03)",
-        border: `1px solid ${hov ? "rgba(0,212,255,0.35)" : "rgba(255,255,255,0.09)"}`,
-        fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
-        color: hov ? "#00d4ff" : "#64748b",
-        transition: "all 0.2s ease", textDecoration: "none"
-      }}>
-      {label}
-    </a>
-  );
-}
-
-// ─── Stat card ────────────────────────────────────────────────────────────────
 function StatCard({ value, label, delay }) {
   const ref = useScrollFade(delay);
   return (
-    <div ref={ref} style={{
-      padding: "20px 16px", textAlign: "center",
-      background: "rgba(255,255,255,0.03)",
-      border: "1px solid rgba(255,255,255,0.07)",
-      borderRadius: 8, position: "relative", overflow: "hidden"
+    <div ref={ref} className="glass" style={{
+      padding: "24px 16px", textAlign: "center",
+      position: "relative", overflow: "hidden"
     }}>
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, height: 2,
-        background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.45), transparent)"
+        background: "linear-gradient(90deg, transparent, #00d4ff, transparent)"
       }} />
       <div style={{
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 30, fontWeight: 700, color: "#00d4ff", lineHeight: 1, marginBottom: 8
+        fontFamily: "'Space Grotesk', sans-serif",
+        fontSize: 32, fontWeight: 700, color: "#00d4ff", lineHeight: 1, marginBottom: 8
       }}>{value}</div>
-      <div style={{ fontSize: 11, color: "#475569", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+      <div style={{ fontSize: 11, color: "#94a3b8", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
         {label}
       </div>
     </div>
   );
 }
 
-// ─── Trust badge ─────────────────────────────────────────────────────────────
 function TrustBadge({ icon, label, delay }) {
   const ref = useScrollFade(delay);
   return (
-    <div ref={ref} style={{
-      padding: "14px 24px", borderRadius: 6,
-      background: "rgba(255,255,255,0.02)",
-      border: "1px solid rgba(255,255,255,0.07)",
-      display: "flex", alignItems: "center", gap: 10,
-      fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "#64748b"
-    }}>
-      <span style={{ fontSize: 18 }}>{icon}</span>
+    <div ref={ref} className="glass" style={{
+      padding: "16px 24px", display: "flex", alignItems: "center", gap: 12,
+      fontFamily: "'Inter', sans-serif", fontSize: 14, color: "#e2e8f0", fontWeight: 500,
+      transition: "all 0.3s ease"
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.borderColor = "rgba(0, 212, 255, 0.4)";
+      e.currentTarget.style.transform = "translateY(-2px)";
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+      e.currentTarget.style.transform = "translateY(0)";
+    }}
+    >
+      <span style={{ fontSize: 20 }}>{icon}</span>
       {label}
     </div>
   );
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Home() {
   const ctaHeaderRef  = useScrollFade(0);
   const ctaTitleRef   = useScrollFade(0.15);
   const ctaDescRef    = useScrollFade(0.25);
   const ctaBtnsRef    = useScrollFade(0.35);
   const ctaStatusRef  = useScrollFade(0.5);
-  const ctaAltsRef    = useScrollFade(0.65);
   const trustRef      = useScrollFade(0);
 
   const stats = [
-    { value: "24h",  label: "Réponse garantie" },
-    { value: "90%",  label: "Précision moyenne" },
-    { value: "5+",   label: "Modèles prod." },
-    { value: "3",    label: "Pays touchés" },
+    { value: "24h",  label: "RÉPONSE GARANTIE" },
+    { value: "90%",  label: "PRÉCISION MOYENNE" },
+    { value: "5+",   label: "MODÈLES EN PROD" },
+    { value: "3",    label: "PAYS TOUCHÉS" },
   ];
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
-        * { box-sizing: border-box; }
-        @keyframes gridFloat { 0%,100%{opacity:.03}50%{opacity:.07} }
-        @keyframes pulseDot  { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
-        .btn-primary:hover  { background:linear-gradient(135deg,#0891b2,#4338ca)!important; transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,212,255,0.25)!important; }
-        .btn-secondary:hover{ border-color:rgba(0,212,255,0.4)!important; color:#00d4ff!important; transform:translateY(-2px); }
-        .btn-primary, .btn-secondary { transition: all 0.25s ease; }
-        a { text-decoration: none; }
-        @media (max-width: 700px) {
-          .cta-btns   { flex-direction: column !important; }
-          .stats-grid { grid-template-columns: repeat(2,1fr) !important; }
-          .trust-grid { flex-direction: column !important; align-items:center !important; }
-          .alt-links  { flex-direction: column !important; align-items:center !important; }
-        }
-      `}</style>
+    <main style={{ color: "#e2e8f0", fontFamily: "'Inter', sans-serif" }}>
+      <Hero />
 
-      <main style={{ background: "#060a0f", color: "#e2e8f0", fontFamily: "'Space Grotesk', sans-serif" }}>
+      <section id="contact" style={{ position: "relative", zIndex: 1, padding: "80px 24px 100px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
 
-        {/* ── Shared grid background ── */}
-        <div style={{
-          position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
-          backgroundImage: `
-            linear-gradient(rgba(0,212,255,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,212,255,0.035) 1px, transparent 1px)`,
-          backgroundSize: "48px 48px", animation: "gridFloat 8s ease infinite"
-        }} />
+          {/* Badge */}
+          <div ref={ctaHeaderRef} style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "8px 20px", borderRadius: "30px", marginBottom: 36,
+            background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.3)",
+            fontSize: 11, fontWeight: 600, color: "#00d4ff", letterSpacing: "0.08em"
+          }}>
+            <span style={{
+              width: 6, height: 6, borderRadius: "50%", background: "#00d4ff",
+              boxShadow: "0 0 10px #00d4ff", display: "inline-block"
+            }} />
+            🔥 3 PROJETS LIVRÉS CE TRIMESTRE · 1 SLOT DISPONIBLE
+          </div>
 
-        {/* ══════════════════════════════════════ */}
-        {/* HERO — composant existant              */}
-        {/* ══════════════════════════════════════ */}
-        <Hero />
+          {/* Title */}
+          <h2 ref={ctaTitleRef} style={{
+            fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(32px, 5.5vw, 62px)", fontWeight: 800,
+            lineHeight: 1.1, letterSpacing: "-0.03em",
+            color: "#ffffff", marginBottom: 24
+          }}>
+            Votre concurrent a déjà<br />
+            <span style={{
+              background: "linear-gradient(135deg, #00d4ff 0%, #ec4899 100%)",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
+            }}>son IA en production.</span>
+          </h2>
 
-        {/* ══════════════════════════════════════ */}
-        {/* CTA SECTION                            */}
-        {/* ══════════════════════════════════════ */}
-        <section id="contact" style={{ position: "relative", zIndex: 1 }}>
-          <div style={{
-            position: "absolute", top: "20%", left: "50%",
-            transform: "translateX(-50%)",
-            width: 700, height: 700, pointerEvents: "none",
-            background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)"
-          }} />
+          {/* Description */}
+          <p ref={ctaDescRef} style={{
+            maxWidth: 680, margin: "0 auto 52px",
+            color: "#94a3b8", fontSize: 16, lineHeight: 1.8
+          }}>
+            Pendant que votre équipe analyse encore les options, je livre un{" "}
+            <strong style={{ color: "#ffffff" }}>agent IA opérationnel</strong>,{" "}
+            un <strong style={{ color: "#ffffff" }}>pipeline ML en production</strong>{" "}
+            ou un <strong style={{ color: "#ffffff" }}>système RAG clé-en-main</strong> —
+            en semaines, pas en mois. Zéro POC qui dort. Zéro réunion inutile.{" "}
+            <strong style={{ color: "#00d4ff" }}>Du concret pour votre entreprise.</strong>
+          </p>
 
-          <div style={{ maxWidth: 860, margin: "0 auto", padding: "80px 24px 100px", textAlign: "center" }}>
-
-            {/* Badge */}
-            <div ref={ctaHeaderRef} style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "6px 18px", borderRadius: 4, marginBottom: 36,
-              background: "rgba(0,212,255,0.07)", border: "1px solid rgba(0,212,255,0.25)",
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
-              color: "#00d4ff", letterSpacing: "0.05em"
-            }}>
-              <span style={{
-                width: 7, height: 7, borderRadius: "50%", background: "#22c55e",
-                animation: "pulseDot 2s ease infinite", display: "inline-block"
-              }} />
-              🔥 3 projets livrés ce trimestre · 1 slot disponible
-            </div>
-
-            {/* Title */}
-            <h2 ref={ctaTitleRef} style={{
-              fontSize: "clamp(32px, 5.5vw, 62px)", fontWeight: 700,
-              lineHeight: 1.1, letterSpacing: "-0.03em",
-              color: "#f8fafc", marginBottom: 20
-            }}>
-              Votre concurrent a déjà<br />
-              <span style={{
-                background: "linear-gradient(135deg, #00d4ff 0%, #6366f1 100%)",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-              }}>son IA en production.</span>
-            </h2>
-            {/* Description */}
-            <p ref={ctaDescRef} style={{
-              maxWidth: 620, margin: "0 auto 52px",
-              color: "#94a3b8", fontSize: 16, lineHeight: 1.85
-            }}>
-              Pendant que votre équipe analyse encore les options, 
-              je livre un{" "}
-              <strong style={{ color: "#e2e8f0" }}>agent IA opérationnel</strong>,{" "}
-              un <strong style={{ color: "#e2e8f0" }}>pipeline ML en production</strong>{" "}
-              ou un <strong style={{ color: "#e2e8f0" }}>système RAG clé-en-main</strong> —
-              en semaines, pas en mois. Zéro POC qui dort. Zéro réunion inutile.{" "}
-              <strong style={{ color: "#00d4ff" }}>Du concret, livré, vous etes gagnants d'une solution durable</strong>
-            </p>
-
-            {/* CTA Buttons */}
-            
-    {/* CTA Buttons */}
-            <div ref={ctaBtnsRef} className="cta-btns" style={{
-              display: "flex", gap: 14, justifyContent: "center",
-              flexWrap: "wrap", marginBottom: 40
-            }}>
-              <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
-                className="btn-primary" style={{
-                  display: "inline-flex", alignItems: "center", gap: 10,
-                  padding: "15px 32px", borderRadius: 6,
-                  background: "linear-gradient(135deg, #0e7490, #4338ca)",
-                  color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 14, fontWeight: 600, letterSpacing: "0.05em",
-                  boxShadow: "0 4px 20px rgba(0,212,255,0.12)"
-                }}>
-                Démarrer mon projet →
-              </a>
-              <a href="mailto:donaerickoulodji@gmail.com" className="btn-secondary" style={{
+          {/* CTA Buttons */}
+          <div ref={ctaBtnsRef} style={{
+            display: "flex", gap: 16, justifyContent: "center",
+            flexWrap: "wrap", marginBottom: 56
+          }}>
+            <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
+              style={{
                 display: "inline-flex", alignItems: "center", gap: 10,
-                padding: "15px 32px", borderRadius: 6, background: "transparent",
-                border: "1px solid rgba(255,255,255,0.15)",
-                color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 14, fontWeight: 500, letterSpacing: "0.05em"
-              }}>
-                ✉ Me décrire mon besoin
-              </a>
-            </div>
-
-            {/* Stats mini-row */}
-            <div className="stats-grid" style={{
-              display: "grid", gridTemplateColumns: "repeat(4,1fr)",
-              gap: 12, maxWidth: 720, margin: "0 auto 56px"
-            }}>
-              {stats.map((s, i) => <StatCard key={i} {...s} delay={0.4 + i * 0.08} />)}
-            </div>
-
-            {/* Garanties */}
-            <div ref={ctaStatusRef} style={{
-              display: "flex", flexWrap: "wrap", gap: 24,
-              justifyContent: "center", marginBottom: 48
-            }}>
-              {[
-                "Réponse sous 24h",
-                "Livraison en semaines",
-                "Code propre · Documenté",
-                "Remote · Freelance · Contract"
-              ].map((g) => (
-                <span key={g} style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 12, color: "#475569",
-                  display: "flex", alignItems: "center", gap: 7
-                }}>
-                  <span style={{ color: "#22c55e", fontSize: 14 }}>✓</span> {g}
-                </span>
-              ))}
-            </div>
-            {/* Alt contact links */}
-            <div ref={ctaAltsRef}>
-              <div style={{
-                fontFamily: "monospace", fontSize: 11, color: "#334155",
-                letterSpacing: "0.12em", marginBottom: 14
-              }}>
-                <span style={{ color: "#475569" }}>// </span>other_channels
-              </div>
-              <div className="alt-links" style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-                <SocialChip href="https://medium.com/@koulodjiric" label="Medium" />
-                <SocialChip href="https://wa.me/+2290151344289" label="WhatsApp" />
-              </div>
-            </div>
+                padding: "14px 32px", borderRadius: "8px",
+                background: "#00d4ff", color: "#0f172a",
+                fontSize: 15, fontWeight: 600, textDecoration: "none",
+                transition: "all 0.3s ease",
+                boxShadow: "0 4px 20px rgba(0, 212, 255, 0.2)"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.background = "#00b8e6";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.background = "#00d4ff";
+              }}
+              >
+              Démarrer mon projet →
+            </a>
+            <a href="mailto:donaerickoulodji@gmail.com" 
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                padding: "14px 32px", borderRadius: "8px", background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#f8fafc", fontSize: 15, fontWeight: 500, textDecoration: "none",
+                transition: "all 0.3s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+              }}
+              >
+              ✉ Me décrire mon besoin
+            </a>
           </div>
-        </section>
 
-
-        {/* ══════════════════════════════════════ */}
-        {/* TRUST SECTION                          */}
-        {/* ══════════════════════════════════════ */}
-        <section style={{ position: "relative", zIndex: 1, padding: "64px 24px 80px" }}>
-          <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
-
-            <div ref={trustRef} style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-              color: "#334155", letterSpacing: "0.15em", marginBottom: 28
-            }}>
-              <span style={{ color: "#475569" }}>// </span>clients.trusted_by[]
-            </div>
-
-            <div className="trust-grid" style={{
-              display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap"
-            }}>
-              <TrustBadge icon="🏢" label="Entreprises Tech" delay={0.1} />
-              <TrustBadge icon="🚀" label="Startups Africaines" delay={0.2} />
-              <TrustBadge icon="🎓" label="Institutions académiques" delay={0.3} />
-              <TrustBadge icon="🌍" label="Clients internationaux" delay={0.4} />
-            </div>
+          {/* Stats mini-row */}
+          <div style={{
+            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+            gap: 16, maxWidth: 720, margin: "0 auto 56px"
+          }}>
+            {stats.map((s, i) => <StatCard key={i} {...s} delay={0.4 + i * 0.08} />)}
           </div>
-        </section>
 
-        {/*======================  */}
-        {/* SECTION AICHAT */}
-          {/* <AIChat /> */}
-      </main>
-    </>
+          {/* Garanties */}
+          <div ref={ctaStatusRef} style={{
+            display: "flex", flexWrap: "wrap", gap: 24,
+            justifyContent: "center"
+          }}>
+            {[
+              "Réponse sous 24h",
+              "Livraison en semaines",
+              "Code propre · Documenté",
+              "Remote · Freelance · Contract"
+            ].map((g) => (
+              <span key={g} style={{
+                fontSize: 13, color: "#64748b", fontWeight: 500,
+                display: "flex", alignItems: "center", gap: 8
+              }}>
+                <span style={{ color: "#00d4ff", fontSize: 16 }}>✓</span> {g}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section style={{ position: "relative", zIndex: 1, padding: "20px 24px 80px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
+          <div ref={trustRef} style={{
+            fontSize: 11, color: "#64748b", fontWeight: 600, letterSpacing: "0.15em", 
+            textTransform: "uppercase", marginBottom: 32
+          }}>
+            <span style={{ color: "#00d4ff" }}>//</span> ILS M'ONT FAIT CONFIANCE
+          </div>
+
+          <div style={{
+            display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap"
+          }}>
+            <TrustBadge icon="🏢" label="Entreprises Tech" delay={0.1} />
+            <TrustBadge icon="🚀" label="Startups Africaines" delay={0.2} />
+            <TrustBadge icon="🎓" label="Institutions académiques" delay={0.3} />
+            <TrustBadge icon="🌍" label="Clients internationaux" delay={0.4} />
+          </div>
+        </div>
+      </section>
+
+    </main>
   );
 }

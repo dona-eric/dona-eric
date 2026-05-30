@@ -20,139 +20,124 @@ const Navigation = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-        .nav-link-text  { transition: color 0.2s ease; }
-        .nav-link:hover .nav-link-text { color: #00d4ff !important; }
-        .nav-link:hover .nav-link-bar  { opacity: 1 !important; }
-        .cta-nav:hover  {
-          background: linear-gradient(135deg,#0891b2,#4338ca) !important;
-          transform: translateY(-1px);
-          box-shadow: 0 8px 24px rgba(0,212,255,0.2) !important;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+        .nav-link-text { transition: color 0.2s ease; }
+        .nav-link:hover .nav-link-text { color: #fff !important; }
+        .nav-link:hover .nav-link-bar { opacity: 1 !important; transform: scaleX(1) !important; }
+        .cta-btn {
+          transition: all 0.3s ease;
         }
-        .mob-link:hover { background: rgba(0,212,255,0.06) !important; border-color: rgba(0,212,255,0.2) !important; }
-        .mob-link:hover .mob-link-text { color: #00d4ff !important; }
-        @keyframes pulseDot { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
+        .cta-btn:hover {
+          background: #00b8e6 !important;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+        .lang-toggle:hover {
+          background: rgba(255, 255, 255, 0.1) !important;
+        }
       `}</style>
 
       <nav style={{
         position: "sticky", top: 0, zIndex: 50, width: "100%",
         transition: "all 0.3s ease",
-        background: scrolled
-          ? "rgba(4,7,12,0.97)"
-          : "rgba(6,10,15,0.92)",
-        borderBottom: `1px solid ${scrolled ? "rgba(0,212,255,0.12)" : "rgba(255,255,255,0.05)"}`,
-        backdropFilter: "blur(20px)",
-        boxShadow: scrolled ? "0 4px 32px rgba(0,0,0,0.4)" : "none"
+        background: scrolled ? "rgba(4,7,12,0.95)" : "rgba(6,10,15,0.8)",
+        borderBottom: `1px solid ${scrolled ? "rgba(255,255,255,0.08)" : "transparent"}`,
+        backdropFilter: "blur(12px)",
       }}>
-
-        {/* Subtle grid overlay */}
         <div style={{
-          position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none",
-          backgroundImage: `
-            linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px)`,
-          backgroundSize: "48px 48px"
-        }} />
-
-        {/* Bottom gradient line on scroll */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: 1,
-          background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent)",
-          opacity: scrolled ? 1 : 0, transition: "opacity 0.3s"
-        }} />
-
-        <div style={{
-          maxWidth: 1160, margin: "0 auto", padding: "0 24px",
+          maxWidth: 1400, margin: "0 auto", padding: "0 24px",
           position: "relative", zIndex: 1
         }}>
           <div style={{
             display: "flex", alignItems: "center",
-            justifyContent: "space-between", height: 68
+            justifyContent: "space-between", height: 80
           }}>
 
             {/* ── Logo ── */}
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 15, fontWeight: 700, letterSpacing: "0.05em"
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 22, fontWeight: 700, letterSpacing: "-0.02em", color: "#fff"
               }}>
-                <span style={{ color: "#475569" }}>{"<"}</span>
-                <span style={{
-                  background: "linear-gradient(135deg, #00d4ff, #6366f1)",
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-                }}>DEK</span>
-                <span style={{ color: "#475569" }}>{" />"}</span>
+                <span style={{ color: "#00d4ff" }}>{">_"}</span> Dona.dev
               </div>
             </Link>
 
             {/* ── Desktop nav ── */}
             <div style={{
-              display: "flex", alignItems: "center", gap: 4,
-              fontFamily: "'JetBrains Mono', monospace"
+              display: "flex", alignItems: "center", gap: 32,
+              fontFamily: "'Inter', sans-serif"
             }} className="desktop-nav">
               {NAVIGATION.map((item) => {
                 const active = isActive(item.path);
+                let nameMap = {
+                  "home": "ACCUEIL",
+                  "about": "À PROPOS",
+                  "skills": "COMPÉTENCES",
+                  "projects": "PROJETS",
+                  "masterclass": "MASTERCLASS",
+                  "blog": "BLOG",
+                  "contact": "CONTACT"
+                };
+                const displayName = nameMap[item.name.toLowerCase()] || item.name;
+
                 return (
                   <Link key={item.path} to={item.path}
                     className="nav-link"
                     style={{
-                      position: "relative", padding: "8px 14px",
-                      borderRadius: 4, textDecoration: "none",
-                      background: active ? "rgba(0,212,255,0.08)" : "transparent",
-                      border: `1px solid ${active ? "rgba(0,212,255,0.25)" : "transparent"}`,
-                      transition: "all 0.2s ease"
+                      position: "relative", padding: "8px 0",
+                      textDecoration: "none",
+                      display: "flex", flexDirection: "column", alignItems: "center"
                     }}>
                     <span className="nav-link-text" style={{
-                      fontSize: 12, fontWeight: 500, letterSpacing: "0.06em",
-                      color: active ? "#00d4ff" : "#64748b"
-                    }}>{item.name}</span>
-                    {/* Active dot */}
-                    {active && (
-                      <span style={{
-                        position: "absolute", top: 5, right: 5,
-                        width: 4, height: 4, borderRadius: "50%",
-                        background: "#00d4ff",
-                        boxShadow: "0 0 6px #00d4ff"
-                      }} />
-                    )}
-                    {/* Hover underbar */}
+                      fontSize: 13, fontWeight: 500, letterSpacing: "0.08em",
+                      color: active ? "#fff" : "#94a3b8",
+                      textTransform: "uppercase"
+                    }}>{displayName}</span>
                     <div className="nav-link-bar" style={{
-                      position: "absolute", bottom: 0, left: "20%", right: "20%",
-                      height: 1, borderRadius: 1,
-                      background: "linear-gradient(90deg, transparent, #00d4ff, transparent)",
-                      opacity: 0, transition: "opacity 0.2s"
+                      position: "absolute", bottom: 0, left: 0, right: 0,
+                      height: 2, background: "#00d4ff",
+                      opacity: active ? 1 : 0, 
+                      transform: active ? "scaleX(1)" : "scaleX(0)",
+                      transition: "all 0.3s ease",
+                      transformOrigin: "center"
                     }} />
                   </Link>
                 );
               })}
             </div>
 
-            {/* ── CTA ── */}
-            <div className="desktop-cta" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              {/* Availability dot */}
-              <div style={{
+            {/* ── CTA & Lang ── */}
+            <div className="desktop-cta" style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              
+              {/* Language toggle */}
+              <button className="lang-toggle" style={{
                 display: "flex", alignItems: "center", gap: 6,
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 10, color: "#22c55e", letterSpacing: "0.08em"
+                padding: "8px 12px", borderRadius: 20,
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#94a3b8", fontFamily: "'Inter', sans-serif",
+                fontSize: 12, fontWeight: 600, cursor: "pointer",
+                transition: "all 0.2s ease"
               }}>
-                <span style={{
-                  width: 6, height: 6, borderRadius: "50%", background: "#22c55e",
-                  animation: "pulseDot 2s ease infinite", display: "inline-block"
-                }} />
-                open_to_work
-              </div>
+                <span>文A</span> FR
+              </button>
 
-              <Link to="https://wa.me/+2290151344289" className="cta-nav" style={{
+              <Link to="https://wa.me/+2290151344289" className="cta-btn" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
-                padding: "8px 18px", borderRadius: 4,
-                background: "linear-gradient(135deg, #0e7490, #4338ca)",
-                color: "#f0f9ff", textDecoration: "none",
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 12, fontWeight: 600, letterSpacing: "0.06em",
-                transition: "all 0.25s ease",
-                boxShadow: "0 2px 12px rgba(0,212,255,0.1)"
+                padding: "10px 24px", borderRadius: 24,
+                background: "#00d4ff",
+                color: "#0f172a", textDecoration: "none",
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 14, fontWeight: 600,
               }}>
-                hire_me() →
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Réserver un appel
               </Link>
             </div>
 
@@ -161,24 +146,23 @@ const Navigation = () => {
               onClick={() => setIsOpen(!isOpen)}
               style={{
                 display: "none", padding: "8px", borderRadius: 4,
-                background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
-                color: "#64748b", cursor: "pointer", lineHeight: 0,
-                transition: "all 0.2s"
+                background: "transparent", border: "none",
+                color: "#f8fafc", cursor: "pointer", lineHeight: 0,
               }}
               className="mobile-burger"
               aria-label="Toggle menu"
             >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 {isOpen ? (
                   <>
-                    <line x1="2" y1="2" x2="16" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <line x1="16" y1="2" x2="2" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                   </>
                 ) : (
                   <>
-                    <line x1="2" y1="5"  x2="16" y2="5"  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <line x1="2" y1="9"  x2="16" y2="9"  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <line x1="2" y1="13" x2="16" y2="13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <line x1="4" y1="6"  x2="20" y2="6"  stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    <line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                   </>
                 )}
               </svg>
@@ -189,74 +173,56 @@ const Navigation = () => {
           {isOpen && (
             <div style={{
               borderTop: "1px solid rgba(255,255,255,0.06)",
-              padding: "16px 0 20px", display: "none"
+              padding: "24px 0", display: "none"
             }} className="mobile-menu">
-              <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 16 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
                 {NAVIGATION.map((item) => {
                   const active = isActive(item.path);
+                  let nameMap = {
+                    "home": "ACCUEIL",
+                    "about": "À PROPOS",
+                    "skills": "COMPÉTENCES",
+                    "projects": "PROJETS",
+                    "masterclass": "MASTERCLASS",
+                    "blog": "BLOG",
+                    "contact": "CONTACT"
+                  };
+                  const displayName = nameMap[item.name.toLowerCase()] || item.name;
+
                   return (
                     <Link key={item.path} to={item.path}
                       className="mob-link"
                       style={{
-                        display: "flex", alignItems: "center", gap: 12,
-                        padding: "12px 14px", borderRadius: 4, textDecoration: "none",
-                        background: active ? "rgba(0,212,255,0.08)" : "transparent",
-                        border: `1px solid ${active ? "rgba(0,212,255,0.25)" : "transparent"}`,
-                        transition: "all 0.2s ease"
+                        display: "flex", alignItems: "center",
+                        textDecoration: "none",
+                        color: active ? "#00d4ff" : "#e2e8f0",
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: 16, fontWeight: 500,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em"
                       }}>
-                      <span style={{
-                        width: 5, height: 5, borderRadius: "50%",
-                        background: active ? "#00d4ff" : "rgba(255,255,255,0.15)",
-                        boxShadow: active ? "0 0 6px #00d4ff" : "none",
-                        flexShrink: 0
-                      }} />
-                      <span className="mob-link-text" style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 13, fontWeight: 500,
-                        color: active ? "#00d4ff" : "#64748b",
-                        letterSpacing: "0.06em", transition: "color 0.2s"
-                      }}>{item.name}</span>
+                      {displayName}
                     </Link>
                   );
                 })}
               </div>
 
-              {/* Mobile CTA */}
-              <Link href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                  padding: "13px", borderRadius: 4, textDecoration: "none",
-                  background: "linear-gradient(135deg, #0e7490, #4338ca)",
-                  color: "#f0f9ff", fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 13, fontWeight: 600, letterSpacing: "0.05em",
-                  marginBottom: 12
-                }}>
-                ✉ WhatsApp → démarrer
-              </Link>
-
-              {/* Mobile availability */}
-              <div style={{
-                display: "flex", justifyContent: "center",
-                alignItems: "center", gap: 8,
-                padding: "8px", borderRadius: 4,
-                background: "rgba(34,197,94,0.07)",
-                border: "1px solid rgba(34,197,94,0.2)",
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 11, color: "#22c55e"
+              <Link to="https://wa.me/+2290151344289" style={{
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                padding: "14px", borderRadius: 8, textDecoration: "none",
+                background: "#00d4ff",
+                color: "#0f172a", fontFamily: "'Inter', sans-serif",
+                fontSize: 14, fontWeight: 600,
+                width: "100%"
               }}>
-                <span style={{
-                  width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
-                  animation: "pulseDot 2s ease infinite", display: "inline-block"
-                }} />
-                Disponible pour projets · Open=True
-              </div>
+                Réserver un appel
+              </Link>
             </div>
           )}
         </div>
 
-        {/* Responsive styles */}
         <style>{`
-          @media (max-width: 768px) {
+          @media (max-width: 1024px) {
             .desktop-nav  { display: none !important; }
             .desktop-cta  { display: none !important; }
             .mobile-burger{ display: block !important; }

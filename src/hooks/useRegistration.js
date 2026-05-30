@@ -1,15 +1,6 @@
-/**
- * ─────────────────────────────────────────────────────────────────
- *  HOOK — useRegistration.js
- *  Gère l'appel API, les états (loading, success, error)
- *  et le compteur de places restantes.
- * ─────────────────────────────────────────────────────────────────
- */
-
 import { useState, useEffect, useCallback } from "react";
 
-const API_URL="https://donerick.onrender.com/api";
-;
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
 /**
  * Hook principal pour la gestion des inscriptions
