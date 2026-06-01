@@ -88,26 +88,21 @@ function mapNotionPageToMasterclass(page) {
 
 export async function getMasterclasses() {
   if (!databaseId || !process.env.NOTION_API_KEY) {
-    console.warn("⚠️ Identifiants Notion manquants. Retour d'un tableau vide.");
+    console.warn("Identifiants Notion manquants. Retour d'un tableau vide.");
     return [];
   }
 
   try {
     const response = await notion.databases.query({
       database_id: databaseId,
-      // On peut filtrer les brouillons si on a une colonne Status
-      // filter: { property: 'Status', select: { does_not_equal: 'Draft' } },
-      sorts: [
-        {
-          property: 'Date',
-          direction: 'descending', // Les plus récents en premier
-        },
-      ],
     });
 
     return response.results.map(mapNotionPageToMasterclass);
   } catch (error) {
-    console.error("Erreur lors de la récupération depuis Notion:", error);
+    console.error("🚨 ERREUR NOTION (getMasterclasses):", error);
+    if (error.code === "object_not_found") {
+      console.error("👉 Vérifie que l'intégration Notion a bien été invitée dans la base de données (Add connections).");
+    }
     return [];
   }
 }

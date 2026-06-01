@@ -34,7 +34,7 @@ export default function App() {
         
         {/* Open Graph / Facebook / LinkedIn */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://donerick.vercel.app/" />
+        <meta property="og:url" content="https://donerick.vercel.app" />
         <meta property="og:title" content="Dona Eric | Data Scientist & ML Engineer" />
         <meta property="og:description" content="Explorez mes projets en Intelligence Artificielle et Computer Vision." />
         <meta property="og:image" content="https://donerick.vercel.app/og-image.png" /> 

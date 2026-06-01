@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../styles/Footer.css";
 
 const SOCIALS = [
   {
@@ -23,7 +24,7 @@ const SOCIALS = [
     ),
   },
   {
-    label: "Twitter / X",
+    label: "X",
     href: "https://twitter.com/ericschrodinger",
     color: "#64748b",
     icon: (
@@ -65,18 +66,13 @@ function SocialBtn({ item }) {
   const [hov, setHov] = useState(false);
   return (
     <a href={item.href} target="_blank" rel="noopener noreferrer"
+      className="footer-social-btn"
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       aria-label={item.label}
       style={{
-        display: "inline-flex", alignItems: "center", gap: 7,
-        padding: "6px 12px", borderRadius: 4, textDecoration: "none",
         background: hov ? `${item.color}12` : "rgba(255,255,255,0.03)",
         border: `1px solid ${hov ? `${item.color}45` : "rgba(255,255,255,0.08)"}`,
         color: hov ? item.color : "#475569",
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 11, fontWeight: 500,
-        transition: "all 0.2s ease",
-        whiteSpace: "nowrap"
       }}>
       {item.icon}
       <span>{item.label}</span>
@@ -85,17 +81,8 @@ function SocialBtn({ item }) {
 }
 
 function FooterLink({ href, label }) {
-  const [hov, setHov] = useState(false);
-  const style = {
-    fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
-    color: hov ? "#00d4ff" : "#475569",
-    textDecoration: "none", transition: "color 0.2s ease",
-    letterSpacing: "0.04em"
-  };
   return (
-    <Link to={href} style={style}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}>
+    <Link to={href} className="footer-link">
       {label}
     </Link>
   );
@@ -106,169 +93,85 @@ const Footer = () => {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap');
-        @keyframes pulseDot { 0%,100%{box-shadow:0 0 6px #22c55e}50%{box-shadow:0 0 14px #22c55e} }
-        @media (max-width: 768px) {
-          .footer-grid   { grid-template-columns: 1fr 1fr !important; }
-          .footer-brand  { grid-column: 1 / -1 !important; }
-          .footer-socials{ flex-wrap: wrap !important; }
-        }
-        @media (max-width: 480px) {
-          .footer-grid   { grid-template-columns: 1fr !important; }
-          .footer-bottom { flex-direction: column !important; align-items: flex-start !important; }
-        }
-      `}</style>
-
-      <footer style={{
-        background: "#040710",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        position: "relative", overflow: "hidden",
-        fontFamily: "'Space Grotesk', sans-serif"
-      }}>
+      <footer className="footer-main">
 
         {/* Top accent */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 1,
-          background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.3), rgba(99,102,241,0.3), transparent)"
-        }} />
+        <div className="footer-accent" />
 
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 1160, margin: "0 auto", padding: "56px 24px 0" }}>
+        <div className="footer-container">
 
           {/* ── Main grid ── */}
-          <div className="footer-grid" style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr 1fr",
-            gap: 40, marginBottom: 48
-          }}>
+          <div className="footer-grid">
 
             {/* Brand */}
             <div className="footer-brand">
-              {/* Logo */}
-              <div style={{ marginBottom: 14 }}>
-                <Link to="/" style={{ textDecoration: "none" }}>
-                              <div style={{
-                                fontFamily: "'JetBrains Mono', monospace",
-                                fontSize: 15, fontWeight: 700, letterSpacing: "0.05em"
-                              }}>
-                                <span style={{ color: "#475569" }}>{"<"}</span>
-                                <span style={{
-                                  background: "linear-gradient(135deg, #00d4ff, #6366f1)",
-                                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-                                }}>DEK</span>
-                                <span style={{ color: "#475569" }}>{" />"}</span>
-                              </div>
-                            </Link>
-                
+                {/* Logo */}
+                <div style={{ marginBottom: 14 }}>
+                  <Link to="/" className="footer-logo">
+                    <div className="footer-logo-text">
+                        <span className="footer-logo-bracket">{"<"}</span>
+                        <span className="footer-logo-name">Dona.ia</span>
+                        <span className="footer-logo-bracket">{" />"}</span>
+                    </div>
+                  </Link>
               </div>
 
               {/* Name + role */}
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                color: "#334155", letterSpacing: "0.12em", marginBottom: 6
-              }}>// profile</div>
-              <p style={{ fontSize: 14, fontWeight: 600, color: "#94a3b8", marginBottom: 4 }}>
+              <div className="footer-label">// profile</div>
+              <p className="footer-name">
                 Dona Éric KOULODJI
               </p>
-              <p style={{
-                fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                color: "#475569", marginBottom: 18, letterSpacing: "0.05em"
-              }}>
-                <span style={{ color: "#6366f1" }}>role</span> :: Data Scientist → ML Engineer
+              <p className="footer-role">
+                <span className="footer-role-highlight">role</span> ::: Data Scientist → ML Engineer
               </p>
 
               {/* Location */}
-              <div style={{
-                display: "flex", alignItems: "center", gap: 8, marginBottom: 18,
-                fontFamily: "monospace", fontSize: 12, color: "#475569"
-              }}>
+              <div className="footer-location">
                 <span>📍</span>
                 Abomey-Calavi, Bénin · Remote OK
               </div>
 
               {/* Availability */}
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                padding: "6px 14px", borderRadius: 4, marginBottom: 20,
-                background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.2)",
-                fontFamily: "monospace", fontSize: 11, color: "#22c55e"
-              }}>
-                <span style={{
-                  width: 5, height: 5, borderRadius: "50%", background: "#22c55e",
-                  animation: "pulseDot 2s ease infinite", display: "inline-block", flexShrink: 0
-                }} />
+              <div className="footer-availability">
+                <span className="footer-availability-dot" />
                 AVAILABLE_FOR_HIRE :: open=True
               </div>
 
               {/* Socials — SVG icons + labels */}
-              <div className="footer-socials" style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div className="footer-socials">
                 {SOCIALS.map(s => <SocialBtn key={s.label} item={s} />)}
               </div>
             </div>
 
             {/* Navigation */}
             <div>
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
-                color: "#334155", letterSpacing: "0.15em", marginBottom: 16
-              }}>// navigation</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div className="footer-column-title">// navigation</div>
+              <div className="footer-link-list">
                 {QUICK_LINKS.map(l => <FooterLink key={l.href} href={l.href} label={l.label} />)}
               </div>
             </div>
 
             {/* Expertise */}
             <div>
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
-                color: "#334155", letterSpacing: "0.15em", marginBottom: 16
-              }}>// expertise</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <div className="footer-column-title">// expertise</div>
+              <div className="footer-expertise-list">
                 {EXPERTISE.map(e => (
-                  <span key={e} style={{
-                    fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                    color: "#475569", letterSpacing: "0.04em"
-                  }}>{e}</span>
+                  <span key={e} className="footer-expertise-item">{e}</span>
                 ))}
               </div>
             </div>
 
             {/* Contact */}
             <div>
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
-                color: "#334155", letterSpacing: "0.15em", marginBottom: 16
-              }}>// contact.info</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <a href="mailto:donaerickoulodji@gmail.com" style={{
-                  fontFamily: "monospace", fontSize: 11, color: "#475569",
-                  textDecoration: "none", transition: "color 0.2s", wordBreak: "break-all"
-                }}
-                  onMouseEnter={e => e.currentTarget.style.color = "#00d4ff"}
-                  onMouseLeave={e => e.currentTarget.style.color = "#475569"}
-                >
+              <div className="footer-column-title">// contact.info</div>
+              <div className="footer-contact-list">
+                <a href="mailto:donaerickoulodji@gmail.com" className="footer-contact-link">
                   ✉ donaerickoulodji@gmail.com
                 </a>
-                <a href="tel:+2290141730240" style={{
-                  fontFamily: "monospace", fontSize: 11, color: "#475569",
-                  textDecoration: "none", transition: "color 0.2s"
-                }}
-                  onMouseEnter={e => e.currentTarget.style.color = "#00d4ff"}
-                  onMouseLeave={e => e.currentTarget.style.color = "#475569"}
-                >
+                <a href="tel:+2290141730240" className="footer-contact-link">
                   ☎ +229 01 41 73 02 40
                 </a>
-                <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 6,
-                    padding: "8px 14px", borderRadius: 4, marginTop: 4,
-                    background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.2)",
-                    fontFamily: "monospace", fontSize: 11, color: "#22c55e",
-                    textDecoration: "none", transition: "all 0.2s ease"
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(34,197,94,0.12)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(34,197,94,0.07)"; }}
-                >
+                <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer" className="footer-wa-link">
                   ↗ start_conversation()
                 </a>
               </div>
@@ -276,27 +179,14 @@ const Footer = () => {
           </div>
 
           {/* ── Bottom bar ── */}
-          <div className="footer-bottom" style={{
-            borderTop: "1px solid rgba(255,255,255,0.05)",
-            padding: "20px 0",
-            display: "flex", alignItems: "center",
-            justifyContent: "space-between", flexWrap: "wrap", gap: 12
-          }}>
-            <span style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: "#334155"
-            }}>
+          <div className="footer-bottom">
+            <span className="footer-copyright">
               © {year} dona-eric.koulodji · Data Science & ML Engineering · Abomey-Calavi · BÉNIN
             </span>
 
-            <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+            <div className="footer-legal">
               {["Confidentialité", "Conditions"].map(l => (
-                <a key={l} href="#" style={{
-                  fontFamily: "monospace", fontSize: 11, color: "#334155",
-                  textDecoration: "none", transition: "color 0.2s"
-                }}
-                  onMouseEnter={e => e.currentTarget.style.color = "#475569"}
-                  onMouseLeave={e => e.currentTarget.style.color = "#334155"}
-                >{l}</a>
+                <a key={l} href="#" className="footer-legal-link">{l}</a>
               ))}
             </div>
           </div>

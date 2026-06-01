@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Send,
-  CheckCircle,
-  AlertCircle,
-  Mail,
-  User,
-  MessageSquare,
-  Linkedin,
-  Github,
-  ArrowUpRight,
-} from "lucide-react";
+import {Send,CheckCircle,AlertCircle,Mail,User,MessageSquare,Linkedin,Github,ArrowUpRight,} from "lucide-react";
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -100,13 +90,8 @@ export default function ContactForm() {
                   { Icon: Linkedin, href: "https://linkedin.com/in/dona-erick", label: "LinkedIn" },
                   { Icon: Github, href: "https://github.com/dona-eric", label: "GitHub" },
                 ].map(({ Icon, href, label }) => (
-                  <a
-                    key={href}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-3 px-6 py-3 border border-zinc-800 rounded-full text-zinc-300 hover:border-zinc-600 hover:bg-white/5 transition-all duration-300"
-                  >
+                  <a key={href}
+                    href={href} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 px-6 py-3 border border-zinc-800 rounded-full text-zinc-300 hover:border-zinc-600 hover:bg-white/5 transition-all duration-300">
                     <Icon className="w-5 h-5" />
                     {label}
                     <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all" />

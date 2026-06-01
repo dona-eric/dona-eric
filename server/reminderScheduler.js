@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import nodemailer from "nodemailer";
 import { getRegistrantsByMasterclass } from "./database.js";
-import { MASTERCLASSES } from "../src/config/masterclasses.config.js";
+import { getMasterclasses } from "./services/notionService.js";
 import { generateReminderHTML, generateReminderText } from "./templates/reminderEmail.js";
 
 const transporter = nodemailer.createTransport({
@@ -12,9 +12,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-/**
- * Vérifie si un masterclass a lieu demain (24h avant)
- */
+/** Vérifie si un masterclass a lieu demain (24h avant)**/
 function isTomorrow(dateStr) {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -26,9 +24,7 @@ function isTomorrow(dateStr) {
   );
 }
 
-/**
- * Envoie l'email de rappel à un inscrit
- */
+/**Envoie l'email de rappel à un inscrit **/
 async function sendReminderEmail(registrant, masterclass) {
   const { email } = registrant;
   const { title, type } = masterclass;
@@ -43,15 +39,13 @@ async function sendReminderEmail(registrant, masterclass) {
   });
 }
 
-/**
- * Tâche principale : s'exécute tous les jours à 8h00
- * Format cron : "minute heure * * *"
- */
+/*** Tâche principale : s'exécute tous les jours à 8h00 * Format cron : "minute heure * * *"*/
 export function startReminderScheduler() {
   cron.schedule("0 8 * * *", async () => {
     console.log(`\n⏰ [${new Date().toLocaleString("fr-FR")}] Vérification des rappels...`);
 
-    const tomorrowEvents = MASTERCLASSES.filter((mc) => isTomorrow(mc.date));
+    const allMasterclasses = await getMasterclasses();
+    const tomorrowEvents = allMasterclasses.filter((mc) => isTomorrow(mc.date));
 
     if (tomorrowEvents.length === 0) {
       console.log("   Aucun événement demain.");
@@ -60,7 +54,7 @@ export function startReminderScheduler() {
 
     for (const masterclass of tomorrowEvents) {
         const registrants = await getRegistrantsByMasterclass(masterclass.id);
-      console.log(`   📧 ${masterclass.title} → ${registrants.length} inscrits à notifier`);
+      console.log(`📧 ${masterclass.title} → ${registrants.length} inscrits à notifier`);
 
       let sent = 0, failed = 0;
 
@@ -72,15 +66,15 @@ export function startReminderScheduler() {
           await new Promise((r) => setTimeout(r, 300));
         } catch (err) {
           failed++;
-          console.error(`   ❌ Échec pour ${registrant.email}:`, err.message);
+          console.error("Échec pour ${registrant.email}:", err.message);
         }
       }
 
-      console.log(`  ✅ Rappels envoyés : ${sent} réussis, ${failed} échoués`);
+      console.log("Rappels envoyés : ${sent} réussis, ${failed} échoués");
     }
   }, {
     timezone: "Africa/Porto-Novo", // ← GMT+1 Bénin
   });
 
-  console.log("📅 Scheduler de rappels actif (8h00 chaque matin, heure de Cotonou)");
+  console.log("Scheduler de rappels actif (8h00 chaque matin, heure de Cotonou)");
 }

@@ -1,0 +1,230 @@
+/* Home.css */
+.home-main {
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+}
+
+.home-section {
+  position: relative;
+  z-index: 1;
+  padding: 80px 24px 100px;
+}
+
+.home-container {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.home-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 30px;
+  margin-bottom: 36px;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  font-size: 11px;
+  font-weight: 600;
+  color: #00d4ff;
+  letter-spacing: 0.08em;
+}
+
+.home-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00d4ff;
+  box-shadow: 0 0 10px #00d4ff;
+  display: inline-block;
+}
+
+.home-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 5.5vw, 62px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.home-title-gradient {
+  background: linear-gradient(135deg, #00d4ff 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-description {
+  max-width: 680px;
+  margin: 0 auto 52px;
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.home-description strong {
+  color: #ffffff;
+}
+
+.home-description strong.accent {
+  color: #00d4ff;
+}
+
+.home-cta-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+.home-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  background: #00d4ff;
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+}
+
+.home-cta-primary:hover {
+  transform: translateY(-2px);
+  background: #00b8e6;
+}
+
+.home-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.home-cta-secondary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.home-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto 56px;
+}
+
+.home-stat-card {
+  padding: 24px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-stat-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+}
+
+.home-stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #00d4ff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.home-stat-label {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-status-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.home-status-item {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-status-icon {
+  color: #00d4ff;
+  font-size: 16px;
+}
+
+.home-trust-section {
+  position: relative;
+  z-index: 1;
+  padding: 20px 24px 80px;
+}
+
+.home-trust-header {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.home-trust-accent {
+  color: #00d4ff;
+}
+
+.home-trust-grid {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.home-trust-badge {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #e2e8f0;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.home-trust-badge:hover {
+  border-color: rgba(0, 212, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.home-trust-badge-icon {
+  font-size: 20px;
+}

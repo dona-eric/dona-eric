@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
+import "../styles/Home.css";
 
 const useScrollFade = (delay = 0) => {
   const ref = useRef(null);
@@ -25,19 +26,10 @@ const useScrollFade = (delay = 0) => {
 function StatCard({ value, label, delay }) {
   const ref = useScrollFade(delay);
   return (
-    <div ref={ref} className="glass" style={{
-      padding: "24px 16px", textAlign: "center",
-      position: "relative", overflow: "hidden"
-    }}>
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: 2,
-        background: "linear-gradient(90deg, transparent, #00d4ff, transparent)"
-      }} />
-      <div style={{
-        fontFamily: "'Space Grotesk', sans-serif",
-        fontSize: 32, fontWeight: 700, color: "#00d4ff", lineHeight: 1, marginBottom: 8
-      }}>{value}</div>
-      <div style={{ fontSize: 11, color: "#94a3b8", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+    <div ref={ref} className="glass home-stat-card">
+      <div className="home-stat-gradient" />
+      <div className="home-stat-value">{value}</div>
+      <div className="home-stat-label">
         {label}
       </div>
     </div>
@@ -47,21 +39,8 @@ function StatCard({ value, label, delay }) {
 function TrustBadge({ icon, label, delay }) {
   const ref = useScrollFade(delay);
   return (
-    <div ref={ref} className="glass" style={{
-      padding: "16px 24px", display: "flex", alignItems: "center", gap: 12,
-      fontFamily: "'Inter', sans-serif", fontSize: 14, color: "#e2e8f0", fontWeight: 500,
-      transition: "all 0.3s ease"
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.borderColor = "rgba(0, 212, 255, 0.4)";
-      e.currentTarget.style.transform = "translateY(-2px)";
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-      e.currentTarget.style.transform = "translateY(0)";
-    }}
-    >
-      <span style={{ fontSize: 20 }}>{icon}</span>
+    <div ref={ref} className="glass home-trust-badge">
+      <span className="home-trust-badge-icon">{icon}</span>
       {label}
     </div>
   );
@@ -83,140 +62,76 @@ export default function Home() {
   ];
 
   return (
-    <main style={{ color: "#e2e8f0", fontFamily: "'Inter', sans-serif" }}>
+    <main className="home-main">
       <Hero />
 
-      <section id="contact" style={{ position: "relative", zIndex: 1, padding: "80px 24px 100px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
+      <section id="contact" className="home-section">
+        <div className="home-container">
 
           {/* Badge */}
-          <div ref={ctaHeaderRef} style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "8px 20px", borderRadius: "30px", marginBottom: 36,
-            background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.3)",
-            fontSize: 11, fontWeight: 600, color: "#00d4ff", letterSpacing: "0.08em"
-          }}>
-            <span style={{
-              width: 6, height: 6, borderRadius: "50%", background: "#00d4ff",
-              boxShadow: "0 0 10px #00d4ff", display: "inline-block"
-            }} />
+          <div ref={ctaHeaderRef} className="home-badge">
+            <span className="home-badge-dot" />
             🔥 3 PROJETS LIVRÉS CE TRIMESTRE · 1 SLOT DISPONIBLE
           </div>
 
           {/* Title */}
-          <h2 ref={ctaTitleRef} style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(32px, 5.5vw, 62px)", fontWeight: 800,
-            lineHeight: 1.1, letterSpacing: "-0.03em",
-            color: "#ffffff", marginBottom: 24
-          }}>
+          <h2 ref={ctaTitleRef} className="home-title">
             Votre concurrent a déjà<br />
-            <span style={{
-              background: "linear-gradient(135deg, #00d4ff 0%, #ec4899 100%)",
-              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"
-            }}>son IA en production.</span>
+            <span className="home-title-gradient">son IA en production.</span>
           </h2>
 
           {/* Description */}
-          <p ref={ctaDescRef} style={{
-            maxWidth: 680, margin: "0 auto 52px",
-            color: "#94a3b8", fontSize: 16, lineHeight: 1.8
-          }}>
+          <p ref={ctaDescRef} className="home-description">
             Pendant que votre équipe analyse encore les options, je livre un{" "}
-            <strong style={{ color: "#ffffff" }}>agent IA opérationnel</strong>,{" "}
-            un <strong style={{ color: "#ffffff" }}>pipeline ML en production</strong>{" "}
-            ou un <strong style={{ color: "#ffffff" }}>système RAG clé-en-main</strong> —
+            <strong>agent IA opérationnel</strong>,{" "}
+            un <strong>pipeline ML en production</strong>{" "}
+            ou un <strong>système RAG clé-en-main</strong> —
             en semaines, pas en mois. Zéro POC qui dort. Zéro réunion inutile.{" "}
-            <strong style={{ color: "#00d4ff" }}>Du concret pour votre entreprise.</strong>
+            <strong className="accent">Du concret pour votre entreprise.</strong>
           </p>
 
           {/* CTA Buttons */}
-          <div ref={ctaBtnsRef} style={{
-            display: "flex", gap: 16, justifyContent: "center",
-            flexWrap: "wrap", marginBottom: 56
-          }}>
+          <div ref={ctaBtnsRef} className="home-cta-container">
             <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 10,
-                padding: "14px 32px", borderRadius: "8px",
-                background: "#00d4ff", color: "#0f172a",
-                fontSize: 15, fontWeight: 600, textDecoration: "none",
-                transition: "all 0.3s ease",
-                boxShadow: "0 4px 20px rgba(0, 212, 255, 0.2)"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.background = "#00b8e6";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.background = "#00d4ff";
-              }}
+              className="home-cta-primary"
               >
               Démarrer mon projet →
             </a>
             <a href="mailto:donaerickoulodji@gmail.com" 
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 10,
-                padding: "14px 32px", borderRadius: "8px", background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "#f8fafc", fontSize: 15, fontWeight: 500, textDecoration: "none",
-                transition: "all 0.3s ease"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-              }}
+              className="home-cta-secondary"
               >
               ✉ Me décrire mon besoin
             </a>
           </div>
 
           {/* Stats mini-row */}
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-            gap: 16, maxWidth: 720, margin: "0 auto 56px"
-          }}>
+          <div className="home-stats-grid">
             {stats.map((s, i) => <StatCard key={i} {...s} delay={0.4 + i * 0.08} />)}
           </div>
 
           {/* Garanties */}
-          <div ref={ctaStatusRef} style={{
-            display: "flex", flexWrap: "wrap", gap: 24,
-            justifyContent: "center"
-          }}>
+          <div ref={ctaStatusRef} className="home-status-container">
             {[
               "Réponse sous 24h",
               "Livraison en semaines",
               "Code propre · Documenté",
               "Remote · Freelance · Contract"
             ].map((g) => (
-              <span key={g} style={{
-                fontSize: 13, color: "#64748b", fontWeight: 500,
-                display: "flex", alignItems: "center", gap: 8
-              }}>
-                <span style={{ color: "#00d4ff", fontSize: 16 }}>✓</span> {g}
+              <span key={g} className="home-status-item">
+                <span className="home-status-icon">✓</span> {g}
               </span>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={{ position: "relative", zIndex: 1, padding: "20px 24px 80px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
-          <div ref={trustRef} style={{
-            fontSize: 11, color: "#64748b", fontWeight: 600, letterSpacing: "0.15em", 
-            textTransform: "uppercase", marginBottom: 32
-          }}>
-            <span style={{ color: "#00d4ff" }}>//</span> ILS M'ONT FAIT CONFIANCE
+      <section className="home-trust-section">
+        <div className="home-container">
+          <div ref={trustRef} className="home-trust-header">
+            <span className="home-trust-accent">//</span> ILS M'ONT FAIT CONFIANCE
           </div>
 
-          <div style={{
-            display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap"
-          }}>
+          <div className="home-trust-grid">
             <TrustBadge icon="🏢" label="Entreprises Tech" delay={0.1} />
             <TrustBadge icon="🚀" label="Startups Africaines" delay={0.2} />
             <TrustBadge icon="🎓" label="Institutions académiques" delay={0.3} />

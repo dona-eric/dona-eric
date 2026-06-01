@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
     }
     res.json(masterclass);
   } catch (error) {
-    console.error(`Erreur GET /api/masterclasses/${req.params.id}:`, error);
+    console.error("Erreur GET /api/masterclasses/${req.params.id}:", error);
     res.status(500).json({ error: "Erreur lors de la récupération des détails" });
   }
 });

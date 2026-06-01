@@ -1,6 +1,9 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import dns from "dns";
+// Contournement d'un bug réseau Node.js fréquent (IPv6 -> Notion)
+dns.setDefaultResultOrder("ipv4first");
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { initDatabase } from "./database.js";

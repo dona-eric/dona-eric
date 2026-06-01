@@ -1,13 +1,9 @@
 import { Router } from "express";
 import { z } from "zod";
-import {
-  insertRegistration,
-  checkDuplicate,
-  countRegistrations,
-  logEmail,
-} from "../database.js";
+import {insertRegistration,checkDuplicate,countRegistrations,logEmail,} from "../database.js";
 import { sendConfirmationEmail } from "../emailService.js";
-import { MASTERCLASSES, isOpen } from "../../src/config/masterclasses.config.js";
+import { getMasterclassById } from "../services/notionService.js";
+import { isOpen } from "../../src/config/masterclasses.config.js";
 
 const router = Router();
 
@@ -27,7 +23,7 @@ router.post("/register", async (req, res) => {
   try {
     const data = registrationSchema.parse(req.body);
 
-    const masterclass = MASTERCLASSES.find((mc) => mc.id === data.masterclass_id);
+    const masterclass = await getMasterclassById(data.masterclass_id);
     if (!masterclass) {
       return res.status(404).json({ error: "Événement introuvable." });
     }
@@ -100,7 +96,7 @@ router.post("/register", async (req, res) => {
 // GET /api/count/:masterclassId
 router.get("/count/:masterclassId", async (req, res) => {
   const { masterclassId } = req.params;
-  const masterclass = MASTERCLASSES.find((mc) => mc.id === masterclassId);
+  const masterclass = await getMasterclassById(masterclassId);
   if (!masterclass) return res.status(404).json({ error: "Événement introuvable." });
 
   const count     = await countRegistrations(masterclassId);

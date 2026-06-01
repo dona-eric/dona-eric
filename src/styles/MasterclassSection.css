@@ -1,0 +1,257 @@
+/* MasterclassSection.css */
+
+.ms-section {
+  padding: 100px 24px;
+  font-family: 'Inter', sans-serif;
+  color: #e2e8f0;
+  position: relative;
+  z-index: 1;
+}
+
+.ms-container {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+/* Header */
+.ms-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.ms-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 30px;
+  margin-bottom: 24px;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  font-size: 11px;
+  font-weight: 600;
+  color: #00d4ff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ms-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00d4ff;
+  box-shadow: 0 0 10px #00d4ff;
+  display: inline-block;
+}
+
+.ms-title {
+  margin: 0 0 16px;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.ms-description {
+  max-width: 640px;
+  margin: 0 auto;
+  color: #94a3b8;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+/* Stats */
+.ms-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.ms-stat-card {
+  text-align: center;
+  padding: 16px 24px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  min-width: 140px;
+}
+
+.ms-stat-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.ms-stat-value {
+  font-size: 32px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.ms-stat-label {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Featured */
+.ms-featured {
+  margin-bottom: 80px;
+}
+
+/* Filters */
+.ms-filters-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ms-filters-subtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #a855f7;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.ms-filters-title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.ms-filter-buttons {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ms-filter-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+/* Grid */
+.ms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Newsletter */
+.ms-newsletter {
+  margin-top: 100px;
+  border-radius: 16px;
+  padding: 64px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ms-newsletter-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00d4ff, #a855f7, transparent);
+}
+
+.ms-newsletter-badge {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #00d4ff;
+  letter-spacing: 0.15em;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.ms-newsletter-title {
+  margin: 0 0 16px;
+  color: #ffffff;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.ms-newsletter-desc {
+  margin: 0 auto 40px;
+  color: #94a3b8;
+  font-size: 16px;
+  max-width: 500px;
+}
+
+.ms-newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.ms-newsletter-input {
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 15px;
+  width: 100%;
+  max-width: 340px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.ms-newsletter-btn {
+  padding: 16px 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #00d4ff, #4338ca);
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+}
+
+.ms-newsletter-btn:hover {
+  transform: translateY(-2px);
+}
+
+.ms-newsletter-success {
+  color: #34d399;
+  font-weight: 600;
+  padding: 16px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  display: inline-block;
+}

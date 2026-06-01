@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "../styles/Contact.css";
 
 const useFadeIn = (delay = 0) => {
   const ref = useRef(null);
@@ -23,15 +24,13 @@ function SocialBtn({ href, label, icon, color="#00d4ff" }) {
     <a href={href} target="_blank" rel="noopener noreferrer"
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       aria-label={label}
+      className="contact-social-btn"
       style={{
-        display: "inline-flex", alignItems: "center", gap: 8,
-        padding: "8px 16px", borderRadius: 6, textDecoration: "none",
         background: hov ? `${color}15` : "rgba(255,255,255,0.03)",
         border: `1px solid ${hov ? `${color}50` : "rgba(255,255,255,0.1)"}`,
-        color: hov ? color : "#94a3b8", fontFamily: "'Inter', sans-serif",
-        fontSize: 13, fontWeight: 500, transition: "all 0.2s ease", whiteSpace: "nowrap"
+        color: hov ? color : "#94a3b8"
       }}>
-      <span style={{ fontSize: 16, lineHeight: 1 }}>{icon}</span>
+      <span className="contact-social-icon">{icon}</span>
       <span>{label}</span>
     </a>
   );
@@ -51,7 +50,7 @@ function Typewriter({ text, speed = 40 }) {
   return (
     <span>
       {displayed}
-      <span style={{ animation: "blink 1s step-end infinite", color: "#00d4ff" }}>|</span>
+      <span className="typewriter-cursor">|</span>
     </span>
   );
 }
@@ -59,61 +58,46 @@ function Typewriter({ text, speed = 40 }) {
 function MetricCard({ label, value, sub, delay }) {
   const ref = useFadeIn(delay);
   return (
-    <div ref={ref} className="glass" style={{
-      padding: "24px 20px", position: "relative", overflow: "hidden"
-    }}>
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: 2,
-        background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.5), transparent)"
-      }} />
-      <div style={{
-        fontFamily: "'Space Grotesk', sans-serif", fontSize: 36,
-        fontWeight: 800, color: "#00d4ff", lineHeight: 1, marginBottom: 8
-      }}>{value}</div>
-      <div style={{ fontSize: 12, color: "#e2e8f0", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</div>
-      {sub && <div style={{ fontSize: 12, color: "#64748b", marginTop: 4, fontFamily: "'Inter', sans-serif" }}>{sub}</div>}
+    <div ref={ref} className="glass contact-metric-card">
+      <div className="contact-metric-gradient" />
+      <div className="contact-metric-value">{value}</div>
+      <div className="contact-metric-label">{label}</div>
+      {sub && <div className="contact-metric-sub">{sub}</div>}
     </div>
   );
 }
 
 function Field({ label, name, type = "text", value, onChange, placeholder, multiline }) {
   const [focused, setFocused] = useState(false);
-  const base = {
-    width: "100%", padding: "14px 16px 14px 42px",
+  const baseStyle = {
     background: focused ? "rgba(0,212,255,0.05)" : "rgba(255,255,255,0.02)",
     border: `1px solid ${focused ? "rgba(0,212,255,0.5)" : "rgba(255,255,255,0.1)"}`,
-    borderRadius: 8, color: "#ffffff",
-    fontFamily: "'Inter', sans-serif", fontSize: 15,
-    outline: "none", resize: "none", transition: "all 0.2s ease", boxSizing: "border-box"
   };
+
   return (
-    <div style={{ position: "relative" }}>
-      <label style={{
-        display: "block", marginBottom: 8, fontSize: 12,
-        fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, color: "#94a3b8",
-        textTransform: "uppercase", letterSpacing: "0.1em"
-      }}>
-        <span style={{ color: "#00d4ff" }}>// </span>{label}
+    <div className="contact-form-group">
+      <label className="contact-form-label">
+        <span className="contact-form-label-prefix">// </span>{label}
       </label>
-      <div style={{ position: "relative" }}>
-        <span style={{
-          position: "absolute", left: 16, top: 15,
-          fontSize: 14, color: focused ? "#00d4ff" : "#64748b",
-          fontFamily: "monospace", transition: "color 0.2s", pointerEvents: "none"
+      <div className="contact-input-wrapper">
+        <span className="contact-input-icon" style={{
+          color: focused ? "#00d4ff" : "#64748b"
         }}>›</span>
         {multiline ? (
           <textarea
             name={name} value={value} onChange={onChange}
             placeholder={placeholder} rows={5}
             onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
-            style={base}
+            className="contact-input"
+            style={baseStyle}
           />
         ) : (
           <input
             name={name} type={type} value={value} onChange={onChange}
             placeholder={placeholder}
             onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
-            style={base}
+            className="contact-input"
+            style={baseStyle}
           />
         )}
       </div>
@@ -164,67 +148,38 @@ export default function ContactPage() {
 
   return (
     <>
-      <style>{`
-        ::placeholder { color: #475569; font-family: 'Inter', sans-serif; font-size: 14px; }
-        @keyframes blink { 50% { opacity: 0; } }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .info-value-link:hover { color: #00d4ff !important; }
-        @media (max-width: 900px) {
-          .contact-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-
-      <main style={{ padding: "100px 24px", fontFamily: "'Inter', sans-serif", color: "#e2e8f0", position: "relative", zIndex: 1 }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <main className="contact-main">
+        <div className="contact-container">
 
           {/* HERO */}
-          <div ref={heroRef} style={{ marginBottom: 80, textAlign: "center" }}>
-            <div style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "8px 20px", borderRadius: "30px", marginBottom: 24,
-              background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.3)",
-              fontSize: 12, fontWeight: 600, color: "#00d4ff", letterSpacing: "0.08em"
-            }}>
-              <span style={{
-                width: 6, height: 6, borderRadius: "50%", background: "#22c55e",
-                boxShadow: "0 0 10px #22c55e", display: "inline-block", animation: "pulse 2s ease infinite"
-              }} />
+          <div ref={heroRef} className="contact-hero">
+            <div className="contact-badge">
+              <span className="contact-badge-dot" />
               AVAILABLE_FOR_HIRE :: STATUS=OPEN
             </div>
 
-            <div style={{ marginBottom: 24 }}>
-              <h1 style={{
-                fontSize: "clamp(40px, 6vw, 64px)", fontWeight: 800, lineHeight: 1.1,
-                color: "#ffffff", letterSpacing: "-0.02em", fontFamily: "'Space Grotesk', sans-serif"
-              }}>
+            <div className="contact-title-container">
+              <h1 className="contact-title">
                 <Typewriter text="Construisons quelque chose" speed={40} />
                 <br />
-                <span className="gradient-text">d'intelligent.</span>
+                <span className="contact-title-gradient">d'intelligent.</span>
               </h1>
             </div>
 
-            <p style={{
-              maxWidth: 640, margin: "0 auto", color: "#94a3b8", fontSize: 17, lineHeight: 1.8, marginBottom: 40
-            }}>
+            <p className="contact-description">
               Data Scientist & ML Engineer. Formé en physique, je modélise rigoureusement avant de coder. 
               Disponible pour des missions freelance, contrats et collaborations de recherche.
             </p>
 
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
+            <div className="contact-tags">
               {expertise.map((tag) => (
-                <span key={tag} style={{
-                  padding: "6px 16px", borderRadius: 4, background: "rgba(168, 85, 247, 0.1)", border: "1px solid rgba(168, 85, 247, 0.25)",
-                  fontSize: 13, fontFamily: "'Inter', sans-serif", fontWeight: 500, color: "#a855f7"
-                }}>{tag}</span>
+                <span key={tag} className="contact-tag">{tag}</span>
               ))}
             </div>
           </div>
 
           {/* METRICS */}
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: 20, marginBottom: 100
-          }}>
+          <div className="contact-metrics-grid">
             <MetricCard label="Projets Livrés" value="08+" sub="Domaines variés" delay={0.2} />
             <MetricCard label="Temps de réponse" value="<24h" sub="Garanti" delay={0.3} />
             <MetricCard label="Expertise" value="Full" sub="Data → Deploy" delay={0.4} />
@@ -232,34 +187,26 @@ export default function ContactPage() {
           </div>
 
           {/* FORM + INFO */}
-          <div className="contact-grid" style={{
-            display: "grid", gridTemplateColumns: "1fr 400px", gap: 40, alignItems: "start"
-          }}>
+          <div className="contact-grid">
             
             {/* FORM */}
-            <div ref={formRef} className="glass" style={{ padding: "48px 40px", position: "relative" }}>
-              <div style={{
-                position: "absolute", top: 0, left: 0, right: 0, height: 3,
-                background: "linear-gradient(90deg, transparent, #00d4ff, #ec4899, transparent)"
-              }} />
+            <div ref={formRef} className="glass contact-form-card">
+              <div className="contact-form-gradient" />
 
-              <div style={{ marginBottom: 40 }}>
-                <div style={{
-                  fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 600,
-                  color: "#00d4ff", letterSpacing: "0.15em", marginBottom: 12, textTransform: "uppercase"
-                }}>
+              <div className="contact-form-header">
+                <div className="contact-form-badge">
                   POST /api/contact → HTTP 200
                 </div>
-                <h2 style={{ fontSize: 32, fontWeight: 800, color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif", marginBottom: 8 }}>
+                <h2 className="contact-form-title">
                   Démarrer la collaboration
                 </h2>
-                <p style={{ color: "#64748b", fontSize: 14 }}>
+                <p className="contact-form-desc">
                   Tous les champs sont requis sauf mention contraire.
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+              <form onSubmit={handleSubmit} className="contact-form">
+                <div className="contact-form-row">
                   <Field label="Votre Nom" name="name" value={form.name} onChange={handleChange} placeholder="John Doe" />
                   <Field label="Adresse Email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="john@entreprise.com" />
                 </div>
@@ -269,27 +216,27 @@ export default function ContactPage() {
 
                 {/* Status Messages */}
                 {status === "missing" && (
-                  <div style={{ padding: "16px", borderRadius: 8, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", color: "#f87171", fontSize: 14, fontWeight: 500 }}>
+                  <div className="contact-status-error">
                     ✗ Erreur de validation : tous les champs requis doivent être remplis.
                   </div>
                 )}
                 {status === "invalid" && (
-                  <div style={{ padding: "16px", borderRadius: 8, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", color: "#f87171", fontSize: 14, fontWeight: 500 }}>
+                  <div className="contact-status-error">
                     ✗ Erreur d'email : le format est invalide.
                   </div>
                 )}
                 {status === "success" && (
-                  <div style={{ padding: "20px", borderRadius: 8, background: "rgba(16, 185, 129, 0.1)", border: "1px solid rgba(16, 185, 129, 0.3)" }}>
-                    <div style={{ color: "#34d399", fontSize: 15, fontWeight: 600, marginBottom: 4 }}>
+                  <div className="contact-status-success">
+                    <div className="contact-status-success-title">
                       ✓ 200 OK — Message envoyé avec succès
                     </div>
-                    <div style={{ color: "#a7f3d0", fontSize: 13 }}>
+                    <div className="contact-status-success-desc">
                       Je vous réponds sous 24h. Merci !
                     </div>
                   </div>
                 )}
                 {status === "error" && (
-                  <div style={{ padding: "16px", borderRadius: 8, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", color: "#f87171", fontSize: 14, fontWeight: 500 }}>
+                  <div className="contact-status-error">
                     ✗ Erreur Serveur 500 — Veuillez réessayer ou m'envoyer un email directement.
                   </div>
                 )}
@@ -297,20 +244,11 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  style={{
-                    padding: "18px 32px", background: "linear-gradient(135deg, #00d4ff, #4338ca)",
-                    border: "none", borderRadius: 8, color: "#ffffff", fontSize: 16, fontWeight: 600,
-                    cursor: status === "sending" ? "not-allowed" : "pointer",
-                    opacity: status === "sending" ? 0.7 : 1, transition: "all 0.3s ease",
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: 12,
-                    boxShadow: "0 4px 20px rgba(0,212,255,0.2)", marginTop: 8
-                  }}
-                  onMouseEnter={(e) => { if (status !== "sending") e.currentTarget.style.transform = "translateY(-2px)"; }}
-                  onMouseLeave={(e) => { if (status !== "sending") e.currentTarget.style.transform = "translateY(0)"; }}
+                  className="contact-submit-btn"
                 >
                   {status === "sending" ? (
                     <>
-                      <span style={{ animation: "spin 1s linear infinite", display: "inline-block" }}>⟳</span>
+                      <span className="contact-spin-icon">⟳</span>
                       Transmission...
                     </>
                   ) : (
@@ -321,32 +259,26 @@ export default function ContactPage() {
             </div>
 
             {/* INFO PANEL */}
-            <div ref={infoRef} style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <div ref={infoRef} className="contact-info-panel">
               
-              <div className="glass" style={{ padding: "32px", position: "relative" }}>
-                <div style={{
-                  position: "absolute", top: 0, left: 0, right: 0, height: 2,
-                  background: "linear-gradient(90deg, transparent, #a855f7, transparent)"
-                }} />
-                <div style={{
-                  fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 600,
-                  color: "#a855f7", letterSpacing: "0.15em", marginBottom: 24, textTransform: "uppercase"
-                }}>
+              <div className="glass contact-info-card">
+                <div className="contact-info-gradient" />
+                <div className="contact-info-badge">
                   contact.json
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                <div className="contact-info-list">
                   {contactInfo.map((item) => (
-                    <div key={item.label} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: 16 }}>
-                      <div style={{ fontSize: 12, color: "#64748b", marginBottom: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    <div key={item.label} className="contact-info-item">
+                      <div className="contact-info-label">
                         {item.label}
                       </div>
                       {item.href ? (
-                        <a href={item.href} className="info-value-link" style={{ color: "#e2e8f0", fontSize: 15, fontWeight: 500, textDecoration: "none", transition: "color 0.2s ease" }}>
+                        <a href={item.href} className="info-value-link">
                           {item.icon} <span style={{ marginLeft: 8 }}>{item.value}</span>
                         </a>
                       ) : (
-                        <div style={{ color: "#e2e8f0", fontSize: 15, fontWeight: 500 }}>
+                        <div className="contact-info-value">
                           {item.icon} <span style={{ marginLeft: 8 }}>{item.value}</span>
                         </div>
                       )}
@@ -355,31 +287,21 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div style={{
-                background: "rgba(0, 212, 255, 0.05)", border: "1px solid rgba(0, 212, 255, 0.15)",
-                borderRadius: 12, padding: "32px"
-              }}>
-                <div style={{
-                  fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 600,
-                  color: "#00d4ff", letterSpacing: "0.15em", marginBottom: 16, textTransform: "uppercase"
-                }}>
+              <div className="contact-mission-card">
+                <div className="contact-mission-badge">
                   // mission.md
                 </div>
-                <p style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.8, marginBottom: 20 }}>
-                  Une rigueur issue de la physique appliquée aux données. De l'analyse exploratoire aux systèmes ML en production — je comble le fossé entre la donnée brute et les décisions intelligentes.
+                <p className="contact-mission-desc">
+                  Une rigueur issue de la physique appliquée aux données. De l'analyse exploratoire aux systèmes ML en production. Je comble le fossé entre la donnée brute et les décisions intelligentes.
                 </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                <div className="contact-mission-tags">
                   {["#Freelance", "#Contract", "#Research", "#Remote"].map((t) => (
-                    <span key={t} style={{
-                      fontSize: 12, fontWeight: 600, color: "#00d4ff",
-                      background: "rgba(0,212,255,0.1)", padding: "4px 12px",
-                      borderRadius: 4, border: "1px solid rgba(0,212,255,0.2)"
-                    }}>{t}</span>
+                    <span key={t} className="contact-mission-tag">{t}</span>
                   ))}
                 </div>
               </div>
 
-              <div ref={socialRef} style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+              <div ref={socialRef} className="contact-social-container">
                 <SocialBtn href="https://github.com/dona-eric" label="GitHub" color="#00d4ff"
                   icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>}
                 />

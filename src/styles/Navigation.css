@@ -1,0 +1,246 @@
+/* Navigation.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+.nav-main {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
+}
+
+.nav-main.scrolled {
+  background: rgba(4, 7, 12, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-main.transparent {
+  background: rgba(6, 10, 15, 0.8);
+  border-bottom: 1px solid transparent;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+/* Logo */
+.nav-logo-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-logo-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.nav-logo-bracket {
+  color: #00d4ff;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-link {
+  position: relative;
+  padding: 8px 0;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-link-text {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.nav-link-text.active {
+  color: #fff;
+}
+
+.nav-link-text.inactive {
+  color: #94a3b8;
+}
+
+.nav-link:hover .nav-link-text {
+  color: #fff !important;
+}
+
+.nav-link-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #00d4ff;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.nav-link-bar.active {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.nav-link-bar.inactive {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-link:hover .nav-link-bar {
+  opacity: 1 !important;
+  transform: scaleX(1) !important;
+}
+
+/* Call to Action & Lang */
+.desktop-cta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 24px;
+  background: #00d4ff;
+  color: #0f172a;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: #00b8e6 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+/* Mobile Burger */
+.mobile-burger {
+  display: none;
+  padding: 8px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  color: #f8fafc;
+  cursor: pointer;
+  line-height: 0;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 24px 0;
+}
+
+.mobile-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.mob-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mob-link.active {
+  color: #00d4ff;
+}
+
+.mob-link.inactive {
+  color: #e2e8f0;
+}
+
+.mobile-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  background: #00d4ff;
+  color: #0f172a;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .desktop-cta {
+    display: none !important;
+  }
+  .mobile-burger {
+    display: block !important;
+  }
+  .mobile-menu {
+    display: flex !important;
+    flex-direction: column;
+  }
+}

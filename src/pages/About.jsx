@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import "../styles/About.css";
 
 const useScrollFade = (delay = 0) => {
   const ref = useRef(null);
@@ -145,25 +146,14 @@ const EXPERIENCES = [
 function ExperienceCard({ exp, delay, isLast }) {
   const ref = useScrollFade(delay);
   return (
-    <div ref={ref} style={{ display: "flex", gap: 24, position: "relative" }}>
+    <div ref={ref} className="about-exp-item">
       {!isLast && (
-        <div style={{
-          position: "absolute", left: 19, top: 44,
-          width: 2, bottom: -24,
-          background: `linear-gradient(180deg, ${exp.accent}60, transparent)`
-        }} />
+        <div className="about-exp-line" style={{ background: `linear-gradient(180deg, ${exp.accent}60, transparent)` }} />
       )}
 
-      <div style={{ flexShrink: 0, paddingTop: 4 }}>
-        <div style={{
-          width: 40, height: 40, borderRadius: "50%",
-          border: `2px solid ${exp.accent}50`,
-          background: "rgba(255,255,255,0.02)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: `0 0 16px ${exp.accent}30`
-        }}>
-          <div style={{
-            width: 8, height: 8, borderRadius: "50%",
+      <div className="about-exp-icon-container">
+        <div className="about-exp-icon-border" style={{ border: `2px solid ${exp.accent}50`, boxShadow: `0 0 16px ${exp.accent}30` }}>
+          <div className="about-exp-dot" style={{
             background: exp.accent,
             boxShadow: `0 0 10px ${exp.accent}`,
             animation: exp.status === "current" ? "pulseDot 2s ease infinite" : "none"
@@ -171,51 +161,34 @@ function ExperienceCard({ exp, delay, isLast }) {
         </div>
       </div>
 
-      <div className="glass" style={{
-        flex: 1, paddingBottom: 36,
-        padding: "24px",
-        position: "relative", overflow: "hidden",
-        marginBottom: 32
-      }}>
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 2,
-          background: `linear-gradient(90deg, transparent, ${exp.accent}, transparent)`
-        }} />
+      <div className="glass about-exp-card">
+        <div className="about-exp-gradient" style={{ background: `linear-gradient(90deg, transparent, ${exp.accent}, transparent)` }} />
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+        <div className="about-exp-header">
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-              <h3 style={{ fontSize: 18, fontWeight: 700, color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif" }}>{exp.role}</h3>
-              <span style={{
-                padding: "4px 10px", borderRadius: 4, fontSize: 11,
-                fontFamily: "'Inter', sans-serif", fontWeight: 600, color: exp.accent,
-                background: exp.accent + "15", border: `1px solid ${exp.accent}30`,
-                letterSpacing: "0.05em", textTransform: "uppercase"
+            <div className="about-exp-role-row">
+              <h3 className="about-exp-role">{exp.role}</h3>
+              <span className="about-exp-type" style={{
+                color: exp.accent, background: exp.accent + "15", border: `1px solid ${exp.accent}30`
               }}>{exp.type}</span>
             </div>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15, fontWeight: 600, color: exp.accent, marginBottom: 4 }}>
+            <div className="about-exp-company" style={{ color: exp.accent }}>
               {exp.company}
             </div>
-            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "#94a3b8", fontWeight: 500 }}>
+            <div className="about-exp-location">
               📍 {exp.location}
             </div>
           </div>
-          <div style={{
-            fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600,
-            color: "#64748b", whiteSpace: "nowrap"
-          }}>{exp.period}</div>
+          <div className="about-exp-period">{exp.period}</div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <div className="about-exp-tasks">
           {exp.tasks.map((t, i) => (
-            <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-              <span style={{
-                padding: "4px 8px", borderRadius: 4, fontSize: 10,
-                fontFamily: "'Inter', sans-serif", fontWeight: 600, color: exp.accent,
-                background: exp.accent + "10", border: `1px solid ${exp.accent}20`,
-                flexShrink: 0, marginTop: 2, letterSpacing: "0.06em", textTransform: "uppercase"
+            <div key={i} className="about-exp-task">
+              <span className="about-exp-task-tag" style={{
+                color: exp.accent, background: exp.accent + "10", border: `1px solid ${exp.accent}20`
               }}>{t.tag}</span>
-              <span style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.6 }}>{t.desc}</span>
+              <span className="about-exp-task-desc">{t.desc}</span>
             </div>
           ))}
         </div>
@@ -228,56 +201,39 @@ export default function About() {
   const bioRef = useScrollFade(0);
 
   return (
-    <main style={{ padding: "100px 24px", fontFamily: "'Inter', sans-serif", color: "#e2e8f0", position: "relative", zIndex: 1 }}>
-      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+    <main className="about-main">
+      <div className="about-container">
         
         {/* Title */}
-        <div style={{ marginBottom: 80, textAlign: "center" }}>
-          <div style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 600,
-            color: "#00d4ff", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16
-          }}>
+        <div className="about-title-container">
+          <div className="about-subtitle">
             // profile.load()
           </div>
-          <h1 style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(40px, 6vw, 64px)", fontWeight: 800,
-            color: "#ffffff", letterSpacing: "-0.02em", marginBottom: 24
-          }}>
+          <h1 className="about-title">
             Dona Éric KOULODJI
           </h1>
-          <p style={{ maxWidth: 700, margin: "0 auto", color: "#94a3b8", fontSize: 18, lineHeight: 1.8 }}>
+          <p className="about-description">
             Je prends votre problème métier et je livre un{" "}
-            <strong style={{ color: "#ffffff" }}>système IA opérationnel</strong> — agent autonome,
+            <strong>système IA opérationnel</strong> — agent autonome,
             modèle ML en prod, ou pipeline RAG clé-en-main. Formé en physique, je modélise
             rigoureusement avant de coder. Résultat :{" "}
-            <strong style={{ color: "#00d4ff" }}>des solutions qui scalent, pas des POC qui dorment.</strong>
+            <strong className="accent">des solutions qui scalent, pas des POC qui dorment.</strong>
           </p>
         </div>
 
         {/* Stats */}
-        <div style={{ marginBottom: 100 }}>
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20
-          }}>
+        <div className="about-stats-container">
+          <div className="about-stats-grid">
             {STATS.map((s, i) => {
               const ref = useScrollFade(i * 0.1);
               return (
-                <div key={i} ref={ref} className="glass" style={{
-                  padding: "32px 24px", textAlign: "center",
-                  position: "relative", overflow: "hidden"
-                }}>
-                  <div style={{
-                    position: "absolute", top: 0, left: 0, right: 0, height: 2,
-                    background: "linear-gradient(90deg, transparent, #00d4ff, transparent)"
-                  }} />
-                  <div style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: 48, fontWeight: 800, color: "#00d4ff", lineHeight: 1
-                  }}>
+                <div key={i} ref={ref} className="glass about-stat-card">
+                  <div className="about-stat-gradient" />
+                  <div className="about-stat-value">
                     <AnimatedCounter target={s.value} suffix={s.suffix} />
                   </div>
-                  <div style={{ fontSize: 13, color: "#e2e8f0", marginTop: 12, fontWeight: 600, letterSpacing: "0.05em" }}>{s.label}</div>
-                  <div style={{ fontSize: 12, color: "#64748b", marginTop: 6, fontWeight: 500 }}>{s.note}</div>
+                  <div className="about-stat-label">{s.label}</div>
+                  <div className="about-stat-note">{s.note}</div>
                 </div>
               );
             })}
@@ -285,46 +241,29 @@ export default function About() {
         </div>
 
         {/* Bio / Timeline */}
-        <div ref={bioRef} style={{
-          marginBottom: 100, display: "grid", gridTemplateColumns: "1fr", gap: 40
-        }}>
-          <div className="glass" style={{ padding: "40px", position: "relative" }}>
-            <div style={{
-              position: "absolute", top: 0, left: 0, right: 0, height: 2,
-              background: "linear-gradient(90deg, transparent, #ec4899, transparent)"
-            }} />
-            <div style={{
-              fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 600,
-              color: "#ec4899", letterSpacing: "0.15em", marginBottom: 32, textTransform: "uppercase"
-            }}>
+        <div ref={bioRef} className="about-bio-container">
+          <div className="glass about-bio-card">
+            <div className="about-bio-gradient" />
+            <div className="about-bio-subtitle">
               // formations.md
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+            <div className="about-timeline">
               {[
                 { year: "Currently →", label: "Machine Learning Engineer", detail: "MLOps · LLM · Systèmes scalables" },
                 { year: "Janv-Mai 2025", label: "Data Science Applied certifed", detail: "World Quant University (Data Science · Python · ML · Stats)" },
                 { year: "Avr-Sept 2024", label: "Data Science Certified", detail: "Analyse de données • Python • Machine Learning • LLMs "},
                 { year: "2020-2024", label: "Licence Physique Fondamentale", detail: "Université d'Abomey-Calavi • Base mathématique & modélisation" },
               ].map((item, i) => (
-                <div key={i} style={{ display: "flex", gap: 24, position: "relative" }}>
+                <div key={i} className="about-timeline-item">
                   {i < 3 && (
-                    <div style={{
-                      position: "absolute", left: 136, top: 24, width: 2, height: "calc(100% + 8px)",
-                      background: "rgba(236, 72, 153, 0.2)"
-                    }} />
+                    <div className="about-timeline-line" />
                   )}
-                  <div style={{
-                    width: 100, flexShrink: 0, fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: 14, fontWeight: 600, color: "#ec4899", paddingTop: 2, textAlign: "right"
-                  }}>{item.year}</div>
-                  <div style={{
-                    width: 12, height: 12, borderRadius: "50%", background: "#ec4899",
-                    flexShrink: 0, marginTop: 6, boxShadow: "0 0 12px rgba(236, 72, 153, 0.6)"
-                  }} />
+                  <div className="about-timeline-year">{item.year}</div>
+                  <div className="about-timeline-dot" />
                   <div>
-                    <div style={{ fontWeight: 700, color: "#ffffff", fontSize: 16, marginBottom: 6, fontFamily: "'Space Grotesk', sans-serif" }}>{item.label}</div>
-                    <div style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.6 }}>{item.detail}</div>
+                    <div className="about-timeline-label">{item.label}</div>
+                    <div className="about-timeline-detail">{item.detail}</div>
                   </div>
                 </div>
               ))}
@@ -333,21 +272,15 @@ export default function About() {
         </div>
 
         {/* Experiences */}
-        <div style={{ marginBottom: 120 }}>
-          <div style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 600,
-            color: "#a855f7", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16
-          }}>
+        <div className="about-experiences-container">
+          <div className="about-section-subtitle">
             // experience.professional[]
           </div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800,
-            color: "#ffffff", letterSpacing: "-0.02em", marginBottom: 48
-          }}>
+          <h2 className="about-section-title">
             Expériences Professionnelles
           </h2>
 
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="about-exp-list">
             {EXPERIENCES.map((exp, i) => (
               <ExperienceCard key={i} exp={exp} delay={i * 0.15} isLast={i === EXPERIENCES.length - 1} />
             ))}
@@ -355,57 +288,24 @@ export default function About() {
         </div>
 
         {/* Values */}
-        <div style={{ marginBottom: 80 }}>
-          <div style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, fontWeight: 600,
-            color: "#00d4ff", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16
-          }}>
+        <div className="about-values-container">
+          <div className="about-section-subtitle">
             // values.core
           </div>
-          <h2 style={{
-            fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800,
-            color: "#ffffff", letterSpacing: "-0.02em", marginBottom: 48
-          }}>
+          <h2 className="about-section-title">
             Pourquoi travailler <span className="gradient-text">avec moi ?</span>
           </h2>
 
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24
-          }}>
+          <div className="about-values-grid">
             {VALUES.map((v, i) => {
               const ref = useScrollFade(i * 0.15);
               return (
-                <div key={i} ref={ref} className="glass" style={{
-                  padding: "40px 32px", position: "relative", overflow: "hidden",
-                  transition: "all 0.3s ease"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                  e.currentTarget.style.borderColor = `rgba(255, 255, 255, 0.2)`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.borderColor = "var(--glass-border)";
-                }}
-                >
-                  <div style={{
-                    position: "absolute", top: 0, left: 0, right: 0, height: 3,
-                    background: `linear-gradient(90deg, transparent, ${v.color}, transparent)`
-                  }} />
-                  <div style={{
-                    fontFamily: "'Space Grotesk', sans-serif", fontSize: 48,
-                    fontWeight: 800, color: v.color, opacity: 0.1,
-                    position: "absolute", top: 16, right: 24
-                  }}>{v.tag}</div>
-                  <h3 style={{
-                    fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: "#ffffff", marginBottom: 16
-                  }}>{v.title}</h3>
-                  <p style={{ fontSize: 15, color: "#94a3b8", lineHeight: 1.8, marginBottom: 24 }}>{v.desc}</p>
-                  <div style={{
-                    fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 600,
-                    color: v.color, letterSpacing: "0.05em", background: `${v.color}10`,
-                    padding: "8px 12px", borderRadius: 6, display: "inline-block"
-                  }}>{v.proof}
+                <div key={i} ref={ref} className="glass about-value-card">
+                  <div className="about-value-gradient" style={{ background: `linear-gradient(90deg, transparent, ${v.color}, transparent)` }} />
+                  <div className="about-value-tag" style={{ color: v.color }}>{v.tag}</div>
+                  <h3 className="about-value-title">{v.title}</h3>
+                  <p className="about-value-desc">{v.desc}</p>
+                  <div className="about-value-proof" style={{ color: v.color, background: `${v.color}10` }}>{v.proof}
                   </div>
                 </div>
               );
