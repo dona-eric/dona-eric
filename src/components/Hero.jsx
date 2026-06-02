@@ -100,22 +100,22 @@ export default function Hero() {
         <div className="hero-content">
           
           {/* Avatar */}
-          <div ref={badgeRef} className="hero-avatar-container">
+          {/* <div ref={badgeRef} className="hero-avatar-container">
             <div className="hero-avatar-ring">
               <img src="/dona.JPG" alt="Dona Éric KOULODJI" className="hero-avatar-img" />
             </div>
             
             {/* Badge */}
-            <div className="hero-badge">
+            {/* <div className="hero-badge">
               <span className="hero-badge-dot" />
               DISPONIBLE POUR DE NOUVELLES OPPORTUNITÉS
             </div>
-          </div>
+          </div> */}
 
           {/* Title */}
           <h1 ref={titleRef} className="hero-title">
-            Dona Éric <br />
-            <span className="gradient-text">KOULODJI</span>
+            Dona Éric
+            <span className="gradient-text">   KOULODJI</span>
           </h1>
 
           {/* Subtitle */}

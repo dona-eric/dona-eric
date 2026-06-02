@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRegistration, checkEmailExists } from "../../hooks/useRegistration";
-import { isOpen } from "../../config/masterclasses.config";
 
 const DOMAINS = [
   "Technologie & Informatique", "Finance & Banque", "Santé & Médecine",

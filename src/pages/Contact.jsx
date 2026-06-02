@@ -137,14 +137,14 @@ export default function ContactPage() {
   };
 
   const contactInfo = [
-    { label: "location", value: "Abomey-Calavi, Bénin 🌍", icon: "📍" },
+    { label: "location", value: "Abomey-Calavi, Bénin", icon: "📍" },
     { label: "email", value: "donaerickoulodji@gmail.com", href: "mailto:donaerickoulodji@gmail.com", icon: "✉" },
     { label: "phone", value: "+229 01 41 73 02 40", href: "tel:+2290141730240", icon: "☎" },
     { label: "response_time", value: "< 24h guaranteed", icon: "⚡" },
     { label: "availability", value: "Mon – Sun · All TZ", icon: "🕐" },
   ];
 
-  const expertise = ["Data Science", "Machine Learning", "Deep Learning", "MLOps", "Statistical Modeling", "Data Viz"];
+  const expertise = ["Data Science", "Machine Learning", "Deep Learning", "MLOps", "Statistical Modeling", "AI Automation"];
 
   return (
     <>
@@ -160,14 +160,14 @@ export default function ContactPage() {
 
             <div className="contact-title-container">
               <h1 className="contact-title">
-                <Typewriter text="Construisons quelque chose" speed={40} />
+                <Typewriter text="Construisons quelque chose" speed={100} />
                 <br />
                 <span className="contact-title-gradient">d'intelligent.</span>
               </h1>
             </div>
 
             <p className="contact-description">
-              Data Scientist & ML Engineer. Formé en physique, je modélise rigoureusement avant de coder. 
+              Ingénieur Machine Learning & Data Scientist, formé en physique, je modélise rigoureusement avant de coder. 
               Disponible pour des missions freelance, contrats et collaborations de recherche.
             </p>
 
@@ -180,7 +180,7 @@ export default function ContactPage() {
 
           {/* METRICS */}
           <div className="contact-metrics-grid">
-            <MetricCard label="Projets Livrés" value="08+" sub="Domaines variés" delay={0.2} />
+            <MetricCard label="Projets Livrés" value="06+" sub="Domaines variés" delay={0.2} />
             <MetricCard label="Temps de réponse" value="<24h" sub="Garanti" delay={0.3} />
             <MetricCard label="Expertise" value="Full" sub="Data → Deploy" delay={0.4} />
             <MetricCard label="Disponibilité" value="Remote" sub="Tous fuseaux horaires" delay={0.5} />
@@ -237,7 +237,7 @@ export default function ContactPage() {
                 )}
                 {status === "error" && (
                   <div className="contact-status-error">
-                    ✗ Erreur Serveur 500 — Veuillez réessayer ou m'envoyer un email directement.
+                    ✗ Erreur Serveur 500 ! Veuillez réessayer ou m'envoyer un email directement.
                   </div>
                 )}
 

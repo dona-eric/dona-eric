@@ -13,7 +13,10 @@ export default function MasterclassSection() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
+        let apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
+        if (import.meta.env.PROD && apiUrl.includes("localhost")) {
+          apiUrl = "https://donerick.onrender.com/api";
+        }
         const res = await fetch(`${apiUrl}/masterclasses`);
         if (res.ok) {
           const data = await res.json();

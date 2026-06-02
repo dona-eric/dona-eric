@@ -94,7 +94,8 @@
   font-size: 84px;
   font-weight: 800;
   line-height: 1.05;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.03em;
+  text-align: center;
   color: #ffffff;
   margin: 0 0 16px 0;
 }

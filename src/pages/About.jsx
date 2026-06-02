@@ -71,7 +71,7 @@ const VALUES = [
     tag: "01", color: "#00d4ff",
     title: "Livraison garantie",
     desc: "Pas de réunions infinies. Un cahier des charges, un délai, un système qui tourne. Je livre en semaines, pas en trimestres.",
-    proof: "→ 12+ projets livrés · 0 POC abandonné"
+    proof: "→ 06+ projets livrés · 0 POC abandonné"
   },
   {
     tag: "02", color: "#ec4899",
@@ -250,10 +250,11 @@ export default function About() {
 
             <div className="about-timeline">
               {[
-                { year: "Currently →", label: "Machine Learning Engineer", detail: "MLOps · LLM · Systèmes scalables" },
+                { year: "01 Avril 2025 - 29 Mai 2026", label: "Ingénieur Machine Learning", detail: " DataCamp & Isheero" },
+                { year: "18-28 Sept 2025", label: "Introduction à l'Astrophysique et la Cosmologie", detail: "Benin4Space"},
                 { year: "Janv-Mai 2025", label: "Data Science Applied certifed", detail: "World Quant University (Data Science · Python · ML · Stats)" },
-                { year: "Avr-Sept 2024", label: "Data Science Certified", detail: "Analyse de données • Python • Machine Learning • LLMs "},
-                { year: "2020-2024", label: "Licence Physique Fondamentale", detail: "Université d'Abomey-Calavi • Base mathématique & modélisation" },
+                { year: "Avr-Sept 2024", label: "Data Science Certified", detail: "Africa TechUp Tour"},
+                { year: "2020-2024", label: "Licence Physique Fondamentale", detail: "Université d'Abomey-Calavi • Faculté des Sciences et Techniques" },
               ].map((item, i) => (
                 <div key={i} className="about-timeline-item">
                   {i < 3 && (
