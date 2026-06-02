@@ -300,7 +300,7 @@ export default function Projects() {
           <p className="projects-cta-desc">
             De la donnée brute au système en production — discutons.
           </p>
-          <a href="/contact" className="projects-cta-btn">
+          <a href="/contact" className="btn btn-primary">
             Démarrer la collaboration →
           </a>
         </div>

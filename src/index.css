@@ -157,7 +157,7 @@ p {
   color: var(--text-secondary);
 }
 
-.text-gradient {
+.text-gradient, .gradient-text {
   background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink), var(--neon-cyan));
   background-clip: text;
   -webkit-background-clip: text;
