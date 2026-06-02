@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import TagCloud from "../components/TagCloud";
 import "../styles/About.css";
 
 const useScrollFade = (delay = 0) => {
@@ -221,23 +222,76 @@ export default function About() {
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="about-stats-container">
-          <div className="about-stats-grid">
-            {STATS.map((s, i) => {
-              const ref = useScrollFade(i * 0.1);
-              return (
-                <div key={i} ref={ref} className="glass about-stat-card">
-                  <div className="about-stat-gradient" />
-                  <div className="about-stat-value">
+        {/* Bento Box */}
+        <div className="about-bento-grid">
+          {/* Card 1: Stats */}
+          <div className="glass about-bento-card bento-span-2">
+            <div className="about-stat-gradient" />
+            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "24px", color: "#ffffff", marginBottom: "24px", width: "100%", textAlign: "left"}}>🚀 Impact</h3>
+            <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "24px", width: "100%"}}>
+              {STATS.map((s, i) => (
+                <div key={i} style={{textAlign: "left"}}>
+                  <div className="about-stat-value" style={{fontSize: "36px"}}>
                     <AnimatedCounter target={s.value} suffix={s.suffix} />
                   </div>
                   <div className="about-stat-label">{s.label}</div>
                   <div className="about-stat-note">{s.note}</div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
+
+          {/* Card 2: Localisation */}
+          <div className="glass about-bento-card bento-span-1" style={{background: "rgba(236, 72, 153, 0.05)", border: "1px solid rgba(236, 72, 153, 0.1)"}}>
+            <div style={{fontSize: "48px", marginBottom: "16px"}}>🌍</div>
+            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "20px", color: "#ffffff", marginBottom: "8px"}}>Based in Bénin</h3>
+            <p style={{color: "#94a3b8", fontSize: "14px"}}>Available for remote work worldwide.</p>
+          </div>
+
+          {/* Card 3: Tech Stack (TagCloud) */}
+          <div className="glass about-bento-card bento-span-2 bento-row-span-2" style={{padding: 0, minHeight: "400px"}}>
+             <div className="about-stat-gradient" style={{background: "linear-gradient(90deg, transparent, #a855f7, transparent)"}} />
+             <div style={{position: "absolute", top: "24px", left: "32px", zIndex: 10}}>
+                <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "20px", color: "#ffffff", margin: 0}}>Tech Stack</h3>
+                <p style={{color: "#94a3b8", fontSize: "13px", marginTop: "4px"}}>Outils & Technologies que je maîtrise</p>
+             </div>
+             <TagCloud tags={[
+               { label: "Python", icon: "🐍" },
+               { label: "TensorFlow", icon: "🧠" },
+               { label: "PyTorch", icon: "🔥" },
+               { label: "React", icon: "⚛️" },
+               { label: "Node.js", icon: "🟢" },
+               { label: "Docker", icon: "🐳" },
+               { label: "AWS", icon: "☁️" },
+               { label: "FastAPI", icon: "⚡" },
+               { label: "SQL", icon: "🗄️" },
+               { label: "MLOps", icon: "⚙️" },
+               { label: "LangChain", icon: "🦜" },
+               { label: "Scikit-Learn", icon: "📊" },
+               { label: "Git", icon: "🐙" },
+               { label: "Spark", icon: "✨" },
+               { label: "MongoDB", icon: "🍃" }
+             ]} radius={130} />
+          </div>
+
+          {/* Card 4: Currently Learning */}
+          <div className="glass about-bento-card bento-span-1 align-left">
+            <div style={{width: "40px", height: "40px", borderRadius: "8px", background: "rgba(0, 212, 255, 0.1)", color: "#00d4ff", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px"}}>📚</div>
+            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "18px", color: "#ffffff", marginBottom: "12px"}}>Actuellement...</h3>
+            <ul style={{listStyle: "none", padding: 0, margin: 0, color: "#94a3b8", fontSize: "14px", display: "flex", flexDirection: "column", gap: "10px"}}>
+              <li>→ Approfondissement LLM Agents</li>
+              <li>→ Optimisation RAG Avancé</li>
+              <li>→ Déploiement Kubernetes</li>
+            </ul>
+          </div>
+          
+          {/* Card 5: Connect */}
+          <div className="glass about-bento-card bento-span-1 align-left" style={{background: "linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(236, 72, 153, 0.05))"}}>
+            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "18px", color: "#ffffff", marginBottom: "8px"}}>Travaillons ensemble</h3>
+            <p style={{color: "#94a3b8", fontSize: "14px", marginBottom: "16px"}}>Un projet IA en tête ? Discutons-en.</p>
+            <a href="mailto:donaerickoulodji@gmail.com" style={{color: "#00d4ff", textDecoration: "none", fontWeight: "600", fontSize: "14px"}}>✉ Contactez-moi →</a>
+          </div>
+
         </div>
 
         {/* Bio / Timeline */}
