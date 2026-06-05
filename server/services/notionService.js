@@ -86,10 +86,103 @@ function mapNotionPageToMasterclass(page) {
   };
 }
 
+const MOCK_EVENTS = [
+  {
+    id: "c591c17b-fa0b-41a8-9b1a-94941d17fad9",
+    type: "masterclass",
+    status: "Active",
+    title: "MLOps Blueprint : Industrialiser et Déployer des Pipelines IA Reproductibles avec DVC et FastAPI",
+    subtitle: "",
+    theme: "Data Science",
+    themeColor: "#6C63FF",
+    accentColor: "",
+    date: "2026-06-20",
+    time: "20:00",
+    duration: "2h",
+    image: "/masterclass/dataops_mlops.png",
+    imageAlt: "",
+    format: "En ligne",
+    link: "",
+    location: "",
+    description: "Passer du code de recherche (Notebook) à une architecture logicielle de niveau industriel. Repartir avec un template de projet propre, versionné, scalable et prêt pour le déploiement continu (CI/CD).",
+    objectives: [
+      "Comprendre pourquoi Git ne suffit plus pour gérer données et modèles",
+      "Maîtriser DVC pour la traçabilité et la reproductibilité des expériences ML",
+      "Développer une API de production performante et documentée avec FastAPI",
+      "Structurer son repo GitHub de manière industrielle (prêt CI/CD)"
+    ],
+    program: [],
+    prerequisites: [
+      "Comprendre pourquoi Git ne suffit plus pour gérer données et modèles",
+      "Maîtriser DVC pour la traçabilité et la reproductibilité des expériences ML",
+      "Développer une API de production performante et documentée avec FastAPI",
+      "Structurer son repo GitHub de manière industrielle (prêt CI/CD)"
+    ],
+    price: "Gratuit",
+    seats: 100,
+    speaker: {
+      name: "Eric KOULODJI",
+      title: "Data Scientist",
+      avatar: "/eric.jpg"
+    },
+    emailContent: {
+      subject: "✅ Inscription confirmée",
+      welcomeMessage: "Votre place est réservée !",
+      sessionLink: "",
+      reminder: "Un rappel vous sera envoyé 24h avant la session.",
+      contact: "dtech.afrik@gmail.com"
+    }
+  },
+  {
+    id: "f2d48e72-aad0-4632-86e2-364c4dc9ec4a",
+    type: "webinaire",
+    status: "Active",
+    title: "Décoder l'Intelligence Artificielle : Les Clés de l'Explicabilité (XAI) pour des Modèles de Confiance",
+    subtitle: "",
+    theme: "IA / Machine Learning",
+    themeColor: "#6C63FF",
+    accentColor: "",
+    date: "2026-06-13",
+    time: "20:00",
+    duration: "1h30",
+    image: "/masterclass/dataops_mlops.png",
+    imageAlt: "",
+    format: "En ligne",
+    link: "",
+    location: "",
+    description: "Comprendre pourquoi la précision d'un modèle ne suffit pas et repartir avec une méthode claire pour auditer, interpréter et faire accepter un modèle d'IA dans le monde réel (santé, environnement, finance).",
+    objectives: [
+      "Comprendre pourquoi la précision d'un modèle ne suffit pas",
+      "Repartir avec une méthode claire pour auditer et interpréter un modèle d'IA",
+      "Faire accepter un modèle d'IA dans le monde réel (santé, environnement, finance)"
+    ],
+    program: [],
+    prerequisites: [
+      "Comprendre pourquoi la précision d'un modèle ne suffit pas",
+      "Repartir avec une méthode claire pour auditer et interpréter un modèle d'IA",
+      "Faire accepter un modèle d'IA dans le monde réel (santé, environnement, finance)"
+    ],
+    price: "Gratuit",
+    seats: 200,
+    speaker: {
+      name: "Eric KOULODJI",
+      title: "Data Scientist",
+      avatar: "/eric.jpg"
+    },
+    emailContent: {
+      subject: "✅ Inscription confirmée",
+      welcomeMessage: "Votre place est réservée !",
+      sessionLink: "",
+      reminder: "Un rappel vous sera envoyé 24h avant la session.",
+      contact: "dtech.afrik@gmail.com"
+    }
+  }
+];
+
 export async function getMasterclasses() {
   if (!databaseId || !process.env.NOTION_API_KEY) {
-    console.warn("Identifiants Notion manquants. Retour d'un tableau vide.");
-    return [];
+    console.warn("Identifiants Notion manquants. Utilisation des fallbacks locaux.");
+    return MOCK_EVENTS;
   }
 
   try {
@@ -99,22 +192,21 @@ export async function getMasterclasses() {
 
     return response.results.map(mapNotionPageToMasterclass);
   } catch (error) {
-    console.error("🚨 ERREUR NOTION (getMasterclasses):", error);
-    if (error.code === "object_not_found") {
-      console.error("👉 Vérifie que l'intégration Notion a bien été invitée dans la base de données (Add connections).");
-    }
-    return [];
+    console.error("🚨 ERREUR NOTION (getMasterclasses) - Utilisation du fallback local:", error);
+    return MOCK_EVENTS;
   }
 }
 
 export async function getMasterclassById(id) {
-  if (!process.env.NOTION_API_KEY) return null;
+  if (!process.env.NOTION_API_KEY) {
+    return MOCK_EVENTS.find(e => e.id === id) || null;
+  }
   
   try {
     const page = await notion.pages.retrieve({ page_id: id });
     return mapNotionPageToMasterclass(page);
   } catch (error) {
-    console.error(`Erreur Notion pour la page ${id}:`, error);
-    return null;
+    console.error(`Erreur Notion pour la page ${id} - Utilisation du fallback local:`, error);
+    return MOCK_EVENTS.find(e => e.id === id) || null;
   }
 }

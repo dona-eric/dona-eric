@@ -4,7 +4,7 @@ import RegistrationForm from "../components/Masterclass/RegistrationForm";
 import PageLoader from "../components/PageLoader";
 import "../styles/MasterclassDetails.css";
 
-import { formatDate } from "../config/masterclasses.config";
+import { formatDate, isOpen, getApiUrl } from "../config/masterclasses.config";
 
 export default function MasterclassDetails() {
   const { id } = useParams();
@@ -15,16 +15,28 @@ export default function MasterclassDetails() {
   useEffect(() => {
     const fetchMasterclass = async () => {
       try {
-        let apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
-        if (import.meta.env.PROD && apiUrl.includes("localhost")) {
-          apiUrl = "https://donerick.onrender.com/api";
-        }
+        const apiUrl = getApiUrl();
         const res = await fetch(`${apiUrl}/masterclasses/${id}`);
+        const listRes = await fetch(`${apiUrl}/masterclasses`);
         
         if (res.ok) {
           const data = await res.json();
+          let allEvents = [];
+          if (listRes.ok) {
+            allEvents = await listRes.json();
+          }
+          
           if (data) {
-            setMasterclass(data);
+            const open = isOpen(data, allEvents);
+            const isPast = data.isPast ?? (new Date(data.date.includes("T") ? data.date : `${data.date}T16:00:00+01:00`) <= new Date());
+            const isLocked = !isPast && !open;
+
+            setMasterclass({
+              ...data,
+              isOpen: open,
+              isPast,
+              isLocked
+            });
             setLoading(false);
             return;
           }
@@ -145,13 +157,34 @@ export default function MasterclassDetails() {
         {/* ── COLONNE DROITE (Formulaire Fixe) ── */}
         <div>
           <div className="mdetails-form-card">
-            <h3 className="mdetails-form-title">Réserver votre place</h3>
-            <p className="mdetails-form-desc">Remplissez le formulaire ci-dessous pour confirmer votre inscription gratuite.</p>
-            
-            <RegistrationForm 
-              masterclass={masterclass} 
-              onClose={() => window.location.href = "/formations"} 
-            />
+            {masterclass.isOpen ? (
+              <>
+                <h3 className="mdetails-form-title">Réserver votre place</h3>
+                <p className="mdetails-form-desc">Remplissez le formulaire ci-dessous pour confirmer votre inscription gratuite.</p>
+                <RegistrationForm 
+                  masterclass={masterclass} 
+                  onClose={() => window.location.href = "/formations"} 
+                />
+              </>
+            ) : masterclass.isPast ? (
+              <div style={{ textAlign: "center", padding: "40px 20px" }}>
+                <div style={{ fontSize: "50px", marginBottom: "16px" }}>🔒</div>
+                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif" }}>Inscriptions Closes</h3>
+                <p style={{ color: "#94a3b8", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
+                  Les inscriptions pour cet événement sont closes car l'événement a déjà eu lieu ou a expiré.
+                </p>
+                <Link to="/formations" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>Retour aux événements</Link>
+              </div>
+            ) : (
+              <div style={{ textAlign: "center", padding: "40px 20px" }}>
+                <div style={{ fontSize: "50px", marginBottom: "16px" }}>⏳</div>
+                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif" }}>Inscriptions à Venir</h3>
+                <p style={{ color: "#94a3b8", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
+                  Les inscriptions pour cet événement ne sont pas encore ouvertes. Elles débuteront dès la fin de l'événement précédent.
+                </p>
+                <Link to="/formations" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>Retour aux événements</Link>
+              </div>
+            )}
           </div>
         </div>
 

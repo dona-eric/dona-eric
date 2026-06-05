@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { isOpen } from "../../config/masterclasses.config";
+import { isOpen, getApiUrl } from "../../config/masterclasses.config";
 import MasterclassHero from "./MasterclassHero";
 import MasterclassCard from "./MasterclassCard";
 import PageLoader from "../PageLoader";
@@ -13,10 +13,7 @@ export default function MasterclassSection() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        let apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
-        if (import.meta.env.PROD && apiUrl.includes("localhost")) {
-          apiUrl = "https://donerick.onrender.com/api";
-        }
+        const apiUrl = getApiUrl();
         const res = await fetch(`${apiUrl}/masterclasses`);
         if (res.ok) {
           const data = await res.json();
@@ -38,15 +35,15 @@ export default function MasterclassSection() {
 
   if (loading) return <PageLoader />;
 
-  const featured = allEvents.find(mc => isOpen(mc)) || allEvents[0]; // Premier ouvert ou juste le premier
+  const featured = allEvents.find(mc => isOpen(mc, allEvents)) || allEvents[0]; // Premier ouvert ou juste le premier
   const filtered = allEvents.filter((mc) => {
-    if (filter === "open") return isOpen(mc);
-    if (filter === "closed") return !isOpen(mc);
+    if (filter === "open") return isOpen(mc, allEvents);
+    if (filter === "closed") return !isOpen(mc, allEvents);
     return true;
   });
 
-  const openCount = allEvents.filter(isOpen).length;
-  const closedCount = allEvents.filter((mc) => !isOpen(mc)).length;
+  const openCount = allEvents.filter(mc => isOpen(mc, allEvents)).length;
+  const closedCount = allEvents.filter((mc) => !isOpen(mc, allEvents)).length;
 
   return (
     <section id="masterclass" className="ms-section">
@@ -133,7 +130,7 @@ export default function MasterclassSection() {
         {/* ── Grille ── */}
         <div className="ms-grid">
           {filtered.map((mc) => (
-            <MasterclassCard key={mc.id} masterclass={mc} />
+            <MasterclassCard key={mc.id} masterclass={mc} allEvents={allEvents} />
           ))}
         </div>
 

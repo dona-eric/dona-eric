@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import "../styles/Home.css";
+import { getApiUrl } from "../config/masterclasses.config";
 
 const useScrollFade = (delay = 0) => {
   const ref = useRef(null);
@@ -69,7 +70,7 @@ function FeaturedProject({ project, reverse, delay }) {
              {project.icon}
           </div>
        </div>
-    </div>
+     </div>
   );
 }
 
@@ -80,10 +81,7 @@ function MasterclassTeaser() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        let apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
-        if (import.meta.env.PROD && apiUrl.includes("localhost")) {
-          apiUrl = "https://donerick.onrender.com/api";
-        }
+        const apiUrl = getApiUrl();
         const res = await fetch(`${apiUrl}/masterclasses`);
         if (res.ok) {
           const data = await res.json();

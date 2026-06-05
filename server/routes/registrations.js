@@ -2,7 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import {insertRegistration,checkDuplicate,countRegistrations,logEmail,} from "../database.js";
 import { sendConfirmationEmail } from "../emailService.js";
-import { getMasterclassById } from "../services/notionService.js";
+import { getMasterclassById, getMasterclasses } from "../services/notionService.js";
 import { isOpen } from "../../src/config/masterclasses.config.js";
 
 const router = Router();
@@ -28,9 +28,10 @@ router.post("/register", async (req, res) => {
       return res.status(404).json({ error: "Événement introuvable." });
     }
 
-    if (!isOpen(masterclass)) {
+    const allMasterclasses = await getMasterclasses();
+    if (!isOpen(masterclass, allMasterclasses)) {
       return res.status(400).json({
-        error: "Les inscriptions pour cet événement sont closes.",
+        error: "Les inscriptions pour cet événement sont closes ou pas encore ouvertes.",
         code: "REGISTRATIONS_CLOSED",
       });
     }

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import "../styles/Blog.css";
+import { getApiUrl } from "../config/masterclasses.config";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-// Set this to your deployed backend URL (or localhost for dev)
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
+const API_BASE = getApiUrl();
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 const useFadeIn = (delay = 0) => {
@@ -189,6 +189,40 @@ function FilterBtn({ label, active, onClick }) {
   );
 }
 
+// ─── Storytelling Card ─────────────────────────────────────────────────────────
+function StorytellingCard({ mc, index, onClick }) {
+  const ref = useScrollFade(index * 0.1);
+  const dateStr = new Date(mc.date).toLocaleDateString("fr-FR", {
+    month: "long",
+    year: "numeric"
+  });
+  
+  // Display only the first paragraph as preview snippet
+  const cleanSnippet = mc.storytelling ? mc.storytelling.split("<br/>")[0] : "";
+
+  return (
+    <div ref={ref} className="storytelling-card" onClick={onClick} style={{ cursor: "pointer" }}>
+      <div className="storytelling-card-content">
+        <div className="storytelling-number-container">
+          <span className="storytelling-number">{mc.registrantsCount}</span>
+          <span className="storytelling-number-label">participants</span>
+        </div>
+        <h3 className="storytelling-event-title">{mc.title}</h3>
+        <div className="storytelling-post-text">
+          <p style={{ margin: 0 }}>"{cleanSnippet}..."</p>
+          <span className="storytelling-readmore" style={{ display: "block", marginTop: "12px", color: "#00d4ff", fontWeight: "600", fontSize: "13px" }}>
+            Lire le post complet →
+          </span>
+        </div>
+        <div className="storytelling-meta">
+          <span>{mc.type === "webinaire" ? "Webinaire" : "Masterclass"}</span>
+          <span style={{ textTransform: "capitalize" }}>{dateStr}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Blog() {
   const heroRef = useFadeIn(0.1);
@@ -199,6 +233,8 @@ export default function Blog() {
   const [error,    setError]    = useState(null);
   const [filter,   setFilter]   = useState("all");
   const [cachedAt, setCachedAt] = useState(null);
+  const [events,   setEvents]   = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const fetchPosts = useCallback(async (source = "all") => {
     setLoading(true);
@@ -219,9 +255,25 @@ export default function Blog() {
 
   useEffect(() => { fetchPosts(filter); }, [filter, fetchPosts]);
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/masterclasses`);
+        if (res.ok) {
+          const data = await res.json();
+          setEvents(data || []);
+        }
+      } catch (err) {
+        console.error("Error fetching masterclasses in blog:", err);
+      }
+    };
+    fetchEvents();
+  }, []);
+
   // Split featured (top 2 by score) vs rest
   const featured = posts.slice(0, 2);
   const others   = posts.slice(2);
+  const completedEvents = events.filter(mc => mc.isPast);
 
   // Aggregate stats
   const totalViews = posts.reduce((a, p) => a + (p.raw_metrics?.views || 0), 0);
@@ -321,6 +373,23 @@ export default function Blog() {
             </div>
           )}
 
+          {/* ══ COMMUNITY STORYTELLING ══ */}
+          {!loading && !error && completedEvents.length > 0 && (
+            <div className="blog-section">
+              <div className="blog-section-subtitle">
+                <span>// </span>community.impact_storytelling()
+              </div>
+              <h2 className="blog-section-title">
+                L'Impact de Nos Événements
+              </h2>
+              <div className="blog-storytelling-grid">
+                {completedEvents.map((mc, i) => (
+                  <StorytellingCard key={mc.id} mc={mc} index={i} onClick={() => setSelectedEvent(mc)} />
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* ══ OTHERS ══ */}
           {!loading && !error && others.length > 0 && (
             <div className="blog-section-alt">
@@ -364,6 +433,45 @@ export default function Blog() {
           </div>
         </div>
       </div>
+
+      {/* ══ STORYTELLING DETAIL MODAL ══ */}
+      {selectedEvent && (
+        <div className="storytelling-modal-overlay" onClick={() => setSelectedEvent(null)}>
+          <div className="storytelling-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="storytelling-modal-close" onClick={() => setSelectedEvent(null)}>
+              &times;
+            </button>
+            <div className="storytelling-modal-header">
+              <span className="storytelling-modal-badge" style={{ borderColor: selectedEvent.themeColor, color: selectedEvent.themeColor, background: `${selectedEvent.themeColor}15` }}>
+                {selectedEvent.type === "webinaire" ? "Webinaire" : "Masterclass"}
+              </span>
+              <span className="storytelling-modal-date">
+                {new Date(selectedEvent.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+              </span>
+            </div>
+            <h3 className="storytelling-modal-title">{selectedEvent.title}</h3>
+            <div className="storytelling-modal-stats">
+              <div className="storytelling-modal-stat-card">
+                <span className="storytelling-modal-stat-number">{selectedEvent.registrantsCount}</span>
+                <span className="storytelling-modal-stat-label">Participants inscrits</span>
+              </div>
+              <div className="storytelling-modal-stat-card">
+                <span className="storytelling-modal-stat-number" style={{ color: "#10b981" }}>100%</span>
+                <span className="storytelling-modal-stat-label">Gratuit & Ouvert</span>
+              </div>
+            </div>
+            <div className="storytelling-modal-body">
+              <h4 style={{ color: "#a78bfa", margin: "0 0 12px 0", fontSize: "15px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "monospace" }}>
+                Récit de l'événement
+              </h4>
+              <div className="storytelling-modal-text" dangerouslySetInnerHTML={{ __html: selectedEvent.storytelling }} />
+            </div>
+            <div className="storytelling-modal-footer">
+              <span className="storytelling-modal-speaker">Présenté par {selectedEvent.speaker?.name || "DTech-Africa"}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

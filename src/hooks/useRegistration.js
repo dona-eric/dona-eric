@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
+import { getApiUrl } from "../config/masterclasses.config";
 
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://donerick.onrender.com/api" : "http://localhost:3001/api");
+const API_URL = getApiUrl();
 
 /**
  * Hook principal pour la gestion des inscriptions

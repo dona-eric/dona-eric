@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { isOpen, formatDate } from "../../config/masterclasses.config";
 import { useRegistration } from "../../hooks/useRegistration";
 
-export default function MasterclassCard({ masterclass }) {
+export default function MasterclassCard({ masterclass, allEvents = [] }) {
   const [showForm, setShowForm] = useState(false);
   const { seats } = useRegistration(masterclass.id);
-  const open = isOpen(masterclass);
+  const open = isOpen(masterclass, allEvents);
+  const isPast = masterclass.isPast ?? (new Date(masterclass.date.includes("T") ? masterclass.date : `${masterclass.date}T16:00:00+01:00`) <= new Date());
+  const isLocked = !isPast && !open;
   
   const { title, subtitle, date, time, format, theme, themeColor, image, imageAlt,
           price, speaker, type, duration } = masterclass;
@@ -53,9 +55,9 @@ export default function MasterclassCard({ masterclass }) {
             }}>{theme}</span>
             <span style={{
               padding: "4px 10px", borderRadius: 4, fontSize: 11,
-              fontFamily: "'Inter', sans-serif", fontWeight: 600, color: open ? "#10b981" : "#f59e0b",
-              background: open ? "rgba(16,185,129,0.1)" : "rgba(245,158,11,0.1)", 
-              border: `1px solid ${open ? "rgba(16,185,129,0.3)" : "rgba(245,158,11,0.3)"}`, textTransform: "uppercase"
+              fontFamily: "'Inter', sans-serif", fontWeight: 600, color: open ? "#10b981" : isLocked ? "#a78bfa" : "#64748b",
+              background: open ? "rgba(16,185,129,0.1)" : isLocked ? "rgba(167,139,250,0.1)" : "rgba(100,116,139,0.1)", 
+              border: `1px solid ${open ? "rgba(16,185,129,0.3)" : isLocked ? "rgba(167,139,250,0.3)" : "rgba(100,116,139,0.3)"}`, textTransform: "uppercase"
             }}>
               {typeLabel}
             </span>
@@ -133,6 +135,25 @@ export default function MasterclassCard({ masterclass }) {
                 onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}
               >
                 Voir les détails & S'inscrire
+              </Link>
+            ) : isLocked ? (
+              <Link
+                to={`/formations/${masterclass.id}`}
+                style={{
+                  display: "block",
+                  width: "100%", padding: "14px", background: "rgba(255,255,255,0.03)", 
+                  color: "#a78bfa", borderRadius: "8px", textAlign: "center", fontSize: "14px",
+                  fontFamily: "'Inter', sans-serif", fontWeight: "600", border: "1px solid rgba(167, 139, 250, 0.25)",
+                  textDecoration: "none", boxSizing: "border-box", transition: "all 0.2s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(167, 139, 250, 0.08)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                }}
+              >
+                ⏳ Inscriptions à venir ({seats ? seats.registered : "..."} inscrits)
               </Link>
             ) : (
               <Link
