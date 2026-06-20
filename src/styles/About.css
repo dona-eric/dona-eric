@@ -21,7 +21,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -49,7 +49,7 @@
 }
 
 .about-description strong.accent {
-  color: #00d4ff;
+  color: var(--neon-cyan);
 }
 
 .about-stats-container {
@@ -75,14 +75,14 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
 }
 
 .about-stat-value {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 48px;
   font-weight: 800;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   line-height: 1;
 }
 
@@ -119,14 +119,14 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #ec4899, transparent);
+  background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
 }
 
 .about-bio-subtitle {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #ec4899;
+  color: var(--neon-pink);
   letter-spacing: 0.15em;
   margin-bottom: 32px;
   text-transform: uppercase;
@@ -150,7 +150,7 @@
   top: 24px;
   width: 2px;
   height: calc(100% + 8px);
-  background: rgba(236, 72, 153, 0.2);
+  background: rgba(139, 92, 246, 0.2);
 }
 
 .about-timeline-year {
@@ -159,7 +159,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #ec4899;
+  color: var(--neon-pink);
   padding-top: 2px;
   text-align: right;
 }
@@ -168,10 +168,10 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #ec4899;
+  background: var(--neon-pink);
   flex-shrink: 0;
   margin-top: 6px;
-  box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.6);
 }
 
 .about-timeline-label {
@@ -196,7 +196,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #a855f7;
+  color: var(--neon-purple);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -361,7 +361,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 16px;

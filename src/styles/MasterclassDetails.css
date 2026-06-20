@@ -259,7 +259,7 @@
 .mdetails-error-link {
   display: inline-block;
   margin-top: 20px;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   text-decoration: underline;
 }
 

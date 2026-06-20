@@ -41,11 +41,11 @@
   padding: 8px 20px;
   border-radius: 30px;
   margin-bottom: 24px;
-  background: rgba(0, 212, 255, 0.05);
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   font-size: 12px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.08em;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .contact-title-gradient {
-  background: linear-gradient(135deg, #00d4ff 0%, #6366f1 100%);
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, #6366f1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -97,12 +97,12 @@
 .contact-tag {
   padding: 6px 16px;
   border-radius: 4px;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
   font-size: 13px;
   font-family: 'Inter', sans-serif;
   font-weight: 500;
-  color: #a855f7;
+  color: var(--neon-purple);
 }
 
 /* Metrics Section */
@@ -125,14 +125,14 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
 }
 
 .contact-metric-value {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 36px;
   font-weight: 800;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   line-height: 1;
   margin-bottom: 8px;
 }
@@ -172,7 +172,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #00d4ff, #ec4899, transparent);
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-pink), transparent);
 }
 
 .contact-form-header {
@@ -183,7 +183,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.15em;
   margin-bottom: 12px;
   text-transform: uppercase;
@@ -230,7 +230,7 @@
 }
 
 .contact-form-label-prefix {
-  color: #00d4ff;
+  color: var(--neon-cyan);
 }
 
 .contact-input-wrapper {
@@ -299,7 +299,7 @@
 /* Submit Button */
 .contact-submit-btn {
   padding: 18px 32px;
-  background: linear-gradient(135deg, #00d4ff, #4338ca);
+  background: linear-gradient(135deg, var(--neon-cyan), #4338ca);
   border: none;
   border-radius: 8px;
   color: #ffffff;
@@ -310,7 +310,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
   margin-top: 8px;
 }
 
@@ -347,14 +347,14 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #a855f7, transparent);
+  background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
 }
 
 .contact-info-badge {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #a855f7;
+  color: var(--neon-purple);
   letter-spacing: 0.15em;
   margin-bottom: 24px;
   text-transform: uppercase;
@@ -395,13 +395,13 @@
 }
 
 .info-value-link:hover {
-  color: #00d4ff !important;
+  color: var(--neon-cyan) !important;
 }
 
 /* Mission Card */
 .contact-mission-card {
-  background: rgba(0, 212, 255, 0.05);
-  border: 1px solid rgba(0, 212, 255, 0.15);
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   border-radius: 12px;
   padding: 32px;
 }
@@ -410,7 +410,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.15em;
   margin-bottom: 16px;
   text-transform: uppercase;
@@ -432,11 +432,11 @@
 .contact-mission-tag {
   font-size: 12px;
   font-weight: 600;
-  color: #00d4ff;
-  background: rgba(0, 212, 255, 0.1);
+  color: var(--neon-cyan);
+  background: rgba(59, 130, 246, 0.1);
   padding: 4px 12px;
   border-radius: 4px;
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 /* Social Buttons */
@@ -469,7 +469,7 @@
 /* Typewriter */
 .typewriter-cursor {
   animation: blink 1s step-end infinite;
-  color: #00d4ff;
+  color: var(--neon-cyan);
 }
 
 /* Responsive */

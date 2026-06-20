@@ -15,7 +15,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), rgba(99, 102, 241, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), rgba(99, 102, 241, 0.3), transparent);
 }
 
 .footer-container {
@@ -55,7 +55,7 @@
 }
 
 .footer-logo-name {
-  background: linear-gradient(135deg, #00d4ff, #6366f1);
+  background: linear-gradient(135deg, var(--neon-cyan), #6366f1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -185,7 +185,7 @@
 }
 
 .footer-link:hover {
-  color: #00d4ff;
+  color: var(--neon-cyan);
 }
 
 .footer-expertise-item {
@@ -205,7 +205,7 @@
 }
 
 .footer-contact-link:hover {
-  color: #00d4ff;
+  color: var(--neon-cyan);
 }
 
 .footer-wa-link {

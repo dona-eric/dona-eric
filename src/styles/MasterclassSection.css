@@ -26,11 +26,11 @@
   padding: 8px 20px;
   border-radius: 30px;
   margin-bottom: 24px;
-  background: rgba(0, 212, 255, 0.05);
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   font-size: 11px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -39,8 +39,8 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #00d4ff;
-  box-shadow: 0 0 10px #00d4ff;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
   display: inline-block;
 }
 
@@ -123,7 +123,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #a855f7;
+  color: var(--neon-purple);
   letter-spacing: 0.15em;
   margin-bottom: 16px;
   text-transform: uppercase;
@@ -179,14 +179,14 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #00d4ff, #a855f7, transparent);
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-purple), transparent);
 }
 
 .ms-newsletter-badge {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.15em;
   margin-bottom: 24px;
   text-transform: uppercase;
@@ -231,7 +231,7 @@
 .ms-newsletter-btn {
   padding: 16px 32px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #00d4ff, #4338ca);
+  background: linear-gradient(135deg, var(--neon-cyan), #4338ca);
   color: #ffffff;
   border: none;
   font-weight: 600;
@@ -239,7 +239,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
 }
 
 .ms-newsletter-btn:hover {

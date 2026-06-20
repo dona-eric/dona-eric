@@ -78,11 +78,11 @@
   padding: 6px 16px;
   border-radius: 4px;
   margin-bottom: 32px;
-  background: rgba(0, 212, 255, 0.07);
-  border: 1px solid rgba(0, 212, 255, 0.25);
+  background: rgba(59, 130, 246, 0.07);
+  border: 1px solid rgba(59, 130, 246, 0.25);
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
-  color: #00d4ff;
+  color: var(--neon-cyan);
   letter-spacing: 0.05em;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .blog-title-gradient {
-  background: linear-gradient(135deg, #00d4ff 0%, #6366f1 100%);
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, #6366f1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -244,7 +244,7 @@
 }
 
 .blog-section-subtitle span {
-  color: #00d4ff;
+  color: var(--neon-cyan);
 }
 
 .blog-section-title {
@@ -430,7 +430,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #a78bfa, #00d4ff, transparent);
+  background: linear-gradient(90deg, transparent, #a78bfa, var(--neon-cyan), transparent);
 }
 
 .blog-cta-subtitle {
@@ -442,7 +442,7 @@
 }
 
 .blog-cta-subtitle span {
-  color: #00d4ff;
+  color: var(--neon-cyan);
 }
 
 .blog-cta-title {
@@ -479,7 +479,7 @@
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.05em;
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.12);
   transition: all 0.25s ease;
   text-decoration: none;
 }
@@ -487,7 +487,7 @@
 .blog-cta-btn:hover {
   background: linear-gradient(135deg, #0891b2, #4338ca) !important;
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0, 212, 255, 0.25) !important;
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.25) !important;
 }
 
 /* Storytelling Section */
@@ -511,8 +511,8 @@
 .storytelling-card:hover {
   background: rgba(255, 255, 255, 0.04);
   transform: translateY(-3px);
-  border-color: rgba(0, 212, 255, 0.35);
-  box-shadow: 0 16px 48px rgba(0, 212, 255, 0.08);
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 16px 48px rgba(59, 130, 246, 0.08);
 }
 
 .storytelling-card-content {
@@ -534,7 +534,7 @@
   font-weight: 800;
   font-family: 'JetBrains Mono', monospace;
   line-height: 1;
-  background: linear-gradient(135deg, #00d4ff 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, #a78bfa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -607,7 +607,7 @@
   max-width: 640px;
   padding: 32px;
   position: relative;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.05);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 40px rgba(59, 130, 246, 0.05);
   animation: slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -699,7 +699,7 @@
   font-family: 'JetBrains Mono', monospace;
   line-height: 1;
   margin-bottom: 6px;
-  background: linear-gradient(135deg, #00d4ff 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, #a78bfa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
