@@ -9,7 +9,7 @@ const DOMAINS = [
 ];
 
 export default function RegistrationForm({ masterclass, onClose }) {
-  const { register, status, error, successData, isLoading, isSuccess, seats } =
+  const { register, status, error, successData, isLoading, isSuccess, seats, emailSent } =
     useRegistration(masterclass.id);
 
   const [fields, setFields] = useState({
@@ -89,6 +89,20 @@ export default function RegistrationForm({ masterclass, onClose }) {
         <div style={{ fontSize: "50px", marginBottom: "16px" }}>✅</div>
         <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif" }}>Bienvenue à bord !</h3>
         <p style={{ color: "#94a3b8", fontFamily: "'Inter', sans-serif" }}>Votre inscription pour <strong>{successData.masterclass}</strong> est confirmée.</p>
+        
+        {/* Avertissement si l'email de confirmation n'a pas pu être envoyé */}
+        {emailSent === false && (
+          <div style={{ 
+            marginTop: "20px", padding: "14px 20px", borderRadius: "10px",
+            background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)",
+            color: "#f59e0b", fontSize: "14px", textAlign: "left", lineHeight: "1.5"
+          }}>
+            <strong>⚠️ Email non envoyé</strong><br />
+            Votre inscription est bien enregistrée, mais l'email de confirmation n'a pas pu être envoyé. 
+            Vérifiez vos spams ou contactez-nous à <strong>dtech.afrik@gmail.com</strong>.
+          </div>
+        )}
+
         <button onClick={onClose} style={{ marginTop: "32px", padding: "14px 32px", background: color, color: "#000000", border: "none", borderRadius: "8px", fontWeight: "700", cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>Fermer</button>
       </div>
     );

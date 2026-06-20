@@ -56,7 +56,7 @@ async function sendReminderEmail(registrant, masterclass, reminderType) {
   });
 }
 
-async function sendScheduledReminders(reminderType) {
+export async function sendScheduledReminders(reminderType) {
   console.log(`\n⏰ [${new Date().toLocaleString("fr-FR")}] Déclenchement rappel : ${reminderType}...`);
   try {
     const allMasterclasses = await getMasterclasses();

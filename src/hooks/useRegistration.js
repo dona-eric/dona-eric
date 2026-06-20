@@ -10,6 +10,7 @@ export function useRegistration(masterclassId) {
   const [error, setError]           = useState(null);
   const [successData, setSuccess]   = useState(null);
   const [seats, setSeats]           = useState(null);
+  const [emailSent, setEmailSent]   = useState(null);     // true | false | null
 
   // Récupère le nombre de places restantes au montage
   useEffect(() => {
@@ -27,11 +28,13 @@ export function useRegistration(masterclassId) {
   const register = useCallback(async (formData) => {
     setStatus("loading");
     setError(null);
+    setEmailSent(null);
 
     try {
       const data = await MasterclassService.register({ masterclass_id: masterclassId, ...formData });
 
       setSuccess(data.data);
+      setEmailSent(data.emailSent ?? null);
       setStatus("success");
 
       // Rafraîchir le compteur de places
@@ -62,6 +65,7 @@ export function useRegistration(masterclassId) {
     setStatus("idle");
     setError(null);
     setSuccess(null);
+    setEmailSent(null);
   }, []);
 
   return {
@@ -70,6 +74,7 @@ export function useRegistration(masterclassId) {
     status,
     error,
     successData,
+    emailSent,    // true = email envoyé, false = échec, null = inconnu
     isLoading:  status === "loading",
     isSuccess:  status === "success",
     isError:    status === "error",
