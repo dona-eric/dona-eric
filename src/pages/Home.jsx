@@ -1,8 +1,8 @@
+import { MasterclassService } from "../services/masterclassService";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import "../styles/Home.css";
-import { getApiUrl } from "../config/masterclasses.config";
 
 const useScrollFade = (delay = 0) => {
   const ref = useRef(null);
@@ -74,34 +74,27 @@ function FeaturedProject({ project, reverse, delay }) {
   );
 }
 
+
 function MasterclassTeaser() {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEvent = async () => {
-      try {
-        const apiUrl = getApiUrl();
-        const res = await fetch(`${apiUrl}/masterclasses`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.length > 0) {
-            // Check if open
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            const openEvent = data.find(mc => {
-              const d = new Date(mc.date);
-              d.setHours(0,0,0,0);
-              return d >= today;
-            });
-            setEvent(openEvent || data[0]);
-          }
-        }
-      } catch (e) {
-        console.error("Erreur teaser masterclass:", e);
-      } finally {
-        setLoading(false);
+      setLoading(true);
+      const data = await MasterclassService.getAll();
+      if (data && data.length > 0) {
+        // Check if open
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const openEvent = data.find(mc => {
+          const d = new Date(mc.date);
+          d.setHours(0,0,0,0);
+          return d >= today;
+        });
+        setEvent(openEvent || data[0]);
       }
+      setLoading(false);
     };
     fetchEvent();
   }, []);
@@ -145,7 +138,7 @@ export default function Home() {
         <div className="home-container">
            <div ref={expertiseHeaderRef} className="home-section-header">
              <span className="home-section-subtitle">// Ce que je livre</span>
-             <h2 className="home-section-title">Des Systèmes IA <br/><span className="gradient-text">Prêts pour la Production</span></h2>
+             <h2 className="home-section-title">Des Systèmes intelligents <br/><span className="gradient-text">qui vous font gagnez plus de temps et d'argent</span></h2>
            </div>
            <div className="home-expertise-grid">
              <ExpertiseCard 
@@ -173,18 +166,17 @@ export default function Home() {
           <div ref={impactRef} className="home-impact-content">
             <div className="home-badge">
               <span className="home-badge-dot" />
-              🔥 3 PROJETS LIVRÉS CE TRIMESTRE · 1 SLOT DISPONIBLE
+              🔥 3 PROJETS LIVRÉS CE SEMESTRE · 1 SLOT DISPONIBLE
             </div>
             <h2 className="home-title">
               Votre concurrent a déjà<br />
-              <span className="home-title-gradient">son IA en production.</span>
+              <span className="home-title-gradient"> un système autonome qui tourne</span>
             </h2>
             <p className="home-description">
-              Pendant que votre équipe analyse encore les options, je livre un{" "}
+              Pendant que votre équipe s'attardent sur les options élémentaires, je livre un{" "}
               <strong>agent IA opérationnel</strong>,{" "}
-              un <strong>pipeline ML en production</strong>{" "}
-              ou un <strong>système RAG clé-en-main</strong> —
-              en semaines, pas en mois. Zéro POC qui dort. Zéro réunion inutile.{" "}
+              un <strong>un système orienté businnes</strong>{" "}
+              ou un <strong>système RAG clé-en-main</strong>  plus simples, plus rapides et sécurisé. Zéro POC qui dort. Zéro réunion inutile.{" "}
               <strong className="accent">Du concret pour votre entreprise.</strong>
             </p>
             <div className="home-stats-grid">

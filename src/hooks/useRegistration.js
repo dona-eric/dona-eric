@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getApiUrl } from "../config/masterclasses.config";
-
-const API_URL = getApiUrl();
+import { MasterclassService } from "../services/masterclassService";
 
 /**
  * Hook principal pour la gestion des inscriptions
@@ -17,8 +15,7 @@ export function useRegistration(masterclassId) {
   useEffect(() => {
     if (!masterclassId) return;
 
-    fetch(`${API_URL}/count/${masterclassId}`)
-      .then((r) => r.json())
+    MasterclassService.getRegistrationCount(masterclassId)
       .then(setSeats)
       .catch(() => {}); // Silencieux si hors ligne
   }, [masterclassId]);
@@ -32,42 +29,30 @@ export function useRegistration(masterclassId) {
     setError(null);
 
     try {
-      const response = await fetch(`${API_URL}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ masterclass_id: masterclassId, ...formData }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Codes d'erreur spécifiques
-        if (data.code === "DUPLICATE_EMAIL") {
-          setError("Vous êtes déjà inscrit(e) avec cet email !");
-        } else if (data.code === "REGISTRATIONS_CLOSED") {
-          setError("Les inscriptions sont closes pour cet événement.");
-        } else if (data.code === "NO_SEATS") {
-          setError("Toutes les places sont prises. Désolé !");
-        } else {
-          setError(data.error || "Une erreur est survenue.");
-        }
-        setStatus("error");
-        return false;
-      }
+      const data = await MasterclassService.register({ masterclass_id: masterclassId, ...formData });
 
       setSuccess(data.data);
       setStatus("success");
 
       // Rafraîchir le compteur de places
-      fetch(`${API_URL}/count/${masterclassId}`)
-        .then((r) => r.json())
+      MasterclassService.getRegistrationCount(masterclassId)
         .then(setSeats)
         .catch(() => {});
 
       return true;
 
     } catch (err) {
-      setError("Impossible de contacter le serveur. Vérifiez votre connexion.");
+      const errMessage = err.message || "";
+      // Codes d'erreur spécifiques
+      if (errMessage.includes("DUPLICATE_EMAIL")) {
+        setError("Vous êtes déjà inscrit(e) avec cet email !");
+      } else if (errMessage.includes("REGISTRATIONS_CLOSED")) {
+        setError("Les inscriptions sont closes pour cet événement.");
+      } else if (errMessage.includes("NO_SEATS")) {
+        setError("Toutes les places sont prises. Désolé !");
+      } else {
+        setError(errMessage || "Impossible de contacter le serveur. Vérifiez votre connexion.");
+      }
       setStatus("error");
       return false;
     }
@@ -99,8 +84,7 @@ export function useRegistration(masterclassId) {
 export async function checkEmailExists(masterclassId, email) {
   if (!email || !email.includes("@")) return false;
   try {
-    const r = await fetch(`${API_URL}/check/${masterclassId}?email=${encodeURIComponent(email)}`);
-    const data = await r.json();
+    const data = await MasterclassService.checkRegistration(masterclassId, email);
     return data.alreadyRegistered;
   } catch {
     return false;

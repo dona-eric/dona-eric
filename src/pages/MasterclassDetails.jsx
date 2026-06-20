@@ -4,7 +4,8 @@ import RegistrationForm from "../components/Masterclass/RegistrationForm";
 import PageLoader from "../components/PageLoader";
 import "../styles/MasterclassDetails.css";
 
-import { formatDate, isOpen, getApiUrl } from "../config/masterclasses.config";
+import { MasterclassService } from "../services/masterclassService";
+import { formatDate, isOpen } from "../config/masterclasses.config";
 
 export default function MasterclassDetails() {
   const { id } = useParams();
@@ -14,37 +15,26 @@ export default function MasterclassDetails() {
 
   useEffect(() => {
     const fetchMasterclass = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const apiUrl = getApiUrl();
-        const res = await fetch(`${apiUrl}/masterclasses/${id}`);
-        const listRes = await fetch(`${apiUrl}/masterclasses`);
+        const data = await MasterclassService.getById(id);
+        const allEvents = await MasterclassService.getAll() || [];
         
-        if (res.ok) {
-          const data = await res.json();
-          let allEvents = [];
-          if (listRes.ok) {
-            allEvents = await listRes.json();
-          }
-          
-          if (data) {
-            const open = isOpen(data, allEvents);
-            const isPast = data.isPast ?? (new Date(data.date.includes("T") ? data.date : `${data.date}T16:00:00+01:00`) <= new Date());
-            const isLocked = !isPast && !open;
+        if (data) {
+          const open = isOpen(data, allEvents);
+          const isPast = data.isPast ?? (new Date(data.date.includes("T") ? data.date : `${data.date}T16:00:00+01:00`) <= new Date());
+          const isLocked = !isPast && !open;
 
-            setMasterclass({
-              ...data,
-              isOpen: open,
-              isPast,
-              isLocked
-            });
-            setLoading(false);
-            return;
-          }
+          setMasterclass({
+            ...data,
+            isOpen: open,
+            isPast,
+            isLocked
+          });
+        } else {
+          setError("Événement introuvable");
         }
-        
-        // Si l'API échoue
-        console.warn("API introuvable ou erreur de chargement");
-        setError("Événement introuvable");
       } catch (err) {
         console.error("Erreur Fetch:", err);
         setError("Erreur de connexion");

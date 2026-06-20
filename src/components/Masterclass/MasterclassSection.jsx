@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { isOpen, getApiUrl } from "../../config/masterclasses.config";
+import { isOpen } from "../../config/masterclasses.config";
+import { MasterclassService } from "../../services/masterclassService";
 import MasterclassHero from "./MasterclassHero";
 import MasterclassCard from "./MasterclassCard";
 import PageLoader from "../PageLoader";
@@ -12,23 +13,10 @@ export default function MasterclassSection() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      try {
-        const apiUrl = getApiUrl();
-        const res = await fetch(`${apiUrl}/masterclasses`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.length > 0) {
-            setAllEvents(data);
-            setLoading(false);
-            return;
-          }
-        }
-      } catch (e) {
-        console.error("Erreur chargement Notion:", e);
-        setAllEvents([]);
-      } finally {
-        setLoading(false);
-      }
+      setLoading(true);
+      const data = await MasterclassService.getAll();
+      setAllEvents(data || []);
+      setLoading(false);
     };
     fetchEvents();
   }, []);

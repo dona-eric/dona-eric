@@ -48,11 +48,4 @@ export const formatDate = (dateStr) => {
   });
 };
 
-/** Résout dynamiquement l'URL de l'API */
-export const getApiUrl = () => {
-  const envUrl = import.meta.env.VITE_API_URL || "https://donerick.onrender.com/api";
-  if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
-    return "http://localhost:3001/api";
-  }
-  return envUrl;
-};
+

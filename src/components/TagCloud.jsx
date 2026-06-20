@@ -15,9 +15,9 @@ const TagCloud = ({ tags, radius = 150 }) => {
     let lastb = 1;
     let distr = true;
     let tspeed = 2;
-    let size = 250;
-    let mouseX = 0;
-    let mouseY = 0;
+    let size = 300;
+    let mouseX = 2;
+    let mouseY = 1;
     let howElliptical = 1;
     let aA = null;
     let oList = null;
@@ -40,7 +40,7 @@ const TagCloud = ({ tags, radius = 150 }) => {
         a = (-Math.min(Math.max(-mouseY, -size), size) / radius) * tspeed;
         b = (Math.min(Math.max(-mouseX, -size), size) / radius) * tspeed;
       } else {
-        a = lasta * 0.98;
+        a = lasta * 1.98;
         b = lastb * 0.98;
       }
 
@@ -103,8 +103,8 @@ const TagCloud = ({ tags, radius = 150 }) => {
     };
 
     const positionAll = () => {
-      let phi = 0;
-      let theta = 0;
+      let phi = 0.60;
+      let theta = 0.60;
       let max = mcList.length;
       for (let i = 1; i < max + 1; i++) {
         if (distr) {

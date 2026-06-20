@@ -83,3 +83,4 @@ export const COMPONENT_CLASSES = {
   gradientText: "bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent",
   gradientBg: "bg-gradient-to-br from-white/5 to-white/0",
 };
+

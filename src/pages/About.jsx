@@ -288,7 +288,7 @@ export default function About() {
           {/* Card 5: Connect */}
           <div className="glass about-bento-card bento-span-1 align-left" style={{background: "linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(236, 72, 153, 0.05))"}}>
             <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "18px", color: "#ffffff", marginBottom: "8px"}}>Travaillons ensemble</h3>
-            <p style={{color: "#94a3b8", fontSize: "14px", marginBottom: "16px"}}>Un projet IA en tête ? Discutons-en.</p>
+            <p style={{color: "#94a3b8", fontSize: "14px", marginBottom: "16px"}}>Un projet en tête ? Discutons-en.</p>
             <a href="mailto:donaerickoulodji@gmail.com" style={{color: "#00d4ff", textDecoration: "none", fontWeight: "600", fontSize: "14px"}}>✉ Contactez-moi →</a>
           </div>
 

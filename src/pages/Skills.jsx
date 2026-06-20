@@ -105,17 +105,29 @@ const TOOLS_TAGS = [
   { label: "PyTorch", icon: "🔥" },
   { label: "TensorFlow", icon: "🧠" },
   { label: "Scikit-Learn", icon: "📊" },
-  { label: "LangChain", icon: "🦜" },
+  { label: "LangChain | Llamaindex", icon: "🦜" },
   { label: "FastAPI", icon: "⚡" },
   { label: "Streamlit", icon: "🌐" },
   { label: "Docker", icon: "🐳" },
   { label: "MLflow", icon: "📈" },
-  { label: "Airflow", icon: "💨" },
+  { label: "Airflow", icon: "Airflow" },
   { label: "PostgreSQL", icon: "🐘" },
   { label: "Spark", icon: "✨" },
-  { label: "Git", icon: "🐙" },
-  { label: "GCP", icon: "☁️" },
-  { label: "React", icon: "⚛️" }
+  { label: "Git & Github", icon: "🐙" },
+  { label: "Google Cloud Platform", icon: "☁️" },
+  { label: "React", icon: "⚛️" },
+  {label: "NextJS",icon: "⚛️"},
+  {label: "Apache", icon:"Apache"},
+  {label: "Kubernetes", icon:"Kub"},
+  {label: "R", icon:"Rmarkdown"},
+  {label: "DVC", icon:"Version Contol"},
+  {label: "F90", icon:"Fortran90"},
+  {label: "Azure", icon:"AZML"},
+  {label: "Vercel", icon:"Deploy"},
+  {label: "Bash", icon:"CURL"},
+
+
+
 ];
 
 const STATS = [
@@ -231,12 +243,12 @@ export default function Skills() {
           </div>
 
           <h2 className="skills-cta-title">
-            Vous avez le problème.<br />
-            <span className="gradient-text">J'ai le système.</span>
+            Vous avez un problème.<br />
+            <span className="gradient-text">J'ai la solution qu'il vous faut.</span>
           </h2>
 
           <p className="skills-cta-desc">
-            Réponse sous 24h · Devis gratuit · Zéro engagement
+            Réponse sous 24h · Devis gratuit · Zéro perte
           </p>
 
           <div className="skills-cta-actions">

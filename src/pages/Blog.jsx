@@ -1,9 +1,9 @@
+import { request } from "../api/apiClient";
+import { MasterclassService } from "../services/masterclassService";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import "../styles/Blog.css";
-import { getApiUrl } from "../config/masterclasses.config";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-const API_BASE = getApiUrl();
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 const useFadeIn = (delay = 0) => {
@@ -240,9 +240,7 @@ export default function Blog() {
     setLoading(true);
     setError(null);
     try {
-      const res  = await fetch(`${API_BASE}/posts?source=${source}&limit=20`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const data = await request(`posts?source=${source}&limit=20`);
       setPosts(data.posts || []);
       setCachedAt(data.cached_at);
     } catch (err) {
@@ -257,15 +255,8 @@ export default function Blog() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      try {
-        const res = await fetch(`${API_BASE}/masterclasses`);
-        if (res.ok) {
-          const data = await res.json();
-          setEvents(data || []);
-        }
-      } catch (err) {
-        console.error("Error fetching masterclasses in blog:", err);
-      }
+      const data = await MasterclassService.getAll();
+      setEvents(data || []);
     };
     fetchEvents();
   }, []);
