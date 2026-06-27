@@ -60,20 +60,6 @@ app.get("/api/test-email", async (req, res) => {
   }
 });
 
-app.get("/api/debug-env", (req, res) => {
-  const mask = (val) => {
-    if (!val) return "undefined/empty";
-    return `${val.substring(0, 3)}...${val.substring(val.length - 3)} (length: ${val.length})`;
-  };
-  return res.json({
-    EMAIL_USER: mask(process.env.EMAIL_USER),
-    EMAIL_PASS: mask(process.env.EMAIL_PASS),
-    EMAIL_FROM: mask(process.env.EMAIL_FROM),
-    PORT: process.env.PORT || "default 3001",
-    NODE_ENV: process.env.NODE_ENV || "not set"
-  });
-});
-
 // ── Route de déclenchement de rappels (pour cron externe) ───────
 const VALID_REMINDER_TYPES = ["morning", "five_minutes", "started"];
 app.get("/api/send-reminders/:type", async (req, res) => {

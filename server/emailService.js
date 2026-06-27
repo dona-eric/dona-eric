@@ -1,9 +1,11 @@
 import nodemailer from "nodemailer";
 import { generateEmailHTML, generateEmailText } from "./templates/confirmationEmail.js";
 
-// Transport SMTP
+// Transport SMTP (Port 587 requis pour éviter le blocage de port 465 sur Render)
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,  // App password, PAS votre vrai mot de passe
