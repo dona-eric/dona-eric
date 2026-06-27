@@ -138,7 +138,7 @@ export default function Home() {
         <div className="home-container">
            <div ref={expertiseHeaderRef} className="home-section-header">
              <span className="home-section-subtitle">// Ce que je livre</span>
-             <h2 className="home-section-title">Des Systèmes intelligents <br/><span className="gradient-text">qui vous font gagnez plus de temps et d'argent</span></h2>
+             <h2 className="home-section-title">Des Systèmes intelligents <br/><span className="gradient-text">qui vous font gagner plus de temps et d'argent</span></h2>
            </div>
            <div className="home-expertise-grid">
              <ExpertiseCard 
@@ -173,10 +173,10 @@ export default function Home() {
               <span className="home-title-gradient"> un système autonome qui tourne</span>
             </h2>
             <p className="home-description">
-              Pendant que votre équipe s'attardent sur les options élémentaires, je livre un{" "}
+              Pendant que votre équipe s'attarde sur les options élémentaires, je livre un{" "}
               <strong>agent IA opérationnel</strong>,{" "}
-              un <strong>un système orienté businnes</strong>{" "}
-              ou un <strong>système RAG clé-en-main</strong>  plus simples, plus rapides et sécurisé. Zéro POC qui dort. Zéro réunion inutile.{" "}
+              un <strong>système orienté business</strong>{" "}
+              ou un <strong>système RAG clé-en-main</strong> — plus simple, plus rapide et sécurisé. Zéro POC qui dort. Zéro réunion inutile.{" "}
               <strong className="accent">Du concret pour votre entreprise.</strong>
             </p>
             <div className="home-stats-grid">
@@ -241,7 +241,7 @@ export default function Home() {
                   Démarrer mon projet →
                 </a>
                 <a href="mailto:donaerickoulodji@gmail.com" className="home-cta-secondary">
-                  ✉ Me décrire mon besoin
+                  ✉ Décrire mon besoin
                 </a>
               </div>
            </div>

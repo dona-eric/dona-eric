@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { generateEmailHTML, generateEmailText } from "./templates/confirmationEmail.js";
 
-// ── Transport SMTP ──────────────────────────────────────────────
+// Transport SMTP
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -17,10 +17,10 @@ const transporter = nodemailer.createTransport({
 export async function verifyTransport() {
   try {
     await transporter.verify();
-    console.log("✅ Transport SMTP vérifié — prêt à envoyer des emails via", process.env.EMAIL_USER);
+    console.log(" Transport SMTP vérifié — prêt à envoyer des emails via", process.env.EMAIL_USER);
     return true;
   } catch (err) {
-    console.error("❌ SMTP TRANSPORT INVALIDE — Les emails NE PARTIRONT PAS.");
+    console.error("SMTP TRANSPORT INVALIDE — Les emails NE PARTIRONT PAS.");
     console.error("   Cause:", err.message);
     console.error("   → Vérifiez EMAIL_USER et EMAIL_PASS (App Password) dans .env");
     return false;
@@ -38,7 +38,7 @@ async function sendWithRetry(mailOptions, retries = 1) {
       return info;
     } catch (err) {
       if (attempt < retries) {
-        console.warn(`⚠️ Tentative ${attempt + 1} échouée pour ${mailOptions.to}: ${err.message}. Retry dans 2s...`);
+        console.warn(` Tentative ${attempt + 1} échouée pour ${mailOptions.to}: ${err.message}. Retry dans 2s...`);
         await new Promise(r => setTimeout(r, 2000));
       } else {
         throw err; // Relance après tous les retries

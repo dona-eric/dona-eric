@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import TagCloud from "../components/TagCloud";
+import GenerativeBg from "../components/GenerativeBg";
 import "../styles/Skills.css";
 
 const useScrollFade = (delay = 0) => {
@@ -31,13 +32,13 @@ function SkillPill({ name, color }) {
       onMouseLeave={() => setHov(false)}
       className="skills-pill"
       style={{
-        background: hov ? color + "15" : color + "08",
-        border: `1px solid ${hov ? color + "50" : color + "20"}`,
+        background: hov ? color + "15" : "rgba(255, 255, 255, 0.02)",
+        border: `1px solid ${hov ? color + "50" : "rgba(255, 255, 255, 0.08)"}`,
       }}
     >
       <span className="skills-pill-dot" style={{
         background: color,
-        boxShadow: `0 0 8px ${color}`
+        boxShadow: `0 0 6px ${color}`
       }} />
       <span className="skills-pill-name">{name}</span>
     </div>
@@ -49,23 +50,20 @@ function CertCard({ cert }) {
     <div className="glass skills-cert-card"
     onMouseEnter={(e) => {
       e.currentTarget.style.transform = "translateY(-4px)";
-      e.currentTarget.style.borderColor = `${cert.color}60`;
+      e.currentTarget.style.borderColor = `${cert.color}40`;
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.transform = "translateY(0)";
-      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.08)";
     }}
     >
-      <div className="skills-cert-gradient" style={{
-        background: `linear-gradient(90deg, transparent, ${cert.color}, transparent)`
-      }} />
       <div className="skills-cert-tag" style={{ color: cert.color }}>{cert.tag}</div>
       <h3 className="skills-cert-title">{cert.title}</h3>
       <div className="skills-cert-inst">{cert.institution}</div>
       <div className="skills-cert-footer">
         <span className="skills-cert-field">{cert.field}</span>
         <span className="skills-cert-year" style={{
-          color: cert.color, background: cert.color + "15", border: `1px solid ${cert.color}30`
+          color: cert.color, background: cert.color + "10", border: `1px solid ${cert.color}20`
         }}>{cert.year}</span>
       </div>
     </div>
@@ -74,15 +72,15 @@ function CertCard({ cert }) {
 
 const SKILL_COLS = [
   {
-    tag: "// ml_core", title: "ML & Deep Learning", accent: "#00d4ff",
+    tag: "// ml_core", title: "ML & Deep Learning", accent: "var(--neon-cyan)",
     skills: ["Scikit-Learn · XGBoost", "PyTorch", "TensorFlow / Keras", "Time Series", "Computer Vision (YOLO, SAM)"],
   },
   {
-    tag: "// llm_genai", title: "LLM & GenAI", accent: "#a855f7",
+    tag: "// llm_genai", title: "LLM & GenAI", accent: "var(--neon-pink)",
     skills: ["Fine-tuning (Llama 3)", "RAG · ChromaDB", "LangChain · LlamaIndex", "Prompt Engineering", "Groq · HuggingFace"],
   },
   {
-    tag: "// mlops_deploy", title: "MLOps & Infra", accent: "#10b981",
+    tag: "// mlops_deploy", title: "MLOps & Infra", accent: "var(--neon-green)",
     skills: ["Docker · Kubernetes", "MLflow", "FastAPI · REST APIs", "CI/CD (GitHub Actions)", "GCP · AWS · Vercel"],
   },
   {
@@ -92,12 +90,12 @@ const SKILL_COLS = [
 ];
 
 const CERTS = [
-  { tag: "education", title: "Licence en Physique", institution: "Université d'Abomey-Calavi", field: "Physique théorique", year: "2025", color: "#6366f1" },
-  { tag: "certification", title: "ML Specialization", institution: "Coursera", field: "Supervised & Unsupervised ML", year: "2024", color: "#00d4ff" },
-  { tag: "certification", title: "DL Specialization", institution: "DeepLearning.AI", field: "CNN · RNN · NLP", year: "2024", color: "#a855f7" },
-  { tag: "certification", title: "Data Science Pro", institution: "Coursera", field: "Advanced Analytics", year: "2025", color: "#10b981" },
-  { tag: "certification", title: "Create LLMs App", institution: "NVIDIA", field: "LLMs · Prompt Design", year: "2025", color: "#10b981" },
-  { tag: "certification", title: "Build RAG Agentic", institution: "NVIDIA", field: "Agentic RAG · Vector Search", year: "2026", color: "#a855f7" },
+  { tag: "education", title: "Licence en Physique", institution: "Université d'Abomey-Calavi", field: "Physique théorique", year: "2025", color: "var(--neon-purple)" },
+  { tag: "certification", title: "ML Specialization", institution: "Coursera", field: "Supervised & Unsupervised ML", year: "2024", color: "var(--neon-cyan)" },
+  { tag: "certification", title: "DL Specialization", institution: "DeepLearning.AI", field: "CNN · RNN · NLP", year: "2024", color: "var(--neon-pink)" },
+  { tag: "certification", title: "Data Science Pro", institution: "Coursera", field: "Advanced Analytics", year: "2025", color: "var(--neon-green)" },
+  { tag: "certification", title: "Create LLMs App", institution: "NVIDIA", field: "LLMs · Prompt Design", year: "2025", color: "var(--neon-green)" },
+  { tag: "certification", title: "Build RAG Agentic", institution: "NVIDIA", field: "Agentic RAG · Vector Search", year: "2026", color: "var(--neon-pink)" },
 ];
 
 const TOOLS_TAGS = [
@@ -105,35 +103,33 @@ const TOOLS_TAGS = [
   { label: "PyTorch", icon: "🔥" },
   { label: "TensorFlow", icon: "🧠" },
   { label: "Scikit-Learn", icon: "📊" },
-  { label: "LangChain | Llamaindex", icon: "🦜" },
+  { label: "LangChain", icon: "🦜" },
+  { label: "LlamaIndex", icon: "🦙" },
   { label: "FastAPI", icon: "⚡" },
   { label: "Streamlit", icon: "🌐" },
   { label: "Docker", icon: "🐳" },
   { label: "MLflow", icon: "📈" },
-  { label: "Airflow", icon: "Airflow" },
+  { label: "Airflow", icon: "🌬️" },
   { label: "PostgreSQL", icon: "🐘" },
   { label: "Spark", icon: "✨" },
-  { label: "Git & Github", icon: "🐙" },
-  { label: "Google Cloud Platform", icon: "☁️" },
+  { label: "Git", icon: "🐙" },
+  { label: "GCP", icon: "☁️" },
   { label: "React", icon: "⚛️" },
-  {label: "NextJS",icon: "⚛️"},
-  {label: "Apache", icon:"Apache"},
-  {label: "Kubernetes", icon:"Kub"},
-  {label: "R", icon:"Rmarkdown"},
-  {label: "DVC", icon:"Version Contol"},
-  {label: "F90", icon:"Fortran90"},
-  {label: "Azure", icon:"AZML"},
-  {label: "Vercel", icon:"Deploy"},
-  {label: "Bash", icon:"CURL"},
-
-
-
+  { label: "Next.js", icon: "▲" },
+  { label: "Apache", icon: "🪶" },
+  { label: "Kubernetes", icon: "☸️" },
+  { label: "R", icon: "📐" },
+  { label: "DVC", icon: "🔄" },
+  { label: "Fortran", icon: "🔬" },
+  { label: "Azure", icon: "☁️" },
+  { label: "Vercel", icon: "▲" },
+  { label: "Bash", icon: "💻" },
 ];
 
 const STATS = [
-  { v: "5+",   l: "SYSTÈMES IA LIVRÉS",     c: "#00d4ff", note: "En prod, pas en notebook" },
-  { v: "90%",  l: "PRÉCISION MOYENNE",    c: "#a855f7", note: "Sur projets réels" },
-  { v: "<48h", l: "DÉMARRAGE PROJET",        c: "#10b981", note: "Après premier contact" },
+  { v: "5+",   l: "SYSTÈMES IA LIVRÉS",     c: "var(--neon-cyan)", note: "En prod, pas en notebook" },
+  { v: "90%",  l: "PRÉCISION MOYENNE",    c: "var(--neon-pink)", note: "Sur projets réels" },
+  { v: "<48h", l: "DÉMARRAGE PROJET",        c: "var(--neon-green)", note: "Après premier contact" },
 ];
 
 export default function Skills() {
@@ -142,7 +138,8 @@ export default function Skills() {
 
   return (
     <main className="skills-main">
-      <div className="skills-container">
+      <GenerativeBg density={30} />
+      <div className="skills-container" style={{ position: "relative", zIndex: 2 }}>
         
         {/* HERO */}
         <div className="skills-hero">

@@ -21,7 +21,6 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "http://localhost:5174",
-    "http://localhost:5175",
     "https://donerick.onrender.com",
     "https://donerick.vercel.app",
     process.env.FRONTEND_URL,
@@ -42,7 +41,7 @@ app.use("/api/masterclasses", masterclassesRoutes);
 app.use("/api/posts", postsRoutes);
 app.get("/api/health", (_, res) => res.json({ status: "ok" }));
 
-// ── Route de test email (DEBUG) ─────────────────────────────────
+// ── Route de test email (DEBUG)
 app.get("/api/test-email", async (req, res) => {
   const to = req.query.to || process.env.EMAIL_USER;
   try {

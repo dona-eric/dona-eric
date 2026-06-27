@@ -5,6 +5,7 @@
   color: #e2e8f0;
   position: relative;
   z-index: 1;
+  overflow: hidden;
 }
 
 .skills-container {
@@ -103,6 +104,16 @@
   padding: 32px 24px;
   position: relative;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skills-col-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
 }
 
 .skills-col-gradient {
@@ -197,11 +208,15 @@
   padding: 24px;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .skills-cert-card:hover {
   transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .skills-cert-gradient {
@@ -421,6 +436,21 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.skills-bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.03;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
 }
 
 .bento-span-3 { grid-column: span 3; }

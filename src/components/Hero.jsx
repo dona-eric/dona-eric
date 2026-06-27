@@ -88,8 +88,8 @@ export default function Hero() {
 
           <div className="hero-stats-grid" ref={statsRef}>
             <StatCard value="5+" label="Systèmes IA en Prod" delay={1.0} />
-            <StatCard value="7+" label="Projets Livrés" delay={1.1} />
-            <StatCard value="95%" label="Précision Moyenne" delay={1.2} />
+            <StatCard value="6+" label="Projets Livrés" delay={1.1} />
+            <StatCard value="90%" label="Précision Moyenne" delay={1.2} />
           </div>
         </div>
 
