@@ -153,28 +153,28 @@ export default function ContactPage() {
 
           {/* HERO */}
           <div ref={heroRef} className="contact-hero">
-            <div className="contact-badge">
-              <span className="contact-badge-dot" />
-              AVAILABLE_FOR_HIRE :: STATUS=OPEN
+            <div className="contact-badge" style={{ background: "rgba(99,102,241,0.1)", color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.2)" }}>
+              <span className="contact-badge-dot" style={{ background: "#818cf8", boxShadow: "0 0 8px #818cf8" }} />
+              Bénin · Monde · Remote
             </div>
 
             <div className="contact-title-container">
               <h1 className="contact-title">
-                <Typewriter text="Construisons quelque chose" speed={100} />
+                <Typewriter text="Parlons de votre prochain" speed={60} />
                 <br />
-                <span className="contact-title-gradient">d'intelligent.</span>
+                <span className="contact-title-gradient">système IA.</span>
               </h1>
             </div>
 
-            <p className="contact-description">
-              Ingénieur Machine Learning & Data Scientist, formé en physique, je modélise rigoureusement avant de coder. 
-              Disponible pour des missions freelance, contrats et collaborations de recherche.
+            <p className="contact-description" style={{ color: "#e2e8f0" }}>
+              Que vous cherchiez à automatiser les processus de votre entreprise (Consulting B2B) 
+              ou à vous inscrire à ma prochaine session de formation (MLAcademy), laissez-moi un message.
             </p>
 
             <div className="contact-tags">
-              {expertise.map((tag) => (
-                <span key={tag} className="contact-tag">{tag}</span>
-              ))}
+              <span className="contact-tag" style={{ border: "1px solid rgba(99,102,241,0.4)" }}>Consulting B2B</span>
+              <span className="contact-tag" style={{ border: "1px solid rgba(139,92,246,0.4)" }}>MLAcademy</span>
+              <span className="contact-tag">Partenariats</span>
             </div>
           </div>
 
@@ -210,9 +210,28 @@ export default function ContactPage() {
                   <Field label="Votre Nom" name="name" value={form.name} onChange={handleChange} placeholder="John Doe" />
                   <Field label="Adresse Email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="john@entreprise.com" />
                 </div>
-                <Field label="Sujet (Optionnel)" name="subject" value={form.subject} onChange={handleChange} placeholder="Audit de modèle ML / Pipeline Data..." />
+                
+                <div className="contact-form-group">
+                  <label className="contact-form-label">
+                    <span className="contact-form-label-prefix">// </span>Motif de contact
+                  </label>
+                  <div className="contact-input-wrapper">
+                    <span className="contact-input-icon" style={{ color: "#64748b" }}>›</span>
+                    <select
+                      name="subject" value={form.subject} onChange={handleChange}
+                      className="contact-input"
+                      style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.1)", appearance: "none" }}
+                    >
+                      <option value="" disabled>Sélectionnez un motif</option>
+                      <option value="Projet d'entreprise / Consulting">Projet d'entreprise / Consulting</option>
+                      <option value="Question sur MLAcademy">Question sur MLAcademy</option>
+                      <option value="Autre demande">Autre demande</option>
+                    </select>
+                  </div>
+                </div>
+
                 <Field label="Message" name="message" value={form.message} onChange={handleChange}
-                  placeholder="Décrivez votre projet. Quelles données avez-vous ? Quels sont les résultats attendus ?" multiline />
+                  placeholder="Décrivez votre besoin..." multiline />
 
                 {/* Status Messages */}
                 {status === "missing" && (

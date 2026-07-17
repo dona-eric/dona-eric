@@ -111,7 +111,30 @@ function MasterclassTeaser() {
             <h3 className="home-teaser-title">{event.title}</h3>
             <p className="home-teaser-date">📅 {new Date(event.date).toLocaleDateString('fr-FR')} à {event.time}</p>
          </div>
-         <Link to={`/formations/${event.id}`} className="home-teaser-btn">S'inscrire</Link>
+      </div>
+    </div>
+  );
+}
+
+function AcademyTeaser() {
+  const ref = useScrollFade(0.2);
+  return (
+    <div ref={ref} className="home-teaser-container" style={{ margin: "40px auto" }}>
+      <div className="glass home-teaser-card" style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05))", border: "1px solid rgba(99,102,241,0.2)" }}>
+         <div className="home-teaser-content">
+            <span className="home-teaser-badge" style={{ background: "rgba(99,102,241,0.2)", color: "#c7d2fe" }}>🚀 Lancement</span>
+            <h3 className="home-teaser-title" style={{ fontSize: "28px" }}>MLAcademy</h3>
+            <p className="home-teaser-date" style={{ color: "#cbd5e1", fontSize: "16px", marginBottom: "16px" }}>
+              Former la prochaine génération d'ingénieurs IA en Afrique. 
+              De Python à Kubernetes en 90 jours.
+            </p>
+            <div style={{ display: "flex", gap: "16px", marginBottom: "20px" }}>
+              <span style={{ background: "rgba(255,255,255,0.05)", padding: "4px 12px", borderRadius: "20px", fontSize: "13px" }}>90 jours</span>
+              <span style={{ background: "rgba(255,255,255,0.05)", padding: "4px 12px", borderRadius: "20px", fontSize: "13px" }}>21 modules</span>
+              <span style={{ background: "rgba(255,255,255,0.05)", padding: "4px 12px", borderRadius: "20px", fontSize: "13px" }}>10 projets</span>
+            </div>
+         </div>
+         <Link to="/academy" className="home-teaser-btn" style={{ background: "#6366f1" }}>Rejoindre la Cohorte #1</Link>
       </div>
     </div>
   );
@@ -133,12 +156,19 @@ export default function Home() {
     <main className="home-main">
       <Hero />
 
+      {/* SECTION ACADEMY TEASER */}
+      <section className="home-section" style={{ padding: "40px 0" }}>
+        <div className="home-container">
+           <AcademyTeaser />
+        </div>
+      </section>
+
       {/* SECTION EXPERTISE */}
       <section className="home-section home-expertise-section">
         <div className="home-container">
            <div ref={expertiseHeaderRef} className="home-section-header">
-             <span className="home-section-subtitle">// Ce que je livre</span>
-             <h2 className="home-section-title">Des Systèmes intelligents <br/><span className="gradient-text">qui vous font gagner plus de temps et d'argent</span></h2>
+             <span className="home-section-subtitle">// Ce que je livre aux entreprises</span>
+             <h2 className="home-section-title">Des Systèmes IA <br/><span className="gradient-text">prêts pour la production</span></h2>
            </div>
            <div className="home-expertise-grid">
              <ExpertiseCard 
@@ -160,27 +190,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION IMPACT & ROI (Anciennement Contact) */}
-      <section id="impact" className="home-section home-impact-section">
+      {/* SECTION IMPACT & ROI (CTA Entreprise) */}
+      <section id="impact" className="home-section home-impact-section" style={{marginBottom: "100px"}}>
         <div className="home-container">
-          <div ref={impactRef} className="home-impact-content">
+          <div ref={impactRef} className="home-impact-content glass" style={{ padding: "60px 40px", borderRadius: "24px", background: "linear-gradient(135deg, rgba(15,23,42,0.8), rgba(30,41,59,0.8))", border: "1px solid rgba(255,255,255,0.05)" }}>
             <div className="home-badge">
               <span className="home-badge-dot" />
-              🔥 3 PROJETS LIVRÉS CE SEMESTRE · 1 SLOT DISPONIBLE
+              🔥 1 SLOT DE CONSULTING DISPONIBLE CE TRIMESTRE
             </div>
-            <h2 className="home-title">
+            <h2 className="home-title" style={{ marginTop: "20px" }}>
               Votre concurrent a déjà<br />
               <span className="home-title-gradient"> un système autonome qui tourne</span>
             </h2>
-            <p className="home-description">
-              Pendant que votre équipe s'attarde sur les options élémentaires, je livre un{" "}
+            <p className="home-description" style={{ maxWidth: "700px" }}>
+              Pendant que d'autres s'attardent sur des POCs qui ne voient jamais le jour, je livre un{" "}
               <strong>agent IA opérationnel</strong>,{" "}
               un <strong>système orienté business</strong>{" "}
-              ou un <strong>système RAG clé-en-main</strong> — plus simple, plus rapide et sécurisé. Zéro POC qui dort. Zéro réunion inutile.{" "}
+              ou un <strong>pipeline MLOps robuste</strong>. Zéro blabla. Zéro réunion inutile.{" "}
               <strong className="accent">Du concret pour votre entreprise.</strong>
             </p>
-            <div className="home-stats-grid">
+            <div className="home-stats-grid" style={{ marginBottom: "40px" }}>
               {stats.map((s, i) => <StatCard key={i} {...s} delay={0.2 + i * 0.1} />)}
+            </div>
+            <div className="home-cta-container">
+              <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer" className="home-cta-primary">
+                Discuter de votre projet →
+              </a>
+              <a href="mailto:donaerickoulodji@gmail.com" className="home-cta-secondary">
+                ✉ M'envoyer un email
+              </a>
             </div>
           </div>
         </div>
@@ -222,29 +260,9 @@ export default function Home() {
       </section>
 
       {/* SECTION MASTERCLASS TEASER */}
-      <section className="home-section">
+      <section className="home-section" style={{marginBottom: "100px"}}>
         <div className="home-container">
            <MasterclassTeaser />
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="home-section home-cta-section" style={{marginBottom: "100px", textAlign: "center"}}>
-        <div className="home-container">
-           <div className="glass" style={{padding: "60px 40px", borderRadius: "24px", background: "linear-gradient(135deg, rgba(0,212,255,0.05), rgba(236,72,153,0.05))"}}>
-              <h2 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "36px", color: "#fff", marginBottom: "16px"}}>Prêt à accélérer ?</h2>
-              <p style={{color: "#94a3b8", fontSize: "18px", marginBottom: "32px", maxWidth: "500px", margin: "0 auto 32px"}}>
-                Transformons vos données en avantage compétitif. Contactez-moi pour discuter de votre infrastructure IA.
-              </p>
-              <div className="home-cta-container" style={{justifyContent: "center"}}>
-                <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer" className="home-cta-primary">
-                  Démarrer mon projet →
-                </a>
-                <a href="mailto:donaerickoulodji@gmail.com" className="home-cta-secondary">
-                  ✉ Décrire mon besoin
-                </a>
-              </div>
-           </div>
         </div>
       </section>
 

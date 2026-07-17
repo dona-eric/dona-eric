@@ -39,6 +39,7 @@ const Navigation = () => {
                   "about": "À PROPOS",
                   "skills": "COMPÉTENCES",
                   "projects": "PROJETS",
+                  "academy": "ACADEMY",
                   "masterclass": "MASTERCLASS",
                   "blog": "BLOG",
                   "contact": "CONTACT"

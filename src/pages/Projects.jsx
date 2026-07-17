@@ -84,9 +84,9 @@ const STATUS_MAP = {
 };
 
 const CAT_MAP = {
-  ml:  { label: "Machine Learning", color: "#00d4ff" },
-  nlp: { label: "NLP / BERT",       color: "#10b981" },
-  llm: { label: "LLM / GenAI",      color: "#a855f7" },
+  ml:  { label: "Machine Learning / MLOps", color: "#3b82f6" },
+  nlp: { label: "NLP / Computer Vision",    color: "#10b981" },
+  llm: { label: "LLM / RAG / Agents",       color: "#6366f1" },
 };
 
 const ALL_CATS = ["all", "ml", "nlp", "llm"];
@@ -115,35 +115,18 @@ function ProjectCard({ project, delay, featured }) {
 
       <div className="project-card-content">
         <div className="project-card-header">
-          <div className="project-card-tags">
-            <span className="project-tag" style={{
-              color: cat.color, background: cat.color + "15", border: `1px solid ${cat.color}30`
-            }}>{cat.label}</span>
-            <span className="project-tag project-status-tag" style={{
-              color: st.color, background: st.bg, border: `1px solid ${st.border}`
-            }}>
-              {project.status === "production" && (
-                <span style={{
-                  width: 6, height: 6, borderRadius: "50%", background: st.color, display: "inline-block", animation: "pulseDot 2s ease infinite"
-                }} />
-              )}
-              {st.label}
-            </span>
-          </div>
-
-          {featured && (
-            <span className="project-featured-tag">★ Featured</span>
-          )}
+          <span className="project-category" style={{ color: cat.color }}>
+            <span className="project-cat-dot" style={{ background: cat.color, boxShadow: `0 0 8px ${cat.color}` }} />
+            {cat.label}
+          </span>
+          <span className="project-status" style={{ color: st.color, background: st.bg, border: `1px solid ${st.border}` }}>
+            {st.label}
+          </span>
         </div>
 
-        <div style={{ marginBottom: 16 }}>
-          <h3 className="project-title">{project.title}</h3>
-          <div className="project-subtitle" style={{ color: project.accent }}>
-            {project.subtitle}
-          </div>
-        </div>
-
-        <p className="project-desc">{project.description}</p>
+        <h3 className="project-title">{project.title}</h3>
+        <h4 className="project-subtitle" style={{ color: cat.color }}>{project.subtitle}</h4>
+        <p className="project-description">{project.description}</p>
 
         <div className="project-impact">
           <span className="project-impact-value" style={{ color: project.accent }}>
@@ -202,14 +185,13 @@ export default function Projects() {
             PROJECTS.LOAD() → {PROJECTS.filter(p => p.status === "production").length} EN PRODUCTION
           </div>
 
-          <h1 className="projects-title">
-            Des modèles qui <br />
-            <span className="gradient-text">tournent en Production.</span>
+          <h1 className="projects-title" style={{ fontSize: "3.5rem" }}>
+            Construire.<br />
+            <span className="gradient-text">Déployer. Mesurer.</span>
           </h1>
 
-          <p className="projects-description">
-            Pas juste des notebooks. Des systèmes utilisés tous les jours —
-            par des <strong>entreprises, coachs, médias et institutions</strong> au Bénin et au-delà.
+          <p className="projects-description" style={{ fontSize: "1.2rem", color: "#e2e8f0" }}>
+            Découvrez comment j'aide les entreprises à automatiser leurs processus métier grâce à des systèmes IA opérationnels et sécurisés.
           </p>
 
           <div className="projects-stats-grid">

@@ -14,9 +14,9 @@
   --neon-green: #10b981;
   
   /* Backgrounds */
-  --bg-primary: #7a5ea7;
-  --bg-secondary: #606094;
-  --bg-tertiary: #5c4283;
+  --bg-primary: #6b7998;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #6e7bbb;
   
   /* Premium Glass Effects */
   --glass-bg: rgba(255, 255, 255, 0.03);
@@ -94,8 +94,8 @@ body::before {
   inset: 0;
   z-index: -2;
   background: 
-    radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.05), transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.04), transparent 40%);
+    radial-gradient(circle at 15% 50%, rgb(255, 255, 255), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(173, 162, 193, 0.04), transparent 40%);
   pointer-events: none;
 }
 
@@ -105,12 +105,12 @@ body::after {
   inset: 0;
   z-index: -3;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(133, 160, 173, 0.642) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(133, 160, 173, 0.642) 1px, transparent 1px);
   background-size: 80px 80px;
   background-position: center center;
   mask-image: radial-gradient(circle at center, rgb(71, 101, 141) 40%, transparent 80%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
   pointer-events: none;
 }
 

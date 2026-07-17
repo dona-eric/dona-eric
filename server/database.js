@@ -31,8 +31,21 @@ export async function initDatabase() {
       error   TEXT    DEFAULT NULL,
       sent_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+    CREATE TABLE IF NOT EXISTS academy_registrations (
+      id             INTEGER PRIMARY KEY AUTOINCREMENT,
+      first_name     TEXT    NOT NULL,
+      last_name      TEXT    NOT NULL,
+      email          TEXT    NOT NULL UNIQUE,
+      country        TEXT    NOT NULL,
+      profession     TEXT    NOT NULL,
+      current_level  TEXT    NOT NULL,
+      objective      TEXT    NOT NULL,
+      motivation     TEXT    DEFAULT '',
+      registered_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+      ip_address     TEXT
+    );
   `);
-  console.log("✅ Tables Turso prêtes");
+  console.log("✅ Tables Turso prêtes (masterclass + academy)");
 }
 
 export async function insertRegistration(data) {
@@ -77,4 +90,34 @@ export async function logEmail(regId, email, status, error) {
     sql:  "INSERT INTO email_logs (reg_id, email, status, error) VALUES (?, ?, ?, ?)",
     args: [regId, email, status, error],
   });
+}
+
+// ── Academy helpers ──
+export async function insertAcademyRegistration(data) {
+  return db.execute({
+    sql: `INSERT INTO academy_registrations
+            (first_name, last_name, email, country, profession, current_level, objective, motivation, ip_address)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [
+      data.first_name, data.last_name, data.email,
+      data.country, data.profession, data.current_level,
+      data.objective, data.motivation, data.ip_address,
+    ],
+  });
+}
+
+export async function checkAcademyDuplicate(email) {
+  const result = await db.execute({
+    sql: "SELECT id FROM academy_registrations WHERE email = ?",
+    args: [email],
+  });
+  return result.rows[0] ?? null;
+}
+
+export async function countAcademyRegistrations() {
+  const result = await db.execute({
+    sql: "SELECT COUNT(*) as count FROM academy_registrations",
+    args: [],
+  });
+  return Number(result.rows[0].count);
 }

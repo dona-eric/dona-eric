@@ -40,7 +40,7 @@ const useScrollFade = (delay = 0) => {
 // ─── Source config ────────────────────────────────────────────────────────────
 // ─── Source config ────────────────────────────────────────────────────────────
 const SOURCE_META = {
-  medium:   { label: "Medium",   color: "#00d4ff", icon: "M" },
+  medium:   { label: "Medium",   color: "#6366f1", icon: "M" },
 };
 
 const FILTERS = [
@@ -210,7 +210,7 @@ function StorytellingCard({ mc, index, onClick }) {
         <h3 className="storytelling-event-title">{mc.title}</h3>
         <div className="storytelling-post-text">
           <p style={{ margin: 0 }}>"{cleanSnippet}..."</p>
-          <span className="storytelling-readmore" style={{ display: "block", marginTop: "12px", color: "#00d4ff", fontWeight: "600", fontSize: "13px" }}>
+          <span className="storytelling-readmore" style={{ display: "block", marginTop: "12px", color: "#6366f1", fontWeight: "600", fontSize: "13px" }}>
             Lire le post complet →
           </span>
         </div>
@@ -289,21 +289,19 @@ export default function Blog() {
 
           {/* ══ HERO ══ */}
           <div ref={heroRef} className="blog-hero">
-            <div className="blog-badge">
-              <span className="blog-badge-dot" />
-              blog.fetch() → Medium · auto-sync 6h
+            <div className="blog-badge" style={{ background: "rgba(99,102,241,0.1)", color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.2)" }}>
+              <span className="blog-badge-dot" style={{ background: "#818cf8", boxShadow: "0 0 8px #818cf8" }} />
+              MLAcademy Hub
             </div>
-
             <h1 className="blog-title">
-              J'écris ce que
-              <br />
-              <span className="blog-title-gradient">je vis en production.</span>
+              Écrits, Idées & <span className="gradient-text">Masterclasses.</span>
             </h1>
-
             <p className="blog-description">
-              Articles triés automatiquement par <strong>vues · likes · fraîcheur</strong>.
-              Mis à jour toutes les 6h depuis Medium.
+              Des ressources techniques pointues (Medium) et les rediffusions 
+              de nos sessions Live (Masterclasses MLAcademy) pour accélérer votre 
+              montée en compétence.
             </p>
+          </div>
 
             {/* Stats */}
             <div className="blog-stats-grid">
@@ -404,26 +402,20 @@ export default function Blog() {
           )}
 
           {/* ══ CTA ══ */}
-          <div ref={ctaRef} className="blog-cta-section">
-            <div className="blog-cta-gradient" />
-            <div className="blog-cta-subtitle">
-              <span>// </span>follow.profiles()
-            </div>
-            <h2 className="blog-cta-title">
-              Suivre mes publications
+          <div ref={ctaRef} className="glass blog-cta">
+            <div className="blog-cta-gradient" style={{ background: "linear-gradient(45deg, transparent, rgba(99,102,241,0.1), transparent)" }} />
+            <h2 className="blog-cta-title" style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+              Rejoignez le programme complet
             </h2>
-            <p className="blog-cta-desc">
-              /* Notifications automatiques dès qu'un article est publié */
+            <p className="blog-cta-desc" style={{ color: "#cbd5e1" }}>
+              Si ces contenus vous parlent, vous devriez jeter un oeil à MLAcademy.
+              Un accompagnement de 90 jours pour maîtriser l'ingénierie IA.
             </p>
-            <div className="blog-cta-btn-container">
-              <a href="https://medium.com/@koulodjiric" target="_blank" rel="noopener noreferrer"
-                className="blog-cta-btn">
-                follow_medium() →
-              </a>
-            </div>
+            <a href="/academy" className="btn btn-primary" style={{ background: "#6366f1" }}>
+              Découvrir MLAcademy →
+            </a>
           </div>
         </div>
-      </div>
 
       {/* ══ STORYTELLING DETAIL MODAL ══ */}
       {selectedEvent && (

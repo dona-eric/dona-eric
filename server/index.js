@@ -10,6 +10,7 @@ import { initDatabase } from "./database.js";
 import registrationRoutes from "./routes/registrations.js";
 import masterclassesRoutes from "./routes/masterclasses.js";
 import postsRoutes from "./routes/posts.js";
+import academyRoutes from "./routes/academy.js";
 import { startReminderScheduler, sendScheduledReminders } from "./reminderScheduler.js";
 import { verifyTransport, sendTestEmail } from "./emailService.js";
 
@@ -39,6 +40,7 @@ app.use("/api/register", limiter);
 app.use("/api", registrationRoutes);
 app.use("/api/masterclasses", masterclassesRoutes);
 app.use("/api/posts", postsRoutes);
+app.use("/api/academy", academyRoutes);
 app.get("/api/health", (_, res) => res.json({ status: "ok" }));
 
 // ── Route de test email (DEBUG)

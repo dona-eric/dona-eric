@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import PageLoader from "./components/PageLoader";
 import { Helmet } from 'react-helmet-async';
+import TurbojetBg from "./components/TurbojetBg";
 
 // Lazy load pages
 const Home = lazy(() => import("./pages/Home"));
@@ -15,6 +16,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const MasterClass = lazy(() => import('./components/Masterclass/MasterclassSection'));
 const MasterclassDetails = lazy(() => import("./pages/MasterclassDetails"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Academy = lazy(() => import("./pages/Academy"));
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -48,6 +50,7 @@ export default function App() {
       </Helmet>
 
       <ScrollToTop />
+      <TurbojetBg />
       <Navigation />
 
       <main className="flex-1 mt-20">
@@ -61,6 +64,7 @@ export default function App() {
             <Route path="/blog" element={<Blog/>}/>
             <Route path="/formations" element={<MasterClass/>}/>
             <Route path="/formations/:id" element={<MasterclassDetails />} />
+            <Route path="/academy" element={<Academy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

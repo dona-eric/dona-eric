@@ -62,10 +62,10 @@ function AnimatedCounter({ target, suffix = "" }) {
 }
 
 const STATS = [
-  { value: "5", suffix: "+", label: "MODÈLES EN PROD", note: "Live & monitored" },
-  { value: "90", suffix: "%", label: "PRÉCISION MOYENNE", note: "Across ML projects" },
-  { value: "3", suffix: "", label: "PAYS TOUCHÉS", note: "BJ · FR · CA" },
-  { value: "6", suffix: "+", label: "PROJETS LIVRÉS", note: "Data → Deploy" },
+  { value: "5", suffix: "+", label: "SYSTÈMES EN PROD", note: "Déployés & Monitorés" },
+  { value: "20", suffix: "+", label: "ÉLÈVES FORMÉS", note: "MLAcademy Cohorte #1" },
+  { value: "3", suffix: "", label: "PAYS TOUCHÉS", note: "Bénin · France · Canada" },
+  { value: "100", suffix: "%", label: "FOCUS PRODUCTION", note: "Zéro POC abandonné" },
 ];
 
 const VALUES = [
@@ -202,24 +202,32 @@ export default function About() {
 
   return (
     <main className="about-main">
-      <GenerativeBg density={25} />
       <div className="about-container" style={{ position: "relative", zIndex: 2 }}>
         
-        {/* Title */}
-        <div className="about-title-container">
-          <div className="about-subtitle">
-            // profile.load()
+        {/* BIO HEADER */}
+        <div ref={bioRef} className="about-bio-header">
+          <div className="about-bio-badge">
+            <span className="about-bio-dot" />
+            Bénin · Global
           </div>
           <h1 className="about-title">
-            Dona Éric KOULODJI
+            Dona Éric KOULODJI<br />
+            <span className="gradient-text">Construire & Transmettre</span>
           </h1>
-          <p className="about-description">
-            Je prends votre problème métier et je livre un{" "}
-            <strong>système IA opérationnel</strong> — agent autonome,
-            modèle ML en prod, ou pipeline RAG clé-en-main. Formé en physique, je modélise
-            rigoureusement avant de coder. Résultat :{" "}
-            <strong className="accent">des solutions qui scalent, pas des POC qui dorment.</strong>
+          <p className="about-subtitle">
+            Ingénieur Machine Learning & Fondateur de MLAcademy.
           </p>
+          <div className="about-text-content">
+            <p>
+              Je conçois et déploie des systèmes d'intelligence artificielle autonomes 
+              pour aider les entreprises à passer d'une idée (POC) à une solution rentable en production.
+            </p>
+            <p>
+              En parallèle, à travers <strong>MLAcademy</strong>, je forme la nouvelle génération 
+              de Data Scientists et MLOps africains, pour qu'ils soient capables de construire 
+              des solutions concrètes et de s'insérer sur le marché mondial.
+            </p>
+          </div>
         </div>
 
         {/* Bento Box */}

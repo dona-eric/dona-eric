@@ -138,7 +138,6 @@ export default function Skills() {
 
   return (
     <main className="skills-main">
-      <GenerativeBg density={30} />
       <div className="skills-container" style={{ position: "relative", zIndex: 2 }}>
         
         {/* HERO */}
@@ -149,16 +148,15 @@ export default function Skills() {
           </div>
 
           <h1 className="skills-title">
-            L'arsenal qui livre.<br />
-            <span className="gradient-text">Pas des slides.</span>
-          </h1>
+          Tech Stack <br />
+          <span className="gradient-text">& Expertise Production.</span>
+        </h1>
 
-          <p className="skills-description">
-            Chaque outil listé ici a servi à{" "}
-            <strong>livrer un système en production</strong> —
-            pas à remplir un CV. Du pipeline de données jusqu'à l'agent IA déployé sur le cloud,{" "}
-            <strong className="accent">de bout en bout.</strong>
-          </p>
+        <p className="skills-description">
+          Au-delà des algorithmes, je maîtrise les outils permettant de 
+          transformer un prototype de recherche en produit scalable, 
+          disponible en continu pour vos utilisateurs.
+        </p>
         </div>
 
         {/* STACK (GLASS CARDS) */}
