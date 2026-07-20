@@ -5,20 +5,9 @@ import {
   checkAcademyDuplicate,
   countAcademyRegistrations,
 } from "../database.js";
-import { generateAcademyWelcomeHTML, generateAcademyWelcomeText } from "../templates/academyWelcomeEmail.js";
-import nodemailer from "nodemailer";
+import { sendAcademyConfirmationEmail } from "../emailService.js";
 
 const router = Router();
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
 
 const academySchema = z.object({
   first_name:    z.string().min(2).max(50).trim(),
@@ -52,19 +41,12 @@ router.post("/register", async (req, res) => {
     });
 
     // Send welcome email (non-blocking)
-    const fullName = `${data.first_name} ${data.last_name}`;
-    try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_FROM || `"MLAcademy" <${process.env.EMAIL_USER}>`,
-        to: data.email,
-        subject: "🎓 Bienvenue chez MLAcademy — Pré-inscription confirmée",
-        html: generateAcademyWelcomeHTML({ fullName, data }),
-        text: generateAcademyWelcomeText({ fullName }),
+    sendAcademyConfirmationEmail(data)
+      .then(() => console.log(`📧 Email MLAcademy envoyé à ${data.email}`))
+      .catch((emailErr) => {
+        console.error("❌ Erreur envoi email MLAcademy:", emailErr.message);
+        import("fs").then(fs => fs.writeFileSync("email_error.log", emailErr.stack || emailErr.message));
       });
-      console.log(`📧 Email MLAcademy envoyé à ${data.email}`);
-    } catch (emailErr) {
-      console.error("❌ Erreur envoi email MLAcademy:", emailErr.message);
-    }
 
     const count = await countAcademyRegistrations();
 

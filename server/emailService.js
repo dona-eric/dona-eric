@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { generateEmailHTML, generateEmailText } from "./templates/confirmationEmail.js";
+import { generateAcademyWelcomeHTML, generateAcademyWelcomeText } from "./templates/academyWelcomeEmail.js";
 
 // Transport SMTP (Port 587 requis pour éviter le blocage de port 465 sur Render)
 const transporter = nodemailer.createTransport({
@@ -65,6 +66,25 @@ export async function sendConfirmationEmail(registration, masterclass) {
     subject: emailContent.subject,
     html: generateEmailHTML({ fullName, masterclass, registration }),
     text: generateEmailText({ fullName, masterclass }),
+  };
+
+  return sendWithRetry(mailOptions);
+}
+
+/**
+ * Envoie l'email de confirmation à un inscrit MLAcademy
+ * @param {Object} registration - Données de l'inscrit
+ */
+export async function sendAcademyConfirmationEmail(registration) {
+  const { first_name, last_name, email } = registration;
+  const fullName = `${first_name} ${last_name}`;
+
+  const mailOptions = {
+    from: process.env.EMAIL_FROM || `"MLAcademy" <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: "🎓 Bienvenue chez MLAcademy — Pré-inscription confirmée",
+    html: generateAcademyWelcomeHTML({ fullName, data: registration }),
+    text: generateAcademyWelcomeText({ fullName }),
   };
 
   return sendWithRetry(mailOptions);
