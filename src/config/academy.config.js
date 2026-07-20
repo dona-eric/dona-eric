@@ -9,7 +9,7 @@ export const ACADEMY = {
   badges: ["100% Live", "100% Projet", "100% Francophone"],
   cohort: {
     name: "Cohorte #1",
-    seats: 50,
+    seats: 100,
     duration: "90 jours",
     status: "pre-registration", // pre-registration | open | closed
   },
@@ -24,9 +24,9 @@ export const ACADEMY = {
 };
 
 export const MISSION = {
-  title: "Pourquoi MLAcademy ?",
-  problem: "Les formations apprennent à entraîner des modèles mais rarement à les déployer en production.",
-  vision: "Former une nouvelle génération de Data Scientists capables de construire des solutions IA complètes de bout en bout.",
+  title: "L'Histoire Derrière MLAcademy",
+  problem: "Pendant longtemps, j'ai vu des étudiants et des professionnels africains suivre des centaines d'heures de tutoriels sur YouTube ou Coursera. Ils maîtrisaient la théorie, connaissaient les algorithmes par cœur, mais face à un problème d'entreprise réel, tout s'effondrait. Pourquoi ? Parce qu'on leur a appris à entraîner des modèles dans des Jupyter Notebooks isolés, avec des jeux de données parfaits, mais jamais à les déployer en production.",
+  vision: "J'ai créé MLAcademy pour combler ce vide. Mon objectif est de bâtir une nouvelle élite africaine en IA. En 90 jours, je ne vais pas juste vous apprendre Python ou le Machine Learning. Je vais vous montrer comment on construit un système de bout en bout, de l'idée jusqu'au déploiement sur un serveur cloud, prêt à encaisser des milliers de requêtes. Prêt à impacter le monde réel.",
 };
 
 export const TRACKS = [
@@ -258,7 +258,7 @@ export const INSTRUCTOR = {
   stats: [
     { value: "5+", label: "Systèmes IA en prod" },
     { value: "6+", label: "Projets livrés" },
-    { value: "20+", label: "Étudiants formés" },
+    { value: "10+", label: "Étudiants formés" },
   ],
   socials: {
     linkedin: "https://linkedin.com/in/dona-erick",
@@ -270,7 +270,7 @@ export const INSTRUCTOR = {
 export const COMMUNITY = [
   { icon: "💬", name: "Discord", desc: "Entraide et discussions en temps réel", url: "#" },
   { icon: "🐙", name: "GitHub", desc: "Projets open-source et code reviews", url: "https://github.com/dona-eric" },
-  { icon: "📺", name: "YouTube", desc: "Cours, tutoriels et replays", url: "www.youtube.com/@mlacademy" },
+  { icon: "📺", name: "YouTube", desc: "Cours, tutoriels et replays", url: "https://www.youtube.com/@mlacademy" },
   { icon: "💼", name: "LinkedIn", desc: "Réseau professionnel et opportunités", url: "https://linkedin.com/in/dona-erick" },
 ];
 

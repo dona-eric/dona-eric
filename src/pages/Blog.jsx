@@ -3,7 +3,6 @@ import { MasterclassService } from "../services/masterclassService";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import "../styles/Blog.css";
 
-// ─── Config ───────────────────────────────────────────────────────────────────
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 const useFadeIn = (delay = 0) => {

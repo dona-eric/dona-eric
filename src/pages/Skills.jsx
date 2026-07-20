@@ -26,6 +26,7 @@ const useScrollFade = (delay = 0) => {
 
 function SkillPill({ name, color }) {
   const [hov, setHov] = useState(false);
+  const isAcademy = ["Scikit-Learn", "PyTorch", "RAG", "LangChain", "Docker", "Kubernetes", "MLflow", "FastAPI", "Python", "SQL"].some(kw => name.includes(kw));
   return (
     <div
       onMouseEnter={() => setHov(true)}
@@ -40,7 +41,9 @@ function SkillPill({ name, color }) {
         background: color,
         boxShadow: `0 0 6px ${color}`
       }} />
-      <span className="skills-pill-name">{name}</span>
+      <span className="skills-pill-name">
+        {name} {isAcademy && <span title="Enseigné dans MLAcademy" style={{ marginLeft: "6px", fontSize: "14px" }}>🎓</span>}
+      </span>
     </div>
   );
 }
@@ -148,8 +151,8 @@ export default function Skills() {
           </div>
 
           <h1 className="skills-title">
-          Tech Stack <br />
-          <span className="gradient-text">& Expertise Production.</span>
+          Ce que je maîtrise. <br />
+          <span className="gradient-text">En production.</span>
         </h1>
 
         <p className="skills-description">

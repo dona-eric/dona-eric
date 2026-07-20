@@ -111,6 +111,7 @@ function MasterclassTeaser() {
             <h3 className="home-teaser-title">{event.title}</h3>
             <p className="home-teaser-date">📅 {new Date(event.date).toLocaleDateString('fr-FR')} à {event.time}</p>
          </div>
+         <Link to={`/formations/${event.id}`} className="home-teaser-btn">S'inscrire</Link>
       </div>
     </div>
   );
@@ -119,22 +120,31 @@ function MasterclassTeaser() {
 function AcademyTeaser() {
   const ref = useScrollFade(0.2);
   return (
-    <div ref={ref} className="home-teaser-container" style={{ margin: "40px auto" }}>
-      <div className="glass home-teaser-card" style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05))", border: "1px solid rgba(99,102,241,0.2)" }}>
-         <div className="home-teaser-content">
-            <span className="home-teaser-badge" style={{ background: "rgba(99,102,241,0.2)", color: "#c7d2fe" }}>🚀 Lancement</span>
-            <h3 className="home-teaser-title" style={{ fontSize: "28px" }}>MLAcademy</h3>
-            <p className="home-teaser-date" style={{ color: "#cbd5e1", fontSize: "16px", marginBottom: "16px" }}>
-              Former la prochaine génération d'ingénieurs IA en Afrique. 
-              De Python à Kubernetes en 90 jours.
+    <div ref={ref} className="home-teaser-container" style={{ margin: "40px auto", maxWidth: "1000px" }}>
+      <div className="glass home-teaser-card" style={{ 
+        background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.08))", 
+        border: "1px solid rgba(99,102,241,0.3)",
+        display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", padding: "40px"
+      }}>
+         <div className="home-teaser-content" style={{ flex: "1 1 500px" }}>
+            <span className="home-teaser-badge" style={{ background: "rgba(99,102,241,0.2)", color: "#c7d2fe", display: "inline-block", marginBottom: "16px" }}>🚀 Lancement</span>
+            <h3 className="home-teaser-title" style={{ fontSize: "36px", lineHeight: "1.2", marginBottom: "16px" }}>
+              Road to Data Science<br/>Moderne en 90 Jours
+            </h3>
+            <p className="home-teaser-date" style={{ color: "#cbd5e1", fontSize: "18px", marginBottom: "24px", maxWidth: "450px" }}>
+              La première formation intensive pour passer de Python à Kubernetes. Construisez des projets concrets.
             </p>
-            <div style={{ display: "flex", gap: "16px", marginBottom: "20px" }}>
-              <span style={{ background: "rgba(255,255,255,0.05)", padding: "4px 12px", borderRadius: "20px", fontSize: "13px" }}>90 jours</span>
-              <span style={{ background: "rgba(255,255,255,0.05)", padding: "4px 12px", borderRadius: "20px", fontSize: "13px" }}>21 modules</span>
-              <span style={{ background: "rgba(255,255,255,0.05)", padding: "4px 12px", borderRadius: "20px", fontSize: "13px" }}>10 projets</span>
+            <div style={{ display: "flex", gap: "12px", marginBottom: "24px", flexWrap: "wrap" }}>
+              <span style={{ background: "rgba(255,255,255,0.05)", padding: "6px 16px", borderRadius: "20px", fontSize: "14px", fontWeight: "500" }}>90 jours</span>
+              <span style={{ background: "rgba(255,255,255,0.05)", padding: "6px 16px", borderRadius: "20px", fontSize: "14px", fontWeight: "500" }}>21 modules</span>
+              <span style={{ background: "rgba(255,255,255,0.05)", padding: "6px 16px", borderRadius: "20px", fontSize: "14px", fontWeight: "500" }}>10 projets</span>
             </div>
          </div>
-         <Link to="/academy" className="home-teaser-btn" style={{ background: "#6366f1" }}>Rejoindre la Cohorte #1</Link>
+         <div style={{ flex: "0 1 auto", textAlign: "center", minWidth: "250px" }}>
+           <div style={{ fontSize: "48px", fontWeight: "bold", color: "var(--neon-purple)", marginBottom: "8px" }}>00</div>
+           <div style={{ fontSize: "14px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "24px" }}>Jours avant fermeture</div>
+           <Link to="/academy" className="home-teaser-btn" style={{ background: "#6366f1", display: "block", fontSize: "16px", padding: "16px 24px" }}>Rejoindre MLAcademy →</Link>
+         </div>
       </div>
     </div>
   );
@@ -260,9 +270,22 @@ export default function Home() {
       </section>
 
       {/* SECTION MASTERCLASS TEASER */}
-      <section className="home-section" style={{marginBottom: "100px"}}>
+      <section className="home-section">
         <div className="home-container">
            <MasterclassTeaser />
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="home-section" style={{ padding: "100px 0", textAlign: "center" }}>
+        <div className="home-container">
+          <h2 className="home-title" style={{ fontSize: "3rem", marginBottom: "24px" }}>
+            Prêt à passer à <span className="gradient-text">l'action ?</span>
+          </h2>
+          <div style={{ display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
+            <Link to="/academy" className="btn-primary" style={{ background: "#6366f1", padding: "16px 32px", fontSize: "1.1rem" }}>🎓 Rejoindre la Formation</Link>
+            <a href="/contact" className="btn-secondary" style={{ padding: "16px 32px", fontSize: "1.1rem" }}>💼 Démarrer un projet B2B</a>
+          </div>
         </div>
       </section>
 

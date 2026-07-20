@@ -35,10 +35,10 @@ export default function Academy() {
             Pré-inscriptions ouvertes — {ACADEMY.cohort.name}
           </div>
 
-          <h1 dangerouslySetInnerHTML={{ __html: ACADEMY.tagline.replace("Intelligence Artificielle", "<span class='gradient-text'>Intelligence Artificielle</span>") }}>
+          <h1 dangerouslySetInnerHTML={{ __html: "Road to Data Science<br/><span class='gradient-text'>Moderne en 90 Jours</span>" }}>
           </h1>
 
-          <p className="academy-hero-sub">
+          <p className="academy-hero-sub" style={{ fontSize: "1.2rem", maxWidth: "600px" }}>
             {ACADEMY.subtitle}
           </p>
 
@@ -82,24 +82,24 @@ export default function Academy() {
       {/* ══════════════════ POURQUOI MLACADEMY ══════════════════ */}
       <div className="academy-divider" />
       <section className="academy-section">
-        <span className="academy-section-label">// mission.statement()</span>
+        <span className="academy-section-label">// story.begin()</span>
         <h2 className="academy-section-title">
-          {MISSION.title.replace("MLAcademy", "")} <span className="gradient-text">MLAcademy</span> ?
+          <span className="gradient-text">{MISSION.title}</span>
         </h2>
 
-        <div className="academy-why-content">
-          <p style={{ fontSize: "18px", color: "#e2e8f0" }}>
+        <div className="academy-story-content" style={{ background: "rgba(15,23,42,0.6)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "24px", padding: "40px", maxWidth: "800px", margin: "0 auto", textAlign: "left", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}>
+          <p style={{ fontSize: "18px", color: "#e2e8f0", lineHeight: "1.8", marginBottom: "24px" }}>
             {MISSION.problem}
           </p>
-          <div className="academy-why-highlight">
+          <div className="academy-why-highlight" style={{ marginBottom: "24px" }}>
             {["Modèles isolés", "Jupyter Notebooks", "Datasets parfaits"].map((t) => (
               <span key={t} className="academy-why-pill">{t}</span>
             ))}
           </div>
-          <p style={{ fontSize: "18px", color: "#e2e8f0" }}>
+          <p style={{ fontSize: "18px", color: "#e2e8f0", lineHeight: "1.8", paddingLeft: "16px", borderLeft: "4px solid #6366f1" }}>
             {MISSION.vision}
           </p>
-          <div className="academy-why-highlight">
+          <div className="academy-why-highlight" style={{ marginTop: "24px" }}>
             {["Déploiement Cloud", "Kubernetes", "Systèmes temps réel", "CI/CD"].map((t) => (
               <span key={t} className="academy-why-pill good">{t}</span>
             ))}
@@ -134,15 +134,33 @@ export default function Academy() {
           De la pré-inscription à la communauté alumni, voici les étapes qui vous attendent.
         </p>
         <div className="academy-timeline">
-          {TIMELINE_STEPS.map((step, i) => (
-            <div key={i} className={`academy-timeline-step ${step.status === "active" ? "active" : ""}`}>
-              <div className="academy-timeline-dot">{step.icon}</div>
-              <div className="academy-timeline-info">
-                <h4>{step.title}</h4>
-                <p>{step.desc}</p>
+          {TIMELINE_STEPS.map((step, i) => {
+            let currentStatus = "upcoming";
+            const cohortStatus = ACADEMY.cohort.status; // pre-registration, selection, open, active, completed
+            
+            const statusMap = {
+              "pre-registration": 0,
+              "selection": 1,
+              "open": 2,
+              "active": 3,
+              "completed": 6
+            };
+            
+            const currentStepIdx = statusMap[cohortStatus] || 0;
+            
+            if (i < currentStepIdx) currentStatus = "done";
+            else if (i === currentStepIdx) currentStatus = "active";
+            
+            return (
+              <div key={i} className={`academy-timeline-step ${currentStatus === "active" ? "active" : currentStatus === "done" ? "done" : ""}`}>
+                <div className="academy-timeline-dot">{step.icon}</div>
+                <div className="academy-timeline-info">
+                  <h4>{step.title}</h4>
+                  <p>{step.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

@@ -180,7 +180,7 @@ export default function ContactPage() {
 
           {/* METRICS */}
           <div className="contact-metrics-grid">
-            <MetricCard label="Projets Livrés" value="06+" sub="Domaines variés" delay={0.2} />
+            <MetricCard label="Systèmes IA en Prod" value="5+" sub="Focus Production" delay={0.2} />
             <MetricCard label="Temps de réponse" value="<24h" sub="Garanti" delay={0.3} />
             <MetricCard label="Expertise" value="Full" sub="Data → Deploy" delay={0.4} />
             <MetricCard label="Disponibilité" value="Remote" sub="Tous fuseaux horaires" delay={0.5} />
@@ -280,6 +280,17 @@ export default function ContactPage() {
             {/* INFO PANEL */}
             <div ref={infoRef} className="contact-info-panel">
               
+              <div className="glass contact-info-card" style={{ marginBottom: "24px", background: "linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05))", border: "1px solid rgba(99,102,241,0.2)" }}>
+                <div className="contact-info-gradient" style={{ background: "linear-gradient(45deg, transparent, rgba(99,102,241,0.1), transparent)" }} />
+                <h3 style={{ fontSize: "1.2rem", color: "#e2e8f0", marginBottom: "12px" }}>🚀 Intéressé par MLAcademy ?</h3>
+                <p style={{ color: "#94a3b8", fontSize: "0.95rem", marginBottom: "20px" }}>
+                  Ne passez pas par le formulaire. Réservez directement votre place pour la Cohorte #1.
+                </p>
+                <a href="/academy" className="contact-submit-btn" style={{ background: "#6366f1", textAlign: "center", textDecoration: "none" }}>
+                  Pré-inscription MLAcademy →
+                </a>
+              </div>
+
               <div className="glass contact-info-card">
                 <div className="contact-info-gradient" />
                 <div className="contact-info-badge">
@@ -304,6 +315,10 @@ export default function ContactPage() {
                     </div>
                   ))}
                 </div>
+                
+                <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer" className="contact-submit-btn" style={{ background: "#22c55e", textAlign: "center", textDecoration: "none", marginTop: "24px" }}>
+                  💬 Discuter sur WhatsApp
+                </a>
               </div>
 
               <div className="contact-mission-card">

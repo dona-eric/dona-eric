@@ -47,10 +47,25 @@ const Navigation = () => {
                 const displayName = nameMap[item.name.toLowerCase()] || item.name;
 
                 return (
-                  <Link key={item.path} to={item.path} className="nav-link">
+                  <Link key={item.path} to={item.path} className="nav-link" style={{ position: "relative" }}>
                     <span className={`nav-link-text ${active ? "active" : "inactive"}`}>
                       {displayName}
                     </span>
+                    {item.name === "academy" && (
+                      <span style={{
+                        position: "absolute",
+                        top: "-8px",
+                        right: "-12px",
+                        background: "#ec4899",
+                        color: "white",
+                        fontSize: "9px",
+                        padding: "2px 4px",
+                        borderRadius: "4px",
+                        fontWeight: "bold",
+                        boxShadow: "0 0 10px rgba(236,72,153,0.5)",
+                        animation: "pulse 2s infinite"
+                      }}>NEW</span>
+                    )}
                     <div className={`nav-link-bar ${active ? "active" : "inactive"}`} />
                   </Link>
                 );

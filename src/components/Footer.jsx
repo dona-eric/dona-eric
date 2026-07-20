@@ -48,6 +48,7 @@ const SOCIALS = [
 const QUICK_LINKS = [
   { label: "About",    href: "/about"    },
   { label: "Projects", href: "/projects" },
+  { label: "MLAcademy", href: "/academy"  },
   { label: "MasterClass", href: "/formations" },
   { label: "Blog",     href: "/blog"     },
   { label: "Contact",  href: "/contact"  },
@@ -122,7 +123,7 @@ const Footer = () => {
                 Dona Éric KOULODJI
               </p>
               <p className="footer-role">
-                <span className="footer-role-highlight">role</span> ::: Data Scientist → ML Engineer
+                <span className="footer-role-highlight">role</span> ::: ML Engineer & Fondateur MLAcademy
               </p>
 
               {/* Location */}

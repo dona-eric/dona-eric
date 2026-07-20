@@ -1,7 +1,7 @@
 // Portfolio Constants & Configuration
 export const PORTFOLIO = {
   name: "Dona Eric",
-  title: "Data Scientist & ML Engineer",
+  title: "ML Engineer & Fondateur MLAcademy",
   subtitle: "Transforming data into intelligent solutions",
   description: "Specialized in Machine Learning, Data Science, and AI. Building impactful, data-driven solutions for organizations and innovators.",
   location: "Abomey-Calavi, Benin",

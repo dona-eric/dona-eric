@@ -59,6 +59,7 @@ export default function Hero() {
           </div>
 
           <h1 className="hero-title" ref={titleRef} style={{ fontSize: "3.5rem", lineHeight: "1.1" }}>
+            <span style={{ display: "block", fontSize: "1.5rem", color: "var(--neon-purple)", marginBottom: "0.5rem" }}>Dona Éric KOULODJI</span>
             Je construis l'IA de demain.<br />
             <span className="gradient-text">Et je forme ceux qui la déploieront.</span>
           </h1>
@@ -86,7 +87,7 @@ export default function Hero() {
 
           <div className="hero-stats-grid" ref={statsRef} style={{ marginTop: "3rem" }}>
             <StatCard value="5+" label="Systèmes IA en Prod" delay={1.0} />
-            <StatCard value="20+" label="Élèves Formés" delay={1.1} />
+            <StatCard value="10+" label="Étudiants Formés" delay={1.1} />
             <StatCard value="100%" label="Focus Production" delay={1.2} />
           </div>
         </div>
