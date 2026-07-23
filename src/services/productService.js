@@ -4,10 +4,11 @@ export const ProductService = {
   getAll: async () => {
     try {
       const data = await request("products");
-      return data.products || [];
+      return Array.isArray(data?.products) ? data.products : [];
     } catch (error) {
       console.error("[ProductService] Error fetching products:", error);
       return [];
     }
   }
 };
+

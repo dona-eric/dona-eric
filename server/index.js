@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./env.js";
 import express from "express";
 import cors from "cors";
 import dns from "dns";
@@ -15,6 +15,7 @@ import chatRoutes from "./routes/chat.js";
 import productsRoutes from "./routes/products.js";
 import { startReminderScheduler, sendScheduledReminders } from "./reminderScheduler.js";
 import { verifyTransport, sendTestEmail } from "./emailService.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;

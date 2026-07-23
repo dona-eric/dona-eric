@@ -1,11 +1,10 @@
+import "../env.js";
 import { Router } from "express";
 import Groq from "groq-sdk";
 
 const router = Router();
 
-const client = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+const client = new Groq({ apiKey: process.env.GROQ_API_KEY});
 
 const SYSTEM_PROMPT = `You are an AI assistant integrated into the personal portfolio of Dona Eric KOULODJI. 
 Your goal is to ONLY provide accurate, verified information about Eric, his career, and his professional profile. You must NEVER invent information.

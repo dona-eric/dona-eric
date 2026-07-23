@@ -15,10 +15,19 @@ const SOURCE_META = {
   medium:   { label: "Medium",   color: "#6366f1", icon: "M" },
 };
 
+const TYPE_LABELS = {
+  downloadable: { label: "Téléchargeable", color: "#3b82f6" },
+  course: { label: "Formation", color: "#a855f7" },
+  service: { label: "Service", color: "#ec4899" },
+  license: { label: "Licence", color: "#10b981" },
+  bundle: { label: "Pack / Bundle", color: "#f59e0b" },
+  coaching: { label: "Coaching", color: "#06b6d4" },
+};
+
 const FILTERS = [
   { key: "all",      label: "Tous" },
+  { key: "products", label: "🛍️ Produits & Livres" },
   { key: "medium",   label: "Medium" },
-  { key: "books",    label: "📚 Livres" },
 ];
 
 // ─── Skeleton card ────────────────────────────────────────────────────────────
@@ -199,23 +208,96 @@ function StorytellingCard({ mc, index, onClick }) {
 // ─── Product Card ──────────────────────────────────────────────────────────────
 function ProductCard({ product, index }) {
   const ref = useScrollFade(index * 0.1);
-  const { name, description, pricing, pictures } = product;
-  
+  const [hov, setHov] = useState(false);
+
+  const { name, description, pricing, pictures, type, category, slug, is_free } = product;
+  const imageSrc = pictures?.cover || pictures?.thumbnail;
+  const typeMeta = TYPE_LABELS[type] || { label: type || "Produit", color: "#6366f1" };
+  const priceDisplay = is_free || pricing?.type === "free" ? "Gratuit" : (pricing?.current_price?.formatted || "Voir offre");
+  const categoryLabel = category?.label;
+  const buyUrl = `https://chariow.com/p/${slug}`;
+
+  // Clean description HTML tags
+  const cleanDesc = description ? description.replace(/(<([^>]+)>)/gi, "").trim() : "";
+
   return (
-    <div ref={ref} className="article-card" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", padding: "20px", borderRadius: "16px", display: "flex", flexDirection: "column" }}>
-      {pictures?.cover && (
-        <img src={pictures.cover} alt={name} style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px", marginBottom: "16px" }} />
+    <div
+      ref={ref}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      className="product-card"
+      style={{
+        background: hov ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+        border: `1px solid ${hov ? typeMeta.color + "60" : "rgba(255,255,255,0.07)"}`,
+        transform: hov ? "translateY(-4px)" : "none",
+        boxShadow: hov ? `0 20px 48px ${typeMeta.color}15` : "none"
+      }}
+    >
+      <div className="product-card-top-bar" style={{
+        background: `linear-gradient(90deg, transparent, ${typeMeta.color}, transparent)`,
+        opacity: hov ? 1 : 0.3
+      }} />
+
+      {imageSrc ? (
+        <div className="product-image-container">
+          <img src={imageSrc} alt={name} className="product-image" />
+          <div className="product-image-overlay" />
+        </div>
+      ) : (
+        <div className="product-image-placeholder" style={{
+          background: `radial-gradient(circle at center, ${typeMeta.color}20 0%, rgba(15,23,42,0.8) 100%)`
+        }}>
+          <span className="product-placeholder-icon">📦</span>
+        </div>
       )}
-      <h3 style={{ fontSize: "18px", color: "#f8fafc", marginBottom: "8px", fontWeight: "600" }}>{name}</h3>
-      <p style={{ color: "#94a3b8", fontSize: "14px", flex: 1, marginBottom: "16px", lineHeight: "1.6" }}>{description?.replace(/(<([^>]+)>)/gi, "").substring(0, 120)}...</p>
-      
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontSize: "18px", fontWeight: "bold", color: "#10b981" }}>
-          {pricing?.current_price?.formatted || "Gratuit"}
-        </span>
-        <a href={`https://chariow.dev/p/${product.slug}`} target="_blank" rel="noopener noreferrer" style={{ background: "#6366f1", color: "white", padding: "8px 16px", borderRadius: "8px", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.background = "#4f46e5"} onMouseLeave={(e) => e.target.style.background = "#6366f1"}>
-          Acheter
-        </a>
+
+      <div className="product-card-body">
+        <div className="product-tags-row">
+          <span className="product-type-badge" style={{
+            color: typeMeta.color,
+            background: typeMeta.color + "15",
+            border: `1px solid ${typeMeta.color}35`
+          }}>
+            {typeMeta.label}
+          </span>
+          {categoryLabel && (
+            <span className="product-category-badge">
+              {categoryLabel}
+            </span>
+          )}
+        </div>
+
+        <h3 className="product-title" style={{ color: hov ? "#ffffff" : "#f1f5f9" }}>
+          {name}
+        </h3>
+
+        {cleanDesc && (
+          <p className="product-description">
+            {cleanDesc.length > 130 ? cleanDesc.substring(0, 130) + "..." : cleanDesc}
+          </p>
+        )}
+
+        <div className="product-card-footer">
+          <div className="product-price-tag">
+            <span className="product-price-label">Prix</span>
+            <span className="product-price-value" style={{ color: is_free || pricing?.type === "free" ? "#10b981" : "#00d4ff" }}>
+              {priceDisplay}
+            </span>
+          </div>
+
+          <a
+            href={buyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="product-buy-btn"
+            style={{
+              background: hov ? typeMeta.color : typeMeta.color + "dd",
+              boxShadow: hov ? `0 4px 20px ${typeMeta.color}50` : "none"
+            }}
+          >
+            Obtenir ↗
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -281,17 +363,20 @@ export default function Blog() {
   const totalLikes = posts.reduce((a, p) => a + (p.raw_metrics?.likes || 0), 0);
 
   const STATS = [
-    { value: `${posts.length}`,   label: "Articles fetched",  color: "#00d4ff" },
+    { value: `${posts.length}`,   label: "Articles",          color: "#00d4ff" },
+    { value: `${products.length}`, label: "Produits & Livres", color: "#10b981" },
     { value: totalViews >= 1000 ? (totalViews/1000).toFixed(1)+"k" : totalViews || "—", label: "Vues totales",    color: "#a78bfa" },
-    { value: totalLikes >= 1000 ? (totalLikes/1000).toFixed(1)+"k" : totalLikes || "—", label: "Likes / Claps",  color: "#22c55e" },
-    { value: "Auto",              label: "Mise à jour",       color: "#f59e0b" },
+    { value: totalLikes >= 1000 ? (totalLikes/1000).toFixed(1)+"k" : totalLikes || "—", label: "Likes / Claps",  color: "#f59e0b" },
   ];
+
+  const showProductsSection = filter === "all" || filter === "products" || filter === "books";
+  const showArticlesSection = filter === "all" || filter === "medium";
 
   return (
     <>
       <Helmet>
-        <title>Blog & Ressources | Dona Eric</title>
-        <meta name="description" content="Articles, masterclasses et ressources sur l'intelligence artificielle, le ML et le déploiement cloud." />
+        <title>Blog & Produits | Dona Eric</title>
+        <meta name="description" content="Articles, livres, produits et masterclasses sur l'intelligence artificielle, le ML et le déploiement cloud." />
       </Helmet>
       <div className="blog-main">
         {/* Grid + blobs */}
@@ -305,46 +390,45 @@ export default function Blog() {
           <div ref={heroRef} className="blog-hero">
             <div className="blog-badge" style={{ background: "rgba(99,102,241,0.1)", color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.2)" }}>
               <span className="blog-badge-dot" style={{ background: "#818cf8", boxShadow: "0 0 8px #818cf8" }} />
-              MLAcademy Hub
+              MLAcademy & Chariow Store
             </div>
             <h1 className="blog-title">
-              Écrits, Idées & <span className="gradient-text">Masterclasses.</span>
+              Écrits, Livres & <span className="gradient-text">Produits.</span>
             </h1>
             <p className="blog-description">
-              Des ressources techniques pointues (Medium) et les rediffusions 
-              de nos sessions Live (Masterclasses MLAcademy) pour accélérer votre 
-              montée en compétence.
+              Découvrez nos articles techniques pointues, nos formations et l'ensemble 
+              de nos livres & produits numériques Chariow pour accélérer votre 
+              montée en compétence en Ingénierie IA.
             </p>
           </div>
 
-            {/* Stats */}
-            <div className="blog-stats-grid">
-              {STATS.map((s, i) => (
-                <div key={i} className="blog-stat-card">
-                  <div className="blog-stat-gradient" style={{
-                    background: `linear-gradient(90deg, transparent, ${s.color}, transparent)`
-                  }} />
-                  <div className="blog-stat-value" style={{ color: s.color }}>
-                    {loading ? "…" : s.value}
-                  </div>
-                  <div className="blog-stat-label">{s.label}</div>
+          {/* Stats */}
+          <div className="blog-stats-grid">
+            {STATS.map((s, i) => (
+              <div key={i} className="blog-stat-card">
+                <div className="blog-stat-gradient" style={{
+                  background: `linear-gradient(90deg, transparent, ${s.color}, transparent)`
+                }} />
+                <div className="blog-stat-value" style={{ color: s.color }}>
+                  {loading && loadingProducts ? "…" : s.value}
                 </div>
+                <div className="blog-stat-label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Filters + cache info */}
+          <div className="blog-filters-container">
+            <div className="blog-filter-row">
+              {FILTERS.map(f => (
+                <FilterBtn key={f.key} label={f.label} active={filter === f.key} onClick={() => setFilter(f.key)} />
               ))}
             </div>
-
-            {/* Filters + cache info */}
-            <div className="blog-filters-container">
-              <div className="blog-filter-row">
-                {FILTERS.map(f => (
-                  <FilterBtn key={f.key} label={f.label} active={filter === f.key} onClick={() => setFilter(f.key)} />
-                ))}
-              </div>
-              {cachedAt && (
-                <span className="blog-sync-info">
-                  sync: {new Date(cachedAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
-                </span>
-              )}
-            </div>
+            {cachedAt && (
+              <span className="blog-sync-info">
+                sync: {new Date(cachedAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+              </span>
+            )}
           </div>
 
           {/* ══ ERROR ══ */}
@@ -354,21 +438,40 @@ export default function Blog() {
             </div>
           )}
 
-          {/* ══ LOADING SKELETONS ══ */}
-          {loading && !error && (
-            <div className="blog-skeleton-grid">
-              {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
+          {/* ══ PRODUCTS SECTION ══ */}
+          {showProductsSection && (
+            <div className="blog-section">
+              <div className="blog-section-subtitle">
+                <span>// </span>products.chariow_store[]
+              </div>
+              <h2 className="blog-section-title">
+                {filter === "all" ? "Produits & Formations à la une" : "Tous mes Produits & Livres"}
+              </h2>
+
+              {loadingProducts ? (
+                <div className="blog-skeleton-grid">
+                  {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
+                </div>
+              ) : products.length > 0 ? (
+                <div className="blog-featured-grid">
+                  {products.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
+                </div>
+              ) : (
+                <div className="blog-empty-state">
+                  // Aucun produit publié trouvé pour le moment.
+                </div>
+              )}
             </div>
           )}
 
-          {/* ══ FEATURED ══ */}
-          {filter !== "books" && !loading && !error && featured.length > 0 && (
+          {/* ══ ARTICLES FEATURED ══ */}
+          {showArticlesSection && !loading && !error && featured.length > 0 && (
             <div className="blog-section">
               <div className="blog-section-subtitle">
                 <span>// </span>posts.top_scored[]
               </div>
               <h2 className="blog-section-title">
-                Les plus populaires
+                Les Articles les plus populaires
               </h2>
               <div className="blog-featured-grid">
                 {featured.map((p, i) => <ArticleCard key={p.id} post={p} delay={i * 0.1} featured />)}
@@ -377,7 +480,7 @@ export default function Blog() {
           )}
 
           {/* ══ COMMUNITY STORYTELLING ══ */}
-          {filter !== "books" && !loading && !error && completedEvents.length > 0 && (
+          {showArticlesSection && !loading && !error && completedEvents.length > 0 && (
             <div className="blog-section">
               <div className="blog-section-subtitle">
                 <span>// </span>community.impact_storytelling()
@@ -393,8 +496,8 @@ export default function Blog() {
             </div>
           )}
 
-          {/* ══ OTHERS ══ */}
-          {filter !== "books" && !loading && !error && others.length > 0 && (
+          {/* ══ OTHERS ARTICLES ══ */}
+          {showArticlesSection && !loading && !error && others.length > 0 && (
             <div className="blog-section-alt">
               <div className="blog-section-subtitle">
                 <span>// </span>posts.recent[]
@@ -409,36 +512,12 @@ export default function Blog() {
           )}
 
           {/* ══ EMPTY STATE ══ */}
-          {filter !== "books" && !loading && !error && posts.length === 0 && (
+          {showArticlesSection && !loading && !error && posts.length === 0 && (
             <div className="blog-empty-state">
               // no posts matching filter — try "Tous"
             </div>
           )}
-
-          {/* ══ BOOKS / PRODUCTS ══ */}
-          {filter === "books" && (
-            <div className="blog-section">
-              <div className="blog-section-subtitle">
-                <span>// </span>products.chariow[]
-              </div>
-              <h2 className="blog-section-title">
-                Mes Livres & Ressources
-              </h2>
-              {loadingProducts ? (
-                <div className="blog-skeleton-grid">
-                  {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
-                </div>
-              ) : products.length > 0 ? (
-                <div className="blog-featured-grid">
-                  {products.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
-                </div>
-              ) : (
-                <div className="blog-empty-state">
-                  // Aucun livre trouvé.
-                </div>
-              )}
-            </div>
-          )}
+        </div>
 
           {/* ══ CTA ══ */}
           {/* <div ref={ctaRef} className="glass blog-cta">

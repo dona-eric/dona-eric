@@ -1,3 +1,4 @@
+import "./env.js";
 import { createClient } from "@libsql/client";
 
 export const db = createClient({
