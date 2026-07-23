@@ -12,6 +12,7 @@ import masterclassesRoutes from "./routes/masterclasses.js";
 import postsRoutes from "./routes/posts.js";
 import academyRoutes from "./routes/academy.js";
 import chatRoutes from "./routes/chat.js";
+import productsRoutes from "./routes/products.js";
 import { startReminderScheduler, sendScheduledReminders } from "./reminderScheduler.js";
 import { verifyTransport, sendTestEmail } from "./emailService.js";
 
@@ -50,6 +51,7 @@ app.use("/api/masterclasses", masterclassesRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/academy", academyRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/products", productsRoutes);
 app.get("/api/health", (_, res) => res.json({ status: "ok" }));
 
 // ── Route de test email (DEBUG)

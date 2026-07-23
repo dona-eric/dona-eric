@@ -1,5 +1,6 @@
 import { request } from "../api/apiClient";
 import { MasterclassService } from "../services/masterclassService";
+import { ProductService } from "../services/productService";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/Blog.css";
@@ -17,6 +18,7 @@ const SOURCE_META = {
 const FILTERS = [
   { key: "all",      label: "Tous" },
   { key: "medium",   label: "Medium" },
+  { key: "books",    label: "📚 Livres" },
 ];
 
 // ─── Skeleton card ────────────────────────────────────────────────────────────
@@ -194,6 +196,31 @@ function StorytellingCard({ mc, index, onClick }) {
   );
 }
 
+// ─── Product Card ──────────────────────────────────────────────────────────────
+function ProductCard({ product, index }) {
+  const ref = useScrollFade(index * 0.1);
+  const { name, description, pricing, pictures } = product;
+  
+  return (
+    <div ref={ref} className="article-card" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", padding: "20px", borderRadius: "16px", display: "flex", flexDirection: "column" }}>
+      {pictures?.cover && (
+        <img src={pictures.cover} alt={name} style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px", marginBottom: "16px" }} />
+      )}
+      <h3 style={{ fontSize: "18px", color: "#f8fafc", marginBottom: "8px", fontWeight: "600" }}>{name}</h3>
+      <p style={{ color: "#94a3b8", fontSize: "14px", flex: 1, marginBottom: "16px", lineHeight: "1.6" }}>{description?.replace(/(<([^>]+)>)/gi, "").substring(0, 120)}...</p>
+      
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontSize: "18px", fontWeight: "bold", color: "#10b981" }}>
+          {pricing?.current_price?.formatted || "Gratuit"}
+        </span>
+        <a href={`https://chariow.dev/p/${product.slug}`} target="_blank" rel="noopener noreferrer" style={{ background: "#6366f1", color: "white", padding: "8px 16px", borderRadius: "8px", textDecoration: "none", fontWeight: "600", transition: "all 0.2s" }} onMouseEnter={(e) => e.target.style.background = "#4f46e5"} onMouseLeave={(e) => e.target.style.background = "#6366f1"}>
+          Acheter
+        </a>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Blog() {
   const heroRef = useFadeIn(0.1);
@@ -206,6 +233,8 @@ export default function Blog() {
   const [cachedAt, setCachedAt] = useState(null);
   const [events,   setEvents]   = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
 
   const fetchPosts = useCallback(async (source = "all") => {
     setLoading(true);
@@ -230,6 +259,16 @@ export default function Blog() {
       setEvents(data || []);
     };
     fetchEvents();
+  }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoadingProducts(true);
+      const data = await ProductService.getAll();
+      setProducts(data);
+      setLoadingProducts(false);
+    };
+    fetchProducts();
   }, []);
 
   // Split featured (top 2 by score) vs rest
@@ -323,7 +362,7 @@ export default function Blog() {
           )}
 
           {/* ══ FEATURED ══ */}
-          {!loading && !error && featured.length > 0 && (
+          {filter !== "books" && !loading && !error && featured.length > 0 && (
             <div className="blog-section">
               <div className="blog-section-subtitle">
                 <span>// </span>posts.top_scored[]
@@ -338,7 +377,7 @@ export default function Blog() {
           )}
 
           {/* ══ COMMUNITY STORYTELLING ══ */}
-          {!loading && !error && completedEvents.length > 0 && (
+          {filter !== "books" && !loading && !error && completedEvents.length > 0 && (
             <div className="blog-section">
               <div className="blog-section-subtitle">
                 <span>// </span>community.impact_storytelling()
@@ -355,7 +394,7 @@ export default function Blog() {
           )}
 
           {/* ══ OTHERS ══ */}
-          {!loading && !error && others.length > 0 && (
+          {filter !== "books" && !loading && !error && others.length > 0 && (
             <div className="blog-section-alt">
               <div className="blog-section-subtitle">
                 <span>// </span>posts.recent[]
@@ -370,14 +409,39 @@ export default function Blog() {
           )}
 
           {/* ══ EMPTY STATE ══ */}
-          {!loading && !error && posts.length === 0 && (
+          {filter !== "books" && !loading && !error && posts.length === 0 && (
             <div className="blog-empty-state">
               // no posts matching filter — try "Tous"
             </div>
           )}
 
+          {/* ══ BOOKS / PRODUCTS ══ */}
+          {filter === "books" && (
+            <div className="blog-section">
+              <div className="blog-section-subtitle">
+                <span>// </span>products.chariow[]
+              </div>
+              <h2 className="blog-section-title">
+                Mes Livres & Ressources
+              </h2>
+              {loadingProducts ? (
+                <div className="blog-skeleton-grid">
+                  {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
+                </div>
+              ) : products.length > 0 ? (
+                <div className="blog-featured-grid">
+                  {products.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
+                </div>
+              ) : (
+                <div className="blog-empty-state">
+                  // Aucun livre trouvé.
+                </div>
+              )}
+            </div>
+          )}
+
           {/* ══ CTA ══ */}
-          <div ref={ctaRef} className="glass blog-cta">
+          {/* <div ref={ctaRef} className="glass blog-cta">
             <div className="blog-cta-gradient" style={{ background: "linear-gradient(45deg, transparent, rgba(99,102,241,0.1), transparent)" }} />
             <h2 className="blog-cta-title" style={{ fontSize: "2rem", marginBottom: "1rem" }}>
               Rejoignez le programme complet
@@ -389,7 +453,7 @@ export default function Blog() {
             <a href="/academy" className="btn btn-primary" style={{ background: "#6366f1" }}>
               Découvrir MLAcademy →
             </a>
-          </div>
+          </div> */}
         </div>
 
       {/* ══ STORYTELLING DETAIL MODAL ══ */}
