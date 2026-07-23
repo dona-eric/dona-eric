@@ -215,7 +215,7 @@ function ProductCard({ product, index }) {
   const typeMeta = TYPE_LABELS[type] || { label: type || "Produit", color: "#6366f1" };
   const priceDisplay = is_free || pricing?.type === "free" ? "Gratuit" : (pricing?.current_price?.formatted || "Voir offre");
   const categoryLabel = category?.label;
-  const buyUrl = `https://chariow.com/p/${slug}`;
+  const buyUrl = product.buy_url || product.url || `https://cykrhzat.mychariow.shop/${slug}`;
 
   // Clean description HTML tags
   const cleanDesc = description ? description.replace(/(<([^>]+)>)/gi, "").trim() : "";

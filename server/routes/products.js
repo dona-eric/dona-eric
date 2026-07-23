@@ -51,7 +51,28 @@ router.get("/", async (req, res) => {
       }
     }
 
-    return res.json({ products: allProducts });
+    // Fetch store URL to build accurate product links (e.g., https://cykrhzat.mychariow.shop/data-science)
+    let storeBaseUrl = "https://cykrhzat.mychariow.shop";
+    try {
+      const storeRes = await fetch(`${URL_BASE_COSMO}/store`, {
+        headers: { "Authorization": `Bearer ${COSMO_API_KEY}` }
+      });
+      if (storeRes.ok) {
+        const storeData = await storeRes.json();
+        if (storeData.data?.url) {
+          storeBaseUrl = storeData.data.url;
+        }
+      }
+    } catch (e) {
+      console.warn("[Products Route] Could not fetch store URL, using fallback:", e.message);
+    }
+
+    const formattedProducts = allProducts.map(product => ({
+      ...product,
+      buy_url: product.url || `${storeBaseUrl.replace(/\/$/, "")}/${product.slug}`
+    }));
+
+    return res.json({ products: formattedProducts });
   } catch (error) {
     console.error("[Products Route Error]", error);
     return res.status(500).json({ error: error.message || "Erreur interne du serveur lors de la récupération des produits." });
@@ -59,5 +80,3 @@ router.get("/", async (req, res) => {
 });
 
 export default router;
-
-
