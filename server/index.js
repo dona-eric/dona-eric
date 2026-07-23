@@ -11,6 +11,7 @@ import registrationRoutes from "./routes/registrations.js";
 import masterclassesRoutes from "./routes/masterclasses.js";
 import postsRoutes from "./routes/posts.js";
 import academyRoutes from "./routes/academy.js";
+import chatRoutes from "./routes/chat.js";
 import { startReminderScheduler, sendScheduledReminders } from "./reminderScheduler.js";
 import { verifyTransport, sendTestEmail } from "./emailService.js";
 
@@ -37,10 +38,18 @@ const limiter = rateLimit({
 });
 app.use("/api/register", limiter);
 
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: "Trop de messages. Réessayez dans quelques minutes." },
+});
+app.use("/api/chat", chatLimiter);
+
 app.use("/api", registrationRoutes);
 app.use("/api/masterclasses", masterclassesRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/academy", academyRoutes);
+app.use("/api/chat", chatRoutes);
 app.get("/api/health", (_, res) => res.json({ status: "ok" }));
 
 // ── Route de test email (DEBUG)

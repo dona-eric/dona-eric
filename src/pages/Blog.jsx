@@ -1,40 +1,12 @@
 import { request } from "../api/apiClient";
 import { MasterclassService } from "../services/masterclassService";
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import "../styles/Blog.css";
 
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
-const useFadeIn = (delay = 0) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(24px)";
-    el.style.transition = `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`;
-    const t = setTimeout(() => { el.style.opacity = "1"; el.style.transform = "translateY(0)"; }, 60);
-    return () => clearTimeout(t);
-  }, [delay]);
-  return ref;
-};
-
-const useScrollFade = (delay = 0) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(28px)";
-    el.style.transition = `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; obs.disconnect(); }
-    }, { threshold: 0.1 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [delay]);
-  return ref;
-};
+import { useFadeIn, useScrollFade } from "../hooks/useAnimations";
 
 // ─── Source config ────────────────────────────────────────────────────────────
 // ─── Source config ────────────────────────────────────────────────────────────
@@ -278,6 +250,10 @@ export default function Blog() {
 
   return (
     <>
+      <Helmet>
+        <title>Blog & Ressources | Dona Eric</title>
+        <meta name="description" content="Articles, masterclasses et ressources sur l'intelligence artificielle, le ML et le déploiement cloud." />
+      </Helmet>
       <div className="blog-main">
         {/* Grid + blobs */}
         <div className="blog-grid-bg" />

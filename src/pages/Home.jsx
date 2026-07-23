@@ -4,26 +4,7 @@ import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import "../styles/Home.css";
 
-const useScrollFade = (delay = 0) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(28px)";
-    el.style.transition = `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        el.style.opacity = "1";
-        el.style.transform = "translateY(0)";
-        obs.disconnect();
-      }
-    }, { threshold: 0.12 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [delay]);
-  return ref;
-};
+import { useScrollFade } from "../hooks/useAnimations";
 
 // --- Composants ---
 function StatCard({ value, label, delay }) {
@@ -180,22 +161,22 @@ export default function Home() {
              <span className="home-section-subtitle">// Ce que je livre aux entreprises</span>
              <h2 className="home-section-title">Des Systèmes IA <br/><span className="gradient-text">prêts pour la production</span></h2>
            </div>
-           <div className="home-expertise-grid">
-             <ExpertiseCard 
-               delay={0.1} color="#a855f7" icon="🤖"
-               title="LLM & Agents Autonomes"
-               desc="Je conçois des agents intelligents (RAG, multi-agents) capables d'automatiser des flux de travail complexes, d'interagir avec vos bases de données et de réduire le temps de traitement manuel."
-             />
-             <ExpertiseCard 
-               delay={0.2} color="#00d4ff" icon="⚙️"
-               title="MLOps & Déploiement"
-               desc="Un modèle dans un notebook ne sert à rien. J'architecture et déploie des pipelines robustes (Docker, CI/CD, MLflow) scalables et monitorés pour le cloud."
-             />
-             <ExpertiseCard 
-               delay={0.3} color="#ec4899" icon="📊"
-               title="Data Science Prédictive"
-               desc="Du nettoyage des données à l'explicabilité du modèle (SHAP), je construis des moteurs de recommandation et de prévision qui transforment vos données en décisions stratégiques."
-             />
+           <div className="home-bento-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", gridAutoRows: "minmax(250px, auto)" }}>
+             <div className="glass bento-card" style={{ padding: "40px", borderRadius: "24px", background: "linear-gradient(135deg, rgba(168,85,247,0.1), transparent)", border: "1px solid rgba(168,85,247,0.3)", gridColumn: "span 2 / auto" }}>
+               <div style={{ color: "#a855f7", background: "rgba(168,85,247,0.15)", width: "56px", height: "56px", borderRadius: "16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "28px", marginBottom: "24px" }}>🤖</div>
+               <h3 style={{ fontSize: "24px", color: "#ffffff", marginBottom: "16px", fontFamily: "'Space Grotesk', sans-serif" }}>LLM & Agents Autonomes</h3>
+               <p style={{ color: "#94a3b8", fontSize: "16px", lineHeight: "1.7", maxWidth: "600px" }}>Je conçois des agents intelligents (RAG, multi-agents) capables d'automatiser des flux de travail complexes, d'interagir avec vos bases de données et de réduire le temps de traitement manuel.</p>
+             </div>
+             <div className="glass bento-card" style={{ padding: "40px", borderRadius: "24px", background: "linear-gradient(135deg, rgba(0,212,255,0.1), transparent)", border: "1px solid rgba(0,212,255,0.3)" }}>
+               <div style={{ color: "#00d4ff", background: "rgba(0,212,255,0.15)", width: "56px", height: "56px", borderRadius: "16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "28px", marginBottom: "24px" }}>⚙️</div>
+               <h3 style={{ fontSize: "24px", color: "#ffffff", marginBottom: "16px", fontFamily: "'Space Grotesk', sans-serif" }}>MLOps & Déploiement</h3>
+               <p style={{ color: "#94a3b8", fontSize: "16px", lineHeight: "1.7" }}>Un modèle dans un notebook ne sert à rien. J'architecture et déploie des pipelines robustes (Docker, CI/CD, MLflow) scalables et monitorés pour le cloud.</p>
+             </div>
+             <div className="glass bento-card" style={{ padding: "40px", borderRadius: "24px", background: "linear-gradient(135deg, rgba(236,72,153,0.1), transparent)", border: "1px solid rgba(236,72,153,0.3)" }}>
+               <div style={{ color: "#ec4899", background: "rgba(236,72,153,0.15)", width: "56px", height: "56px", borderRadius: "16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "28px", marginBottom: "24px" }}>📊</div>
+               <h3 style={{ fontSize: "24px", color: "#ffffff", marginBottom: "16px", fontFamily: "'Space Grotesk', sans-serif" }}>Data Science Prédictive</h3>
+               <p style={{ color: "#94a3b8", fontSize: "16px", lineHeight: "1.7" }}>Du nettoyage des données à l'explicabilité (SHAP), je construis des moteurs de recommandation et de prévision qui transforment vos données en décisions stratégiques.</p>
+             </div>
            </div>
         </div>
       </section>
@@ -222,7 +203,7 @@ export default function Home() {
             <div className="home-stats-grid" style={{ marginBottom: "40px" }}>
               {stats.map((s, i) => <StatCard key={i} {...s} delay={0.2 + i * 0.1} />)}
             </div>
-            <div className="home-cta-container">
+            <div className="home-cta-container" style={{ justifyContent: "flex-start" }}>
               <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer" className="home-cta-primary">
                 Discuter de votre projet →
               </a>
@@ -230,6 +211,37 @@ export default function Home() {
                 ✉ M'envoyer un email
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION TÉMOIGNAGES / PREUVE SOCIALE */}
+      <section className="home-section" style={{ background: "rgba(15,23,42,0.5)", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="home-container">
+          <div className="home-section-header" style={{ marginBottom: "60px" }}>
+            <span className="home-section-subtitle">// Preuve Sociale</span>
+            <h2 className="home-section-title">Ils ont <span className="gradient-text">transformé leur métier</span></h2>
+          </div>
+          
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
+            {[1, 2, 3].map((item) => (
+              <div key={item} className="glass" style={{ padding: "32px", borderRadius: "16px", textAlign: "left", position: "relative" }}>
+                <div style={{ position: "absolute", top: "20px", right: "20px", color: "rgba(255,255,255,0.1)", fontSize: "40px", fontFamily: "serif" }}>"</div>
+                <div style={{ display: "flex", gap: "2px", color: "#f59e0b", marginBottom: "16px" }}>
+                  ★★★★★
+                </div>
+                <p style={{ color: "#e2e8f0", fontSize: "15px", lineHeight: "1.7", marginBottom: "24px", fontStyle: "italic" }}>
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla."
+                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                  <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "rgba(255,255,255,0.1)" }} />
+                  <div>
+                    <h4 style={{ color: "#ffffff", fontSize: "15px", fontWeight: "600", marginBottom: "4px" }}>Nom du Client</h4>
+                    <span style={{ color: "#94a3b8", fontSize: "13px" }}>CEO @ Entreprise B2B</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

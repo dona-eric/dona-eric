@@ -23,7 +23,6 @@ export const NAVIGATION = [
   { name: "skills", path: "/skills" },
   { name: "projects", path: "/projects" },
   { name: "academy", path: "/academy" },
-  { name: "masterclass", path: "/formations" },
   { name: "blog", path: "/blog" },
   { name: "contact", path: "/contact" },
 ];

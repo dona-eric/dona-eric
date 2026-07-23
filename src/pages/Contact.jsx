@@ -1,22 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Helmet } from "react-helmet-async";
 import "../styles/Contact.css";
 
-const useFadeIn = (delay = 0) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(24px)";
-    el.style.transition = `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`;
-    const t = setTimeout(() => {
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-    }, 50);
-    return () => clearTimeout(t);
-  }, [delay]);
-  return ref;
-};
+import { useFadeIn } from "../hooks/useAnimations";
 
 function SocialBtn({ href, label, icon, color="#00d4ff" }) {
   const [hov, setHov] = useState(false);
@@ -149,6 +135,10 @@ export default function ContactPage() {
   return (
     <>
       <main className="contact-main">
+        <Helmet>
+          <title>Contact — Dona Eric | ML Engineer</title>
+          <meta name="description" content="Démarrez votre projet IA avec un expert technique expérimenté." />
+        </Helmet>
         <div className="contact-container">
 
           {/* HERO */}
@@ -293,6 +283,8 @@ export default function ContactPage() {
 
               <div className="glass contact-info-card">
                 <div className="contact-info-gradient" />
+                <h3 className="contact-info-title">Disponibilité</h3>
+                <p className="contact-info-desc">Lun – Dim · Tous fuseaux</p>
                 <div className="contact-info-badge">
                   contact.json
                 </div>

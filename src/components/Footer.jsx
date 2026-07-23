@@ -46,12 +46,11 @@ const SOCIALS = [
 ];
 
 const QUICK_LINKS = [
-  { label: "About",    href: "/about"    },
-  { label: "Projects", href: "/projects" },
-  { label: "MLAcademy", href: "/academy"  },
-  { label: "MasterClass", href: "/formations" },
-  { label: "Blog",     href: "/blog"     },
-  { label: "Contact",  href: "/contact"  },
+  { label: "Services & Stack", href: "/about"    },
+  { label: "Use Cases",        href: "/projects" },
+  { label: "Academy",          href: "/academy"  },
+  { label: "Blog",             href: "/blog"     },
+  { label: "Contact",          href: "/contact"  },
 ];
 
 const EXPERTISE = [
@@ -186,9 +185,8 @@ const Footer = () => {
             </span>
 
             <div className="footer-legal">
-              {["Confidentialité", "Conditions"].map(l => (
-                <a key={l} href="#" className="footer-legal-link">{l}</a>
-              ))}
+              <span className="footer-legal-link" aria-disabled="true">Confidentialité</span>
+              <span className="footer-legal-link" aria-disabled="true">Conditions</span>
             </div>
           </div>
         </div>

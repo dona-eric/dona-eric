@@ -36,11 +36,10 @@ const Navigation = () => {
               {NAVIGATION.map((item) => {
                 const active = isActive(item.path);
                 let nameMap = {
-                  "about": "À PROPOS",
+                  "about": "SERVICES & STACK",
                   "skills": "COMPÉTENCES",
-                  "projects": "PROJETS",
+                  "projects": "USE CASES",
                   "academy": "ACADEMY",
-                  "masterclass": "MASTERCLASS",
                   "blog": "BLOG",
                   "contact": "CONTACT"
                 };
@@ -72,15 +71,9 @@ const Navigation = () => {
               })}
             </div>
 
-            {/* ── CTA & Lang ── */}
+            {/* ── CTA ── */}
             <div className="desktop-cta">
-              
-              {/* Language toggle */}
-              <button className="lang-toggle">
-                <span>文A</span> FR
-              </button>
-
-              <Link to="https://wa.me/+2290151344289" className="cta-btn">
+              <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer" className="cta-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                   <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -88,7 +81,7 @@ const Navigation = () => {
                   <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
                 Réserver un appel
-              </Link>
+              </a>
             </div>
 
             {/* ── Mobile burger ── */}

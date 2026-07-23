@@ -2,22 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Hero.css";
 
-const useFadeIn = (delay = 0) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(24px)";
-    el.style.transition = `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`;
-    const t = setTimeout(() => {
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-    }, 60);
-    return () => clearTimeout(t);
-  }, [delay]);
-  return ref;
-};
+import { useFadeIn } from "../hooks/useAnimations";
 
 // Social Button
 function SocialBtn({ href, icon }) {
@@ -40,42 +25,43 @@ function StatCard({ value, label, delay }) {
 }
 
 export default function Hero() {
-  const titleRef  = useFadeIn(0.1);
-  const subtitleRef = useFadeIn(0.3);
-  const descRef   = useFadeIn(0.5);
-  const ctaRef    = useFadeIn(0.7);
-  const statsRef  = useFadeIn(0.9);
-  const imageRef  = useFadeIn(0.4);
+  const badgeRef     = useFadeIn(0.1);
+  const titleRef     = useFadeIn(0.2);
+  const subtitleRef  = useFadeIn(0.3);
+  const descRef      = useFadeIn(0.5);
+  const ctaRef       = useFadeIn(0.7);
+  const statsRef     = useFadeIn(0.9);
+  const imageRef     = useFadeIn(0.4);
 
   return (
     <div className="hero-main">
       <div className="hero-content">
-        
+
         {/* Left Column: Text & CTA */}
         <div className="hero-left">
-          <div className="hero-badge" ref={titleRef} style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)", color: "#a5b4fc" }}>
+          <div className="hero-badge" ref={badgeRef} style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)", color: "#a5b4fc" }}>
             <span className="hero-badge-dot" style={{ background: "#818cf8", boxShadow: "0 0 10px #818cf8" }} />
             Expert IA & Fondateur de MLAcademy
           </div>
 
           <h1 className="hero-title" ref={titleRef} style={{ fontSize: "3.5rem", lineHeight: "1.1" }}>
-            <span style={{ display: "block", fontSize: "1.5rem", color: "var(--neon-purple)", marginBottom: "0.5rem" }}>Dona Éric KOULODJI</span>
-            Je construis l'IA de demain.<br />
-            <span className="gradient-text">Et je forme ceux qui la déploieront.</span>
+            <span style={{ display: "block", fontSize: "1.2rem", color: "var(--neon-cyan)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "1rem" }}>Ingénieur Machine Learning & MLOps</span>
+            De l'idée au système IA<br />
+            <span className="gradient-text">déployé en production.</span>
           </h1>
 
           <h2 className="hero-subtitle" ref={subtitleRef} style={{ color: "#e2e8f0", fontSize: "1.25rem", marginTop: "1.5rem" }}>
-            Ingénieur Machine Learning spécialisé dans la conception de systèmes autonomes (RAG, Agents) et l'architecture MLOps.
+            J'aide les PME et startups francophones à transformer leurs prototypes d'Intelligence Artificielle en produits scalables, fiables et rentables.
           </h2>
 
           <p className="hero-desc" ref={descRef} style={{ marginBottom: "2.5rem" }}>
-            Que vous ayez besoin d'automatiser vos flux de travail ou d'apprendre à le faire vous-même, vous êtes au bon endroit.
+            Fini les POCs (Preuves de Concept) abandonnés. Je conçois, déploie et maintiens des architectures MLOps robustes pour que votre IA génère un vrai ROI.
           </p>
 
           <div className="hero-cta" ref={ctaRef} style={{ gap: "1rem", display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-            <Link to="/academy" className="btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
-              🎓 Découvrir MLAcademy
-            </Link>
+            <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
+              🚀 Réserver un appel gratuit
+            </a>
             <a href="mailto:donaerickoulodji@gmail.com" className="btn-secondary" style={{ padding: "1rem 2rem", fontSize: "1.1rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", borderRadius: "8px", color: "white", textDecoration: "none", transition: "all 0.3s ease" }}>
               💼 Me contacter pour un projet
             </a>
@@ -95,9 +81,9 @@ export default function Hero() {
         {/* Right Column: Avatar Graphic */}
         <div className="hero-right" ref={imageRef}>
           <div className="hero-image-wrapper">
-            <div className="hero-image-backdrop"></div>
-            <img src="/5Y6A4881.JPG" alt="Dona Éric KOULODJI" className="hero-image" />
-            
+            <div className="hero-image-backdrop" aria-hidden="true"></div>
+            <img src="/hero-image.webp" alt="Dona Éric KOULODJI" className="hero-image" />
+
             {/* Floating glass cards for tech premium feel */}
             <div className="hero-floating-card top-right glass">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-purple)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>

@@ -13,7 +13,6 @@
 .home-container {
   max-width: 860px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .home-badge {
@@ -125,7 +124,7 @@
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 16px;
   max-width: 720px;
-  margin: 0 auto 56px;
+  margin: 0 0 56px 0;
 }
 
 .home-stat-card {
@@ -233,7 +232,7 @@
 
 .home-section-header {
   margin-bottom: 48px;
-  text-align: center;
+  text-align: left;
 }
 
 .home-section-subtitle {

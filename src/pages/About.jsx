@@ -1,31 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import TagCloud from "../components/TagCloud";
 import GenerativeBg from "../components/GenerativeBg";
+import { Helmet } from "react-helmet-async";
 import "../styles/About.css";
 
-const useScrollFade = (delay = 0) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(32px)";
-    el.style.transition = `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0)";
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [delay]);
-  return ref;
-};
+import { useScrollFade } from "../hooks/useAnimations";
 
 function AnimatedCounter({ target, suffix = "" }) {
   const [val, setVal] = useState(0);
@@ -197,11 +176,28 @@ function ExperienceCard({ exp, delay, isLast }) {
   );
 }
 
+function ValueCard({ v, delay }) {
+  const ref = useScrollFade(delay);
+  return (
+    <div ref={ref} className="glass about-value-card" style={{ borderLeft: `3px solid ${v.color}` }}>
+      <div className="about-value-tag" style={{ color: v.color }}>{v.tag}</div>
+      <h3 className="about-value-title">{v.title}</h3>
+      <p className="about-value-desc">{v.desc}</p>
+      <div className="about-value-proof" style={{ color: v.color, background: `${v.color}10` }}>{v.proof}
+      </div>
+    </div>
+  );
+}
+
 export default function About() {
   const bioRef = useScrollFade(0);
 
   return (
     <main className="about-main">
+      <Helmet>
+        <title>À Propos — Dona Eric | ML Engineer</title>
+        <meta name="description" content="Parcours, expériences et valeurs de Dona Eric. Ingénieur Machine Learning spécialisé dans la conception de systèmes autonomes." />
+      </Helmet>
       <div className="about-container" style={{ position: "relative", zIndex: 2 }}>
         
         {/* BIO HEADER */}
@@ -251,8 +247,8 @@ export default function About() {
           {/* Card 2: Localisation */}
           <div className="glass about-bento-card bento-span-1" style={{background: "rgba(255, 255, 255, 0.02)", borderColor: "rgba(255, 255, 255, 0.08)"}}>
             <div style={{fontSize: "48px", marginBottom: "16px"}}>🌍</div>
-            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "20px", color: "#ffffff", marginBottom: "8px"}}>Based in Bénin</h3>
-            <p style={{color: "#94a3b8", fontSize: "14px"}}>Available for remote work worldwide.</p>
+            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "20px", color: "#ffffff", marginBottom: "8px"}}>Basé au Bénin</h3>
+            <p style={{color: "#94a3b8", fontSize: "14px"}}>Disponible en remote partout dans le monde.</p>
           </div>
 
           {/* Card 3: Tech Stack (TagCloud) */}
@@ -357,18 +353,9 @@ export default function About() {
           </h2>
 
           <div className="about-values-grid">
-            {VALUES.map((v, i) => {
-              const ref = useScrollFade(i * 0.15);
-              return (
-                <div key={i} ref={ref} className="glass about-value-card" style={{ borderLeft: `3px solid ${v.color}` }}>
-                  <div className="about-value-tag" style={{ color: v.color }}>{v.tag}</div>
-                  <h3 className="about-value-title">{v.title}</h3>
-                  <p className="about-value-desc">{v.desc}</p>
-                  <div className="about-value-proof" style={{ color: v.color, background: `${v.color}10` }}>{v.proof}
-                  </div>
-                </div>
-              );
-            })}
+            {VALUES.map((v, i) => (
+              <ValueCard key={i} v={v} delay={i * 0.15} />
+            ))}
           </div>
         </div>
       </div>

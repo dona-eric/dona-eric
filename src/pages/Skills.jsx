@@ -1,28 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import TagCloud from "../components/TagCloud";
 import GenerativeBg from "../components/GenerativeBg";
+import { Helmet } from "react-helmet-async";
 import "../styles/Skills.css";
 
-const useScrollFade = (delay = 0) => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = "0";
-    el.style.transform = "translateY(28px)";
-    el.style.transition = `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        el.style.opacity = "1";
-        el.style.transform = "translateY(0)";
-        obs.disconnect();
-      }
-    }, { threshold: 0.1 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [delay]);
-  return ref;
-};
+import { useScrollFade } from "../hooks/useAnimations";
 
 function SkillPill({ name, color }) {
   const [hov, setHov] = useState(false);
@@ -141,6 +123,11 @@ export default function Skills() {
 
   return (
     <main className="skills-main">
+      <Helmet>
+        <title>Compétences & Stack | Dona Eric</title>
+        <meta name="description" content="Stack technique complète : Python, PyTorch, React, Cloud AWS, MLOps et outils d'intelligence artificielle modernes." />
+      </Helmet>
+      <GenerativeBg />
       <div className="skills-container" style={{ position: "relative", zIndex: 2 }}>
         
         {/* HERO */}
