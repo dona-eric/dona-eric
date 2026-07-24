@@ -1,24 +1,14 @@
+import "./env.js";
 import cron from "node-cron";
-import nodemailer from "nodemailer";
 import { getRegistrantsByMasterclass } from "./database.js";
 import { getMasterclasses } from "./services/notionService.js";
 import { generateReminderHTML, generateReminderText } from "./templates/reminderEmail.js";
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+import { sendBrevoEmail } from "./emailService.js";
 
 /** Vérifie si un masterclass a lieu aujourd'hui **/
 function isToday(dateStr) {
   if (!dateStr) return false;
   
-  // Format is YYYY-MM-DD
   const today = new Date();
   
   // Convert today's date to GMT+1 / Africa/Porto-Novo date string
@@ -42,19 +32,21 @@ function getSubject(typeLabel, title, reminderType) {
   return `Rappel : Votre ${typeLabel} "${title}"`;
 }
 
-/** Envoie l'email de rappel à un inscrit **/
+/** Envoie l'email de rappel à un inscrit via Brevo API **/
 async function sendReminderEmail(registrant, masterclass, reminderType) {
-  const { email } = registrant;
+  const { email, first_name, last_name } = registrant;
   const { title, type } = masterclass;
   const typeLabel = type === "webinaire" ? "Webinaire" : "Masterclass";
   const subject = getSubject(typeLabel, title, reminderType);
+  const fullName = `${first_name || ''} ${last_name || ''}`.trim();
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM || `"Rappel" <${process.env.EMAIL_USER}>`,
+  await sendBrevoEmail({
     to: email,
+    recipientName: fullName || email.split("@")[0],
+    sender: process.env.EMAIL_FROM || `"Rappel" <${process.env.EMAIL_USER}>`,
     subject,
-    html: generateReminderHTML({ registrant, masterclass, reminderType }),
-    text: generateReminderText({ registrant, masterclass, reminderType }),
+    htmlContent: generateReminderHTML({ registrant, masterclass, reminderType }),
+    textContent: generateReminderText({ registrant, masterclass, reminderType })
   });
 }
 
@@ -79,18 +71,18 @@ export async function sendScheduledReminders(reminderType) {
         try {
           await sendReminderEmail(registrant, masterclass, reminderType);
           sent++;
-          // Petite pause entre chaque email (évite le spam filter)
-          await new Promise((r) => setTimeout(r, 300));
+          // Pause entre chaque envoi Brevo
+          await new Promise((r) => setTimeout(r, 200));
         } catch (err) {
           failed++;
-          console.error(`Échec pour ${registrant.email}:`, err.message);
+          console.error(`Échec Brevo pour ${registrant.email}:`, err.message);
         }
       }
 
-      console.log(`Rappels envoyés (${reminderType}) : ${sent} réussis, ${failed} échoués`);
+      console.log(`Rappels Brevo envoyés (${reminderType}) : ${sent} réussis, ${failed} échoués`);
     }
   } catch (error) {
-    console.error("Erreur dans sendScheduledReminders:", error);
+    console.error("Erreur dans sendScheduledReminders Brevo:", error);
   }
 }
 
@@ -117,5 +109,5 @@ export function startReminderScheduler() {
     timezone: "Africa/Porto-Novo",
   });
 
-  console.log("Scheduler de rappels actif (08h00, 19h55, et 20h00, heure de Cotonou)");
+  console.log("Scheduler de rappels Brevo actif (08h00, 19h55, et 20h00, heure de Cotonou)");
 }
