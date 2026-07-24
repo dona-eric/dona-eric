@@ -1,5 +1,5 @@
 import { MasterclassService } from "../services/masterclassService";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";

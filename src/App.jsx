@@ -6,6 +6,7 @@ import PageLoader from "./components/PageLoader";
 import ChatWidget from "./components/ChatWidget";
 import { Helmet } from 'react-helmet-async';
 import { AnimatePresence, motion } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
 
 const TurbojetBg = lazy(() => import("./components/TurbojetBg"));
 
@@ -138,6 +139,7 @@ export default function App() {
       <ChatWidget />
 
       <Footer />
+      <Analytics />
     </div>
   );
 }
