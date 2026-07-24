@@ -49,6 +49,7 @@ router.post("/register", async (req, res) => {
       });
 
     const count = await countAcademyRegistrations();
+    const fullName = `${data.first_name} ${data.last_name}`;
 
     return res.status(201).json({
       success: true,
