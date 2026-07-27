@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import GenerativeBg from "../components/GenerativeBg";
+import CountdownTimer from "../components/CountdownTimer";
+import { AcademyService } from "../services/academyService";
 import "../styles/Academy.css";
 
 export default function Academy() {
+  const [preRegCount, setPreRegCount] = useState(14);
+
+  useEffect(() => {
+    AcademyService.getCount()
+      .then((data) => {
+        if (data && data.count > 0) setPreRegCount(data.count);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <main className="academy-main" style={{ minHeight: "100vh" }}>
       <Helmet>
@@ -27,9 +39,18 @@ export default function Academy() {
             <span className="gradient-text">De la théorie à la production.</span>
           </h1>
 
-          <p style={{ fontSize: "18px", color: "#94a3b8", lineHeight: "1.7", marginBottom: "40px" }}>
+          <p style={{ fontSize: "18px", color: "#94a3b8", lineHeight: "1.7", marginBottom: "24px" }}>
             Des parcours intensifs, des masterclasses pointues et des webinaires gratuits pour vous armer face aux défis réels de l'Intelligence Artificielle en entreprise.
           </p>
+
+          <div style={{ marginBottom: "32px" }}>
+            <div style={{ fontSize: "12px", color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px", fontWeight: "600" }}>⏳ Fermeture des pré-inscriptions dans :</div>
+            <CountdownTimer />
+            <div style={{ fontSize: "14px", color: "#6ee7b7", fontWeight: "600", marginTop: "12px", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", display: "inline-block" }} />
+              <strong>{preRegCount}</strong> personnes déjà pré-inscrites
+            </div>
+          </div>
         </div>
       </section>
 

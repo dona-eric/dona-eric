@@ -1,5 +1,7 @@
 import { MasterclassService } from "../services/masterclassService";
 import { ReviewService, DEFAULT_REVIEWS } from "../services/reviewService";
+import { AcademyService } from "../services/academyService";
+import CountdownTimer from "../components/CountdownTimer";
 import { Analytics } from "@vercel/analytics/react";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -99,9 +101,18 @@ function MasterclassTeaser() {
     </div>
   );
 }
-
 function AcademyTeaser() {
   const ref = useScrollFade(0.2);
+  const [preRegCount, setPreRegCount] = useState(14);
+
+  useEffect(() => {
+    AcademyService.getCount()
+      .then((data) => {
+        if (data && data.count > 0) setPreRegCount(data.count);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <div ref={ref} className="home-teaser-container" style={{ margin: "40px auto", maxWidth: "1000px" }}>
       <div className="glass home-teaser-card" style={{ 
@@ -109,7 +120,7 @@ function AcademyTeaser() {
         border: "1px solid rgba(99,102,241,0.3)",
         display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", padding: "40px"
       }}>
-         <div className="home-teaser-content" style={{ flex: "1 1 500px" }}>
+         <div className="home-teaser-content" style={{ flex: "1 1 480px" }}>
             <span className="home-teaser-badge" style={{ background: "rgba(99,102,241,0.2)", color: "#c7d2fe", display: "inline-block", marginBottom: "16px" }}>🚀 Lancement</span>
             <h3 className="home-teaser-title" style={{ fontSize: "36px", lineHeight: "1.2", marginBottom: "16px" }}>
               Road to Data Science<br/>Moderne en 90 Jours
@@ -123,10 +134,14 @@ function AcademyTeaser() {
               <span style={{ background: "rgba(255,255,255,0.05)", padding: "6px 16px", borderRadius: "20px", fontSize: "14px", fontWeight: "500" }}>10 projets</span>
             </div>
          </div>
-         <div style={{ flex: "0 1 auto", textAlign: "center", minWidth: "250px" }}>
-           <div style={{ fontSize: "48px", fontWeight: "bold", color: "var(--neon-purple)", marginBottom: "8px" }}>00</div>
-           <div style={{ fontSize: "14px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "24px" }}>Jours avant fermeture</div>
-           <Link to="/academy" className="home-teaser-btn" style={{ background: "#6366f1", display: "block", fontSize: "16px", padding: "16px 24px" }}>Rejoindre MLAcademy →</Link>
+         <div style={{ flex: "0 1 auto", textAlign: "center", minWidth: "280px" }}>
+           <div style={{ fontSize: "12px", color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px", fontWeight: "600" }}>⏳ Fin des pré-inscriptions</div>
+           <CountdownTimer />
+           <div style={{ fontSize: "13px", color: "#6ee7b7", fontWeight: "600", marginTop: "10px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+             <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", display: "inline-block" }} />
+             <strong>{preRegCount}</strong> personnes déjà pré-inscrites
+           </div>
+           <Link to="/academy" className="home-teaser-btn" style={{ background: "#6366f1", display: "block", fontSize: "16px", padding: "14px 24px" }}>Rejoindre MLAcademy →</Link>
          </div>
       </div>
     </div>
