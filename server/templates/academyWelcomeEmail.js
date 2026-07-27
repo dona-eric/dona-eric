@@ -197,7 +197,7 @@ Votre parcours de formation en 90 jours :
 - Niveau 6 : Projets Réels, Portfolio & Carrière
 
 Dona Eric KOULODJI
-Fondateur MLAcademy | Data Scientist & AI Engineer
+Fondateur MLAcademy | Data Scientist & Machine Learning Engineer
 Contact : dtech.afrik@gmail.com
   `.trim();
 }

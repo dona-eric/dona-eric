@@ -42,8 +42,8 @@ function AnimatedCounter({ target, suffix = "" }) {
 
 const STATS = [
   { value: "5", suffix: "+", label: "SYSTÈMES EN PROD", note: "Déployés & Monitorés" },
-  { value: "20", suffix: "+", label: "ÉLÈVES FORMÉS", note: "MLAcademy Cohorte #1" },
-  { value: "3", suffix: "", label: "PAYS TOUCHÉS", note: "Bénin · France · Canada" },
+  { value: "06", suffix: "+", label: "ÉLÈVES FORMÉS", note: "MLAcademy Cohorte #1" },
+  { value: "3", suffix: "", label: "PAYS TOUCHÉS", note: "Bénin · Burkina-Faso · Sénégal" },
   { value: "100", suffix: "%", label: "FOCUS PRODUCTION", note: "Zéro POC abandonné" },
 ];
 

@@ -6,7 +6,7 @@ import "../styles/Academy.css";
 
 export default function Academy() {
   return (
-    <main className="academy-main" style={{ minHeight: "100vh", paddingTop: "80px" }}>
+    <main className="academy-main" style={{ minHeight: "100vh" }}>
       <Helmet>
         <title>MLAcademy — Hub de Formations IA & MLOps | Dona.ia</title>
         <meta name="description" content="Découvrez nos formations, bootcamps et masterclasses en Data Science, IA et MLOps pour booster votre carrière." />

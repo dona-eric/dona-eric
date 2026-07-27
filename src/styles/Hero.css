@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 140px 24px 80px; /* Increased top padding to avoid navbar overlap */
+  padding: 40px 24px 60px;
   position: relative;
   overflow: hidden;
 }

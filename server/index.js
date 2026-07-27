@@ -14,6 +14,7 @@ import academyRoutes from "./routes/academy.js";
 import chatRoutes from "./routes/chat.js";
 import productsRoutes from "./routes/products.js";
 import customersRoutes from "./routes/customers.js";
+import reviewsRoutes from "./routes/reviews.js";
 import { startReminderScheduler, sendScheduledReminders } from "./reminderScheduler.js";
 import { verifyTransport, sendTestEmail } from "./emailService.js";
 
@@ -25,7 +26,6 @@ app.use(helmet());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "http://localhost:5174",
     "https://donerick.onrender.com",
     "https://donerick.vercel.app",
     process.env.FRONTEND_URL,
@@ -55,7 +55,9 @@ app.use("/api/academy", academyRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/customers", customersRoutes);
+app.use("/api/reviews", reviewsRoutes);
 app.get("/api/health", (_, res) => res.json({ status: "ok" }));
+
 
 // ── Route de test email (DEBUG)
 app.get("/api/test-email", async (req, res) => {
@@ -71,7 +73,7 @@ app.get("/api/test-email", async (req, res) => {
     return res.status(500).json({
       success: false,
       error: err.message,
-      hint: "Vérifiez EMAIL_USER et EMAIL_PASS dans .env (App Password Gmail).",
+      hint: "Vérifiez EMAIL_USER",
     });
   }
 });

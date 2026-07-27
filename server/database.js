@@ -45,8 +45,17 @@ export async function initDatabase() {
       registered_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
       ip_address     TEXT
     );
+    CREATE TABLE IF NOT EXISTS reviews (
+      id            INTEGER PRIMARY KEY AUTOINCREMENT,
+      name          TEXT    NOT NULL,
+      role          TEXT    NOT NULL,
+      rating        INTEGER DEFAULT 5,
+      comment       TEXT    NOT NULL,
+      created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
+      ip_address    TEXT
+    );
   `);
-  console.log("✅ Tables Turso prêtes (masterclass + academy)");
+  console.log("✅ Tables Turso prêtes (masterclass + academy + reviews)");
 }
 
 export async function insertRegistration(data) {
@@ -121,4 +130,20 @@ export async function countAcademyRegistrations() {
     args: [],
   });
   return Number(result.rows[0].count);
+}
+
+// ── Reviews helpers ──
+export async function insertReview(data) {
+  return db.execute({
+    sql: `INSERT INTO reviews (name, role, rating, comment, ip_address) VALUES (?, ?, ?, ?, ?)`,
+    args: [data.name, data.role, data.rating || 5, data.comment, data.ip_address || ''],
+  });
+}
+
+export async function getReviews() {
+  const result = await db.execute({
+    sql: "SELECT id, name, role, rating, comment, created_at FROM reviews ORDER BY created_at DESC LIMIT 50",
+    args: [],
+  });
+  return result.rows;
 }
