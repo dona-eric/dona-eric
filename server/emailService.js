@@ -1,6 +1,16 @@
 import "./env.js";
+import nodemailer from "nodemailer";
 import { generateEmailHTML, generateEmailText } from "./templates/confirmationEmail.js";
 import { generateAcademyWelcomeHTML, generateAcademyWelcomeText } from "./templates/academyWelcomeEmail.js";
+
+// Nodemailer Gmail SMTP transport fallback
+const nodemailerTransporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER || "dtech.afrik@gmail.com",
+    pass: process.env.EMAIL_PASS || "sirnfknvlmxkmpku",
+  },
+});
 
 /**
  * Extraire nom et email depuis "Nom <email@domaine.com>" ou "email@domaine.com"
@@ -58,7 +68,6 @@ export async function sendBrevoEmail({ to, subject, htmlContent, textContent, se
     const errData = await response.json().catch(() => ({}));
     if (response.status === 401 && errData.message?.includes("unrecognised IP")) {
       console.error("⚠️ [Brevo IP Restriction] Votre adresse IP n'est pas autorisée sur votre compte Brevo.");
-      console.error("👉 Rendez-vous sur https://app.brevo.com/security/authorised_ips pour autoriser cette IP ou décocher la restriction d'IP.");
     }
     throw new Error(`Erreur API Brevo (${response.status}): ${errData.message || response.statusText}`);
   }
@@ -69,51 +78,77 @@ export async function sendBrevoEmail({ to, subject, htmlContent, textContent, se
 }
 
 /**
- * Vérifie la validité de la clé Brevo au démarrage
+ * Envoie un email via Nodemailer (Gmail SMTP Fallback)
  */
-export async function verifyTransport() {
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) {
-    console.error("⚠️ BREVO_API_KEY manquante — Les emails ne pourront pas être envoyés.");
-    return false;
-  }
+export async function sendNodemailerEmail({ to, subject, htmlContent, textContent, sender }) {
+  const mailOptions = {
+    from: sender || process.env.EMAIL_FROM || `"MLAcademy" <${process.env.EMAIL_USER || "dtech.afrik@gmail.com"}>`,
+    to,
+    subject,
+    html: htmlContent,
+    text: textContent,
+  };
 
+  const info = await nodemailerTransporter.sendMail(mailOptions);
+  console.log(`📧 Email SMTP Nodemailer envoyé avec succès à ${to} (messageId: ${info.messageId})`);
+  return info;
+}
+
+/**
+ * Système unifié d'envoi d'email avec Fallback automatique sur SMTP Nodemailer
+ */
+export async function sendEmail({ to, subject, htmlContent, textContent, sender, recipientName }) {
   try {
-    const response = await fetch("https://api.brevo.com/v3/account", {
-      method: "GET",
-      headers: {
-        "api-key": apiKey,
-        "Accept": "application/json"
-      }
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log(`✅ API Brevo vérifiée — Compte prêt: ${data.email}`);
-      return true;
-    } else {
-      const errData = await response.json().catch(() => ({}));
-      console.warn(`⚠️ Clé API Brevo présente mais rejetée (${response.status}): ${errData.message || "Erreur d'authentification"}`);
-      if (response.status === 401 && errData.message?.includes("unrecognised IP")) {
-        console.warn("👉 Veuillez autoriser l'adresse IP courante sur https://app.brevo.com/security/authorised_ips");
-      }
-      return false;
-    }
-  } catch (err) {
-    console.error("⚠️ Échec de vérification Brevo:", err.message);
-    return false;
+    return await sendBrevoEmail({ to, subject, htmlContent, textContent, sender, recipientName });
+  } catch (brevoErr) {
+    console.warn(`⚠️ Brevo indisponible (${brevoErr.message}) -> Repli automatique sur Gmail SMTP...`);
+    return await sendNodemailerEmail({ to, subject, htmlContent, textContent, sender });
   }
 }
 
 /**
- * Envoie l'email de confirmation à un inscrit masterclass via Brevo
+ * Vérifie la validité des transports (Brevo & Gmail SMTP)
+ */
+export async function verifyTransport() {
+  let brevoOk = false;
+  let smtpOk = false;
+
+  try {
+    smtpOk = await nodemailerTransporter.verify().then(() => true).catch(() => false);
+    if (smtpOk) console.log("✅ Gmail SMTP Transport prêt !");
+  } catch (e) {
+    console.warn("⚠️ Gmail SMTP indisponible:", e.message);
+  }
+
+  const apiKey = process.env.BREVO_API_KEY;
+  if (apiKey) {
+    try {
+      const response = await fetch("https://api.brevo.com/v3/account", {
+        method: "GET",
+        headers: { "api-key": apiKey, "Accept": "application/json" }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`✅ API Brevo vérifiée — Compte prêt: ${data.email}`);
+        brevoOk = true;
+      }
+    } catch {
+      brevoOk = false;
+    }
+  }
+
+  return smtpOk || brevoOk;
+}
+
+/**
+ * Envoie l'email de confirmation à un inscrit masterclass
  */
 export async function sendConfirmationEmail(registration, masterclass) {
   const { first_name, last_name, email } = registration;
   const { emailContent } = masterclass;
   const fullName = `${first_name} ${last_name}`;
 
-  return sendBrevoEmail({
+  return sendEmail({
     to: email,
     recipientName: fullName,
     sender: process.env.EMAIL_FROM || `"DTech-Africa" <${process.env.EMAIL_USER}>`,
@@ -124,43 +159,43 @@ export async function sendConfirmationEmail(registration, masterclass) {
 }
 
 /**
- * Envoie l'email de confirmation à un inscrit MLAcademy via Brevo
+ * Envoie l'email de confirmation à un inscrit MLAcademy
  */
 export async function sendAcademyConfirmationEmail(registration) {
   const { first_name, last_name, email } = registration;
   const fullName = `${first_name} ${last_name}`;
 
-  return sendBrevoEmail({
+  return sendEmail({
     to: email,
     recipientName: fullName,
     sender: process.env.EMAIL_FROM || `"MLAcademy" <${process.env.EMAIL_USER}>`,
-    subject: "🎓 Bienvenue chez MLAcademy — Pré-inscription confirmée",
+    subject: "🎓 Bienvenue chez MLAcademy — Pré-inscription & Modalités de Formation",
     htmlContent: generateAcademyWelcomeHTML({ fullName, data: registration }),
     textContent: generateAcademyWelcomeText({ fullName })
   });
 }
 
 /**
- * Envoie un email de test via Brevo
+ * Envoie un email de test
  */
 export async function sendTestEmail(recipientEmail) {
-  return sendBrevoEmail({
+  return sendEmail({
     to: recipientEmail,
     recipientName: recipientEmail.split("@")[0],
     sender: process.env.EMAIL_FROM || `"DTech-Africa" <${process.env.EMAIL_USER}>`,
-    subject: "🧪 Test API Brevo — DTech-Africa",
+    subject: "🧪 Test API Email — MLAcademy",
     htmlContent: `
       <div style="font-family:Arial,sans-serif;padding:40px;background:#f3f4f6;text-align:center;">
         <div style="max-width:480px;margin:0 auto;background:#fff;border-radius:12px;padding:40px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-          <h1 style="color:#111827;font-size:24px;">✅ Pipeline Brevo Fonctionnel</h1>
+          <h1 style="color:#111827;font-size:24px;">✅ Pipeline Email Fonctionnel</h1>
           <p style="color:#6b7280;font-size:16px;line-height:1.6;">
-            Cet email confirme que l'API Brevo est correctement configurée.
+            Cet email confirme que le pipeline d'envoi MLAcademy est opérationnel.
           </p>
           <p style="color:#9ca3af;font-size:13px;margin-top:24px;">
             Envoyé le ${new Date().toLocaleString("fr-FR", { timeZone: "Africa/Porto-Novo" })}
           </p>
         </div>
       </div>`,
-    textContent: `Test API Brevo OK. Envoyé le ${new Date().toISOString()}.`
+    textContent: `Test API Email OK. Envoyé le ${new Date().toISOString()}.`
   });
 }
