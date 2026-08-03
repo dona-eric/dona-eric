@@ -18,7 +18,7 @@ You may answer questions about:
 STRICT RULES:
 1. Contact information must always be given exactly as follows:
    - Email: [EMAIL_ADDRESS]
-   - WhatsApp: +229 01 41 73 02 40
+   - WhatsApp: +229 01 51-3442-89
    - LinkedIn: https://linkedin.com/in/dona-erick
 2. If the user asks about projects or CV:
    - Never summarize or create details not present in Eric's portfolio.
@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
       temperature: 0.7,
     });
 
-    const reply = response.choices[0]?.message?.content || "⚠️ Aucune réponse disponible.";
+    const reply = response.choices[0]?.message?.content;
     return res.json({ reply });
   } catch (err) {
     console.error("❌ Groq API error:", err.message);

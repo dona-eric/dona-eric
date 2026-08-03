@@ -5,7 +5,7 @@ import "../styles/ChatWidget.css";
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Bonjour ! Je suis l'assistant IA de Dona Eric. Comment puis-je vous aider ?" }
+    { role: "assistant", content: "Bonjour ! Je suis Dona. Comment puis-je vous aider ?" }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +72,7 @@ export default function ChatWidget() {
         <div className="chat-widget-header">
           <div className="chat-widget-title">
             <div className="chat-widget-dot"></div>
-            <span>Assistant IA — Dona.ia</span>
+            <span>Dona.ia</span>
           </div>
           <button className="chat-widget-close" onClick={() => setIsOpen(false)}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

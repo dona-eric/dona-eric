@@ -5,7 +5,7 @@
 export const ACADEMY = {
   name: "MLAcademy",
   tagline: "Construisez des solutions d'IA.<br/>Et faites-en votre carrière.",
-  subtitle: "De Python à Kubernetes. En 90 jours. Grâce à des projets réels.",
+  subtitle: "De Zéro à Data Scientist en 90 jours. Grâce à des projets réels.",
   badges: ["100% Live", "100% Projet", "100% Francophone"],
   cohort: {
     name: "Cohorte #1",
