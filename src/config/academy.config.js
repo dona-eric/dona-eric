@@ -9,24 +9,22 @@ export const ACADEMY = {
   badges: ["100% Live", "100% Projet", "100% Francophone"],
   cohort: {
     name: "Cohorte #1",
-    seats: 100,
+    seats: 25,
     duration: "90 jours",
     status: "pre-registration", // pre-registration | open | closed
   },
   stats: [
     { value: "90", label: "jours" },
-    { value: "21", label: "modules" },
-    { value: "180", label: "vidéos" },
     { value: "40", label: "TP" },
-    { value: "10", label: "projets" },
-    { value: "1", label: "Capstone" },
+    { value: "+10", label: "projets réels" },
+    { value: "1", label: "Certificat Reconnue" },
   ]
 };
 
 export const MISSION = {
   title: "L'Histoire Derrière MLAcademy",
   problem: "Pendant longtemps, j'ai vu des étudiants et des professionnels africains suivre des centaines d'heures de tutoriels sur YouTube ou Coursera. Ils maîtrisaient la théorie, connaissaient les algorithmes par cœur, mais face à un problème d'entreprise réel, tout s'effondrait. Pourquoi ? Parce qu'on leur a appris à entraîner des modèles dans des Jupyter Notebooks isolés, avec des jeux de données parfaits, mais jamais à les déployer en production.",
-  vision: "J'ai créé MLAcademy pour combler ce vide. Mon objectif est de bâtir une nouvelle élite africaine en IA. En 90 jours, je ne vais pas juste vous apprendre Python ou le Machine Learning. Je vais vous montrer comment on construit un système de bout en bout, de l'idée jusqu'au déploiement sur un serveur cloud, prêt à encaisser des milliers de requêtes. Prêt à impacter le monde réel.",
+  vision: "J'ai créé MLAcademy pour combler ce vide. Mon objectif est de bâtir une nouvelle élite africaine en IA. En 90 jours, vous sortirez avec une bonne capacité de construire, déployer et présenter de vrais projets Data/ML/IA.Vous saurez comment construire un système de bout en bout, de l'idée jusqu'au déploiement sur un serveur cloud, prêt à encaisser des milliers de requêtes. Prêt à impacter le monde réel.",
 };
 
 export const TRACKS = [
@@ -89,8 +87,8 @@ export const TRACKS = [
       "Optimiser les hyperparamètres d'un modèle"
     ],
     projects: [
-      "Modèle de prédiction de churn client",
-      "Classificateur d'images avec PyTorch"
+      "Modèle de prédiction",
+      "Vision par Ordinateur avec Pytorch"
     ],
     certification: "Machine Learning Practitioner",
   },
@@ -165,7 +163,7 @@ export const ADVANTAGES = [
   { icon: "▶️", title: "Replay YouTube", desc: "Toutes les sessions enregistrées, accessibles à vie." },
   { icon: "💬", title: "Communauté Discord", desc: "Entraide permanente avec les autres apprenants et les mentors." },
   { icon: "🛠️", title: "Support technique", desc: "Aide personnalisée sur vos blocages de code et de projet." },
-  { icon: "📂", title: "8 Projets concrets", desc: "Du dashboard BI au déploiement Kubernetes, vous construisez tout." },
+  { icon: "📂", title: "+10 Projets concrets", desc: "Du dashboard BI au déploiement Kubernetes, vous construisez tout." },
   { icon: "🌐", title: "Portfolio déployé", desc: "Repartez avec un portfolio professionnel en ligne." },
   { icon: "🤝", title: "Réseau Alumni", desc: "Rejoignez une communauté de professionnels de la Data en Afrique." },
 ];
@@ -245,15 +243,15 @@ export const FAQ = [
     a: "Sessions live hebdomadaires (Meet/Zoom), TP guidés, projets individuels avec review de code, support continu sur Discord.",
   },
   {
-    q: "Pourquoi seulement 100 places ?",
+    q: "Pourquoi seulement 25 places ?",
     a: "Pour garantir un accompagnement de qualité. Chaque projet est relu, chaque question reçoit une réponse personnalisée. La qualité prime sur la quantité.",
   },
 ];
 
 export const INSTRUCTOR = {
   name: "Eric KOULODJI",
-  title: "Data Scientist & AI Engineer",
-  bio: "Physicien de formation, passionné par l'Intelligence Artificielle appliquée. Contributeur au Centre National d'Études Spatiales (CNES), mentor à la DSA Summer School, et fondateur de Dona.ia. Spécialisé dans le déploiement de systèmes IA en production.",
+  title: "Data Scientist, ML Engineer et Student AI Researcher at Google DeepMind",
+  bio: "Physicien de formation, AI Engineer chez Datum Africa. Contributeur au Centre National d'Études Spatiales (CNES), mentor à Ubuntu Foundation et Founder de DTech-Africa. Spécialisé dans le déploiement de systèmes IA en production.",
   avatar: "/JO6A0001.jpg",
   stats: [
     { value: "5+", label: "Systèmes IA en prod" },

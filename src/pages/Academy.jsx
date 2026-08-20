@@ -34,9 +34,9 @@ export default function Academy() {
             MLAcademy — Hub de Formation
           </div>
 
-          <h1 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 800, marginBottom: "24px", lineHeight: "1.1", fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h1 style={{ fontSize: "clamp(30px, 5vw, 40px)", fontWeight: 800, marginBottom: "24px", lineHeight: "1.1", fontFamily: "'Space Grotesk', sans-serif" }}>
             Maîtrisez l'IA.<br/>
-            <span className="gradient-text">Du brouillon(Notebooks) à la production.</span>
+            <span className="gradient-text">De Niveau Zéro au niveau Avancé</span>
           </h1>
 
           <p style={{ fontSize: "18px", color: "#94a3b8", lineHeight: "1.7", marginBottom: "24px" }}>
@@ -70,10 +70,10 @@ export default function Academy() {
                 <span style={{ color: "#94a3b8", fontSize: "14px", fontWeight: "600" }}>90 Jours</span>
               </div>
               <h3 style={{ fontSize: "24px", color: "#ffffff", marginBottom: "16px", fontFamily: "'Space Grotesk', sans-serif" }}>
-                Road to Data Science Moderne
+                BootCamp Road to Data Science Moderne
               </h3>
               <p style={{ color: "#94a3b8", fontSize: "15px", lineHeight: "1.6", marginBottom: "24px", flex: 1 }}>
-                La formation intensive de 90 jours pour passer de Zéro à Data Scientist. Construisez 10 projets réels et maîtrisez le cycle de vie complet d'un modèle ML.
+                La formation intensive de 90 jours pour passer de Zéro à Data Scientist. Construisez 10 projets réels et maîtrisez le cycle de vie complet d'un projet IA ou Machine Learning.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "32px" }}>
                 <span style={{ fontSize: "12px", background: "rgba(255,255,255,0.05)", padding: "4px 10px", borderRadius: "4px", color: "#cbd5e1", border: "1px solid rgba(255,255,255,0.1)" }}>Python</span>

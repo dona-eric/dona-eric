@@ -100,8 +100,9 @@ export function generateAcademyWelcomeHTML({ fullName = "Futur Expert", data = {
               <div style="background-color:#f0fdf4;border-radius:14px;border:2px solid #86efac;
                           padding:24px;margin-bottom:28px;">
                 <h2 style="margin:0 0 12px;font-size:17px;color:#166534;font-weight:800;">
-                  💳 Modalités & Coût de la Formation
+                  💳 Modalités & Coût de la Formation: 30.000 Fcfa
                 </h2>
+            
                 <p style="margin:0 0 14px;font-size:14px;color:#15803d;line-height:1.6;">
                   En tant que candidat pré-inscrit, vous bénéficiez de conditions préférentielles pour le lancement de la cohorte :
                 </p>
@@ -112,7 +113,7 @@ export function generateAcademyWelcomeHTML({ fullName = "Futur Expert", data = {
                   </li>
                   <li style="margin-bottom:8px;">
                     <strong>Bootcamp Complet (Niveaux 1 à 6 - 90 Jours) :</strong><br/>
-                    Une réduction / bourse d'études pré-inscription sera réservée prioritairement aux 50 premiers candidats retenus.
+                    Une réduction / bourse d'études pré-inscription sera réservée prioritairement aux 10 premiers candidats retenus.
                   </li>
                   <li style="margin-bottom:8px;">
                     <strong>Facilités de Paiement :</strong><br/>
@@ -172,7 +173,7 @@ export function generateAcademyWelcomeHTML({ fullName = "Futur Expert", data = {
                   Dona Eric KOULODJI
                 </p>
                 <p style="margin:0 0 12px;color:#64748b;font-size:13px;">
-                  Fondateur MLAcademy | Data Scientist & AI Engineer
+                  Fondateur de DTech-Africa | Data Scientist & AI Engineer
                 </p>
                 <p style="margin:0;color:#64748b;font-size:13px;line-height:1.5;">
                   Un doute ou une question ? Écrivez-nous à 

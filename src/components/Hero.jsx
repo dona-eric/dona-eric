@@ -41,11 +41,11 @@ export default function Hero() {
         <div className="hero-left">
           <div className="hero-badge" ref={badgeRef} style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)", color: "#a5b4fc" }}>
             <span className="hero-badge-dot" style={{ background: "#818cf8", boxShadow: "0 0 10px #818cf8" }} />
-            Expert IA & Fondateur de MLAcademy
+            Ingénieur Machine Learning & Founder DTech-Africa
           </div>
 
           <h1 className="hero-title" ref={titleRef} style={{ fontSize: "3.5rem", lineHeight: "1.1" }}>
-            <span style={{ display: "block", fontSize: "1.2rem", color: "var(--neon-cyan)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "1rem" }}>Ingénieur Machine Learning & MLOps</span>
+            <span style={{ display:"flow-root", fontSize: "1.2rem", color: "var(--neon-cyan)", textTransform: "uppercase", letterSpacing: "2px", marginBottom: "1rem" }}>Ingénieur Machine Learning & AI Researcher Student at AIMS South Africa</span>
             De l'idée au système IA<br />
             <span className="gradient-text">déployé en production.</span>
           </h1>
