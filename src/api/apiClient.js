@@ -22,9 +22,17 @@ export async function request(endpoint, method = "GET", data = null) {
       try {
         errData = await response.json();
       } catch (e) {
-        throw new Error(`HTTP Error: ${response.status}`);
+        if (response.status === 429) {
+          throw new Error("Trop de requêtes effectuées. Veuillez repatienter 2 à 3 minutes avant de réessayer.");
+        }
+        throw new Error(`Erreur serveur (${response.status}). Réessayez ultérieurement.`);
       }
-      throw new Error(errData.error || errData.detail || "Erreur API");
+
+      if (response.status === 429) {
+        throw new Error(errData?.error || "Limite de tentatives atteinte. Veuillez patienter quelques minutes.");
+      }
+
+      throw new Error(errData?.error || errData?.message || errData?.detail || "Une erreur est survenue.");
     }
     return await response.json();
   } catch (err) {

@@ -22,30 +22,53 @@ import { verifyTransport, sendTestEmail } from "./emailService.js";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Nécessaire sur Render/Vercel pour récupérer la vraie IP du client derrière le proxy
+app.set("trust proxy", 1);
+
 app.use(helmet());
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "http://localhost:3000",
     "https://donerick.onrender.com",
     "https://donerick.vercel.app",
     process.env.FRONTEND_URL,
   ].filter(Boolean),
   methods: ["GET", "POST"],
+  credentials: true,
 }));
 app.use(express.json());
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: { error: "Trop de tentatives. Réessayez dans 15 minutes." },
+// Limiteur de requêtes équilibré pour les formulaires d'inscription
+const registrationLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // 30 tentatives max par IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de tentatives d'inscription. Veuillez réessayer dans quelques minutes.", code: "TOO_MANY_REQUESTS" },
 });
-app.use("/api/register", limiter);
 
+// Limiteur de requêtes pour le Chat AI
 const chatLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 10 minutes
+  max: 60, // 60 messages par IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Limite de messages atteinte. Veuillez repatienter quelques minutes.", code: "TOO_MANY_REQUESTS" },
+});
+
+// Limiteur pour la soumission d'avis étudiants
+const reviewsLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 20,
-  message: { error: "Trop de messages. Réessayez dans quelques minutes." },
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Trop de soumissions d'avis. Veuillez patienter avant d'en poster un nouveau.", code: "TOO_MANY_REQUESTS" },
 });
+
+app.use("/api/register", registrationLimiter);
+app.use("/api/academy/register", registrationLimiter);
+app.use("/api/reviews", reviewsLimiter);
 app.use("/api/chat", chatLimiter);
 
 app.use("/api", registrationRoutes);
