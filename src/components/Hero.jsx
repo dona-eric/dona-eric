@@ -37,7 +37,7 @@ export default function Hero() {
 
         {/* Value Proposition Description */}
         <p className="hero-description-text">
-          De la recherche avancée en IA à l'ingénierie logicielle en production, je structure des architectures MLOps fiables, scalables et performantes. Spécialiste en Deep Learning, LLMs et pipelines automatisés, je transforme vos défis techniques en leviers de croissance durables.
+          De la <span className="gradient-text">Physique Mathématique</span> à la data et l'intelligence Artificielle, je structure des architectures MLOps fiables, scalables et performantes. Spécialiste en Machine Learning, Agentic AI et Data Science, je transforme vos défis techniques en leviers de croissance durables.
         </p>
 
         {/* Tech Stack Pills */}
