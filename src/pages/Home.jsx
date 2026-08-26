@@ -61,9 +61,20 @@ function StudentReviewsSection() {
   return (
     <section ref={ref} className="home-section" style={{ background: "rgba(15,23,42,0.5)", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
       <div className="home-container">
+        {/* Rating Metrics Ribbon */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "20px", flexWrap: "wrap", marginBottom: "40px", padding: "12px 24px", background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: "9999px" }}>
+          <span style={{ color: "#f59e0b", fontSize: "14px", fontWeight: "700", display: "flex", alignItems: "center", gap: "4px" }}>
+            ★★★★★ <strong style={{ color: "#ffffff", marginLeft: "4px" }}>5.0 / 5</strong>
+          </span>
+          <span style={{ color: "rgba(255,255,255,0.2)" }}>•</span>
+          <span style={{ color: "#a5b4fc", fontSize: "13px", fontWeight: "600" }}>🎓 MLAcademy & Bootcamps</span>
+          <span style={{ color: "rgba(255,255,255,0.2)" }}>•</span>
+          <span style={{ color: "#6ee7b7", fontSize: "13px", fontWeight: "600" }}>100% Retours Vérifiés</span>
+        </div>
+
         <div className="home-reviews-header-flex">
           <div className="home-section-header" style={{ marginBottom: 0 }}>
-            <span className="home-section-subtitle">// Retour d'Expérience & Pédagogie</span>
+            <span className="home-section-subtitle">// RETOUR D'EXPÉRIENCE & PÉDAGOGIE</span>
             <h2 className="home-section-title">
               Ce que disent mes <span className="gradient-text">étudiants & partenaires</span>
             </h2>
@@ -71,7 +82,7 @@ function StudentReviewsSection() {
           <button
             onClick={() => setShowModal(true)}
             className="home-cta-primary"
-            style={{ padding: "12px 24px", fontSize: "14px", background: "#6366f1" }}
+            style={{ padding: "12px 24px", fontSize: "14px", background: "#6366f1", borderRadius: "9999px", boxShadow: "0 4px 20px rgba(99, 102, 241, 0.4)" }}
           >
             ✍️ Laisser un avis
           </button>

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Desktop from "../components/os/Desktop";
-import { UbuntuMailIcon, UbuntuFolderIcon } from "../components/os/Icons";
+import GravatarQR from "../components/GravatarQR";
 
 export default function Contact({ isWindow }) {
   const [form, setForm] = useState({ subject: "", message: "", sender: "" });
   const [status, setStatus] = useState(null);
-  const [activeFolder, setActiveFolder] = useState('compose');
+  const [activeFolder, setActiveFolder] = useState('compose'); // 'compose' | 'gravatar'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,6 +69,25 @@ export default function Contact({ isWindow }) {
           Nouveau Message
         </button>
 
+        <button 
+          onClick={() => setActiveFolder('gravatar')}
+          style={{
+            display: 'flex', alignItems: 'center', gap: '12px',
+            padding: '10px 24px', background: activeFolder === 'gravatar' ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
+            border: 'none', color: activeFolder === 'gravatar' ? '#818cf8' : '#cbd5e1',
+            cursor: 'pointer', textAlign: 'left',
+            borderLeft: activeFolder === 'gravatar' ? '3px solid #6366f1' : '3px solid transparent',
+            transition: 'background 0.2s',
+            fontWeight: activeFolder === 'gravatar' ? '600' : '400',
+            fontSize: '14px'
+          }}
+          onMouseOver={(e) => { if (activeFolder !== 'gravatar') e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+          onMouseOut={(e) => { if (activeFolder !== 'gravatar') e.currentTarget.style.background = 'transparent' }}
+        >
+          <span style={{ fontSize: '16px' }}>🆔</span>
+          Profil Gravatar QR
+        </button>
+
         <a href="https://linkedin.com/in/dona-erick" target="_blank" rel="noopener noreferrer"
           style={{
             display: 'flex', alignItems: 'center', gap: '12px',
@@ -115,84 +134,91 @@ export default function Contact({ isWindow }) {
         </a>
       </div>
 
-      {/* Main Area (Compose Mail) */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#1e1e1e' }}>
-        
-        {/* Toolbar */}
-        <div style={{ 
-          height: '48px', 
-          borderBottom: '1px solid #1a1a1a', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between',
-          padding: '0 24px',
-          background: '#252525'
-        }}>
-          <div style={{ fontWeight: '600', color: '#fff', fontSize: '14px' }}>Nouveau Message</div>
-          <button 
-            onClick={handleSubmit}
-            disabled={status === "sending"}
-            style={{
-              background: '#e95420',
-              color: '#fff',
-              border: 'none',
-              padding: '6px 16px',
-              borderRadius: '4px',
-              fontSize: '13px',
-              fontWeight: '600',
-              cursor: status === "sending" ? 'not-allowed' : 'pointer',
-              opacity: status === "sending" ? 0.7 : 1
-            }}
-          >
-            {status === "sending" ? "Envoi..." : status === "success" ? "Envoyé ✓" : status === "error" ? "Erreur" : "Envoyer"}
-          </button>
-        </div>
-
-        {/* Compose Form */}
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
-            <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>De:</div>
-            <input 
-              type="email" 
-              required
-              placeholder="votre.email@entreprise.com" 
-              value={form.sender}
-              onChange={e => setForm({...form, sender: e.target.value})}
-              style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '14px' }}
-            />
+      {/* Main Area */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#1e1e1e', overflowY: 'auto' }}>
+        {activeFolder === 'gravatar' ? (
+          <div style={{ padding: '40px 24px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%' }}>
+            <GravatarQR email="donaerickoulodji@gmail.com" defaultType="gravatar" defaultVersion="3" size={350} />
           </div>
-          
-          <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
-            <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>À:</div>
-            <div style={{ flex: 1, color: '#fff', fontSize: '14px', background: 'rgba(255,255,255,0.05)', padding: '4px 8px', borderRadius: '4px', display: 'inline-block', width: 'fit-content', flexGrow: 0 }}>
-              donaerickoulodji@gmail.com
+        ) : (
+          <>
+            {/* Toolbar */}
+            <div style={{ 
+              height: '48px', 
+              borderBottom: '1px solid #1a1a1a', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between',
+              padding: '0 24px',
+              background: '#252525'
+            }}>
+              <div style={{ fontWeight: '600', color: '#fff', fontSize: '14px' }}>Nouveau Message</div>
+              <button 
+                onClick={handleSubmit}
+                disabled={status === "sending"}
+                style={{
+                  background: '#e95420',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '6px 16px',
+                  borderRadius: '4px',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: status === "sending" ? 'not-allowed' : 'pointer',
+                  opacity: status === "sending" ? 0.7 : 1
+                }}
+              >
+                {status === "sending" ? "Envoi..." : status === "success" ? "Envoyé ✓" : status === "error" ? "Erreur" : "Envoyer"}
+              </button>
             </div>
-          </div>
-          
-          <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
-            <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>Objet:</div>
-            <input 
-              type="text" 
-              required
-              placeholder="Proposition de collaboration..." 
-              value={form.subject}
-              onChange={e => setForm({...form, subject: e.target.value})}
-              style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '14px', fontWeight: '500' }}
-            />
-          </div>
 
-          <textarea 
-            required
-            placeholder="Écrivez votre message ici..."
-            value={form.message}
-            onChange={e => setForm({...form, message: e.target.value})}
-            style={{ 
-              flex: 1, background: 'transparent', border: 'none', color: '#cbd5e1', 
-              padding: '24px', outline: 'none', fontSize: '14px', resize: 'none',
-              fontFamily: "'Inter', sans-serif", lineHeight: '1.6'
-            }}
-          />
-        </form>
+            {/* Compose Form */}
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
+                <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>De:</div>
+                <input 
+                  type="email" 
+                  required
+                  placeholder="votre.email@entreprise.com" 
+                  value={form.sender}
+                  onChange={e => setForm({...form, sender: e.target.value})}
+                  style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '14px' }}
+                />
+              </div>
+              
+              <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
+                <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>À:</div>
+                <div style={{ flex: 1, color: '#fff', fontSize: '14px', background: 'rgba(255,255,255,0.05)', padding: '4px 8px', borderRadius: '4px', display: 'inline-block', width: 'fit-content', flexGrow: 0 }}>
+                  donaerickoulodji@gmail.com
+                </div>
+              </div>
+              
+              <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
+                <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>Objet:</div>
+                <input 
+                  type="text" 
+                  required
+                  placeholder="Proposition de collaboration..." 
+                  value={form.subject}
+                  onChange={e => setForm({...form, subject: e.target.value})}
+                  style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '14px', fontWeight: '500' }}
+                />
+              </div>
+
+              <textarea 
+                required
+                placeholder="Écrivez votre message ici..."
+                value={form.message}
+                onChange={e => setForm({...form, message: e.target.value})}
+                style={{ 
+                  flex: 1, background: 'transparent', border: 'none', color: '#cbd5e1', 
+                  padding: '24px', outline: 'none', fontSize: '14px', resize: 'none',
+                  fontFamily: "'Inter', sans-serif", lineHeight: '1.6'
+                }}
+              />
+            </form>
+          </>
+        )}
       </div>
     </div>
   );
