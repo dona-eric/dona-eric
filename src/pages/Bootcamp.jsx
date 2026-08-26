@@ -7,9 +7,10 @@ import {
 } from "../config/academy.config";
 import { AcademyService } from "../services/academyService";
 import GenerativeBg from "../components/GenerativeBg";
+import Desktop from "../components/os/Desktop";
 import "../styles/Academy.css";
 
-export default function Academy() {
+export default function Bootcamp({ isWindow }) {
   const [preRegCount, setPreRegCount] = useState(0);
 
   useEffect(() => {
@@ -18,14 +19,9 @@ export default function Academy() {
       .catch(() => {});
   }, []);
 
-  return (
-    <main className="academy-main">
-      <Helmet>
-        <title>MLAcademy — Devenez Data Scientist en 90 jours | Dona.ia</title>
-        <meta name="description" content="Formation intensive en Data Science, IA et MLOps. De Python à Kubernetes en 90 jours avec des projets réels. Pré-inscriptions ouvertes." />
-      </Helmet>
-
-      <GenerativeBg />
+  const content = (
+    <div className="academy-main" style={isWindow ? { minHeight: "100%", padding: 0 } : {}}>
+      {!isWindow && <GenerativeBg />}
 
       {/* ══════════════════ HERO ══════════════════ */}
       <section className="academy-hero">
@@ -414,7 +410,21 @@ export default function Academy() {
         </div>
         <RegistrationForm onSuccess={() => setPreRegCount((c) => c + 1)} />
       </section>
-    </main>
+    </div>
+  );
+
+  if (!isWindow) {
+    return <Desktop />;
+  }
+
+  return (
+    <>
+      <Helmet>
+        <title>MLAcademy — Devenez Data Scientist en 90 jours | Dona.ia</title>
+        <meta name="description" content="Formation intensive en Data Science, IA et MLOps. De Python à Kubernetes en 90 jours avec des projets réels. Pré-inscriptions ouvertes." />
+      </Helmet>
+      {content}
+    </>
   );
 }
 

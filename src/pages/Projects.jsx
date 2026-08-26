@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import "../styles/Projects.css";
-
-import { useScrollFade } from "../hooks/useAnimations";
+import Desktop from "../components/os/Desktop";
+import { UbuntuFolderIcon, UbuntuFileIcon } from "../components/os/Icons";
 
 const PROJECTS = [
   {
@@ -67,235 +66,208 @@ const PROJECTS = [
   },
 ];
 
-const STATUS_MAP = {
-  production: { label: "En production",  color: "#10b981", bg: "rgba(16,185,129,0.1)",  border: "rgba(16,185,129,0.3)"  },
-  done:       { label: "Terminé",         color: "#94a3b8", bg: "rgba(148,163,184,0.1)", border: "rgba(148,163,184,0.3)" },
-  wip:        { label: "En cours",        color: "#f59e0b", bg: "rgba(245,158,11,0.1)",  border: "rgba(245,158,11,0.3)"  },
-};
-
 const CAT_MAP = {
-  ml:  { label: "Machine Learning / MLOps", color: "#3b82f6" },
-  nlp: { label: "NLP / Computer Vision",    color: "#10b981" },
-  llm: { label: "LLM / RAG / Agents",       color: "#6366f1" },
+  all: { label: "Home", icon: "🏠" },
+  ml:  { label: "Machine Learning", icon: "🧠" },
+  nlp: { label: "NLP / Vision", icon: "👁️" },
+  llm: { label: "LLM / Agents", icon: "🤖" },
 };
 
 const ALL_CATS = ["all", "ml", "nlp", "llm"];
 
-function ProjectCard({ project, delay, featured }) {
-  const ref = useScrollFade(delay);
-  const st = STATUS_MAP[project.status];
-  const cat = CAT_MAP[project.category];
+export default function Projects({ isWindow }) {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const filtered = activeFilter === "all" ? PROJECTS : PROJECTS.filter(p => p.category === activeFilter);
+
+  const content = (
+    <div style={{ display: 'flex', height: '100%', width: '100%', fontFamily: "'Inter', sans-serif", color: '#e2e8f0', background: '#1e1e1e' }}>
+      
+      {/* Sidebar (Places) */}
+      <div style={{ 
+        width: '240px', 
+        background: '#242424', 
+        borderRight: '1px solid #1a1a1a', 
+        display: 'flex', 
+        flexDirection: 'column',
+        padding: '16px 0'
+      }}>
+        <div style={{ padding: '0 16px', marginBottom: '12px', fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>
+          Dossiers
+        </div>
+        {ALL_CATS.map(cat => {
+          const active = activeFilter === cat;
+          return (
+            <button 
+              key={cat}
+              onClick={() => { setActiveFilter(cat); setSelectedProject(null); }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '12px',
+                padding: '10px 24px', background: active ? 'rgba(233, 84, 32, 0.15)' : 'transparent',
+                border: 'none', color: active ? '#e95420' : '#cbd5e1',
+                cursor: 'pointer', textAlign: 'left',
+                borderLeft: active ? '3px solid #e95420' : '3px solid transparent',
+                transition: 'background 0.2s',
+                fontWeight: active ? '600' : '400',
+                fontSize: '14px'
+              }}
+              onMouseOver={(e) => { if (!active) e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+              onMouseOut={(e) => { if (!active) e.currentTarget.style.background = 'transparent' }}
+            >
+              <span style={{ fontSize: '16px' }}>{CAT_MAP[cat].icon}</span>
+              {CAT_MAP[cat].label}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Main Area */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#1e1e1e' }}>
+        
+        {/* Toolbar / Path */}
+        <div style={{ 
+          height: '48px', 
+          borderBottom: '1px solid #1a1a1a', 
+          display: 'flex', 
+          alignItems: 'center', 
+          padding: '0 24px',
+          background: '#252525'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#94a3b8', fontSize: '14px' }}>
+            <span>dona.ia</span>
+            <span>/</span>
+            <span style={{ color: '#fff' }}>Projets</span>
+            <span>/</span>
+            <span style={{ color: '#e95420', fontWeight: '600' }}>{CAT_MAP[activeFilter].label}</span>
+          </div>
+        </div>
+
+        {/* Content (Grid or Details) */}
+        {selectedProject ? (
+          <ProjectDetails project={selectedProject} onBack={() => setSelectedProject(null)} />
+        ) : (
+          <div style={{ 
+            padding: '24px', 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', 
+            gap: '24px',
+            alignContent: 'start',
+            overflowY: 'auto',
+            flex: 1
+          }}>
+            {filtered.map(project => (
+              <div 
+                key={project.id}
+                onClick={() => setSelectedProject(project)}
+                style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
+                  padding: '16px', borderRadius: '8px', cursor: 'pointer',
+                  textAlign: 'center', transition: 'background 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+              >
+                <div style={{ position: 'relative' }}>
+                  <UbuntuFolderIcon size={64} />
+                  {project.status === 'production' && (
+                    <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', background: '#10b981', width: '14px', height: '14px', borderRadius: '50%', border: '2px solid #1e1e1e' }} title="En Production" />
+                  )}
+                </div>
+                <div>
+                  <div style={{ color: '#fff', fontSize: '13px', fontWeight: '500', marginBottom: '4px' }}>{project.title}</div>
+                  <div style={{ color: '#64748b', fontSize: '11px' }}>{project.impact}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  if (!isWindow) {
+    return <Desktop />;
+  }
 
   return (
-    <div ref={ref} className="glass project-card"
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "translateY(-4px)";
-        e.currentTarget.style.borderColor = project.accent;
-        e.currentTarget.style.boxShadow = `0 16px 48px ${project.accent}20`;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.borderColor = "var(--glass-border)";
-        e.currentTarget.style.boxShadow = "none";
-      }}
-    >
-      <div className="project-card-gradient" style={{
-        background: `linear-gradient(90deg, transparent, ${project.accent}, transparent)`
-      }} />
+    <>
+      <Helmet>
+        <title>Projets — dona.ia</title>
+        <meta name="description" content="Découvrez mes projets d'ingénierie en IA, du prototypage au déploiement en production." />
+      </Helmet>
+      {content}
+    </>
+  );
+}
 
-      <div className="project-card-content">
-        <div className="project-card-header">
-          <span className="project-category" style={{ color: cat.color }}>
-            <span className="project-cat-dot" style={{ background: cat.color, boxShadow: `0 0 8px ${cat.color}` }} />
-            {cat.label}
-          </span>
-          <span className="project-status" style={{ color: st.color, background: st.bg, border: `1px solid ${st.border}` }}>
-            {st.label}
-          </span>
+function ProjectDetails({ project, onBack }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflowY: 'auto' }}>
+      <div style={{ padding: '24px', borderBottom: '1px solid #1a1a1a', display: 'flex', alignItems: 'center', gap: '24px', background: '#222' }}>
+        <button 
+          onClick={onBack}
+          style={{ 
+            background: 'rgba(255,255,255,0.05)', border: 'none', color: '#fff', 
+            width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+          }}
+        >
+          ←
+        </button>
+        <div>
+          <h2 style={{ fontSize: '24px', color: '#fff', margin: '0 0 4px 0', fontWeight: '600' }}>{project.title}</h2>
+          <div style={{ color: '#94a3b8', fontSize: '14px' }}>{project.subtitle}</div>
         </div>
-
-        <h3 className="project-title">{project.title}</h3>
-        <h4 className="project-subtitle" style={{ color: cat.color, marginBottom: "16px" }}>{project.subtitle}</h4>
+      </div>
+      
+      <div style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '800px', margin: '0 auto' }}>
         
-        <div className="project-b2b-content" style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
-          <div>
-            <span style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "#64748b", fontWeight: "600", display: "block", marginBottom: "4px" }}>Problème</span>
-            <p className="project-description" style={{ margin: 0, fontSize: "14px" }}>{project.problem}</p>
-          </div>
-          <div>
-            <span style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: "#64748b", fontWeight: "600", display: "block", marginBottom: "4px" }}>Solution</span>
-            <p className="project-description" style={{ margin: 0, fontSize: "14px" }}>{project.solution}</p>
-          </div>
-          <div style={{ padding: "12px", background: "rgba(255,255,255,0.03)", borderRadius: "8px", borderLeft: `3px solid ${project.accent}` }}>
-            <span style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", color: project.accent, fontWeight: "600", display: "block", marginBottom: "4px" }}>Résultats / ROI</span>
-            <p className="project-description" style={{ margin: 0, fontSize: "14px", color: "#e2e8f0" }}>{project.results}</p>
-          </div>
-        </div>
-
-        <div className="project-impact">
-          <span className="project-impact-value" style={{ color: project.accent }}>
-            {project.impact}
+        {/* Status & Links */}
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <span style={{ padding: '6px 12px', background: 'rgba(16,185,129,0.1)', color: '#10b981', borderRadius: '20px', fontSize: '12px', fontWeight: '600', border: '1px solid rgba(16,185,129,0.3)' }}>
+            {project.status.toUpperCase()}
           </span>
-          <span className="project-impact-label">
-            {project.impactDetail}
-          </span>
-        </div>
-
-        <div className="project-stack">
-          {project.stack.map(tech => (
-            <span key={tech} className="project-stack-item">{tech}</span>
-          ))}
-        </div>
-
-        <div className="project-links">
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link-github">
-            ⌥ Code Source
+          <a href={project.github} target="_blank" rel="noopener noreferrer" style={{ color: '#e95420', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>
+            📁 Code Source
           </a>
           {project.demo && (
-            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link-demo" style={{
-              background: project.accent, boxShadow: `0 4px 15px ${project.accent}40`
-            }}>
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{ color: '#00d4ff', textDecoration: 'none', fontSize: '14px', fontWeight: '500' }}>
               ↗ Live Demo
             </a>
           )}
         </div>
+
+        {/* Content */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div>
+            <div style={{ fontSize: '11px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', fontWeight: '600' }}>Le Problème</div>
+            <p style={{ margin: 0, color: '#cbd5e1', fontSize: '15px', lineHeight: '1.6' }}>{project.problem}</p>
+          </div>
+          <div>
+            <div style={{ fontSize: '11px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', fontWeight: '600' }}>La Solution</div>
+            <p style={{ margin: 0, color: '#cbd5e1', fontSize: '15px', lineHeight: '1.6' }}>{project.solution}</p>
+          </div>
+          
+          <div style={{ background: 'rgba(233, 84, 32, 0.05)', padding: '20px', borderRadius: '8px', borderLeft: '3px solid #e95420' }}>
+            <div style={{ fontSize: '11px', color: '#e95420', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px', fontWeight: '600' }}>Résultats / ROI</div>
+            <p style={{ margin: 0, color: '#fff', fontSize: '15px', lineHeight: '1.6' }}>{project.results}</p>
+          </div>
+        </div>
+
+        {/* Stack */}
+        <div>
+          <div style={{ fontSize: '11px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px', fontWeight: '600' }}>Technologies utilisées</div>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {project.stack.map(tech => (
+              <span key={tech} style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', fontSize: '13px', color: '#cbd5e1' }}>
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
-  );
-}
-
-export default function Projects() {
-  const [activeFilter, setActiveFilter] = useState("all");
-  const filterRef = useScrollFade(0);
-
-  const featured = PROJECTS.filter(p => p.featured);
-  const filtered = activeFilter === "all" ? PROJECTS : PROJECTS.filter(p => p.category === activeFilter);
-
-  const statsRow = [
-    { value: `${PROJECTS.filter(p => p.status === "production").length}`, label: "En production" },
-    { value: `${PROJECTS.length}+`, label: "Projets livrés" },
-    { value: "3", label: "Pays touchés" },
-    { value: "90%", label: "Précision moy." },
-  ];
-
-  return (
-    <main className="projects-main">
-      <Helmet>
-        <title>Projets IA & ML | Dona Eric</title>
-        <meta name="description" content="Découvrez mes projets en Machine Learning, NLP, RAG et MLOps. Systèmes IA déployés en production." />
-      </Helmet>
-      
-      <div className="projects-container">
-        
-        {/* HERO */}
-        <div className="projects-hero">
-          <div className="projects-badge">
-            <span className="projects-badge-dot" />
-            PROJECTS.LOAD() → {PROJECTS.filter(p => p.status === "production").length} EN PRODUCTION
-          </div>
-
-          <h1 className="projects-title" style={{ fontSize: "3.5rem" }}>
-            Construire.<br />
-            <span className="gradient-text">Déployer. Mesurer.</span>
-          </h1>
-
-          <p className="projects-description" style={{ fontSize: "1.2rem", color: "#e2e8f0" }}>
-            Découvrez comment j'aide les entreprises à automatiser leurs processus métier grâce à des systèmes IA opérationnels et sécurisés.
-          </p>
-
-          <div className="projects-stats-grid">
-            {statsRow.map((s, i) => (
-              <div key={i} className="glass projects-stat-card">
-                <div className="projects-stat-gradient" />
-                <div className="projects-stat-value">{s.value}</div>
-                <div className="projects-stat-label">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* FEATURED */}
-        <div className="projects-section">
-          <div className="projects-subtitle">
-            // projects.featured[]
-          </div>
-          <h2 className="projects-section-title">
-            Projets phares
-          </h2>
-
-          <div className="projects-grid">
-            {featured.map((p, i) => (
-              <ProjectCard key={p.id} project={p} delay={i * 0.1} featured />
-            ))}
-          </div>
-        </div>
-
-        {/* ALL PROJECTS */}
-        <div className="projects-section">
-          <div className="projects-filter-header">
-            <div>
-              <div className="projects-subtitle projects-subtitle-alt">
-                // projects.all[]
-              </div>
-              <h2 className="projects-section-title" style={{ marginBottom: 0 }}>
-                Tous les projets
-              </h2>
-            </div>
-
-            <div ref={filterRef} className="projects-filters">
-              {ALL_CATS.map(cat => {
-                const active = activeFilter === cat;
-                const label = cat === "all" ? "Tous" : CAT_MAP[cat]?.label || cat;
-                const color = cat === "all" ? "#00d4ff" : CAT_MAP[cat]?.color || "#94a3b8";
-                return (
-                  <button key={cat}
-                    onClick={() => setActiveFilter(cat)}
-                    className="projects-filter-btn"
-                    style={{
-                      borderColor: active ? color + "60" : "rgba(255,255,255,0.1)",
-                      background: active ? color + "15" : "rgba(255,255,255,0.02)",
-                      color: active ? color : "#94a3b8",
-                    }}
-                    onMouseEnter={(e) => { if(!active) e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
-                    onMouseLeave={(e) => { if(!active) e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
-                  >
-                    {label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="projects-grid">
-            {filtered.map((p, i) => (
-              <ProjectCard key={p.id} project={p} delay={i * 0.07} featured={false} />
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="glass projects-empty">
-              Aucun projet ne correspond à ce filtre.
-            </div>
-          )}
-        </div>
-
-        {/* CTA */}
-        <div className="glass projects-cta">
-          <div className="projects-cta-gradient" />
-          <div className="projects-cta-subtitle">
-            // new_project.init()
-          </div>
-          <h2 className="projects-cta-title">
-            Un projet IA en tête ?
-          </h2>
-          <p className="projects-cta-desc">
-            De la donnée brute au système en production — discutons.
-          </p>
-          <a href="/contact" className="btn btn-primary">
-            Démarrer la collaboration →
-          </a>
-        </div>
-      </div>
-    </main>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import TagCloud from "../components/TagCloud";
-import GenerativeBg from "../components/GenerativeBg";
 import { Helmet } from "react-helmet-async";
+import Desktop from "../components/os/Desktop";
 import "../styles/About.css";
 
 import { useScrollFade } from "../hooks/useAnimations";
@@ -191,174 +190,78 @@ function ValueCard({ v, delay }) {
 
 export default function About() {
   const bioRef = useScrollFade(0);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [password, setPassword] = useState("");
+  const [time, setTime] = useState(new Date());
 
-  return (
-    <main className="about-main">
-      <Helmet>
-        <title>À Propos — Dona Eric | ML Engineer</title>
-        <meta name="description" content="Parcours, expériences et valeurs de Dona Eric. Ingénieur Machine Learning spécialisé dans la conception de systèmes autonomes." />
-      </Helmet>
-      <div className="about-container" style={{ position: "relative", zIndex: 2 }}>
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleUnlock = (e) => {
+    e.preventDefault();
+    if (password.trim() === "sudo apt-get update money" || password.trim() === "sudo apt get update money") {
+      setIsUnlocked(true);
+    } else {
+      // Optional: Add a shake effect or error message here
+      setPassword("");
+    }
+  };
+
+  if (!isUnlocked) {
+    const hours = time.getHours().toString().padStart(2, "0");
+    const minutes = time.getMinutes().toString().padStart(2, "0");
+    
+    // Format date in French (e.g., Mardi 25 Août)
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    const dateStr = time.toLocaleDateString('fr-FR', options);
+    const formattedDate = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+
+    return (
+      <div className="lock-screen-container">
+        <Helmet>
+          <title>Verrouillé — Dona Eric</title>
+        </Helmet>
         
-        {/* BIO HEADER */}
-        <div ref={bioRef} className="about-bio-header">
-          <div className="about-bio-badge">
-            <span className="about-bio-dot" />
-            Bénin · Global
-          </div>
-          <h1 className="about-title">
-            Dona Éric KOULODJI<br />
-            <span className="gradient-text">Construire & Transmettre</span>
-          </h1>
-          <p className="about-subtitle">
-            Ingénieur Machine Learning & Fondateur de MLAcademy.
-          </p>
-          <div className="about-text-content">
-            <p>
-              Je conçois et déploie des systèmes d'intelligence artificielle autonomes 
-              pour aider les entreprises à passer d'une idée (POC) à une solution rentable en production.
-            </p>
-            <p>
-              En parallèle, à travers <strong>MLAcademy</strong>, je forme la nouvelle génération 
-              de Data Scientists et MLOps africains, pour qu'ils soient capables de construire 
-              des solutions concrètes et de s'insérer sur le marché mondial.
-            </p>
-          </div>
+        <div className="lock-screen-time">
+          <h1>{hours}:{minutes}</h1>
+          <p>{formattedDate}</p>
         </div>
 
-        {/* Bento Box */}
-        <div className="about-bento-grid">
-          {/* Card 1: Stats */}
-          <div className="glass about-bento-card bento-span-2">
-            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "24px", color: "#ffffff", marginBottom: "24px", width: "100%", textAlign: "left"}}>🚀 Impact</h3>
-            <div style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "24px", width: "100%"}}>
-              {STATS.map((s, i) => (
-                <div key={i} style={{textAlign: "left"}}>
-                  <div className="about-stat-value" style={{fontSize: "36px"}}>
-                    <AnimatedCounter target={s.value} suffix={s.suffix} />
-                  </div>
-                  <div className="about-stat-label">{s.label}</div>
-                  <div className="about-stat-note">{s.note}</div>
-                </div>
-              ))}
-            </div>
+        <div className="lock-screen-user">
+          <div className="nav-logo-monogram" style={{ width: "80px", height: "80px", margin: "0 auto 16px", border: "2px solid rgba(255, 255, 255, 0.4)" }}>
+            <span className="nav-logo-letter" style={{ fontSize: "36px" }}>D</span>
+            <span className="nav-logo-dot" style={{ width: "10px", height: "10px", bottom: "14px", right: "16px" }} />
           </div>
+          <h2 style={{ color: "#fff", fontSize: "20px", fontWeight: "600", marginBottom: "24px" }}>dona.ia</h2>
+        </div>
 
-          {/* Card 2: Localisation */}
-          <div className="glass about-bento-card bento-span-1" style={{background: "rgba(255, 255, 255, 0.02)", borderColor: "rgba(255, 255, 255, 0.08)"}}>
-            <div style={{fontSize: "48px", marginBottom: "16px"}}>🌍</div>
-            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "20px", color: "#ffffff", marginBottom: "8px"}}>Basé au Bénin</h3>
-            <p style={{color: "#94a3b8", fontSize: "14px"}}>Disponible en remote partout dans le monde.</p>
-          </div>
-
-          {/* Card 3: Tech Stack (TagCloud) */}
-          <div className="glass about-bento-card bento-span-2 bento-row-span-2" style={{padding: 0, minHeight: "400px"}}>
-             <div style={{position: "absolute", top: "24px", left: "32px", zIndex: 10}}>
-                <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "20px", color: "#ffffff", margin: 0}}>Tech Stack</h3>
-                <p style={{color: "#94a3b8", fontSize: "13px", marginTop: "4px"}}>Outils & Technologies que je maîtrise</p>
-             </div>
-             <TagCloud tags={[
-               { label: "Python", icon: "🐍" },
-               { label: "TensorFlow", icon: "🧠" },
-               { label: "PyTorch", icon: "🔥" },
-               { label: "React", icon: "⚛️" },
-               { label: "Node.js", icon: "🟢" },
-               { label: "Docker", icon: "🐳" },
-               { label: "AWS", icon: "☁️" },
-               { label: "FastAPI", icon: "⚡" },
-               { label: "SQL", icon: "🗄️" },
-               { label: "MLOps", icon: "⚙️" },
-               { label: "LangChain", icon: "🦜" },
-               { label: "Scikit-Learn", icon: "📊" },
-               { label: "Git", icon: "🐙" },
-               { label: "Spark", icon: "✨" },
-               { label: "MongoDB", icon: "🍃" }
-             ]} radius={130} />
-          </div>
-
-          {/* Card 4: Currently Learning */}
-          <div className="glass about-bento-card bento-span-1 align-left">
-            <div style={{width: "40px", height: "40px", borderRadius: "8px", background: "rgba(59, 130, 246, 0.1)", color: "var(--neon-cyan)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px"}}>📚</div>
-            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "18px", color: "#ffffff", marginBottom: "12px"}}>Actuellement...</h3>
-            <ul style={{listStyle: "none", padding: 0, margin: 0, color: "#94a3b8", fontSize: "14px", display: "flex", flexDirection: "column", gap: "10px"}}>
-              <li>→ Approfondissement LLM Agents</li>
-              <li>→ Optimisation RAG Avancé</li>
-              <li>→ Déploiement Kubernetes</li>
-            </ul>
+        <form onSubmit={handleUnlock} className="lock-screen-form">
+          <div className="lock-input-wrapper">
+            <input 
+              type="text" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Entrer la commande..."
+              autoFocus
+            />
+            <button type="submit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           </div>
           
-          {/* Card 5: Connect */}
-          <div className="glass about-bento-card bento-span-1 align-left" style={{background: "rgba(255, 255, 255, 0.02)", borderColor: "rgba(255, 255, 255, 0.08)"}}>
-            <h3 style={{fontFamily: "'Space Grotesk', sans-serif", fontSize: "18px", color: "#ffffff", marginBottom: "8px"}}>Travaillons ensemble</h3>
-            <p style={{color: "#94a3b8", fontSize: "14px", marginBottom: "16px"}}>Un projet en tête ? Discutons-en.</p>
-            <a href="mailto:donaerickoulodji@gmail.com" style={{color: "var(--neon-cyan)", textDecoration: "none", fontWeight: "600", fontSize: "14px"}}>✉ Contactez-moi →</a>
+          <div className="lock-screen-hint">
+            <span className="hint-icon">i</span>
+            Astuce : entrez 'sudo apt-get update money' pour continuer
           </div>
-
-        </div>
-
-        {/* Bio / Timeline */}
-        <div ref={bioRef} className="about-bio-container">
-          <div className="glass about-bio-card">
-            <div className="about-bio-subtitle">
-              // formations.md
-            </div>
-
-            <div className="about-timeline">
-              {[
-                { year: "01 Avril 2025 - 29 Mai 2026", label: "Ingénieur Machine Learning", detail: " DataCamp & Isheero" },
-                { year: "18-28 Sept 2025", label: "Introduction à l'Astrophysique et la Cosmologie", detail: "Benin4Space"},
-                { year: "Janv-Mai 2025", label: "Data Science Applied certifed", detail: "World Quant University (Data Science · Python · ML · Stats)" },
-                { year: "Avr-Sept 2024", label: "Data Science Certified", detail: "Africa TechUp Tour"},
-                { year: "2020-2024", label: "Licence Physique Fondamentale", detail: "Université d'Abomey-Calavi • Faculté des Sciences et Techniques" },
-              ].map((item, i) => (
-                <div key={i} className="about-timeline-item">
-                  {i < 4 && (
-                    <div className="about-timeline-line" />
-                  )}
-                  <div className="about-timeline-year">{item.year}</div>
-                  <div className="about-timeline-dot" />
-                  <div>
-                    <div className="about-timeline-label">{item.label}</div>
-                    <div className="about-timeline-detail">{item.detail}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Experiences */}
-        <div className="about-experiences-container">
-          <div className="about-section-subtitle">
-            // experience.professional[]
-          </div>
-          <h2 className="about-section-title">
-            Expériences Professionnelles
-          </h2>
-
-          <div className="about-exp-list">
-            {EXPERIENCES.map((exp, i) => (
-              <ExperienceCard key={i} exp={exp} delay={i * 0.15} isLast={i === EXPERIENCES.length - 1} />
-            ))}
-          </div>
-        </div>
-
-        {/* Values */}
-        <div className="about-values-container">
-          <div className="about-section-subtitle">
-            // values.core
-          </div>
-          <h2 className="about-section-title">
-            Pourquoi travailler <span className="gradient-text">avec moi ?</span>
-          </h2>
-
-          <div className="about-values-grid">
-            {VALUES.map((v, i) => (
-              <ValueCard key={i} v={v} delay={i * 0.15} />
-            ))}
-          </div>
-        </div>
+          <p className="lock-screen-prompt">Appuyez sur Entrée ou cliquez pour accéder</p>
+        </form>
       </div>
-    </main>
-  );
+    );
+  }
+
+  return <Desktop />;
 }

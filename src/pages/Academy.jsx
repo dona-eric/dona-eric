@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import GenerativeBg from "../components/GenerativeBg";
 import CountdownTimer from "../components/CountdownTimer";
 import { AcademyService } from "../services/academyService";
+import Desktop from "../components/os/Desktop";
 import "../styles/Academy.css";
 
-export default function Academy() {
+export default function Academy({ isWindow }) {
   const [preRegCount, setPreRegCount] = useState(14);
 
   useEffect(() => {
@@ -17,14 +18,9 @@ export default function Academy() {
       .catch(() => {});
   }, []);
 
-  return (
-    <main className="academy-main" style={{ minHeight: "100vh" }}>
-      <Helmet>
-        <title>MLAcademy — Hub de Formations IA & MLOps | Dona.ia</title>
-        <meta name="description" content="Découvrez nos formations, bootcamps et masterclasses en Data Science, IA et MLOps pour booster votre carrière." />
-      </Helmet>
-
-      <GenerativeBg />
+  const content = (
+    <div className="academy-main" style={isWindow ? { minHeight: "100%", padding: 0 } : { minHeight: "100vh" }}>
+      {!isWindow && <GenerativeBg />}
 
       {/* ══════════════════ HERO HUB ══════════════════ */}
       <section className="academy-hero" style={{ paddingBottom: "60px" }}>
@@ -175,6 +171,20 @@ export default function Academy() {
           </form>
         </div>
       </section>
-    </main>
+    </div>
+  );
+
+  if (!isWindow) {
+    return <Desktop />;
+  }
+
+  return (
+    <>
+      <Helmet>
+        <title>MLAcademy — Hub de Formations IA & MLOps | Dona.ia</title>
+        <meta name="description" content="Découvrez nos formations, bootcamps et masterclasses en Data Science, IA et MLOps pour booster votre carrière." />
+      </Helmet>
+      {content}
+    </>
   );
 }

@@ -36,31 +36,55 @@
   height: 80px;
 }
 
-/* Logo */
+/* Logo Monogram */
 .nav-logo-link {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
-.nav-logo-text {
+.nav-logo-monogram {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.nav-logo-monogram:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+.nav-logo-letter {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #fff;
+  color: #ffffff;
 }
 
-.nav-logo-bracket {
-  color: var(--neon-cyan);
+.nav-logo-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  box-shadow: 0 0 8px #f59e0b;
 }
 
 /* Desktop Navigation */
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 36px;
   font-family: 'Inter', sans-serif;
 }
 
@@ -74,15 +98,15 @@
 }
 
 .nav-link-text {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   transition: color 0.2s ease;
 }
 
 .nav-link-text.active {
-  color: #fff;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .nav-link-text.inactive {
@@ -90,7 +114,7 @@
 }
 
 .nav-link:hover .nav-link-text {
-  color: #fff !important;
+  color: #ffffff !important;
 }
 
 .nav-link-bar {
@@ -99,9 +123,11 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--neon-cyan);
+  background: #3b82f6;
   transition: all 0.3s ease;
   transform-origin: center;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
 }
 
 .nav-link-bar.active {
@@ -119,52 +145,70 @@
   transform: scaleX(1) !important;
 }
 
-/* Call to Action & Lang */
+/* Right Utilities & CTA */
 .desktop-cta {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.lang-toggle {
-  display: flex;
+.btn-cv-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 20px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-cv-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.lang-toggle-pill {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 12px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
+  padding: 6px 12px;
+  color: #e2e8f0;
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.lang-toggle:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
+.lang-toggle-pill:hover {
+  color: #ffffff;
 }
 
-.cta-btn {
-  display: inline-flex;
+.theme-toggle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  border-radius: 24px;
-  background: var(--neon-cyan);
-  color: var(--bg-secondary);
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.cta-btn:hover {
-  background: #00b8e6 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+.theme-toggle-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Mobile Burger */

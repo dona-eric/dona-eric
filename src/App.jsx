@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import Footer from "./components/Footer";
 import PageLoader from "./components/PageLoader";
 import ChatWidget from "./components/ChatWidget";
 import { Helmet } from 'react-helmet-async';
@@ -101,6 +100,9 @@ export default function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const osRoutes = ['/about', '/projects', '/projets', '/contact', '/academy'];
+  const isDesktopOsRoute = osRoutes.some(r => location.pathname.toLowerCase().startsWith(r));
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       <Helmet>
@@ -123,22 +125,21 @@ export default function App() {
       </Helmet>
 
       <ScrollToTop />
-      {isDesktop && (
+      {isDesktop && !isDesktopOsRoute && (
         <Suspense fallback={null}>
           <TurbojetBg />
         </Suspense>
       )}
-      <Navigation />
+      
+      {!isDesktopOsRoute && <Navigation />}
 
-      <main className="flex-1 mt-20">
+      <main className={`flex-1 ${!isDesktopOsRoute ? 'mt-20' : ''}`}>
         <Suspense fallback={<PageLoader />}>
           <AnimatedRoutes />
         </Suspense>
       </main>
 
-      <ChatWidget />
-
-      <Footer />
+      {!isDesktopOsRoute && <ChatWidget />}
       <Analytics />
     </div>
   );

@@ -24,64 +24,59 @@ const Navigation = () => {
         <div className="nav-container">
           <div className="nav-header">
 
-            {/* ── Logo ── */}
+            {/* ── Logo Monogram ── */}
             <Link to="/" className="nav-logo-link">
-              <div className="nav-logo-text">
-                <span className="nav-logo-bracket">{">_"}</span> Dona.ia
+              <div className="nav-logo-monogram">
+                <span className="nav-logo-letter">D</span>
+                <span className="nav-logo-dot" />
               </div>
             </Link>
 
             {/* ── Desktop nav ── */}
             <div className="desktop-nav">
-              {NAVIGATION.map((item) => {
-                const active = isActive(item.path);
-                let nameMap = {
-                  "about": "SERVICES & STACK",
-                  "skills": "COMPÉTENCES",
-                  "projects": "USE CASES",
-                  "academy": "ACADEMY",
-                  "blog": "BLOG",
-                  "contact": "CONTACT"
-                };
-                const displayName = nameMap[item.name.toLowerCase()] || item.name;
-
-                return (
-                  <Link key={item.path} to={item.path} className="nav-link" style={{ position: "relative" }}>
-                    <span className={`nav-link-text ${active ? "active" : "inactive"}`}>
-                      {displayName}
-                    </span>
-                    {item.name === "academy" && (
-                      <span style={{
-                        position: "absolute",
-                        top: "-8px",
-                        right: "-12px",
-                        background: "#ec4899",
-                        color: "white",
-                        fontSize: "9px",
-                        padding: "2px 4px",
-                        borderRadius: "4px",
-                        fontWeight: "bold",
-                        boxShadow: "0 0 10px rgba(236,72,153,0.5)",
-                        animation: "pulse 2s infinite"
-                      }}>NEW</span>
-                    )}
-                    <div className={`nav-link-bar ${active ? "active" : "inactive"}`} />
-                  </Link>
-                );
-              })}
+              <Link to="/" className="nav-link">
+                <span className={`nav-link-text ${isActive('/') ? 'active' : 'inactive'}`}>Home</span>
+                <div className={`nav-link-bar ${isActive('/') ? 'active' : 'inactive'}`} />
+              </Link>
+              <Link to="/projects" className="nav-link">
+                <span className={`nav-link-text ${isActive('/projects') ? 'active' : 'inactive'}`}>Projets</span>
+                <div className={`nav-link-bar ${isActive('/projects') ? 'active' : 'inactive'}`} />
+              </Link>
+              <Link to="/about" className="nav-link">
+                <span className={`nav-link-text ${isActive('/about') ? 'active' : 'inactive'}`}>À propos</span>
+                <div className={`nav-link-bar ${isActive('/about') ? 'active' : 'inactive'}`} />
+              </Link>
+              <Link to="/contact" className="nav-link">
+                <span className={`nav-link-text ${isActive('/contact') ? 'active' : 'inactive'}`}>Contact</span>
+                <div className={`nav-link-bar ${isActive('/contact') ? 'active' : 'inactive'}`} />
+              </Link>
+              <Link to="/academy" className="nav-link">
+                <span className={`nav-link-text ${isActive('/academy') ? 'active' : 'inactive'}`}>MLAcademy</span>
+                <div className={`nav-link-bar ${isActive('/academy') ? 'active' : 'inactive'}`} />
+              </Link>
             </div>
 
-            {/* ── CTA ── */}
+            {/* ── Right Utilities & CTA ── */}
             <div className="desktop-cta">
-              <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer" className="cta-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                Réserver un appel
+              <a href="/cv-dona-eric.pdf" target="_blank" rel="noopener noreferrer" className="btn-cv-pill">
+                Télécharger CV
               </a>
+              <div className="lang-toggle-pill">
+                <span>🇫🇷</span> FR <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <button className="theme-toggle-btn" aria-label="Toggle theme">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+              </button>
             </div>
 
             {/* ── Mobile burger ── */}
