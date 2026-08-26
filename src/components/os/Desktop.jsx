@@ -229,33 +229,8 @@ function DockIcon({ icon, label, onClick, isOpen, isActive }) {
   );
 }
 
-function DesktopIcon({ icon, label, onClick }) {
-  return (
-    <button 
-      onClick={onClick}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '4px',
-        background: 'transparent',
-        border: 'none',
-        cursor: 'pointer',
-        padding: '8px',
-        borderRadius: '8px',
-        width: '80px'
-      }}
-      onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-      onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-    >
-      {icon}
-      <span style={{ color: '#fff', fontSize: '12px', textShadow: '0 1px 2px rgba(0,0,0,0.8)', fontWeight: '500' }}>{label}</span>
-    </button>
-  );
-}
-
 function getSizeForWindow(id) {
-  if (id === 'Ce PC') return { width: 650, height: 450 };
+  if (id === 'Ce PC') return { width: 750, height: 600 };
   return { width: 1000, height: 750 };
 }
 

@@ -93,6 +93,7 @@ function AnimatedRoutes() {
 
 export default function App() {
   const [isDesktop, setIsDesktop] = React.useState(window.innerWidth >= 768);
+  const routerLocation = useLocation();
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
@@ -101,7 +102,7 @@ export default function App() {
   }, []);
 
   const osRoutes = ['/about', '/projects', '/projets', '/contact', '/academy'];
-  const isDesktopOsRoute = osRoutes.some(r => location.pathname.toLowerCase().startsWith(r));
+  const isDesktopOsRoute = osRoutes.some(r => routerLocation.pathname.toLowerCase().startsWith(r));
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">

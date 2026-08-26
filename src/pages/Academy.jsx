@@ -174,17 +174,11 @@ export default function Academy({ isWindow }) {
     </div>
   );
 
+  // Route directe (/academy) → afficher le bureau Ubuntu
   if (!isWindow) {
     return <Desktop />;
   }
 
-  return (
-    <>
-      <Helmet>
-        <title>MLAcademy — Hub de Formations IA & MLOps | Dona.ia</title>
-        <meta name="description" content="Découvrez nos formations, bootcamps et masterclasses en Data Science, IA et MLOps pour booster votre carrière." />
-      </Helmet>
-      {content}
-    </>
-  );
+  // Ouvert dans une fenêtre du bureau → afficher le contenu
+  return content;
 }

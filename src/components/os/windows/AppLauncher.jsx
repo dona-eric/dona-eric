@@ -128,7 +128,7 @@ export default function AppLauncher({ visible, apps, onOpenApp, onClose, usernam
           </div>
         ) : (
           <div style={{ marginTop: '6vh', color: 'rgba(255,255,255,0.4)', fontSize: '14px' }}>
-            Aucune application trouvee
+            Aucune application trouvée
           </div>
         )}
       </div>
@@ -172,7 +172,7 @@ export default function AppLauncher({ visible, apps, onOpenApp, onClose, usernam
                 <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
                 <line x1="12" y1="2" x2="12" y2="12"></line>
               </svg>
-              Se deconnecter
+              Se déconnecter
             </button>
           )}
         </div>

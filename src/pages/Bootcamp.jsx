@@ -413,19 +413,13 @@ export default function Bootcamp({ isWindow }) {
     </div>
   );
 
+  // Route directe (/academy/bootcamp) → afficher le bureau Ubuntu
   if (!isWindow) {
     return <Desktop />;
   }
 
-  return (
-    <>
-      <Helmet>
-        <title>MLAcademy — Devenez Data Scientist en 90 jours | Dona.ia</title>
-        <meta name="description" content="Formation intensive en Data Science, IA et MLOps. De Python à Kubernetes en 90 jours avec des projets réels. Pré-inscriptions ouvertes." />
-      </Helmet>
-      {content}
-    </>
-  );
+  // Ouvert dans une fenêtre du bureau → afficher le contenu
+  return content;
 }
 
 /* ── FAQ Accordion Item ── */
