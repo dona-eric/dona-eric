@@ -11,7 +11,7 @@ export default function Hero() {
       {/* Background Portrait Blend Overlay */}
       <div className="hero-portrait-bg-container">
         <img 
-          src="/eric-dona.jpg" 
+          src="/eric-donerick.jpg" 
           alt="Dona Eric KOULODJI" 
           className="hero-portrait-bg-img" 
         />

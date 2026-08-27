@@ -107,7 +107,7 @@
 .hero-name-title {
   font-family: 'Space Grotesk', -apple-system, sans-serif;
   font-size: clamp(3rem, 7.5vw, 6.2rem);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.05;
   color: #ffffff;

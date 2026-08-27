@@ -201,7 +201,7 @@ export default function About() {
 
   const handleUnlock = (e) => {
     e.preventDefault();
-    if (password.trim() === "sudo apt-get update money" || password.trim() === "sudo apt get update money") {
+    if (password.trim() === "sudo" || password.trim() === "sudo") {
       setIsUnlocked(true);
     } else {
       // Optional: Add a shake effect or error message here
@@ -255,7 +255,7 @@ export default function About() {
           
           <div className="lock-screen-hint">
             <span className="hint-icon">i</span>
-            Astuce : entrez 'sudo apt-get update money' pour continuer
+            Astuce : entrez 'sudo' pour continuer
           </div>
           <p className="lock-screen-prompt">Appuyez sur Entrée ou cliquez pour accéder</p>
         </form>
