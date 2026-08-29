@@ -61,10 +61,19 @@ const Navigation = () => {
               <a href="/cv-dona-eric.pdf" target="_blank" rel="noopener noreferrer" className="btn-cv-pill">
                 Télécharger CV
               </a>
-              <div className="lang-toggle-pill">
+              <div 
+                className="lang-toggle-pill" 
+                title="Langue : Français (Default)"
+                style={{ cursor: "pointer" }}
+              >
                 <span>🇫🇷</span> FR <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
               </div>
-              <button className="theme-toggle-btn" aria-label="Toggle theme">
+              <button 
+                className="theme-toggle-btn" 
+                aria-label="Toggle theme"
+                title="Thème Sombre / Yaru Dark actif"
+                style={{ cursor: "pointer" }}
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="5"></circle>
                   <line x1="12" y1="1" x2="12" y2="3"></line>

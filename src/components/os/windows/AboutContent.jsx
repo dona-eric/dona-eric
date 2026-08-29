@@ -86,7 +86,7 @@ const EXPERIENCES = [
   },
 ];
 
-export default function AboutContent() {
+export default function AboutContent({ onOpenWindow }) {
   return (
     <div style={{
       color: '#e2e8f0',
@@ -106,7 +106,7 @@ export default function AboutContent() {
           <span className="nav-logo-letter" style={{ fontSize: "32px", color: '#e95420' }}>D</span>
           <span className="nav-logo-dot" style={{ width: "9px", height: "9px", bottom: "12px", right: "14px", background: '#e95420' }} />
         </div>
-        <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#fff', marginBottom: '4px', fontFamily: "'Space Grotesk', sans-serif" }}>Dona Eric</h2>
+        <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#fff', marginBottom: '4px', fontFamily: "'Space Grotesk', sans-serif", whiteSpace: 'nowrap' }}>Dona Eric KOULODJI</h2>
         <p style={{ fontSize: '13px', color: '#e95420', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '20px', fontWeight: '600' }}>
           Machine Learning Engineer
         </p>
@@ -140,19 +140,21 @@ export default function AboutContent() {
         padding: '24px 32px',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
-        <div style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          borderRadius: '12px',
-          padding: '20px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '14px',
-          cursor: 'pointer',
-          transition: 'background 0.2s',
-        }}
-        onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.07)'}
-        onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
+        <div 
+          onClick={() => onOpenWindow && onOpenWindow('Projets')}
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: '12px',
+            padding: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '14px',
+            cursor: 'pointer',
+            transition: 'background 0.2s',
+          }}
+          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.07)'}
+          onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
         >
           <UbuntuFolderIcon size={36} />
           <div>
@@ -161,7 +163,7 @@ export default function AboutContent() {
           </div>
         </div>
 
-        <a href="/cv_dona_eric.pdf" target="_blank" rel="noopener noreferrer" style={{
+        <a href="/cv-dona-eric.pdf" target="_blank" rel="noopener noreferrer" style={{
           background: 'rgba(233,84,32,0.08)',
           border: '1px solid rgba(233,84,32,0.2)',
           borderRadius: '12px',

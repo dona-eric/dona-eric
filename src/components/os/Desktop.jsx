@@ -11,6 +11,7 @@ import Contact from '../../pages/Contact';
 import Academy from '../../pages/Academy';
 import Bootcamp from '../../pages/Bootcamp';
 import AboutContent from './windows/AboutContent';
+import CvContent from './windows/CvContent';
 
 // Source unique pour la liste d'apps : utilisee a la fois par le Dock ET
 // par AppLauncher, pour ne pas dupliquer/desynchroniser les deux listes.
@@ -111,7 +112,7 @@ export default function Desktop() {
               defaultSize={getSizeForWindow(windowId)}
               isActive={activeWindow === windowId}
             >
-              {renderWindowContent(windowId)}
+              {renderWindowContent(windowId, handleOpenWindow)}
             </Window>
           </div>
         ))}
@@ -234,14 +235,14 @@ function getSizeForWindow(id) {
   return { width: 1000, height: 750 };
 }
 
-function renderWindowContent(id) {
+function renderWindowContent(id, onOpenWindow) {
   switch(id) {
-    case 'Ce PC': return <AboutContent />;
+    case 'Ce PC': return <AboutContent onOpenWindow={onOpenWindow} />;
     case 'Projets': return <Projects isWindow={true} />;
     case 'Contact': return <Contact isWindow={true} />;
     case 'Academy': return <Academy isWindow={true} />;
     case 'Bootcamp': return <Bootcamp isWindow={true} />;
-    case 'Mon CV': return <div style={{ color: 'white', padding: '24px' }}>Contenu CV (Timeline, Formations)</div>;
+    case 'Mon CV': return <CvContent />;
     default: return <div style={{ color: 'white', padding: '24px' }}>Contenu en construction...</div>;
   }
 }

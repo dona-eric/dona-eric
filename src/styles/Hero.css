@@ -106,13 +106,14 @@
 /* Main Title Name */
 .hero-name-title {
   font-family: 'Space Grotesk', -apple-system, sans-serif;
-  font-size: clamp(3rem, 7.5vw, 6.2rem);
+  font-size: clamp(1.8rem, 5.5vw, 5.5rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.05;
   color: #ffffff;
   margin-bottom: 24px;
   text-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
 }
 
 /* Subtitle Highlight */
