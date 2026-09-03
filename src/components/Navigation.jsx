@@ -58,7 +58,7 @@ const Navigation = () => {
 
             {/* ── Right Utilities & CTA ── */}
             <div className="desktop-cta">
-              <a href="/cv-dona-eric.pdf" target="_blank" rel="noopener noreferrer" className="btn-cv-pill">
+              <a href="/cv_dona_eric.pdf" target="_blank" rel="noopener noreferrer" className="btn-cv-pill">
                 Télécharger CV
               </a>
               <div 

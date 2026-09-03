@@ -163,7 +163,7 @@ export default function AboutContent({ onOpenWindow }) {
           </div>
         </div>
 
-        <a href="/cv-dona-eric.pdf" target="_blank" rel="noopener noreferrer" style={{
+        <a href="/cv_dona_eric.pdf" target="_blank" rel="noopener noreferrer" style={{
           background: 'rgba(233,84,32,0.08)',
           border: '1px solid rgba(233,84,32,0.2)',
           borderRadius: '12px',

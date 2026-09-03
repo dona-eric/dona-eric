@@ -1,4 +1,6 @@
 // Portfolio Constants & Configuration
+export const CV_PDF_URL = "/cv_dona_eric.pdf";
+
 export const PORTFOLIO = {
   name: "Dona Eric",
   title: "ML Engineer & Fondateur MLAcademy",
@@ -31,7 +33,6 @@ export const CTA_BUTTON = {
   label: "Start a Project",
   url: "https://wa.me/22901417302400",
 };
-
 
 export const SERVICES = [
   {
