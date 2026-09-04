@@ -6,8 +6,11 @@ import ChatWidget from "./components/ChatWidget";
 import { Helmet } from 'react-helmet-async';
 import { AnimatePresence, motion } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
+import { LanguageProvider } from "./context/LanguageContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const TurbojetBg = lazy(() => import("./components/TurbojetBg"));
+
 
 // Lazy load pages
 const Home = lazy(() => import("./pages/Home"));
@@ -105,43 +108,47 @@ export default function App() {
   const isDesktopOsRoute = osRoutes.some(r => routerLocation.pathname.toLowerCase().startsWith(r));
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
-      <Helmet>
-        <title>Dona Eric | Machine Learning Engineer</title>
-        <meta name="description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning, Deep Learning et MLOps. Expert Python et déploiement de modèles IA au Bénin." />
-        
-        {/* Open Graph / Facebook / LinkedIn */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://donerick.vercel.app" />
-        <meta property="og:title" content="Dona Eric | Data Scientist & ML Engineer" />
-        <meta property="og:description" content="Explorez mes projets en Intelligence Artificielle et Computer Vision." />
-        <meta property="og:image" content="https://donerick.vercel.app/og-image.png" /> 
+    <LanguageProvider>
+      <ThemeProvider>
+        <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col transition-colors duration-300">
+          <Helmet>
+            <title>Dona Eric | Machine Learning Engineer</title>
+            <meta name="description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning, Deep Learning et MLOps. Expert Python et déploiement de modèles IA." />
+            
+            {/* Open Graph / Facebook / LinkedIn */}
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://donerick.vercel.app" />
+            <meta property="og:title" content="Dona Eric | Data Scientist & ML Engineer" />
+            <meta property="og:description" content="Explorez mes projets en Intelligence Artificielle et Computer Vision." />
+            <meta property="og:image" content="https://donerick.vercel.app/og-image.png" /> 
 
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@EricSchrodinger" /> {/* Optionnel */}
-        <meta name="twitter:title" content="Dona Eric | Data Scientist & ML Engineer" />
-        <meta name="twitter:description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning et IA." />
-        <meta name="twitter:image" content="https://donerick.vercel.app/og-image.png" />
-      </Helmet>
+            {/* Twitter */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@EricSchrodinger" />
+            <meta name="twitter:title" content="Dona Eric | Data Scientist & ML Engineer" />
+            <meta name="twitter:description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning et IA." />
+            <meta name="twitter:image" content="https://donerick.vercel.app/og-image.png" />
+          </Helmet>
 
-      <ScrollToTop />
-      {isDesktop && !isDesktopOsRoute && (
-        <Suspense fallback={null}>
-          <TurbojetBg />
-        </Suspense>
-      )}
-      
-      {!isDesktopOsRoute && <Navigation />}
+          <ScrollToTop />
+          {isDesktop && !isDesktopOsRoute && (
+            <Suspense fallback={null}>
+              <TurbojetBg />
+            </Suspense>
+          )}
+          
+          {!isDesktopOsRoute && <Navigation />}
 
-      <main className={`flex-1 ${!isDesktopOsRoute ? 'mt-20' : ''}`}>
-        <Suspense fallback={<PageLoader />}>
-          <AnimatedRoutes />
-        </Suspense>
-      </main>
+          <main className={`flex-1 ${!isDesktopOsRoute ? 'mt-20' : ''}`}>
+            <Suspense fallback={<PageLoader />}>
+              <AnimatedRoutes />
+            </Suspense>
+          </main>
 
-      {!isDesktopOsRoute && <ChatWidget />}
-      <Analytics />
-    </div>
+          {!isDesktopOsRoute && <ChatWidget />}
+          <Analytics />
+        </div>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }

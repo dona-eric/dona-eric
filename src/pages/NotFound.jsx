@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useLanguage } from "../context/LanguageContext";
 
 const SYSTEM_LOGS = [
   "🚨 [ALERTE ROUGE // ÉVASION DE CONFINEMENT] INTRUSION OU ACCÈS HORS LIMITES DÉTECTÉ !",
@@ -12,6 +13,8 @@ const SYSTEM_LOGS = [
 export default function NotFound() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
+
 
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalLogs, setTerminalLogs] = useState([]);
@@ -392,7 +395,7 @@ export default function NotFound() {
                 transition: "all 0.2s"
               }}
             >
-              {sirenActive ? "🔇 COUPER LA SIRÈNE D'ÉVASION ROUGE" : "🔊 DÉCLENCHER LA SIRÈNE D'ÉVASION ROUGE 🚨"}
+              {sirenActive ? t("notfound.sirenOff") : t("notfound.sirenOn")}
             </button>
           </div>
 
@@ -416,10 +419,10 @@ export default function NotFound() {
               marginTop: "16px",
               textTransform: "uppercase"
             }}>
-              💥 INTRUSION DÉTECTÉE — ALARME ÉVASION ACTIVÉE
+              💥 {t("notfound.title")}
             </div>
             <p style={{ color: "#cbd5e1", fontSize: "14px", marginTop: "12px", lineHeight: "1.6" }}>
-              Déclenchez la sirène d'évasion rouge ci-dessus ou saisissez une commande de secours dans le terminal (`sudo -a`, `sudo -p`, `sudo -co`) pour vous évader vers les sections autorisées.
+              {t("notfound.subtitle")}
             </p>
           </div>
 
@@ -451,7 +454,7 @@ export default function NotFound() {
                 type="text"
                 value={terminalInput}
                 onChange={e => setTerminalInput(e.target.value)}
-                placeholder="Tapez 'help' ou exécutez (sudo -a, sudo -p, sudo -co) pour couper l'alarme..."
+                placeholder="Tapez 'help' ou exécutez (sudo -a, sudo -p, sudo -co)..."
                 style={{
                   flex: 1,
                   background: "transparent",
@@ -490,7 +493,7 @@ export default function NotFound() {
               onMouseOver={e => e.currentTarget.style.background = "rgba(233, 84, 32, 0.4)"}
               onMouseOut={e => e.currentTarget.style.background = "rgba(233, 84, 32, 0.2)"}
             >
-              $ sudo -a (Éteindre Alarme & Accueil)
+              {t("notfound.cmdHome")}
             </button>
 
             <button
@@ -510,7 +513,7 @@ export default function NotFound() {
               onMouseOver={e => e.currentTarget.style.background = "rgba(0, 240, 255, 0.3)"}
               onMouseOut={e => e.currentTarget.style.background = "rgba(0, 240, 255, 0.15)"}
             >
-              $ sudo -p (Éteindre Alarme & Projets)
+              {t("notfound.cmdProjects")}
             </button>
 
             <button
@@ -530,9 +533,10 @@ export default function NotFound() {
               onMouseOver={e => e.currentTarget.style.background = "rgba(168, 85, 247, 0.4)"}
               onMouseOut={e => e.currentTarget.style.background = "rgba(168, 85, 247, 0.2)"}
             >
-              $ sudo -co (Éteindre Alarme & Contact)
+              {t("notfound.cmdContact")}
             </button>
           </div>
+
         </div>
       </main>
     </>

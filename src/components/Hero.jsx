@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import GravatarQR from "./GravatarQR";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/Hero.css";
 
 export default function Hero() {
   const [showGravatarModal, setShowGravatarModal] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <section className="hero-section-pixel">
@@ -22,7 +24,7 @@ export default function Hero() {
         {/* Top Status Pill Badge */}
         <div className="hero-status-pill">
           <span className="hero-status-dot" />
-          <span className="hero-status-text">DISPONIBLE POUR DE NOUVEAUX PROJETS</span>
+          <span className="hero-status-text">{t("home.badge")}</span>
         </div>
 
         {/* Main Title Name */}
@@ -32,12 +34,12 @@ export default function Hero() {
 
         {/* Subtitle Highlight */}
         <h2 className="hero-role-subtitle">
-          Ingénieur Machine Learning <span className="hero-subtitle-separator">|</span> <span className="hero-accent-text">Expertise MLOps</span> & Fondateur MLAcademy
+          {t("home.heroTitleLine1")} <span className="hero-subtitle-separator">|</span> <span className="hero-accent-text">{t("home.heroTitleLine2")}</span>
         </h2>
 
         {/* Value Proposition Description */}
         <p className="hero-description-text">
-          De la <span className="gradient-text">Physique Mathématique</span> à la data et l'intelligence Artificielle, je structure des architectures MLOps fiables, scalables et performantes. Spécialiste en Machine Learning, Agentic AI et Data Science, je transforme vos défis techniques en leviers de croissance durables.
+          {t("home.heroSubtitle")}
         </p>
 
         {/* Tech Stack Pills */}
@@ -53,7 +55,7 @@ export default function Hero() {
         {/* Action Buttons */}
         <div className="hero-cta-buttons">
           <Link to="/about" className="hero-btn-primary-blue">
-            <span>Découvrez-moi ici</span>
+            <span>{t("home.btnProjects")}</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
@@ -65,7 +67,7 @@ export default function Hero() {
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            <span>Me Contacter</span>
+            <span>{t("home.btnContact")}</span>
           </Link>
         </div>
 
@@ -100,65 +102,12 @@ export default function Hero() {
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
             </svg>
           </a>
-
-          {/* Twitter / X */}
-          <a href="https://twitter.com/@EricSchrodinger" target="_blank" rel="noopener noreferrer" className="hero-social-circle" aria-label="Twitter" title="Twitter / X">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </a>
-
-          {/* WhatsApp */}
-          <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer" className="hero-social-circle" aria-label="WhatsApp" title="WhatsApp">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.461c-1.926 0-3.815-.518-5.467-1.498l-.392-.232-4.062 1.065 1.084-3.961-.254-.405c-1.077-1.716-1.644-3.702-1.644-5.742 0-6.024 4.899-10.923 10.926-10.923 2.919 0 5.662 1.136 7.727 3.204 2.064 2.067 3.2 4.811 3.2 7.727 0 6.026-4.898 10.925-10.924 10.925m0-20.082C5.972 1.761 1 6.733 1 12.877c0 2.372.684 4.606 1.978 6.514L0 25l5.772-1.513a11.08 11.08 0 0 0 6.279 1.916c6.046 0 10.967-4.921 10.967-10.966 0-2.93-1.141-5.684-3.214-7.757C17.73 4.59 14.976 3.447 12.051 3.447"/>
-            </svg>
-          </a>
         </div>
       </div>
 
-      {/* Gravatar Modal */}
+      {/* Modal QR Code Gravatar */}
       {showGravatarModal && (
-        <div 
-          onClick={() => setShowGravatarModal(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 99999,
-            background: "rgba(2, 6, 23, 0.85)",
-            backdropFilter: "blur(12px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "20px"
-          }}
-        >
-          <div onClick={(e) => e.stopPropagation()} style={{ position: "relative" }}>
-            <button
-              onClick={() => setShowGravatarModal(false)}
-              style={{
-                position: "absolute",
-                top: "-12px",
-                right: "-12px",
-                background: "#1e293b",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                color: "#ffffff",
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
-                fontSize: "18px",
-                cursor: "pointer",
-                zIndex: 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              ×
-            </button>
-            <GravatarQR email="donaerickoulodji@gmail.com" defaultType="gravatar" defaultVersion="3" size={350} />
-          </div>
-        </div>
+        <GravatarQR onClose={() => setShowGravatarModal(false)} />
       )}
     </section>
   );
