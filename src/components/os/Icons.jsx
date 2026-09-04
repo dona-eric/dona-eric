@@ -7,22 +7,27 @@ export const UbuntuMonitorIcon = ({ size = 48, className = "" }) => (
 
 // Dossier (Jaune/Orange Yaru)
 export const UbuntuFolderIcon = ({ size = 48, className = "" }) => (
-  <img src="/os-icons/folder.png" width={size} height={size} className={className} alt="Folder" />
+  <img src="/os-icons/project.png" width={size} height={size} className={className} alt="Folder" />
 );
 
 // Fichier / CV (Texte)
 export const UbuntuFileIcon = ({ size = 48, className = "" }) => (
-  <img src="/os-icons/document.png" width={size} height={size} className={className} alt="Document" />
+  <img src="/os-icons/cv.png" width={size} height={size} className={className} alt="Document" />
 );
 
 // Email (Mail App)
 export const UbuntuMailIcon = ({ size = 48, className = "" }) => (
-  <img src="/os-icons/mail.png" width={size} height={size} className={className} alt="Mail" />
+  <img src="/os-icons/gmail.png" width={size} height={size} className={className} alt="Mail" />
 );
 
 // Logiciel (Software Store)
 export const UbuntuAcademyIcon = ({ size = 48, className = "" }) => (
-  <img src="/os-icons/software.png" width={size} height={size} className={className} alt="Software" />
+<img src="/os-icons/academy.png" width={size} height={size} className={className} alt="Software" />
+);
+
+// Blog / Ecrits & Produits (Yaru News / Book style)
+export const UbuntuBlogIcon = ({ size = 48, className = "" }) => (
+  <img src="/os-icons/ebook.png" width={size} height={size} className={className} alt="Document" />
 );
 
 export const ShowAppsIcon = ({ size = 32, className = "" }) => (

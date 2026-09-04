@@ -1,18 +1,16 @@
 import { request } from "../api/apiClient";
 import { MasterclassService } from "../services/masterclassService";
-import { ProductService } from "../services/productService";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { ProductService, FALLBACK_PRODUCTS } from "../services/productService";
+import React, { useEffect, useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/Blog.css";
-
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 import { useFadeIn, useScrollFade } from "../hooks/useAnimations";
 
 // ─── Source config ────────────────────────────────────────────────────────────
-// ─── Source config ────────────────────────────────────────────────────────────
 const SOURCE_META = {
-  medium:   { label: "Medium",   color: "#6366f1", icon: "M" },
+  medium: { label: "Medium", color: "#6366f1", icon: "M" },
 };
 
 const TYPE_LABELS = {
@@ -25,16 +23,118 @@ const TYPE_LABELS = {
 };
 
 const FILTERS = [
-  { key: "all",      label: "Tous" },
+  { key: "all", label: "Tous" },
   { key: "products", label: "🛍️ Produits & Livres" },
-  { key: "medium",   label: "Medium" },
+  { key: "medium", label: "Medium" },
+];
+
+const FALLBACK_POSTS = [
+  {
+    id: "https://medium.com/p/1c7a13fe5a4d",
+    title: "EPISODE 7: AGENTIC CHUNKING TECHNIQUES",
+    excerpt: "Welcome at Series Building RAG SYSTEMS TO ZERO-HERO IN 10 DAYS. Après LLM-Based Chunking, on arrive à une approche encore plus intéressante pour structurer vos données...",
+    source: "medium",
+    pub_date: 1787736661,
+    score: 83,
+    tags: ["artificial-intelligence", "langchain", "llm", "python-programming", "agentic-workflow"],
+    raw_metrics: { views: 4965, likes: 496, comments: 24 },
+    url: "https://medium.com/@koulodjiric/episode-7-agentic-chunking-techniques-1c7a13fe5a4d"
+  },
+  {
+    id: "https://medium.com/p/d2091df9c91b",
+    title: "EPISODE 6: SEGEMENTATION AGENTIC OU BASED-LLM CHUNKING",
+    excerpt: "Building RAG Master in 10 Days. Jusqu’ici, nous avons essayé de définir les frontières des chunks avec des règles, puis avec le sens, puis avec la structure...",
+    source: "medium",
+    pub_date: 1787650261,
+    score: 93,
+    tags: ["agentic-rag", "artificial-intelligence", "llm", "rags"],
+    raw_metrics: { views: 2241, likes: 224, comments: 11 },
+    url: "https://medium.com/@koulodjiric/episode-6-segementation-agentic-ou-based-llm-chunking-d2091df9c91b"
+  },
+  {
+    id: "https://medium.com/p/1f78c6be2e9d",
+    title: "UNDERSTAND DATA ARCHITECTURES MODERNS",
+    excerpt: "À l’ère de l’intelligence artificielle, les données sont comme du carburant pour les moteurs. Sans données, L’IA n’existe pas. Alors une architecture moderne...",
+    source: "medium",
+    pub_date: 1767708427,
+    score: 97,
+    tags: ["data-science", "ml-engineer", "aws-lambda", "kappa-architecture", "software-architecture"],
+    raw_metrics: { views: 2162, likes: 216, comments: 10 },
+    url: "https://medium.com/@koulodjiric/understand-data-architectures-moderns-1f78c6be2e9d"
+  },
+  {
+    id: "https://medium.com/p/02d11c870cbf",
+    title: "Régression Linéaire : Comprendre l'Algorithme de Base du Machine Learning",
+    excerpt: "La régression linéaire est l'un des modèles fondamentaux du Machine Learning pour appréhender la modélisation prédictive...",
+    source: "medium",
+    pub_date: 1739355961,
+    score: 83,
+    tags: ["language", "machine-learning", "python", "data-science", "programming"],
+    raw_metrics: { views: 1555, likes: 155, comments: 7 },
+    url: "https://medium.com/@koulodjiric/r%C3%A9gression-lin%C3%A9aire-02d11c870cbf"
+  },
+  {
+    id: "https://medium.com/p/3eff33c8dde7",
+    title: "OPTIMISATION DES MODÈLES D’APPRENTISSAGE POUR LA PRODUCTION",
+    excerpt: "L’optimisation des modèles d’apprentissage automatique pour la production implique l'automatisation des pipelines d'inférence et de monitoring...",
+    source: "medium",
+    pub_date: 1737632082,
+    score: 74,
+    tags: ["apache-spark", "machine-learning", "apache-airflow", "deployment-pipelines", "automation-tools"],
+    raw_metrics: { views: 4418, likes: 441, comments: 22 },
+    url: "https://medium.com/@koulodjiric/optimisation-des-mod%C3%A8les-dapprentissage-pour-la-production-3eff33c8dde7"
+  },
+  {
+    id: "https://medium.com/p/4fd8685628c8",
+    title: "Avoid Using PCA for Visualisation Unless…",
+    excerpt: "ACP : Analyse en Composantes Principales, de par sa nature est une technique de réduction de dimensionnalité. Parfois utilisée pour la visualisation...",
+    source: "medium",
+    pub_date: 1732554164,
+    score: 76,
+    tags: ["data-science", "machine-learning", "data-visualization", "data-analysis", "pca-analysis"],
+    raw_metrics: { views: 3672, likes: 367, comments: 18 },
+    url: "https://medium.com/@koulodjiric/avoid-using-pca-for-visualisation-unless-4fd8685628c8"
+  },
+  {
+    id: "https://medium.com/p/ffd431c80d49",
+    title: "Enrichissez l’analyse des données manquantes avec des cartes thermiques",
+    excerpt: "En science de données, lors de l’exploration, le nettoyage des données manquantes est une étape clé avant la modélisation...",
+    source: "medium",
+    pub_date: 1729196453,
+    score: 86,
+    tags: ["missforest", "knn-algorithm", "handling-missing-values", "missing-value-treatment", "data-analyst"],
+    raw_metrics: { views: 2624, likes: 262, comments: 13 },
+    url: "https://medium.com/@koulodjiric/enrichissez-lanalyse-des-donn%C3%A9es-manquantes-avec-des-cartes-thermiques-ffd431c80d49"
+  },
+  {
+    id: "https://medium.com/p/a6fbd676f0a0",
+    title: "Modélisation de sujets",
+    excerpt: "La modélisation de sujets avec NLP et LLMs permet d'extraire automatiquement des thématiques à partir d'un grand volume de textes...",
+    source: "medium",
+    pub_date: 1728308062,
+    score: 99,
+    tags: ["modelisation-des-sujets", "llms-utilization", "data-science", "nlp"],
+    raw_metrics: { views: 1594, likes: 159, comments: 7 },
+    url: "https://medium.com/@koulodjiric/mod%C3%A9lisation-de-sujets-a6fbd676f0a0"
+  },
+  {
+    id: "https://medium.com/p/3d555cdf4074",
+    title: "Sur moi — De la Physique fondamentale à la Data Science",
+    excerpt: "Mon premier article sur Medium : Mon voyage vers l’exploration du monde quantique, de la physique théorique vers l'IA et le Machine Learning.",
+    source: "medium",
+    pub_date: 1727816633,
+    score: 81,
+    tags: ["physique", "machine-learning-ai", "physique-quantique", "data-science"],
+    raw_metrics: { views: 499, likes: 49, comments: 2 },
+    url: "https://medium.com/@koulodjiric/sur-moi-3d555cdf4074"
+  }
 ];
 
 // ─── Skeleton card ────────────────────────────────────────────────────────────
 function SkeletonCard() {
   return (
     <div className="blog-skeleton-card">
-      {["60%","90%","75%","40%"].map((w, i) => (
+      {["60%", "90%", "75%", "40%"].map((w, i) => (
         <div key={i} className="blog-skeleton-line" style={{
           height: i === 0 ? 10 : i === 3 ? 8 : 14,
           width: w, animationDelay: `${i * 0.15}s`
@@ -58,15 +158,15 @@ function ScoreBadge({ score }) {
 
 // ─── Article card ──────────────────────────────────────────────────────────────
 function ArticleCard({ post, delay, featured }) {
-  const ref   = useScrollFade(delay);
+  const ref = useScrollFade(delay);
   const [hov, setHov] = useState(false);
-  const src   = SOURCE_META[post.source] || SOURCE_META.medium;
+  const src = SOURCE_META[post.source] || SOURCE_META.medium;
 
   const pubDate = new Date(post.pub_date * 1000).toLocaleDateString("fr-FR", {
     day: "numeric", month: "short", year: "numeric"
   });
 
-  const metrics = post.raw_metrics;
+  const metrics = post.raw_metrics || { views: 0, likes: 0, comments: 0 };
 
   return (
     <div ref={ref}
@@ -86,11 +186,9 @@ function ArticleCard({ post, delay, featured }) {
       }} />
 
       <div className="article-card-content">
-
         {/* Header row */}
         <div className="article-header-row">
           <div className="article-tags-group">
-            {/* Source badge */}
             <span className="article-source-badge" style={{
               color: src.color, background: src.color + "15", border: `1px solid ${src.color}30`
             }}>{src.label}</span>
@@ -111,7 +209,7 @@ function ArticleCard({ post, delay, featured }) {
         <p className="article-excerpt">{post.excerpt}</p>
 
         {/* Tags */}
-        {post.tags.length > 0 && (
+        {post.tags && post.tags.length > 0 && (
           <div className="article-tags-container">
             {post.tags.slice(0, 4).map(t => (
               <span key={t} className="article-tag">{t}</span>
@@ -124,12 +222,12 @@ function ArticleCard({ post, delay, featured }) {
           <div className="article-metrics-group">
             {metrics.views > 0 && (
               <span className="article-metric">
-                👁 {metrics.views >= 1000 ? (metrics.views/1000).toFixed(1)+"k" : metrics.views}
+                👁 {metrics.views >= 1000 ? (metrics.views / 1000).toFixed(1) + "k" : metrics.views}
               </span>
             )}
             {metrics.likes > 0 && (
               <span className="article-metric">
-                ♥ {metrics.likes >= 1000 ? (metrics.likes/1000).toFixed(1)+"k" : metrics.likes}
+                ♥ {metrics.likes >= 1000 ? (metrics.likes / 1000).toFixed(1) + "k" : metrics.likes}
               </span>
             )}
             {metrics.comments > 0 && (
@@ -178,8 +276,7 @@ function StorytellingCard({ mc, index, onClick }) {
     month: "long",
     year: "numeric"
   });
-  
-  // Display only the first paragraph as preview snippet
+
   const cleanSnippet = mc.storytelling ? mc.storytelling.split("<br/>")[0] : "";
 
   return (
@@ -217,7 +314,6 @@ function ProductCard({ product, index }) {
   const categoryLabel = category?.label;
   const buyUrl = product.buy_url || product.url || `https://cykrhzat.mychariow.shop/${slug}`;
 
-  // Clean description HTML tags
   const cleanDesc = description ? description.replace(/(<([^>]+)>)/gi, "").trim() : "";
 
   return (
@@ -306,30 +402,25 @@ function ProductCard({ product, index }) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Blog() {
   const heroRef = useFadeIn(0.1);
-  const ctaRef  = useScrollFade(0);
 
-  const [posts,    setPosts]    = useState([]);
-  const [loading,  setLoading]  = useState(true);
-  const [error,    setError]    = useState(null);
-  const [filter,   setFilter]   = useState("all");
+  const [posts, setPosts] = useState(FALLBACK_POSTS);
+  const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState("all");
   const [cachedAt, setCachedAt] = useState(null);
-  const [events,   setEvents]   = useState([]);
+  const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(FALLBACK_PRODUCTS);
   const [loadingProducts, setLoadingProducts] = useState(false);
 
   const fetchPosts = useCallback(async (source = "all") => {
-    setLoading(true);
-    setError(null);
     try {
       const data = await request(`posts?source=${source}&limit=20`);
-      setPosts(data.posts || []);
-      setCachedAt(data.cached_at);
+      if (Array.isArray(data?.posts) && data.posts.length > 0) {
+        setPosts(data.posts);
+        setCachedAt(data.cached_at);
+      }
     } catch (err) {
-      setError("En cours");
-      console.error("[Blog]", err);
-    } finally {
-      setLoading(false);
+      console.warn("[Blog] API error fetching live posts, using static catalog:", err.message);
     }
   }, []);
 
@@ -347,7 +438,9 @@ export default function Blog() {
     const fetchProducts = async () => {
       setLoadingProducts(true);
       const data = await ProductService.getAll();
-      setProducts(data);
+      if (data && data.length > 0) {
+        setProducts(data);
+      }
       setLoadingProducts(false);
     };
     fetchProducts();
@@ -355,7 +448,7 @@ export default function Blog() {
 
   // Split featured (top 2 by score) vs rest
   const featured = posts.slice(0, 2);
-  const others   = posts.slice(2);
+  const others = posts.slice(2);
   const completedEvents = events.filter(mc => mc.isPast);
 
   // Aggregate stats
@@ -363,10 +456,10 @@ export default function Blog() {
   const totalLikes = posts.reduce((a, p) => a + (p.raw_metrics?.likes || 0), 0);
 
   const STATS = [
-    { value: `${posts.length}`,   label: "Articles",          color: "#00d4ff" },
+    { value: `${posts.length}`, label: "Articles", color: "#00d4ff" },
     { value: `${products.length}`, label: "Produits & Livres", color: "#10b981" },
-    { value: totalViews >= 1000 ? (totalViews/1000).toFixed(1)+"k" : totalViews || "—", label: "Vues totales",    color: "#a78bfa" },
-    { value: totalLikes >= 1000 ? (totalLikes/1000).toFixed(1)+"k" : totalLikes || "—", label: "Likes / Claps",  color: "#f59e0b" },
+    { value: totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + "k" : totalViews || "—", label: "Vues totales", color: "#a78bfa" },
+    { value: totalLikes >= 1000 ? (totalLikes / 1000).toFixed(1) + "k" : totalLikes || "—", label: "Likes / Claps", color: "#f59e0b" },
   ];
 
   const showProductsSection = filter === "all" || filter === "products" || filter === "books";
@@ -376,7 +469,7 @@ export default function Blog() {
     <>
       <Helmet>
         <title>Blog & Produits | Dona Eric</title>
-        <meta name="description" content="Articles, livres, produits et masterclasses sur l'intelligence artificielle, le ML et le déploiement cloud." />
+        <meta name="description" content="Articles Medium, livres, produits numériques et masterclasses sur l'intelligence artificielle, le ML et le déploiement cloud par Dona Eric KOULODJI." />
       </Helmet>
       <div className="blog-main">
         {/* Grid + blobs */}
@@ -396,9 +489,8 @@ export default function Blog() {
               Écrits, Livres & <span className="gradient-text">Produits.</span>
             </h1>
             <p className="blog-description">
-              Découvrez nos articles techniques pointues, nos formations et l'ensemble 
-              de nos livres & produits numériques Chariow pour accélérer votre 
-              montée en compétence en Ingénierie IA.
+              Découvrez mes articles techniques pointus publiés sur Medium, mes livres électroniques et l'ensemble
+              de nos produits numériques sur Chariow pour maîtriser l'Ingénierie IA & le Machine Learning.
             </p>
           </div>
 
@@ -410,7 +502,7 @@ export default function Blog() {
                   background: `linear-gradient(90deg, transparent, ${s.color}, transparent)`
                 }} />
                 <div className="blog-stat-value" style={{ color: s.color }}>
-                  {loading && loadingProducts ? "…" : s.value}
+                  {s.value}
                 </div>
                 <div className="blog-stat-label">{s.label}</div>
               </div>
@@ -431,13 +523,6 @@ export default function Blog() {
             )}
           </div>
 
-          {/* ══ ERROR ══ */}
-          {error && (
-            <div className="blog-error">
-              ✗ {error}
-            </div>
-          )}
-
           {/* ══ PRODUCTS SECTION ══ */}
           {showProductsSection && (
             <div className="blog-section">
@@ -445,42 +530,42 @@ export default function Blog() {
                 <span>// </span>products.chariow_store[]
               </div>
               <h2 className="blog-section-title">
-                {filter === "all" ? "Produits & Formations à la une" : "Tous mes Produits & Livres"}
+                {filter === "all" ? "Produits & Livres Numériques" : "Tous mes Produits & Livres"}
               </h2>
 
-              {loadingProducts ? (
+              {loadingProducts && products.length === 0 ? (
                 <div className="blog-skeleton-grid">
-                  {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
+                  {[...Array(2)].map((_, i) => <SkeletonCard key={i} />)}
                 </div>
               ) : products.length > 0 ? (
                 <div className="blog-featured-grid">
-                  {products.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
+                  {products.map((p, i) => <ProductCard key={p.id || i} product={p} index={i} />)}
                 </div>
               ) : (
                 <div className="blog-empty-state">
-                  // Aucun produit publié trouvé pour le moment.
+                  // Aucun produit disponible pour le moment.
                 </div>
               )}
             </div>
           )}
 
           {/* ══ ARTICLES FEATURED ══ */}
-          {showArticlesSection && !loading && !error && featured.length > 0 && (
+          {showArticlesSection && featured.length > 0 && (
             <div className="blog-section">
               <div className="blog-section-subtitle">
                 <span>// </span>posts.top_scored[]
               </div>
               <h2 className="blog-section-title">
-                Les Articles les plus populaires
+                Les Articles les plus populaires sur Medium
               </h2>
               <div className="blog-featured-grid">
-                {featured.map((p, i) => <ArticleCard key={p.id} post={p} delay={i * 0.1} featured />)}
+                {featured.map((p, i) => <ArticleCard key={p.id || i} post={p} delay={i * 0.1} featured />)}
               </div>
             </div>
           )}
 
           {/* ══ COMMUNITY STORYTELLING ══ */}
-          {showArticlesSection && !loading && !error && completedEvents.length > 0 && (
+          {showArticlesSection && completedEvents.length > 0 && (
             <div className="blog-section">
               <div className="blog-section-subtitle">
                 <span>// </span>community.impact_storytelling()
@@ -490,50 +575,29 @@ export default function Blog() {
               </h2>
               <div className="blog-storytelling-grid">
                 {completedEvents.map((mc, i) => (
-                  <StorytellingCard key={mc.id} mc={mc} index={i} onClick={() => setSelectedEvent(mc)} />
+                  <StorytellingCard key={mc.id || i} mc={mc} index={i} onClick={() => setSelectedEvent(mc)} />
                 ))}
               </div>
             </div>
           )}
 
           {/* ══ OTHERS ARTICLES ══ */}
-          {showArticlesSection && !loading && !error && others.length > 0 && (
+          {showArticlesSection && others.length > 0 && (
             <div className="blog-section-alt">
               <div className="blog-section-subtitle">
                 <span>// </span>posts.recent[]
               </div>
               <h2 className="blog-section-title">
-                Articles récents
+                Tous les Articles Medium Récentes
               </h2>
               <div className="blog-others-grid">
-                {others.map((p, i) => <ArticleCard key={p.id} post={p} delay={i * 0.07} featured={false} />)}
+                {others.map((p, i) => <ArticleCard key={p.id || i} post={p} delay={i * 0.07} featured={false} />)}
               </div>
             </div>
           )}
 
-          {/* ══ EMPTY STATE ══ */}
-          {showArticlesSection && !loading && !error && posts.length === 0 && (
-            <div className="blog-empty-state">
-              // no posts matching filter — try "Tous"
-            </div>
-          )}
         </div>
-
-          {/* ══ CTA ══ */}
-          {/* <div ref={ctaRef} className="glass blog-cta">
-            <div className="blog-cta-gradient" style={{ background: "linear-gradient(45deg, transparent, rgba(99,102,241,0.1), transparent)" }} />
-            <h2 className="blog-cta-title" style={{ fontSize: "2rem", marginBottom: "1rem" }}>
-              Rejoignez le programme complet
-            </h2>
-            <p className="blog-cta-desc" style={{ color: "#cbd5e1" }}>
-              Si ces contenus vous parlent, vous devriez jeter un oeil à MLAcademy.
-              Un accompagnement de 90 jours pour maîtriser l'ingénierie IA.
-            </p>
-            <a href="/academy" className="btn btn-primary" style={{ background: "#6366f1" }}>
-              Découvrir MLAcademy →
-            </a>
-          </div> */}
-        </div>
+      </div>
 
       {/* ══ STORYTELLING DETAIL MODAL ══ */}
       {selectedEvent && (

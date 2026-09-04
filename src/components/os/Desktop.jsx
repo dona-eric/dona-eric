@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Window from './Window';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { UbuntuFolderIcon, UbuntuFileIcon, UbuntuMailIcon, UbuntuAcademyIcon, UbuntuMonitorIcon, ShowAppsIcon } from './Icons';
+import { UbuntuFolderIcon, UbuntuFileIcon, UbuntuMailIcon, UbuntuAcademyIcon, UbuntuMonitorIcon, UbuntuBlogIcon, ShowAppsIcon } from './Icons';
 import AppLauncher from './windows/AppLauncher';
 
 // Contenus
@@ -10,14 +10,16 @@ import Projects from '../../pages/Projects';
 import Contact from '../../pages/Contact';
 import Academy from '../../pages/Academy';
 import Bootcamp from '../../pages/Bootcamp';
+import Blog from '../../pages/Blog';
 import AboutContent from './windows/AboutContent';
 import CvContent from './windows/CvContent';
 
-// Source unique pour la liste d'apps : utilisee a la fois par le Dock ET
-// par AppLauncher, pour ne pas dupliquer/desynchroniser les deux listes.
+// Source unique pour la liste d'apps : utilisée à la fois par le Dock ET
+// par AppLauncher, pour ne pas dupliquer/désynchroniser les deux listes.
 const LAUNCHER_APPS = [
   { id: 'Ce PC', label: 'Ce PC', icon: <UbuntuMonitorIcon size={30} /> },
   { id: 'Projets', label: 'Projets', icon: <UbuntuFolderIcon size={30} /> },
+  { id: 'Blog', label: 'Blog & Livres', icon: <UbuntuBlogIcon size={30} /> },
   { id: 'Mon CV', label: 'Mon CV', icon: <UbuntuFileIcon size={30} /> },
   { id: 'Contact', label: 'Contact', icon: <UbuntuMailIcon size={30} /> },
   { id: 'Academy', label: 'Academy', icon: <UbuntuAcademyIcon size={30} /> },
@@ -35,6 +37,7 @@ export default function Desktop() {
     let windowToOpen = null;
     if (path === '/about') windowToOpen = 'Ce PC';
     else if (path === '/projets' || path === '/projects') windowToOpen = 'Projets';
+    else if (path === '/blog') windowToOpen = 'Blog';
     else if (path === '/contact') windowToOpen = 'Contact';
     else if (path === '/academy') windowToOpen = 'Academy';
     else if (path === '/academy/bootcamp') windowToOpen = 'Bootcamp';
@@ -57,8 +60,6 @@ export default function Desktop() {
     }
   };
 
-  // Ouvre une fenetre depuis le launcher, puis referme le launcher -
-  // reutilise directement handleOpenWindow pour ne pas dupliquer la logique.
   const handleOpenFromLauncher = (windowId) => {
     handleOpenWindow(windowId);
     setShowLauncher(false);
@@ -188,6 +189,7 @@ function LeftDock({ openWindows, onOpenWindow, activeWindow, onShowApps }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
         <DockIcon icon={<UbuntuMonitorIcon size={35} />} label="Ce PC" onClick={() => onOpenWindow('Ce PC')} isOpen={openWindows.includes('Ce PC')} isActive={activeWindow === 'Ce PC'} />
         <DockIcon icon={<UbuntuFolderIcon size={35} />} label="Projets" onClick={() => onOpenWindow('Projets')} isOpen={openWindows.includes('Projets')} isActive={activeWindow === 'Projets'} />
+        <DockIcon icon={<UbuntuBlogIcon size={35} />} label="Blog & Livres" onClick={() => onOpenWindow('Blog')} isOpen={openWindows.includes('Blog')} isActive={activeWindow === 'Blog'} />
         <DockIcon icon={<UbuntuFileIcon size={35} />} label="Mon CV" onClick={() => onOpenWindow('Mon CV')} isOpen={openWindows.includes('Mon CV')} isActive={activeWindow === 'Mon CV'} />
         <DockIcon icon={<UbuntuMailIcon size={35} />} label="Contact" onClick={() => onOpenWindow('Contact')} isOpen={openWindows.includes('Contact')} isActive={activeWindow === 'Contact'} />
         <DockIcon icon={<UbuntuAcademyIcon size={35} />} label="Academy" onClick={() => onOpenWindow('Academy')} isOpen={openWindows.includes('Academy')} isActive={activeWindow === 'Academy'} />
@@ -195,7 +197,7 @@ function LeftDock({ openWindows, onOpenWindow, activeWindow, onShowApps }) {
       <button
         onClick={onShowApps}
         style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '12px' }}
-        title="Show Applications"
+        title="Afficher les applications"
       >
         <ShowAppsIcon size={22} />
       </button>
@@ -232,6 +234,7 @@ function DockIcon({ icon, label, onClick, isOpen, isActive }) {
 
 function getSizeForWindow(id) {
   if (id === 'Ce PC') return { width: 750, height: 600 };
+  if (id === 'Blog') return { width: 1050, height: 750 };
   return { width: 1000, height: 750 };
 }
 
@@ -239,6 +242,7 @@ function renderWindowContent(id, onOpenWindow) {
   switch(id) {
     case 'Ce PC': return <AboutContent onOpenWindow={onOpenWindow} />;
     case 'Projets': return <Projects isWindow={true} />;
+    case 'Blog': return <Blog isWindow={true} />;
     case 'Contact': return <Contact isWindow={true} />;
     case 'Academy': return <Academy isWindow={true} />;
     case 'Bootcamp': return <Bootcamp isWindow={true} />;

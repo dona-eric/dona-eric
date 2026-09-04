@@ -252,7 +252,7 @@ export const INSTRUCTOR = {
   name: "Eric KOULODJI",
   title: "Data Scientist, ML Engineer et Student AI Researcher at Google DeepMind",
   bio: "Physicien de formation, AI Engineer chez Datum Africa. Contributeur au Centre National d'Études Spatiales (CNES), mentor à Ubuntu Foundation et Founder de DTech-Africa. Spécialisé dans le déploiement de systèmes IA en production.",
-  avatar: "/JO6A0001.jpg",
+  avatar: "/eric-dona.jpg",
   stats: [
     { value: "5+", label: "Systèmes IA en prod" },
     { value: "6+", label: "Projets livrés" },
