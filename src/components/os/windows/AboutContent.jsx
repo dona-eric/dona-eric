@@ -1,6 +1,7 @@
 import React from 'react';
 import { UbuntuFolderIcon, UbuntuFileIcon } from '../Icons';
 import '../../../styles/About.css';
+import { desc } from 'framer-motion/client';
 
 const STATS = [
   { value: "3", label: "SYSTÈMES EN PROD", note: "Déployés & accessibles" },
@@ -31,6 +32,17 @@ const VALUES = [
 ];
 
 const EXPERIENCES = [
+  {
+    role: "Facilitateur, Mentor Technique",
+    type: "Bénévolat",
+    Company: "Impact Hub Cotonou",
+    period: "28-30 Aout 2026",
+    accent: "#f470b5",
+    tasks:[
+      {tag: "Communalthon", desc: "Accompagner plus de 30 jeunes diplomés et développeurs dans la création des solutions innovantes numérique liées à l'économie verte à Cotonou lors de l'hackaton nommé Communalthon"}
+    ]
+  },
+
   {
     role: "AI & Data Engineer",
     type: "Bénévolat",
@@ -74,7 +86,7 @@ const EXPERIENCES = [
     ]
   },
   {
-    role: "Intervenant & Mentor ML",
+    role: "Intervenant & Participants",
     type: "Intervenant",
     company: "DSA 2025 Summer School — Université d'Ibadan",
     location: "Nigeria",
@@ -82,6 +94,8 @@ const EXPERIENCES = [
     accent: "#34d399",
     status: "done",
     tasks: [
+      {tag: "Discovery", desc: "J'ai participé à l'école d'été en Data Science Africa 2025, et avoir suivi des différentes interventions et masterclass sur l'apprentissage du machine learning, le federated learning et comprendre le fonctionnement des architectures des réseaux de neurones et LLMs."},
+      {},
       { tag: "Prédiction", desc: "Projet de prédiction du rendement du riz (unsupervised learning & séries temporelles)" },
       { tag: "Formation", desc: "20+ étudiants internationaux formés en ML et Python" },
     ],
