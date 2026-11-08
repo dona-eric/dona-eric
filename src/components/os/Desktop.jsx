@@ -24,7 +24,20 @@ export default function Desktop() {
 
   const [openWindows, setOpenWindows] = useState([]);
   const [activeWindow, setActiveWindow] = useState(null);
+  const [minimizedWindows, setMinimizedWindows] = useState([]);
+  const [windowSlots, setWindowSlots] = useState({});
   const [showLauncher, setShowLauncher] = useState(false);
+  const slotOrder = useRef([]);
+
+  // Give every window a stable cascade slot so a newly opened window
+  // never sits exactly on top of the previous one. The ref keeps this
+  // idempotent under React StrictMode double-invocation.
+  const assignSlot = (windowId) => {
+    if (slotOrder.current.includes(windowId)) return;
+    const slot = slotOrder.current.length % 5;
+    slotOrder.current = [...slotOrder.current, windowId];
+    setWindowSlots(prev => ({ ...prev, [windowId]: slot }));
+  };
 
   const LAUNCHER_APPS = [
     { id: 'Ce PC', label: t('os.pc'), icon: <UbuntuMonitorIcon size={30} /> },
@@ -46,18 +59,28 @@ export default function Desktop() {
     else if (path === '/academy/bootcamp') windowToOpen = 'Bootcamp';
 
     if (windowToOpen) {
+      assignSlot(windowToOpen);
       setOpenWindows(prev => prev.includes(windowToOpen) ? prev : [...prev, windowToOpen]);
       setActiveWindow(windowToOpen);
     }
   }, [location.pathname]);
 
   const handleOpenWindow = (windowId) => {
+    assignSlot(windowId);
     setOpenWindows(prev => prev.includes(windowId) ? prev : [...prev, windowId]);
+    setMinimizedWindows(prev => prev.filter(w => w !== windowId));
     setActiveWindow(windowId);
+  };
+
+  const handleMinimizeWindow = (windowId) => {
+    setMinimizedWindows(prev => prev.includes(windowId)
+      ? prev.filter(w => w !== windowId)
+      : [...prev, windowId]);
   };
 
   const handleCloseWindow = (windowId) => {
     setOpenWindows(openWindows.filter(w => w !== windowId));
+    setMinimizedWindows(prev => prev.filter(w => w !== windowId));
     if (activeWindow === windowId) {
       setActiveWindow(openWindows.length > 1 ? openWindows[openWindows.length - 2] : null);
     }
@@ -133,8 +156,11 @@ export default function Desktop() {
             <Window 
               title={windowId} 
               onClose={() => handleCloseWindow(windowId)}
+              onMinimize={() => handleMinimizeWindow(windowId)}
               defaultSize={getSizeForWindow(windowId)}
               isActive={activeWindow === windowId}
+              isMinimized={minimizedWindows.includes(windowId)}
+              slot={windowSlots[windowId] || 0}
             >
               {renderWindowContent(windowId, handleOpenWindow)}
             </Window>
@@ -368,8 +394,8 @@ function getSizeForWindow(windowId) {
 function renderWindowContent(windowId, onOpenWindow) {
   switch (windowId) {
     case 'Ce PC': return <AboutContent onOpenWindow={onOpenWindow} />;
-    case 'Projets': return <Projects />;
-    case 'Blog': return <Blog />;
+    case 'Projets': return <Projects isWindow />;
+    case 'Blog': return <Blog isWindow />;
     case 'Mon CV': return <CvContent />;
     case 'Contact': return <Contact isWindow />;
     case 'Academy': return <Academy isWindow onOpenBootcamp={() => onOpenWindow('Bootcamp')} />;

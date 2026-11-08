@@ -249,10 +249,12 @@ export default function Contact({ isWindow }) {
 
   return (
     <>
-      <Helmet>
-        <title>Contact — Dona Eric KOULODJI</title>
-        <meta name="description" content="Contactez Dona Eric KOULODJI pour une opportunité en Data Science / Machine Learning, une collaboration ou une mission IA." />
-      </Helmet>
+      {!isWindow && (
+        <Helmet>
+          <title>Contact — Dona Eric KOULODJI</title>
+          <meta name="description" content="Contactez Dona Eric KOULODJI pour une opportunité en Data Science / Machine Learning, une collaboration ou une mission IA." />
+        </Helmet>
+      )}
       {content}
     </>
   );

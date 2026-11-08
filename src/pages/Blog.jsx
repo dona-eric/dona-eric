@@ -400,7 +400,7 @@ function ProductCard({ product, index }) {
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
-export default function Blog() {
+export default function Blog({ isWindow = false }) {
   const heroRef = useFadeIn(0.1);
 
   const [posts, setPosts] = useState(FALLBACK_POSTS);
@@ -467,10 +467,12 @@ export default function Blog() {
 
   return (
     <>
-      <Helmet>
-        <title>Blog & Produits — Dona Eric KOULODJI</title>
-        <meta name="description" content="Articles Medium, livres et produits numériques sur l'IA, le Machine Learning, les LLM et le déploiement cloud, par Dona Eric KOULODJI." />
-      </Helmet>
+      {!isWindow && (
+        <Helmet>
+          <title>Blog & Produits — Dona Eric KOULODJI</title>
+          <meta name="description" content="Articles Medium, livres et produits numériques sur l'IA, le Machine Learning, les LLM et le déploiement cloud, par Dona Eric KOULODJI." />
+        </Helmet>
+      )}
       <div className="blog-main">
         {/* Grid + blobs */}
         <div className="blog-grid-bg" />

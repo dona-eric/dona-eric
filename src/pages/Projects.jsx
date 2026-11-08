@@ -327,7 +327,7 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-export default function Projects() {
+export default function Projects({ isWindow = false }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
   const heroRef = useScrollFade(0);
@@ -336,10 +336,12 @@ export default function Projects() {
 
   return (
     <main className="projects-main">
-      <Helmet>
-        <title>Projets IA — Dona Eric KOULODJI | Data Scientist & ML Engineer</title>
-        <meta name="description" content="8 projets IA : NLP, agents LLM/RAG, scoring crédit explicable, qualité de l'air et MLOps. Code public, démos et résultats documentés." />
-      </Helmet>
+      {!isWindow && (
+        <Helmet>
+          <title>Projets IA — Dona Eric KOULODJI | Data Scientist & ML Engineer</title>
+          <meta name="description" content="8 projets IA : NLP, agents LLM/RAG, scoring crédit explicable, qualité de l'air et MLOps. Code public, démos et résultats documentés." />
+        </Helmet>
+      )}
 
       {/* Hero */}
       <div ref={heroRef} className="projects-hero">

@@ -7,7 +7,7 @@ import { AcademyService } from "../services/academyService";
 import Desktop from "../components/os/Desktop";
 import "../styles/Academy.css";
 
-export default function Academy({ isWindow }) {
+export default function Academy({ isWindow, onOpenBootcamp }) {
   const [preRegCount, setPreRegCount] = useState(0);
 
   useEffect(() => {
@@ -82,7 +82,19 @@ export default function Academy({ isWindow }) {
                 <span style={{ fontSize: "12px", background: "rgba(255,255,255,0.05)", padding: "4px 10px", borderRadius: "4px", color: "#cbd5e1", border: "1px solid rgba(255,255,255,0.1)" }}>Docker</span>
                 <span style={{ fontSize: "12px", background: "rgba(255,255,255,0.05)", padding: "4px 10px", borderRadius: "4px", color: "#cbd5e1", border: "1px solid rgba(255,255,255,0.1)" }}>MLOps</span>
               </div>
-              <Link to="/academy/bootcamp" className="academy-cta-primary" style={{ width: "100%", textAlign: "center", background: "#6366f1", color: "#fff", padding: "14px", borderRadius: "8px", textDecoration: "none", fontWeight: "600", transition: "all 0.3s" }}>
+              <Link
+                to="/academy/bootcamp"
+                onClick={(e) => {
+                  // Inside the OS desktop, open Bootcamp as another window
+                  // instead of navigating (which would remount Desktop and close Academy).
+                  if (isWindow && onOpenBootcamp) {
+                    e.preventDefault();
+                    onOpenBootcamp();
+                  }
+                }}
+                className="academy-cta-primary"
+                style={{ width: "100%", textAlign: "center", background: "#6366f1", color: "#fff", padding: "14px", borderRadius: "8px", textDecoration: "none", fontWeight: "600", transition: "all 0.3s" }}
+              >
                 Découvrir le programme →
               </Link>
             </div>

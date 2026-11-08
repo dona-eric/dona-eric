@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Window({ title, onClose, children, defaultSize = { width: 800, height: 600 }, isActive = false }) {
+export default function Window({ title, onClose, onMinimize, children, defaultSize = { width: 800, height: 600 }, isActive = false, isMinimized = false, slot = 0 }) {
   const [isMaximized, setIsMaximized] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
 
   const toggleMaximize = () => setIsMaximized(!isMaximized);
-  const toggleMinimize = () => setIsMinimized(!isMinimized);
 
-  if (isMinimized) return null; // In a real OS, it would go to dock. For now, hide it.
+  if (isMinimized) return null; // Minimized windows are restored from the dock.
 
-  const windowStyle = isMaximized 
-    ? { top: '28px', left: '64px', width: 'calc(100vw - 64px)', height: 'calc(100vh - 28px)', borderRadius: 0 } 
-    : { width: defaultSize.width, height: defaultSize.height, borderRadius: 12 };
+  // Cascade offset: keeps every new window visibly offset from the previous one.
+  const offset = Math.min(slot, 4) * 20;
+
+  const windowStyle = isMaximized
+    ? { top: 0, left: 0, width: '100%', height: '100%', borderRadius: 0 }
+    : {
+        width: `min(${defaultSize.width}px, calc(100vw - 224px))`,
+        height: `min(${defaultSize.height}px, calc(100vh - 160px))`,
+        borderRadius: 12
+      };
 
   return (
     <motion.div
@@ -25,8 +30,8 @@ export default function Window({ title, onClose, children, defaultSize = { width
       className="os-window glass"
       style={{
         position: 'absolute',
-        top: isMaximized ? '0' : '10%',
-        left: isMaximized ? '0' : '15%',
+        top: isMaximized ? 0 : `calc(6% + ${offset}px)`,
+        left: isMaximized ? 0 : `calc(8% + ${offset}px)`,
         ...windowStyle,
         display: 'flex',
         flexDirection: 'column',
@@ -64,7 +69,7 @@ export default function Window({ title, onClose, children, defaultSize = { width
         
         <div style={{ position: 'absolute', right: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
           {/* Ubuntu Yaru Window Controls */}
-          <button onClick={toggleMinimize} style={{ border: 'none', color: '#ffffff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }}>
+          <button onClick={onMinimize} style={{ border: 'none', color: '#ffffff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} title="Minimize">
             <svg width="10" height="2" viewBox="0 0 10 2" fill="currentColor"><rect width="10" height="2" rx="1"/></svg>
           </button>
           <button onClick={toggleMaximize} style={{ border: 'none', color: '#ffffff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }}>
