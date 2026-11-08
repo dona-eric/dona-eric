@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Window({ title, onClose, onMinimize, children, defaultSize = { width: 800, height: 600 }, isActive = false, isMinimized = false, slot = 0 }) {
+export default function Window({ title, onClose, onMinimize, children, defaultSize = { width: 800, height: 600 }, isActive = false, isMinimized = false }) {
   const [isMaximized, setIsMaximized] = useState(false);
 
   const toggleMaximize = () => setIsMaximized(!isMaximized);
 
   if (isMinimized) return null; // Minimized windows are restored from the dock.
-
-  // Cascade offset: keeps every new window visibly offset from the previous one.
-  const offset = Math.min(slot, 4) * 20;
 
   const windowStyle = isMaximized
     ? { top: 0, left: 0, width: '100%', height: '100%', borderRadius: 0 }
@@ -30,8 +27,8 @@ export default function Window({ title, onClose, onMinimize, children, defaultSi
       className="os-window glass"
       style={{
         position: 'absolute',
-        top: isMaximized ? 0 : `calc(6% + ${offset}px)`,
-        left: isMaximized ? 0 : `calc(8% + ${offset}px)`,
+        top: isMaximized ? 0 : '6%',
+        left: isMaximized ? 0 : '8%',
         ...windowStyle,
         display: 'flex',
         flexDirection: 'column',

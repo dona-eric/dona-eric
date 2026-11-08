@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Window from './Window';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -25,19 +25,7 @@ export default function Desktop() {
   const [openWindows, setOpenWindows] = useState([]);
   const [activeWindow, setActiveWindow] = useState(null);
   const [minimizedWindows, setMinimizedWindows] = useState([]);
-  const [windowSlots, setWindowSlots] = useState({});
   const [showLauncher, setShowLauncher] = useState(false);
-  const slotOrder = useRef([]);
-
-  // Give every window a stable cascade slot so a newly opened window
-  // never sits exactly on top of the previous one. The ref keeps this
-  // idempotent under React StrictMode double-invocation.
-  const assignSlot = (windowId) => {
-    if (slotOrder.current.includes(windowId)) return;
-    const slot = slotOrder.current.length % 5;
-    slotOrder.current = [...slotOrder.current, windowId];
-    setWindowSlots(prev => ({ ...prev, [windowId]: slot }));
-  };
 
   const LAUNCHER_APPS = [
     { id: 'Ce PC', label: t('os.pc'), icon: <UbuntuMonitorIcon size={30} /> },
@@ -59,16 +47,17 @@ export default function Desktop() {
     else if (path === '/academy/bootcamp') windowToOpen = 'Bootcamp';
 
     if (windowToOpen) {
-      assignSlot(windowToOpen);
-      setOpenWindows(prev => prev.includes(windowToOpen) ? prev : [...prev, windowToOpen]);
+      // One window at a time: opening a new one closes the previous one.
+      setOpenWindows([windowToOpen]);
+      setMinimizedWindows([]);
       setActiveWindow(windowToOpen);
     }
   }, [location.pathname]);
 
   const handleOpenWindow = (windowId) => {
-    assignSlot(windowId);
-    setOpenWindows(prev => prev.includes(windowId) ? prev : [...prev, windowId]);
-    setMinimizedWindows(prev => prev.filter(w => w !== windowId));
+    // One window at a time: opening a new one closes the previous one.
+    setOpenWindows([windowId]);
+    setMinimizedWindows([]);
     setActiveWindow(windowId);
   };
 
@@ -160,7 +149,6 @@ export default function Desktop() {
               defaultSize={getSizeForWindow(windowId)}
               isActive={activeWindow === windowId}
               isMinimized={minimizedWindows.includes(windowId)}
-              slot={windowSlots[windowId] || 0}
             >
               {renderWindowContent(windowId, handleOpenWindow)}
             </Window>
