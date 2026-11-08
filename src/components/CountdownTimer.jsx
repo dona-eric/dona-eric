@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 // Target date set to 1 month and 1 week (37 days) from launch date (2026-07-27)
-const TARGET_DATE = new Date("2026-09-02T23:59:59").getTime();
+const TARGET_DATE = (() => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const candidates = [
+    new Date(year, 0, 15, 23, 59, 59),
+    new Date(year, 6, 15, 23, 59, 59),
+    new Date(year + 1, 0, 15, 23, 59, 59),
+  ];
+  return (candidates.find((d) => d > now) || candidates[2]).getTime();
+})();
 
 export function useCountdown(targetTimestamp = TARGET_DATE) {
   const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(targetTimestamp));

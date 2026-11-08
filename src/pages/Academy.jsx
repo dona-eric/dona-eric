@@ -8,7 +8,7 @@ import Desktop from "../components/os/Desktop";
 import "../styles/Academy.css";
 
 export default function Academy({ isWindow }) {
-  const [preRegCount, setPreRegCount] = useState(14);
+  const [preRegCount, setPreRegCount] = useState(0);
 
   useEffect(() => {
     AcademyService.getCount()
@@ -43,8 +43,14 @@ export default function Academy({ isWindow }) {
             <div style={{ fontSize: "12px", color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "8px", fontWeight: "600" }}>⏳ Fermeture des pré-inscriptions dans :</div>
             <CountdownTimer />
             <div style={{ fontSize: "14px", color: "#6ee7b7", fontWeight: "600", marginTop: "12px", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", display: "inline-block" }} />
-              <strong>{preRegCount}</strong> personnes déjà pré-inscrites
+              {preRegCount > 0 ? (
+                <>
+                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", display: "inline-block" }} />
+                  <span><strong>{preRegCount}</strong> personnes déjà pré-inscrites</span>
+                </>
+              ) : (
+                <span>Inscriptions ouvertes — places limitées</span>
+              )}
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ export const TRANSLATIONS = {
     nav: {
       home: "Accueil",
       projects: "Projets",
+      skills: "Compétences",
       about: "À propos",
       contact: "Contact",
       academy: "MLAcademy",
@@ -32,10 +33,10 @@ export const TRANSLATIONS = {
     },
     // Home Page
     home: {
-      badge: "Ingénieur IA & Data Scientist",
+      badge: "Data Scientist & ML Engineer · Ouvert aux opportunités",
       heroTitleLine1: "Concevoir le Futur",
       heroTitleLine2: "avec l'Intelligence Artificielle.",
-      heroSubtitle: "Spécialiste en Deep Learning, Computer Vision et Architectures RAG / LLM. Je transforme la donnée en systèmes intelligents de haute performance.",
+      heroSubtitle: "Je conçois des systèmes IA mesurables et déployables : NLP, modélisation prédictive, agents LLM et MLOps. De la donnée brute au service en production.",
       btnProjects: "Explorer mes Projets",
       btnContact: "Me Contacter",
       btnDesktop: "Lancer Ubuntu OS Portfolio",
@@ -113,6 +114,7 @@ export const TRANSLATIONS = {
     nav: {
       home: "Home",
       projects: "Projects",
+      skills: "Skills",
       about: "About",
       contact: "Contact",
       academy: "MLAcademy",
@@ -135,10 +137,10 @@ export const TRANSLATIONS = {
       power: "Power Off / Home"
     },
     home: {
-      badge: "AI Engineer & Data Scientist",
+      badge: "Data Scientist & ML Engineer · Open to opportunities",
       heroTitleLine1: "Designing the Future",
       heroTitleLine2: "with Artificial Intelligence.",
-      heroSubtitle: "Specialist in Deep Learning, Computer Vision, and RAG/LLM Architectures. Transforming complex data into high-performance intelligent systems.",
+      heroSubtitle: "I build measurable, deployable AI systems: NLP, predictive modeling, LLM agents and MLOps. From raw data to production services.",
       btnProjects: "Explore My Projects",
       btnContact: "Contact Me",
       btnDesktop: "Launch Ubuntu OS Portfolio",
@@ -210,6 +212,7 @@ export const TRANSLATIONS = {
     nav: {
       home: "Inicio",
       projects: "Proyectos",
+      skills: "Habilidades",
       about: "Sobre mí",
       contact: "Contacto",
       academy: "MLAcademy",
@@ -232,10 +235,10 @@ export const TRANSLATIONS = {
       power: "Apagar / Inicio"
     },
     home: {
-      badge: "Ingeniero de IA y Data Scientist",
+      badge: "Data Scientist & ML Engineer · Abierto a oportunidades",
       heroTitleLine1: "Diseñando el Futuro",
       heroTitleLine2: "con Inteligencia Artificial.",
-      heroSubtitle: "Especialista en Deep Learning, Visión por Computadora y Arquitecturas RAG/LLM. Transformando datos complejos en sistemas inteligentes de alto rendimiento.",
+      heroSubtitle: "Construyo sistemas de IA medibles y desplegables: NLP, modelado predictivo, agentes LLM y MLOps. Del dato bruto al servicio en producción.",
       btnProjects: "Explorar Mis Proyectos",
       btnContact: "Contáctame",
       btnDesktop: "Iniciar Ubuntu OS Portfolio",
@@ -307,6 +310,7 @@ export const TRANSLATIONS = {
     nav: {
       home: "ホーム",
       projects: "プロジェクト",
+      skills: "スキル",
       about: "自己紹介",
       contact: "お問い合わせ",
       academy: "MLAcademy",
@@ -329,10 +333,10 @@ export const TRANSLATIONS = {
       power: "電源オフ / ホーム"
     },
     home: {
-      badge: "AIエンジニア ＆ データサイエンティスト",
+      badge: "データサイエンティスト ＆ MLエンジニア · 求職中",
       heroTitleLine1: "人工知能で",
       heroTitleLine2: "未来をデザインする。",
-      heroSubtitle: "ディープラーニング、コンピュータビジョン、RAG/LLMアーキテクチャのスペシャリスト。複雑なデータを高性能なインテリジェントシステムへと変換します。",
+      heroSubtitle: "測定可能でデプロイ可能なAIシステムを構築します。NLP、予測モデリング、LLMエージェント、MLOps。生データから本番サービスまで。",
       btnProjects: "プロジェクトを見る",
       btnContact: "お問い合わせ",
       btnDesktop: "Ubuntu OS ポートフォリオを起動",

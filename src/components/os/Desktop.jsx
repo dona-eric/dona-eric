@@ -77,7 +77,19 @@ export default function Desktop() {
       backgroundColor: theme === 'light' ? '#f1f5f9' : '#000000',
     }}>
       <Helmet>
-        <title>Bureau — dona.ia</title>
+        <title>
+          {location.pathname.startsWith('/academy')
+            ? "MLAcademy — Formation IA & Data Science | Dona Eric KOULODJI"
+            : "À propos — Dona Eric KOULODJI | Data Scientist & ML Engineer"}
+        </title>
+        <meta
+          name="description"
+          content={
+            location.pathname.startsWith('/academy')
+              ? "MLAcademy : bootcamps, masterclasses et parcours en Data Science, Machine Learning et IA."
+              : "Parcours, expériences et compétences de Dona Eric KOULODJI, Data Scientist & ML Engineer : NLP, LLM/RAG et MLOps."
+          }
+        />
       </Helmet>
 
       {/* Background Image with lowered opacity */}
@@ -103,7 +115,7 @@ export default function Desktop() {
       }} />
 
       {/* Top Bar (Ubuntu GNOME) */}
-      <TopBar onPowerClick={() => navigate('/')} />
+      <TopBar onPowerClick={() => navigate('/')} onSiteClick={() => navigate('/')} />
 
       {/* Left Dock (Ubuntu GNOME) */}
       <LeftDock
@@ -143,7 +155,7 @@ export default function Desktop() {
   );
 }
 
-function TopBar({ onPowerClick }) {
+function TopBar({ onPowerClick, onSiteClick }) {
   const [time, setTime] = useState(new Date());
   const { lang, changeLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
@@ -176,6 +188,22 @@ function TopBar({ onPowerClick }) {
       boxShadow: theme === 'light' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <button
+          onClick={onSiteClick}
+          style={{
+            background: 'rgba(255,255,255,0.12)',
+            border: 'none',
+            color: 'inherit',
+            padding: '3px 10px',
+            borderRadius: '5px',
+            fontSize: '12px',
+            fontWeight: '600',
+            cursor: 'pointer'
+          }}
+          title="Revenir au portfolio classique"
+        >
+          ← Portfolio
+        </button>
         <span style={{ fontWeight: '700', letterSpacing: '0.5px' }}>Activities</span>
       </div>
 
@@ -339,13 +367,13 @@ function getSizeForWindow(windowId) {
 
 function renderWindowContent(windowId, onOpenWindow) {
   switch (windowId) {
-    case 'Ce PC': return <AboutContent />;
+    case 'Ce PC': return <AboutContent onOpenWindow={onOpenWindow} />;
     case 'Projets': return <Projects />;
     case 'Blog': return <Blog />;
     case 'Mon CV': return <CvContent />;
-    case 'Contact': return <Contact />;
-    case 'Academy': return <Academy onOpenBootcamp={() => onOpenWindow('Bootcamp')} />;
-    case 'Bootcamp': return <Bootcamp />;
+    case 'Contact': return <Contact isWindow />;
+    case 'Academy': return <Academy isWindow onOpenBootcamp={() => onOpenWindow('Bootcamp')} />;
+    case 'Bootcamp': return <Bootcamp isWindow />;
     default: return <div>Contenu non trouvé</div>;
   }
 }

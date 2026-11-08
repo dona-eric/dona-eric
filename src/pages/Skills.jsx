@@ -76,11 +76,11 @@ const SKILL_COLS = [
 
 const CERTS = [
   { tag: "education", title: "Licence en Physique", institution: "Université d'Abomey-Calavi", field: "Physique théorique", year: "2025", color: "var(--neon-purple)" },
+  { tag: "certification", title: "Machine Learning Engineer", institution: "Isheero / DataCamp", field: "ML Engineering", year: "2026", color: "var(--neon-cyan)" },
+  { tag: "certification", title: "Data Science", institution: "IBM / Africa TechUp Tour", field: "Data Science", year: "2024", color: "var(--neon-green)" },
   { tag: "certification", title: "ML Specialization", institution: "Coursera", field: "Supervised & Unsupervised ML", year: "2024", color: "var(--neon-cyan)" },
   { tag: "certification", title: "DL Specialization", institution: "DeepLearning.AI", field: "CNN · RNN · NLP", year: "2024", color: "var(--neon-pink)" },
-  { tag: "certification", title: "Data Science Pro", institution: "Coursera", field: "Advanced Analytics", year: "2025", color: "var(--neon-green)" },
-  { tag: "certification", title: "Create LLMs App", institution: "NVIDIA", field: "LLMs · Prompt Design", year: "2025", color: "var(--neon-green)" },
-  { tag: "certification", title: "Build RAG Agentic", institution: "NVIDIA", field: "Agentic RAG · Vector Search", year: "2026", color: "var(--neon-pink)" },
+  { tag: "certification", title: "Build RAG Agentic", institution: "NVIDIA", field: "Agentic RAG · Vector Search", year: "2026", color: "var(--neon-green)" },
 ];
 
 const TOOLS_TAGS = [
@@ -112,8 +112,8 @@ const TOOLS_TAGS = [
 ];
 
 const STATS = [
-  { v: "5+",   l: "SYSTÈMES IA LIVRÉS",     c: "var(--neon-cyan)", note: "En prod, pas en notebook" },
-  { v: "90%",  l: "PRÉCISION MOYENNE",    c: "var(--neon-pink)", note: "Sur projets réels" },
+  { v: "8",    l: "PROJETS AU PORTFOLIO",    c: "var(--neon-cyan)", note: "Dont 7 livrés, 1 en cours" },
+  { v: "3",    l: "SYSTÈMES EN PRODUCTION",  c: "var(--neon-pink)", note: "En ligne et accessibles" },
   { v: "<48h", l: "DÉMARRAGE PROJET",        c: "var(--neon-green)", note: "Après premier contact" },
 ];
 
@@ -124,8 +124,8 @@ export default function Skills() {
   return (
     <main className="skills-main">
       <Helmet>
-        <title>Compétences & Stack | Dona Eric</title>
-        <meta name="description" content="Stack technique complète : Python, PyTorch, React, Cloud AWS, MLOps et outils d'intelligence artificielle modernes." />
+        <title>Compétences & Stack — Dona Eric KOULODJI | Data Scientist & ML Engineer</title>
+        <meta name="description" content="Stack technique : Python, SQL, Scikit-Learn, PyTorch, NLP, agents LLM/RAG, FastAPI, Docker, MLflow et cloud." />
       </Helmet>
       <GenerativeBg />
       <div className="skills-container" style={{ position: "relative", zIndex: 2 }}>
@@ -224,20 +224,20 @@ export default function Skills() {
 
           <div className="skills-cta-badge">
             <span className="skills-cta-badge-dot" />
-            1 SLOT DISPONIBLE · DÉMARRAGE SOUS 48H
+            OUVERT AUX OPPORTUNITÉS · DÉMARRAGE SOUS 48H
           </div>
 
           <h2 className="skills-cta-title">
-            Vous avez un problème.<br />
-            <span className="gradient-text">J'ai la solution qu'il vous faut.</span>
+            Un besoin data ou IA ?<br />
+            <span className="gradient-text">Construisons la solution ensemble.</span>
           </h2>
 
           <p className="skills-cta-desc">
-            Réponse sous 24h · Devis gratuit · Zéro perte
+            Réponse sous 24h · Devis gratuit · Code et résultats documentés
           </p>
 
           <div className="skills-cta-actions">
-            <a href="https://wa.me/+2290151344289" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer"
               className="skills-cta-primary"
             >
               Démarrer mon projet →

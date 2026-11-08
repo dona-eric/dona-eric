@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import Desktop from "../components/os/Desktop";
 import GravatarQR from "../components/GravatarQR";
 
 export default function Contact({ isWindow }) {
@@ -10,6 +9,10 @@ export default function Contact({ isWindow }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.sender.trim() || !form.subject.trim() || !form.message.trim()) {
+      setStatus("invalid");
+      return;
+    }
     setStatus("sending");
     
     try {
@@ -35,10 +38,16 @@ export default function Contact({ isWindow }) {
   };
 
   const content = (
-    <div style={{ display: 'flex', height: '100%', width: '100%', fontFamily: "'Inter', sans-serif", color: '#e2e8f0', background: '#1e1e1e' }}>
+    <div className="contact-shell" style={{ display: 'flex', width: '100%', minHeight: isWindow ? '100%' : 'calc(100vh - 5rem)', fontFamily: "'Inter', sans-serif", color: '#e2e8f0', background: '#1e1e1e' }}>
+      <style>{`
+        @media (max-width: 720px) {
+          .contact-shell { flex-direction: column !important; }
+          .contact-sidebar { width: 100% !important; border-right: none !important; border-bottom: 1px solid #1a1a1a; }
+        }
+      `}</style>
       
       {/* Left Sidebar (Mail Folders) */}
-      <div style={{ 
+      <div className="contact-sidebar" style={{
         width: '240px', 
         background: '#242424', 
         borderRight: '1px solid #1a1a1a', 
@@ -118,6 +127,21 @@ export default function Contact({ isWindow }) {
           GitHub
         </a>
 
+        <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer"
+          style={{
+            display: 'flex', alignItems: 'center', gap: '12px',
+            padding: '10px 24px', background: 'transparent',
+            border: 'none', color: '#cbd5e1', textDecoration: 'none',
+            cursor: 'pointer', textAlign: 'left', borderLeft: '3px solid transparent',
+            transition: 'background 0.2s', fontSize: '14px'
+          }}
+          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+          onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+        >
+          <span style={{ fontSize: '16px', color: '#25D366' }}>◉</span>
+          WhatsApp direct
+        </a>
+
         <a href="mailto:donaerickoulodji@gmail.com"
           style={{
             display: 'flex', alignItems: 'center', gap: '12px',
@@ -168,7 +192,7 @@ export default function Contact({ isWindow }) {
                   opacity: status === "sending" ? 0.7 : 1
                 }}
               >
-                {status === "sending" ? "Envoi..." : status === "success" ? "Envoyé ✓" : status === "error" ? "Erreur" : "Envoyer"}
+                {status === "sending" ? "Envoi..." : status === "success" ? "Envoyé ✓" : status === "invalid" ? "Champs requis" : status === "error" ? "Erreur" : "Envoyer"}
               </button>
             </div>
 
@@ -223,14 +247,11 @@ export default function Contact({ isWindow }) {
     </div>
   );
 
-  if (!isWindow) {
-    return <Desktop />;
-  }
-
   return (
     <>
       <Helmet>
-        <title>Contact — dona.ia</title>
+        <title>Contact — Dona Eric KOULODJI</title>
+        <meta name="description" content="Contactez Dona Eric KOULODJI pour une opportunité en Data Science / Machine Learning, une collaboration ou une mission IA." />
       </Helmet>
       {content}
     </>

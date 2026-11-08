@@ -5,7 +5,7 @@ import "../styles/ChatWidget.css";
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Bonjour ! Je suis Dona. Comment puis-je vous aider ?" }
+    { role: "assistant", content: "Bonjour ! Je suis l'assistant IA de Dona. Posez-moi une question sur son parcours, ses projets ou ses compétences." }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);

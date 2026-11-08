@@ -4,10 +4,10 @@ import { CV_PDF_URL } from '../../../config/constants';
 
 const CV_DATA = {
   name: "Dona Eric KOULODJI",
-  title: "Machine Learning Engineer & MLOps Specialist",
-  location: "Abomey-Calavi, Bénin",
+  title: "Data Scientist & ML Engineer",
+  location: "Abomey-Calavi, Bénin · Remote",
   email: "donaerickoulodji@gmail.com",
-  phone: "+229 01 41 73 02 / +229 01 51 34 42 89",
+  phone: "+229 01 51 34 42 89",
   linkedin: "https://linkedin.com/in/dona-erick",
   github: "https://github.com/dona-eric",
   gravatar: "https://gravatar.com/donaerickoulodji",
@@ -16,8 +16,8 @@ const CV_DATA = {
 
   experiences: [
     {
-      period: "Sept 2025 – Présent",
-      role: "AI & Data Engineer",
+      period: "Sept 2025 – Fév 2026",
+      role: "AI & Data Engineer (Bénévolat)",
       company: "Datum Africa",
       location: "À distance",
       accent: "#f472b6",

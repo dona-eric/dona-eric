@@ -67,6 +67,10 @@ const Navigation = () => {
                 <span className={`nav-link-text ${isActive('/projects') ? 'active' : 'inactive'}`}>{t("nav.projects")}</span>
                 <div className={`nav-link-bar ${isActive('/projects') ? 'active' : 'inactive'}`} />
               </Link>
+              <Link to="/skills" className="nav-link">
+                <span className={`nav-link-text ${isActive('/skills') ? 'active' : 'inactive'}`}>{t("nav.skills") || "Skills"}</span>
+                <div className={`nav-link-bar ${isActive('/skills') ? 'active' : 'inactive'}`} />
+              </Link>
               <Link to="/about" className="nav-link">
                 <span className={`nav-link-text ${isActive('/about') ? 'active' : 'inactive'}`}>{t("nav.about")}</span>
                 <div className={`nav-link-bar ${isActive('/about') ? 'active' : 'inactive'}`} />
@@ -74,6 +78,10 @@ const Navigation = () => {
               <Link to="/contact" className="nav-link">
                 <span className={`nav-link-text ${isActive('/contact') ? 'active' : 'inactive'}`}>{t("nav.contact")}</span>
                 <div className={`nav-link-bar ${isActive('/contact') ? 'active' : 'inactive'}`} />
+              </Link>
+              <Link to="/blog" className="nav-link">
+                <span className={`nav-link-text ${isActive('/blog') ? 'active' : 'inactive'}`}>{t("nav.blog")}</span>
+                <div className={`nav-link-bar ${isActive('/blog') ? 'active' : 'inactive'}`} />
               </Link>
               <Link to="/academy" className="nav-link">
                 <span className={`nav-link-text ${isActive('/academy') ? 'active' : 'inactive'}`}>{t("nav.academy")}</span>
@@ -202,8 +210,10 @@ const Navigation = () => {
               <div className="mobile-menu-list">
                 <Link to="/" className={`mob-link ${isActive('/') ? "active" : "inactive"}`}>{t("nav.home")}</Link>
                 <Link to="/projects" className={`mob-link ${isActive('/projects') ? "active" : "inactive"}`}>{t("nav.projects")}</Link>
+                <Link to="/skills" className={`mob-link ${isActive('/skills') ? "active" : "inactive"}`}>{t("nav.skills") || "Skills"}</Link>
                 <Link to="/about" className={`mob-link ${isActive('/about') ? "active" : "inactive"}`}>{t("nav.about")}</Link>
                 <Link to="/contact" className={`mob-link ${isActive('/contact') ? "active" : "inactive"}`}>{t("nav.contact")}</Link>
+                <Link to="/blog" className={`mob-link ${isActive('/blog') ? "active" : "inactive"}`}>{t("nav.blog")}</Link>
                 <Link to="/academy" className={`mob-link ${isActive('/academy') ? "active" : "inactive"}`}>{t("nav.academy")}</Link>
               </div>
 

@@ -17,7 +17,7 @@ export const ACADEMY = {
     { value: "90", label: "jours" },
     { value: "40", label: "TP" },
     { value: "+10", label: "projets réels" },
-    { value: "1", label: "Certificat Reconnue" },
+    { value: "1", label: "Certificat de fin de parcours" },
   ]
 };
 
@@ -250,13 +250,13 @@ export const FAQ = [
 
 export const INSTRUCTOR = {
   name: "Eric KOULODJI",
-  title: "Data Scientist, ML Engineer et Student AI Researcher at Google DeepMind",
-  bio: "Physicien de formation, AI Engineer chez Datum Africa. Contributeur au Centre National d'Études Spatiales (CNES), mentor à Ubuntu Foundation et Founder de DTech-Africa. Spécialisé dans le déploiement de systèmes IA en production.",
+  title: "Data Scientist & ML Engineer · Fondateur de MLAcademy",
+  bio: "Physicien de formation, AI & Data Engineer (bénévolat) chez Datum Africa, contributeur au Centre National d'Études Spatiales (CNES), mentor à la DSA Summer School et fondateur de DTech-Africa / MLAcademy. Spécialisé dans les systèmes IA mesurables et déployés.",
   avatar: "/eric-dona.jpg",
   stats: [
-    { value: "5+", label: "Systèmes IA en prod" },
-    { value: "6+", label: "Projets livrés" },
-    { value: "10+", label: "Étudiants formés" },
+    { value: "3", label: "Systèmes IA en prod" },
+    { value: "8", label: "Projets livrés" },
+    { value: "6+", label: "Étudiants formés" },
   ],
   socials: {
     linkedin: "https://linkedin.com/in/dona-erick",

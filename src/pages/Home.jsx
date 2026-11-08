@@ -69,7 +69,7 @@ function StudentReviewsSection() {
           <span style={{ color: "rgba(255,255,255,0.2)" }}>•</span>
           <span style={{ color: "#a5b4fc", fontSize: "13px", fontWeight: "600" }}>🎓 MLAcademy & Bootcamps</span>
           <span style={{ color: "rgba(255,255,255,0.2)" }}>•</span>
-          <span style={{ color: "#6ee7b7", fontSize: "13px", fontWeight: "600" }}>100% Retours Vérifiés</span>
+          <span style={{ color: "#6ee7b7", fontSize: "13px", fontWeight: "600" }}>Avis publiés par les apprenants</span>
         </div>
 
         <div className="home-reviews-header-flex">

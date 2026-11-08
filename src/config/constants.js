@@ -2,21 +2,21 @@
 export const CV_PDF_URL = "/cv_dona_eric.pdf";
 
 export const PORTFOLIO = {
-  name: "Dona Eric",
-  title: "ML Engineer & Fondateur MLAcademy",
-  subtitle: "Transforming data into intelligent solutions",
-  description: "Specialized in Machine Learning, Data Science, and AI. Building impactful, data-driven solutions for organizations and innovators.",
-  location: "Abomey-Calavi, Benin",
+  name: "Dona Eric KOULODJI",
+  title: "Data Scientist & ML Engineer",
+  subtitle: "Des données aux systèmes IA en production",
+  description: "Data Scientist & ML Engineer spécialisé en NLP, modélisation prédictive et MLOps. Je conçois des systèmes IA mesurables, explicables et déployés.",
+  location: "Abomey-Calavi, Bénin · Remote",
   email: "donaerickoulodji@gmail.com",
-  phone: "+22901417302400",
+  phone: "+2290151344289",
 };
 
 export const SOCIAL_LINKS = [
   { name: "LinkedIn", url: "https://linkedin.com/in/dona-erick", icon: "linkedin" },
   { name: "GitHub", url: "https://github.com/dona-eric", icon: "github" },
-  { name: "Twitter", url: "https://twitter.com/ericschrodinger", icon: "twitter" },
+  { name: "Medium", url: "https://medium.com/@koulodjiric", icon: "medium" },
   { name: "Email", url: "mailto:donaerickoulodji@gmail.com", icon: "mail" },
-  { name: "WhatsApp", url: "https://wa.me/22901417302400", icon: "phone" },
+  { name: "WhatsApp", url: "https://wa.me/2290151344289", icon: "phone" },
 ];
 
 export const NAVIGATION = [
@@ -30,8 +30,8 @@ export const NAVIGATION = [
 ];
 
 export const CTA_BUTTON = {
-  label: "Start a Project",
-  url: "https://wa.me/22901417302400",
+  label: "Discuter d'une opportunité",
+  url: "https://wa.me/2290151344289",
 };
 
 export const SERVICES = [
@@ -62,10 +62,10 @@ export const SERVICES = [
 ];
 
 export const STATS = [
-  { label: "Projects Delivered", value: "10+" },
-  { label: "Client Satisfaction", value: "100%" },
-  { label: "Response Time", value: "24h" },
-  { label: "Years Experience", value: "5+" },
+  { label: "Projets livrés", value: "8" },
+  { label: "Systèmes en production", value: "3" },
+  { label: "Pays touchés", value: "3" },
+  { label: "Démarrage projet", value: "48h" },
 ];
 
 export const TESTIMONIALS = [

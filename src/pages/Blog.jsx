@@ -468,8 +468,8 @@ export default function Blog() {
   return (
     <>
       <Helmet>
-        <title>Blog & Produits | Dona Eric</title>
-        <meta name="description" content="Articles Medium, livres, produits numériques et masterclasses sur l'intelligence artificielle, le ML et le déploiement cloud par Dona Eric KOULODJI." />
+        <title>Blog & Produits — Dona Eric KOULODJI</title>
+        <meta name="description" content="Articles Medium, livres et produits numériques sur l'IA, le Machine Learning, les LLM et le déploiement cloud, par Dona Eric KOULODJI." />
       </Helmet>
       <div className="blog-main">
         {/* Grid + blobs */}

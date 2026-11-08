@@ -3,24 +3,24 @@ import { UbuntuFolderIcon, UbuntuFileIcon } from '../Icons';
 import '../../../styles/About.css';
 
 const STATS = [
-  { value: "5+", label: "SYSTÈMES EN PROD", note: "Déployés & Monitorés" },
+  { value: "3", label: "SYSTÈMES EN PROD", note: "Déployés & accessibles" },
+  { value: "8", label: "PROJETS", note: "Dont 7 livrés, 1 en cours" },
+  { value: "3", label: "PAYS TOUCHÉS", note: "Bénin · Nigeria · France" },
   { value: "06+", label: "ÉLÈVES FORMÉS", note: "MLAcademy Cohorte #1" },
-  { value: "3", label: "PAYS TOUCHÉS", note: "Bénin · Burkina-Faso · Sénégal" },
-  { value: "100%", label: "FOCUS PRODUCTION", note: "Zéro POC abandonné" },
 ];
 
 const VALUES = [
   {
     tag: "01", color: "#22d3ee",
-    title: "Livraison garantie",
-    desc: "Pas de réunions infinies. Un cahier des charges, un délai, un système qui tourne. Je livre en semaines, pas en trimestres.",
-    proof: "→ 06+ projets livrés · 0 POC abandonné"
+    title: "Livraison concrète",
+    desc: "Pas de réunions infinies. Un besoin, un délai, un système qui tourne. Je livre des projets testables, pas des slides.",
+    proof: "→ 8 projets · code public sur GitHub"
   },
   {
     tag: "02", color: "#f472b6",
     title: "Production-first",
     desc: "Chaque ligne de code est pensée pour le cloud, le monitoring et le scaling dès le départ — pas retrofittée après coup.",
-    proof: "→ Docker · MLflow · CI/CD · GCP / AWS"
+    proof: "→ Docker · MLflow · CI/CD · FastAPI"
   },
   {
     tag: "03", color: "#a78bfa",
@@ -32,56 +32,58 @@ const VALUES = [
 
 const EXPERIENCES = [
   {
-    role: "Data Scientist",
-    type: "Temps partiel",
-    company: "Sirius Club Association",
-    location: "Présentiel",
-    period: "04-06 Oct 2025",
-    accent: "#22d3ee",
-    status: "done",
-    tasks: [
-      { tag: "Architecture Data", desc: "Collecte des données qualité de l'air (NASA)" },
-      { tag: "Pipeline ML", desc: "Pipeline d'ingestion via FastAPI pour la modélisation" },
-      { tag: "Modélisation", desc: "XGBOOST 80% vs RandomForest 95% (risque overfitting)" }
-    ]
-  },
-  {
     role: "AI & Data Engineer",
-    type: "Temps partiel",
+    type: "Bénévolat",
     company: "Datum Africa",
     location: "À distance",
-    period: "Sept 2025 – Présent",
+    period: "Sept 2025 – Fév 2026",
     accent: "#f472b6",
-    status: "current",
+    status: "done",
     tasks: [
-      { tag: "Architecture", desc: "Modèles de BDD robustes (UML) pour systèmes scalables" },
-      { tag: "Pipelines", desc: "Collecte pour langues africaines (Igbo, Hausa) via PySpark" },
+      { tag: "Architecture", desc: "Modèles de bases de données (UML/PostgreSQL) pour systèmes scalables" },
+      { tag: "Pipelines", desc: "Collecte et traitement de corpus africains (Igbo, Hausa) via PySpark" },
+      { tag: "Collaboration", desc: "Workflows d'équipe et versioning via GitHub" },
     ],
   },
   {
     role: "Data Developer",
     type: "Bénévole",
-    company: "CNES — Centre Nat. d'Études Spatiales",
+    company: "CNES — Centre National d'Études Spatiales",
     location: "À distance · France",
     period: "Juil – Oct 2025",
     accent: "#a78bfa",
     status: "done",
     tasks: [
-      { tag: "Automatisation", desc: "Qualité de datasets satellites à grande échelle (> 10 Go)" },
-      { tag: "Optimisation", desc: "Données spatiales pour applications ML" },
+      { tag: "Qualité data", desc: "Pipelines de contrôle qualité de datasets satellites (> 10 Go)" },
+      { tag: "Modélisation", desc: "Random Forest pour la prédiction agricole sur données spatiales" },
+      { tag: "MLOps", desc: "Suivi et production avec DVC, MLflow et OpenTelemetry" },
     ],
   },
   {
-    role: "Intervenant & Mentor",
+    role: "Data Scientist",
+    type: "Mission courte",
+    company: "Sirius Club Association",
+    location: "Présentiel · Bénin",
+    period: "04 – 06 Oct 2025",
+    accent: "#22d3ee",
+    status: "done",
+    tasks: [
+      { tag: "Data", desc: "Collecte de données qualité de l'air et météo (NASA)" },
+      { tag: "Pipeline ML", desc: "Pipeline d'ingestion et d'inférence via FastAPI" },
+      { tag: "Modélisation", desc: "Benchmark XGBoost vs Random Forest avec contrôle du surapprentissage" },
+    ]
+  },
+  {
+    role: "Intervenant & Mentor ML",
     type: "Intervenant",
-    company: "DSA 2025 Summer School",
+    company: "DSA 2025 Summer School — Université d'Ibadan",
     location: "Nigeria",
-    period: "2025",
+    period: "02 – 05 Mai 2025",
     accent: "#34d399",
     status: "done",
     tasks: [
-      { tag: "Prédiction", desc: "Prédiction rendement riz via Unsupervised Learning" },
-      { tag: "Formation", desc: "20 étudiants internationaux formés en ML & Python" },
+      { tag: "Prédiction", desc: "Projet de prédiction du rendement du riz (unsupervised learning & séries temporelles)" },
+      { tag: "Formation", desc: "20+ étudiants internationaux formés en ML et Python" },
     ],
   },
 ];
@@ -108,10 +110,10 @@ export default function AboutContent({ onOpenWindow }) {
         </div>
         <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#fff', marginBottom: '4px', fontFamily: "'Space Grotesk', sans-serif", whiteSpace: 'nowrap' }}>Dona Eric KOULODJI</h2>
         <p style={{ fontSize: '13px', color: '#e95420', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '20px', fontWeight: '600' }}>
-          Machine Learning Engineer
+          Data Scientist &amp; ML Engineer
         </p>
-        <p style={{ fontSize: '14px', color: '#94a3b8', lineHeight: '1.7', maxWidth: '500px', margin: '0 auto', textAlign: 'left' }}>
-          Je conçois et déploie des systèmes de Machine Learning en production — pas des prototypes de notebooks. Mon approche : <strong style={{ color: '#e2e8f0' }}>modélisation → API → monitoring → scaling</strong>, en boucle continue.
+        <p style={{ fontSize: '14px', color: '#94a3b8', lineHeight: '1.7', maxWidth: '520px', margin: '0 auto', textAlign: 'left' }}>
+          Je conçois des systèmes de Machine Learning mesurables et déployables : <strong style={{ color: '#e2e8f0' }}>données → modèle → API → monitoring</strong>. Formation en physique théorique, spécialisation NLP, modélisation prédictive et agents LLM.
         </p>
       </div>
 
@@ -159,7 +161,7 @@ export default function AboutContent({ onOpenWindow }) {
           <UbuntuFolderIcon size={36} />
           <div>
             <div style={{ fontSize: '16px', fontWeight: '600', color: '#fff' }}>8 Projets</div>
-            <div style={{ fontSize: '12px', color: '#94a3b8' }}>ML · NLP · MLOps</div>
+            <div style={{ fontSize: '12px', color: '#94a3b8' }}>ML · NLP · LLM · MLOps</div>
           </div>
         </div>
 

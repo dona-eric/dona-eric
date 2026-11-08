@@ -104,30 +104,33 @@ export default function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const osRoutes = ['/about', '/projects', '/projets', '/contact', '/academy'];
+  const osRoutes = ['/about', '/academy'];
   const isDesktopOsRoute = osRoutes.some(r => routerLocation.pathname.toLowerCase().startsWith(r));
+
 
   return (
     <LanguageProvider>
       <ThemeProvider>
         <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col transition-colors duration-300">
           <Helmet>
-            <title>Dona Eric | Machine Learning Engineer</title>
-            <meta name="description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning, Deep Learning et MLOps. Expert Python et déploiement de modèles IA." />
+            <title>Dona Eric KOULODJI | Data Scientist & ML Engineer</title>
+            <meta name="description" content="Portfolio de Dona Eric KOULODJI, Data Scientist & ML Engineer : NLP, modélisation prédictive, agents LLM, RAG et MLOps. Projets déployés, code public et CV." />
+            <link rel="canonical" href="https://donerick.vercel.app" />
             
             {/* Open Graph / Facebook / LinkedIn */}
             <meta property="og:type" content="website" />
             <meta property="og:url" content="https://donerick.vercel.app" />
-            <meta property="og:title" content="Dona Eric | Data Scientist & ML Engineer" />
-            <meta property="og:description" content="Explorez mes projets en Intelligence Artificielle et Computer Vision." />
-            <meta property="og:image" content="https://donerick.vercel.app/og-image.png" /> 
+            <meta property="og:title" content="Dona Eric KOULODJI | Data Scientist & ML Engineer" />
+            <meta property="og:description" content="Systèmes IA mesurables et déployés : NLP, prédiction, agents LLM et MLOps." />
+            <meta property="og:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
+            <meta property="og:image:alt" content="Portrait de Dona Eric KOULODJI" />
 
             {/* Twitter */}
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:site" content="@EricSchrodinger" />
-            <meta name="twitter:title" content="Dona Eric | Data Scientist & ML Engineer" />
-            <meta name="twitter:description" content="Portfolio de Dona Eric : Projets avancés en Machine Learning et IA." />
-            <meta name="twitter:image" content="https://donerick.vercel.app/og-image.png" />
+            <meta name="twitter:title" content="Dona Eric KOULODJI | Data Scientist & ML Engineer" />
+            <meta name="twitter:description" content="Portfolio IA : NLP, modélisation prédictive, LLM/RAG et MLOps." />
+            <meta name="twitter:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
           </Helmet>
 
           <ScrollToTop />

@@ -84,7 +84,7 @@
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 24px;
   font-family: 'Inter', sans-serif;
 }
 
