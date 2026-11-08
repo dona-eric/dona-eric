@@ -357,7 +357,7 @@ export default function Projects() {
           </p>
 
           {/* Mini stats */}
-          <div className="projects-stats-grid" style={{ maxWidth: "600px", margin: "40px auto 0" }}>
+          <div className="projects-stats-grid" style={{ maxWidth: "760px", margin: "40px auto 0" }}>
             {[
               { v: `${PROJECTS.filter(p => p.status === "production").length}`, l: "En Production", c: "#10b981" },
               { v: `${PROJECTS.length}`, l: "Projets", c: "#6366f1" },
