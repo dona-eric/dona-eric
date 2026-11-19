@@ -56,9 +56,9 @@ export default function MasterclassSection() {
           {/* Stats rapides */}
           <div className="ms-stats">
             {[
-              { val: allEvents.length, label: "Événements", color: "#a855f7" },
-              { val: openCount, label: "Ouverts", color: "#10b981" },
-              { val: closedCount, label: "Réalisés", color: "#f59e0b" },
+              { val: allEvents.length, label: "Événements", color: "#8f7dff" },
+              { val: openCount, label: "Ouverts", color: "#d4ff3a" },
+              { val: closedCount, label: "Réalisés", color: "#ffc94a" },
             ].map(({ val, label, color }) => (
               <div key={label} className="glass ms-stat-card">
                 <div className="ms-stat-gradient" style={{
@@ -95,18 +95,18 @@ export default function MasterclassSection() {
 
           <div className="ms-filter-buttons">
             {[
-              { key: "all", label: `Tous (${allEvents.length})`, color: "#00d4ff" },
-              { key: "open", label: `Ouverts (${openCount})`, color: "#10b981" },
-              { key: "closed", label: `Terminés (${closedCount})`, color: "#f59e0b" },
+              { key: "all", label: `Tous (${allEvents.length})`, color: "#5ee6ff" },
+              { key: "open", label: `Ouverts (${openCount})`, color: "#d4ff3a" },
+              { key: "closed", label: `Terminés (${closedCount})`, color: "#ffc94a" },
             ].map(({ key, label, color }) => (
               <button
                 key={key}
                 onClick={() => setFilter(key)}
                 className="ms-filter-btn"
                 style={{
-                  border: `1px solid ${filter === key ? color + "60" : "rgba(255,255,255,0.1)"}`,
-                  background: filter === key ? color + "15" : "rgba(255,255,255,0.02)",
-                  color: filter === key ? color : "#94a3b8"
+                  border: `1px solid ${filter === key ? color + "60" : "color-mix(in srgb, var(--q-ink) 10%, transparent)"}`,
+                  background: filter === key ? color + "15" : "color-mix(in srgb, var(--q-ink) 2%, transparent)",
+                  color: filter === key ? color : "var(--q-ink-2)"
                 }}
               >
                 {label}
@@ -159,8 +159,8 @@ function NewsletterForm() {
         placeholder="votre@email.com"
         required
         className="ms-newsletter-input"
-        onFocus={(e) => e.currentTarget.style.borderColor = "rgba(0,212,255,0.5)"}
-        onBlur={(e) => e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"}
+        onFocus={(e) => e.currentTarget.style.borderColor = "rgba(94,230,255,0.5)"}
+        onBlur={(e) => e.currentTarget.style.borderColor = "color-mix(in srgb, var(--q-ink) 10%, transparent)"}
       />
       <button type="submit" className="ms-newsletter-btn">
         Me notifier →

@@ -55,9 +55,9 @@ export default function MasterclassCard({ masterclass, allEvents = [] }) {
             }}>{theme}</span>
             <span style={{
               padding: "4px 10px", borderRadius: 4, fontSize: 11,
-              fontFamily: "'Inter', sans-serif", fontWeight: 600, color: open ? "#10b981" : isLocked ? "#a78bfa" : "#64748b",
-              background: open ? "rgba(16,185,129,0.1)" : isLocked ? "rgba(167,139,250,0.1)" : "rgba(100,116,139,0.1)", 
-              border: `1px solid ${open ? "rgba(16,185,129,0.3)" : isLocked ? "rgba(167,139,250,0.3)" : "rgba(100,116,139,0.3)"}`, textTransform: "uppercase"
+              fontFamily: "'Inter', sans-serif", fontWeight: 600, color: open ? "#d4ff3a" : isLocked ? "#b6a8ff" : "var(--q-ink-3)",
+              background: open ? "rgba(212,255,58,0.1)" : isLocked ? "rgba(143,125,255,0.1)" : "color-mix(in srgb, var(--q-ink-3) 10%, transparent)", 
+              border: `1px solid ${open ? "rgba(212,255,58,0.3)" : isLocked ? "rgba(143,125,255,0.3)" : "color-mix(in srgb, var(--q-ink-3) 30%, transparent)"}`, textTransform: "uppercase"
             }}>
               {typeLabel}
             </span>
@@ -65,13 +65,13 @@ export default function MasterclassCard({ masterclass, allEvents = [] }) {
 
           <h3 style={{
             margin: "0 0 8px", fontSize: "20px", fontWeight: "700",
-            color: "#ffffff", lineHeight: "1.3", fontFamily: "'Space Grotesk', sans-serif"
+            color: "var(--q-ink)", lineHeight: "1.3", fontFamily: "var(--q-font-display)"
           }}>
             {title}
           </h3>
 
           <p style={{
-            margin: "0 0 20px", fontSize: "14px", color: "#94a3b8", lineHeight: "1.6", flexGrow: 1
+            margin: "0 0 20px", fontSize: "14px", color: "var(--q-ink-2)", lineHeight: "1.6", flexGrow: 1
           }}>
             {subtitle}
           </p>
@@ -82,9 +82,9 @@ export default function MasterclassCard({ masterclass, allEvents = [] }) {
             gap: "12px", 
             marginBottom: "24px",
             padding: "16px",
-            background: "rgba(255,255,255,0.02)",
+            background: "color-mix(in srgb, var(--q-ink) 2%, transparent)",
             borderRadius: "8px",
-            border: "1px solid rgba(255,255,255,0.05)"
+            border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)"
           }}>
             {[
               { icon: "📅", label: formatDate(date).split(" ").slice(0, 3).join(" ") },
@@ -92,7 +92,7 @@ export default function MasterclassCard({ masterclass, allEvents = [] }) {
               { icon: "⏱️", label: duration },
               { icon: "💻", label: format },
             ].map(({ icon, label }) => (
-              <div key={label} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#e2e8f0" }}>
+              <div key={label} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "var(--text-secondary)" }}>
                 <span style={{ flexShrink: 0, opacity: 0.8 }}>{icon}</span>
                 <span style={{ fontWeight: "500", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{label}</span>
               </div>
@@ -102,17 +102,17 @@ export default function MasterclassCard({ masterclass, allEvents = [] }) {
           {/* Speaker */}
           <div style={{
             display: "flex", alignItems: "center", gap: "12px",
-            paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.05)",
+            paddingTop: "16px", borderTop: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)",
             marginBottom: "24px",
           }}>
             <div style={{ width: "36px", height: "36px", borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: `1px solid ${themeColor}50` }}>
               {speaker.avatar 
                 ? <img src={speaker.avatar} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                : <span style={{ background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>👤</span>
+                : <span style={{ background: "color-mix(in srgb, var(--q-ink) 10%, transparent)", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>👤</span>
               }
             </div>
             <div style={{ overflow: "hidden" }}>
-              <p style={{ margin: 0, fontSize: "14px", fontWeight: "600", color: "#ffffff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{speaker.name}</p>
+              <p style={{ margin: 0, fontSize: "14px", fontWeight: "600", color: "var(--q-ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{speaker.name}</p>
             </div>
           </div>
 
@@ -141,16 +141,16 @@ export default function MasterclassCard({ masterclass, allEvents = [] }) {
                 to={`/formations/${masterclass.id}`}
                 style={{
                   display: "block",
-                  width: "100%", padding: "14px", background: "rgba(255,255,255,0.03)", 
-                  color: "#a78bfa", borderRadius: "8px", textAlign: "center", fontSize: "14px",
-                  fontFamily: "'Inter', sans-serif", fontWeight: "600", border: "1px solid rgba(167, 139, 250, 0.25)",
+                  width: "100%", padding: "14px", background: "color-mix(in srgb, var(--q-ink) 3%, transparent)", 
+                  color: "#b6a8ff", borderRadius: "8px", textAlign: "center", fontSize: "14px",
+                  fontFamily: "'Inter', sans-serif", fontWeight: "600", border: "1px solid rgba(143,125,255,0.25)",
                   textDecoration: "none", boxSizing: "border-box", transition: "all 0.2s ease"
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(167, 139, 250, 0.08)";
+                  e.currentTarget.style.background = "rgba(143,125,255,0.08)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                  e.currentTarget.style.background = "color-mix(in srgb, var(--q-ink) 3%, transparent)";
                 }}
               >
                 ⏳ Inscriptions à venir ({seats ? seats.registered : "..."} inscrits)
@@ -160,9 +160,9 @@ export default function MasterclassCard({ masterclass, allEvents = [] }) {
                 to={`/formations/${masterclass.id}`}
                 style={{
                   display: "block",
-                  width: "100%", padding: "14px", background: "rgba(255,255,255,0.03)", 
-                  color: "#64748b", borderRadius: "8px", textAlign: "center", fontSize: "14px",
-                  fontFamily: "'Inter', sans-serif", fontWeight: "500", border: "1px solid rgba(255,255,255,0.05)",
+                  width: "100%", padding: "14px", background: "color-mix(in srgb, var(--q-ink) 3%, transparent)", 
+                  color: "var(--q-ink-3)", borderRadius: "8px", textAlign: "center", fontSize: "14px",
+                  fontFamily: "'Inter', sans-serif", fontWeight: "500", border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)",
                   textDecoration: "none", boxSizing: "border-box"
                 }}>
                 🔒 Inscriptions closes ({seats ? seats.registered : "..."} inscrits)

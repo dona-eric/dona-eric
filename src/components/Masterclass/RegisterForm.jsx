@@ -136,8 +136,8 @@ export default function RegistrationForm({ masterclass, onClose, onSuccess }) {
           <button style={styles.closeBtn} onClick={onClose}>✕</button>
           <div style={{ textAlign: "center", padding: "40px 20px" }}>
             <div style={{ fontSize: 56, marginBottom: 16 }}>🔒</div>
-            <h2 style={{ color: "#f1f5f9", marginBottom: 8 }}>Inscriptions closes</h2>
-            <p style={{ color: "#94a3b8" }}>
+            <h2 style={{ color: "var(--q-ink)", marginBottom: 8 }}>Inscriptions closes</h2>
+            <p style={{ color: "var(--q-ink-2)" }}>
               La date de cette masterclass est passée. Consultez la prochaine session ci-dessous.
             </p>
           </div>
@@ -152,10 +152,10 @@ export default function RegistrationForm({ masterclass, onClose, onSuccess }) {
         {/* Header */}
         <div style={styles.modalHeader}>
           <div>
-            <p style={{ color: "#a78bfa", fontSize: 12, marginBottom: 4, fontWeight: 600 }}>
+            <p style={{ color: "#b6a8ff", fontSize: 12, marginBottom: 4, fontWeight: 600 }}>
               INSCRIPTION
             </p>
-            <h2 style={{ color: "#f1f5f9", fontSize: 18, margin: 0 }}>{masterclass.title}</h2>
+            <h2 style={{ color: "var(--q-ink)", fontSize: 18, margin: 0 }}>{masterclass.title}</h2>
           </div>
           <button style={styles.closeBtn} onClick={onClose}>✕</button>
         </div>
@@ -262,7 +262,7 @@ export default function RegistrationForm({ masterclass, onClose, onSuccess }) {
           {step === 2 && (
             <div>
               <p style={styles.stepLabel}>Étape 2 / 2 — Vérification des prérequis</p>
-              <p style={{ color: "#94a3b8", fontSize: 14, marginBottom: 20 }}>
+              <p style={{ color: "var(--q-ink-2)", fontSize: 14, marginBottom: 20 }}>
                 Cochez les prérequis que vous remplissez pour tirer le meilleur parti de la session.
               </p>
 
@@ -273,13 +273,13 @@ export default function RegistrationForm({ masterclass, onClose, onSuccess }) {
                     style={{
                       ...styles.prereqItem,
                       borderColor: prereqs[prereq.id]
-                        ? "#7c3aed"
+                        ? "#8f7dff"
                         : prereq.required
-                        ? "#4b5563"
-                        : "#374151",
+                        ? "var(--q-ink-3)"
+                        : "var(--q-surface-3)",
                       background: prereqs[prereq.id]
                         ? "rgba(124,58,237,0.1)"
-                        : "rgba(255,255,255,0.02)",
+                        : "color-mix(in srgb, var(--q-ink) 2%, transparent)",
                     }}
                   >
                     <input
@@ -288,12 +288,12 @@ export default function RegistrationForm({ masterclass, onClose, onSuccess }) {
                       onChange={() =>
                         setPrereqs({ ...prereqs, [prereq.id]: !prereqs[prereq.id] })
                       }
-                      style={{ accentColor: "#7c3aed", width: 18, height: 18 }}
+                      style={{ accentColor: "#8f7dff", width: 18, height: 18 }}
                     />
-                    <span style={{ color: "#e2e8f0", fontSize: 14 }}>
+                    <span style={{ color: "var(--text-secondary)", fontSize: 14 }}>
                       {prereq.label}
                       {prereq.required && (
-                        <span style={{ color: "#a78bfa", marginLeft: 6, fontSize: 11 }}>
+                        <span style={{ color: "#b6a8ff", marginLeft: 6, fontSize: 11 }}>
                           *obligatoire
                         </span>
                       )}
@@ -331,26 +331,26 @@ export default function RegistrationForm({ masterclass, onClose, onSuccess }) {
           {step === 3 && (
             <div style={{ textAlign: "center", padding: "20px 0" }}>
               <div style={styles.successIcon}>🎉</div>
-              <h2 style={{ color: "#f1f5f9", marginBottom: 8 }}>Inscription confirmée !</h2>
-              <p style={{ color: "#94a3b8", marginBottom: 16 }}>
-                Un email de confirmation a été envoyé à <strong style={{ color: "#a78bfa" }}>{form.email}</strong>.
+              <h2 style={{ color: "var(--q-ink)", marginBottom: 8 }}>Inscription confirmée !</h2>
+              <p style={{ color: "var(--q-ink-2)", marginBottom: 16 }}>
+                Un email de confirmation a été envoyé à <strong style={{ color: "#b6a8ff" }}>{form.email}</strong>.
               </p>
               <div style={styles.successCard}>
-                <p style={{ color: "#e2e8f0", margin: "4px 0" }}>
+                <p style={{ color: "var(--text-secondary)", margin: "4px 0" }}>
                   📅 {new Date(masterclass.date).toLocaleDateString("fr-FR", {
                     weekday: "long", day: "numeric", month: "long", year: "numeric"
                   })}
                 </p>
-                <p style={{ color: "#e2e8f0", margin: "4px 0" }}>
+                <p style={{ color: "var(--text-secondary)", margin: "4px 0" }}>
                   ⏰ {new Date(masterclass.date).toLocaleTimeString("fr-FR", {
                     hour: "2-digit", minute: "2-digit"
                   })}
                 </p>
-                <p style={{ color: "#e2e8f0", margin: "4px 0" }}>
+                <p style={{ color: "var(--text-secondary)", margin: "4px 0" }}>
                   💻 {masterclass.platform}
                 </p>
               </div>
-              <p style={{ color: "#64748b", fontSize: 13 }}>
+              <p style={{ color: "var(--q-ink-3)", fontSize: 13 }}>
                 Vérifiez vos spams si vous ne recevez pas l'email sous 5 minutes.
               </p>
               <button style={{ ...styles.primaryBtn, marginTop: 16 }} onClick={onClose}>
@@ -372,17 +372,17 @@ const styles = {
     justifyContent: "center", zIndex: 1000, padding: 16,
   },
   modal: {
-    background: "#0f172a", borderRadius: 20, width: "100%", maxWidth: 520,
+    background: "var(--q-surface)", borderRadius: 20, width: "100%", maxWidth: 520,
     maxHeight: "90vh", overflowY: "auto", border: "1px solid rgba(124,58,237,0.3)",
     boxShadow: "0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,58,237,0.1)",
   },
   modalHeader: {
     display: "flex", alignItems: "flex-start", justifyContent: "space-between",
-    padding: "20px 24px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)",
+    padding: "20px 24px 16px", borderBottom: "1px solid color-mix(in srgb, var(--q-ink) 6%, transparent)",
   },
   modalBody: { padding: "20px 24px 24px" },
   closeBtn: {
-    background: "rgba(255,255,255,0.08)", border: "none", color: "#94a3b8",
+    background: "color-mix(in srgb, var(--q-ink) 8%, transparent)", border: "none", color: "var(--q-ink-2)",
     width: 32, height: 32, borderRadius: 8, cursor: "pointer", fontSize: 16,
     display: "flex", alignItems: "center", justifyContent: "center",
   },
@@ -390,37 +390,37 @@ const styles = {
     height: 3, background: "rgba(124,58,237,0.2)", position: "relative",
   },
   progressFill: {
-    height: "100%", background: "linear-gradient(90deg, #7c3aed, #a78bfa)",
+    height: "100%", background: "linear-gradient(90deg, #8f7dff, #b6a8ff)",
     transition: "width 0.4s ease", borderRadius: 2,
   },
-  stepLabel: { color: "#64748b", fontSize: 12, marginBottom: 16, fontWeight: 600 },
+  stepLabel: { color: "var(--q-ink-3)", fontSize: 12, marginBottom: 16, fontWeight: 600 },
   row: { display: "flex", gap: 12 },
   field: { flex: 1, marginBottom: 14 },
-  label: { display: "block", color: "#94a3b8", fontSize: 13, marginBottom: 6, fontWeight: 500 },
+  label: { display: "block", color: "var(--q-ink-2)", fontSize: 13, marginBottom: 6, fontWeight: 500 },
   input: {
-    width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
-    borderRadius: 10, padding: "10px 14px", color: "#f1f5f9", fontSize: 14,
+    width: "100%", background: "color-mix(in srgb, var(--q-ink) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--q-ink) 10%, transparent)",
+    borderRadius: 10, padding: "10px 14px", color: "var(--q-ink)", fontSize: 14,
     outline: "none", boxSizing: "border-box",
     transition: "border-color 0.2s",
   },
   primaryBtn: {
-    width: "100%", background: "linear-gradient(135deg, #7c3aed, #4f46e5)",
+    width: "100%", background: "linear-gradient(135deg, #8f7dff, #8f7dff)",
     border: "none", borderRadius: 12, padding: "14px", color: "white",
     fontSize: 15, fontWeight: 600, cursor: "pointer", marginTop: 8,
     transition: "opacity 0.2s, transform 0.1s",
   },
   secondaryBtn: {
-    background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-    borderRadius: 12, padding: "14px 20px", color: "#94a3b8",
+    background: "color-mix(in srgb, var(--q-ink) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--q-ink) 10%, transparent)",
+    borderRadius: 12, padding: "14px 20px", color: "var(--q-ink-2)",
     fontSize: 14, cursor: "pointer",
   },
   errorMsg: {
-    color: "#f87171", background: "rgba(248,113,113,0.1)", borderRadius: 8,
+    color: "#ff5d5d", background: "rgba(248,113,113,0.1)", borderRadius: 8,
     padding: "10px 14px", fontSize: 13, marginTop: 8,
   },
   urgencyBadge: {
-    background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.3)",
-    color: "#fbbf24", borderRadius: 8, padding: "8px 12px", fontSize: 13,
+    background: "rgba(255,201,74,0.15)", border: "1px solid rgba(255,201,74,0.3)",
+    color: "#ffc94a", borderRadius: 8, padding: "8px 12px", fontSize: 13,
     marginBottom: 16, textAlign: "center",
   },
   prereqItem: {

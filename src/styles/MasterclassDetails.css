@@ -2,14 +2,14 @@
 
 .mdetails-main {
   font-family: 'Inter', sans-serif;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   padding-bottom: 100px;
 }
 
 /* Hero Section */
 .mdetails-hero {
   padding: 100px 24px 60px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid color-mix(in srgb, var(--q-ink) 5%, transparent);
 }
 
 .mdetails-hero-content {
@@ -21,7 +21,7 @@
 .mdetails-back-link {
   display: inline-block;
   margin-bottom: 40px;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -29,7 +29,7 @@
 }
 
 .mdetails-back-link:hover {
-  color: #ffffff;
+  color: var(--q-ink);
 }
 
 .mdetails-badges {
@@ -50,9 +50,9 @@
 
 .mdetails-badge-format {
   padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #cbd5e1;
+  background: color-mix(in srgb, var(--q-ink) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--q-ink) 10%, transparent);
+  color: var(--text-secondary);
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
@@ -61,15 +61,15 @@
 .mdetails-title {
   font-size: clamp(36px, 5vw, 56px);
   font-weight: 800;
-  color: #ffffff;
+  color: var(--q-ink);
   line-height: 1.1;
   margin-bottom: 24px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
 }
 
 .mdetails-subtitle {
   font-size: 18px;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   line-height: 1.6;
   max-width: 700px;
   margin: 0 auto;
@@ -90,24 +90,24 @@
 .mdetails-meta-label {
   display: block;
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .mdetails-meta-value {
   font-size: 16px;
-  color: #ffffff;
+  color: var(--q-ink);
   font-weight: bold;
 }
 
 .mdetails-meta-value.price {
-  color: #10b981;
+  color: var(--q-accent-text);
 }
 
 .mdetails-meta-divider {
   width: 1px;
-  background: rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--q-ink) 10%, transparent);
 }
 
 /* Layout */
@@ -123,15 +123,15 @@
 /* Left Column */
 .mdetails-section-title {
   font-size: 24px;
-  color: #ffffff;
+  color: var(--q-ink);
   font-weight: 700;
   margin-bottom: 20px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
 }
 
 .mdetails-description {
   font-size: 16px;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   line-height: 1.8;
   margin-bottom: 40px;
   white-space: pre-line;
@@ -139,7 +139,7 @@
 
 .mdetails-subsection-title {
   font-size: 20px;
-  color: #ffffff;
+  color: var(--q-ink);
   font-weight: 700;
   margin-bottom: 16px;
 }
@@ -147,7 +147,7 @@
 .mdetails-objectives {
   padding-left: 20px;
   margin-bottom: 40px;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .mdetails-objectives li {
@@ -186,7 +186,7 @@
 
 .mdetails-program-title {
   font-size: 16px;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -194,10 +194,10 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: color-mix(in srgb, var(--q-ink) 3%, transparent);
   padding: 20px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid color-mix(in srgb, var(--q-ink) 5%, transparent);
 }
 
 .mdetails-speaker-avatar {
@@ -210,11 +210,11 @@
 .mdetails-speaker-name {
   font-weight: 700;
   font-size: 18px;
-  color: #ffffff;
+  color: var(--q-ink);
 }
 
 .mdetails-speaker-title {
-  color: #94a3b8;
+  color: var(--q-ink-2);
   font-size: 14px;
   margin-top: 4px;
 }
@@ -223,9 +223,9 @@
 .mdetails-form-card {
   position: sticky;
   top: 100px;
-  background: rgba(15, 23, 42, 0.6);
+  background: color-mix(in srgb, var(--q-surface) 60%, transparent);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--q-ink) 10%, transparent);
   border-radius: 16px;
   padding: 32px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -233,15 +233,15 @@
 
 .mdetails-form-title {
   font-size: 22px;
-  color: #ffffff;
+  color: var(--q-ink);
   font-weight: 700;
   margin-bottom: 8px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
 }
 
 .mdetails-form-desc {
   font-size: 14px;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   margin-bottom: 24px;
 }
 
@@ -253,7 +253,7 @@
 
 .mdetails-error-title {
   font-size: 2rem;
-  color: #ef4444;
+  color: var(--q-danger);
 }
 
 .mdetails-error-link {

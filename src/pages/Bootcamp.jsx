@@ -6,11 +6,9 @@ import {
   COMMUNITY, FORM_OPTIONS,
 } from "../config/academy.config";
 import { AcademyService } from "../services/academyService";
-import GenerativeBg from "../components/GenerativeBg";
-import Desktop from "../components/os/Desktop";
 import "../styles/Academy.css";
 
-export default function Bootcamp({ isWindow }) {
+export default function Bootcamp() {
   const [preRegCount, setPreRegCount] = useState(0);
 
   useEffect(() => {
@@ -20,8 +18,7 @@ export default function Bootcamp({ isWindow }) {
   }, []);
 
   const content = (
-    <div className="academy-main" style={isWindow ? { minHeight: "100%", padding: 0 } : {}}>
-      {!isWindow && <GenerativeBg />}
+    <div className="academy-main" >
 
       {/* ══════════════════ HERO ══════════════════ */}
       <section className="academy-hero">
@@ -40,7 +37,7 @@ export default function Bootcamp({ isWindow }) {
 
           <div className="academy-hero-tags">
             {ACADEMY.badges.map((b) => (
-              <span key={b} className="academy-hero-tag" style={{ border: "1px solid rgba(99,102,241,0.3)", background: "rgba(99,102,241,0.1)", color: "#a5b4fc" }}>
+              <span key={b} className="academy-hero-tag" style={{ border: "1px solid rgba(143,125,255,0.3)", background: "rgba(143,125,255,0.1)", color: "#b6a8ff" }}>
                 ✓ {b}
               </span>
             ))}
@@ -64,12 +61,12 @@ export default function Bootcamp({ isWindow }) {
       </section>
 
       {/* ══════════════════ STATS / PROGRESSION ══════════════════ */}
-      <section style={{ background: "rgba(0,0,0,0.2)", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <section style={{ background: "rgba(0,0,0,0.2)", borderTop: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)", borderBottom: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "24px 48px" }}>
           {ACADEMY.stats.map((stat, i) => (
             <div key={i} style={{ textAlign: "center" }}>
-              <div style={{ fontSize: "32px", fontWeight: "700", color: "#f8fafc", fontFamily: "'Space Grotesk', sans-serif" }}>{stat.value}</div>
-              <div style={{ fontSize: "14px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", fontWeight: "500" }}>{stat.label}</div>
+              <div style={{ fontSize: "32px", fontWeight: "700", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{stat.value}</div>
+              <div style={{ fontSize: "14px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "1px", fontWeight: "500" }}>{stat.label}</div>
             </div>
           ))}
         </div>
@@ -83,8 +80,8 @@ export default function Bootcamp({ isWindow }) {
           <span className="gradient-text">{MISSION.title}</span>
         </h2>
 
-        <div className="academy-story-content" style={{ background: "rgba(15,23,42,0.6)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "24px", padding: "40px", maxWidth: "800px", margin: "0 auto", textAlign: "left", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}>
-          <p style={{ fontSize: "18px", color: "#e2e8f0", lineHeight: "1.8", marginBottom: "24px" }}>
+        <div className="academy-story-content" style={{ background: "color-mix(in srgb, var(--q-surface) 60%, transparent)", border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)", borderRadius: "24px", padding: "40px", maxWidth: "800px", margin: "0 auto", textAlign: "left", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}>
+          <p style={{ fontSize: "18px", color: "var(--text-secondary)", lineHeight: "1.8", marginBottom: "24px" }}>
             {MISSION.problem}
           </p>
           <div className="academy-why-highlight" style={{ marginBottom: "24px" }}>
@@ -92,7 +89,7 @@ export default function Bootcamp({ isWindow }) {
               <span key={t} className="academy-why-pill">{t}</span>
             ))}
           </div>
-          <p style={{ fontSize: "18px", color: "#e2e8f0", lineHeight: "1.8", paddingLeft: "16px", borderLeft: "4px solid #6366f1" }}>
+          <p style={{ fontSize: "18px", color: "var(--text-secondary)", lineHeight: "1.8", paddingLeft: "16px", borderLeft: "4px solid #8f7dff" }}>
             {MISSION.vision}
           </p>
           <div className="academy-why-highlight" style={{ marginTop: "24px" }}>
@@ -188,7 +185,7 @@ export default function Bootcamp({ isWindow }) {
                 {/* Tech Stack */}
                 <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "16px" }}>
                   {track.stack.map((tech, idx) => (
-                    <span key={idx} style={{ fontSize: "12px", background: "rgba(255,255,255,0.06)", padding: "2px 8px", borderRadius: "4px", color: "#cbd5e1" }}>
+                    <span key={idx} style={{ fontSize: "12px", background: "color-mix(in srgb, var(--q-ink) 6%, transparent)", padding: "2px 8px", borderRadius: "4px", color: "var(--text-secondary)" }}>
                       {tech}
                     </span>
                   ))}
@@ -196,8 +193,8 @@ export default function Bootcamp({ isWindow }) {
 
                 {/* Outcomes */}
                 <div style={{ marginBottom: "16px" }}>
-                  <div style={{ fontSize: "13px", color: "#64748b", marginBottom: "8px", fontWeight: "600", textTransform: "uppercase" }}>Vous serez capable de :</div>
-                  <ul style={{ margin: 0, paddingLeft: "16px", color: "#94a3b8", fontSize: "14px", display: "flex", flexDirection: "column", gap: "6px" }}>
+                  <div style={{ fontSize: "13px", color: "var(--q-ink-3)", marginBottom: "8px", fontWeight: "600", textTransform: "uppercase" }}>Vous serez capable de :</div>
+                  <ul style={{ margin: 0, paddingLeft: "16px", color: "var(--q-ink-2)", fontSize: "14px", display: "flex", flexDirection: "column", gap: "6px" }}>
                     {track.learningOutcomes.map((outcome, idx) => (
                       <li key={idx}>{outcome}</li>
                     ))}
@@ -206,9 +203,9 @@ export default function Bootcamp({ isWindow }) {
 
                 {/* Projects */}
                 {track.projects.length > 0 && (
-                  <div style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: "8px", padding: "12px 16px", marginTop: "16px" }}>
-                    <div style={{ fontSize: "13px", color: "#8b5cf6", marginBottom: "6px", fontWeight: "600" }}>🚀 PROJETS :</div>
-                    <ul style={{ margin: 0, paddingLeft: "16px", color: "#cbd5e1", fontSize: "14px" }}>
+                  <div style={{ background: "rgba(143,125,255,0.05)", border: "1px solid rgba(143,125,255,0.15)", borderRadius: "8px", padding: "12px 16px", marginTop: "16px" }}>
+                    <div style={{ fontSize: "13px", color: "#8f7dff", marginBottom: "6px", fontWeight: "600" }}>🚀 PROJETS :</div>
+                    <ul style={{ margin: 0, paddingLeft: "16px", color: "var(--text-secondary)", fontSize: "14px" }}>
                       {track.projects.map((proj, idx) => (
                         <li key={idx}>{proj}</li>
                       ))}
@@ -413,12 +410,6 @@ export default function Bootcamp({ isWindow }) {
     </div>
   );
 
-  // Route directe (/academy/bootcamp) → afficher le bureau Ubuntu
-  if (!isWindow) {
-    return <Desktop />;
-  }
-
-  // Ouvert dans une fenêtre du bureau → afficher le contenu
   return content;
 }
 
@@ -483,7 +474,7 @@ function RegistrationForm({ onSuccess }) {
           <div className="academy-form-success-icon">🎉</div>
           <h3>Pré-inscription confirmée !</h3>
           <p>
-            Un email de bienvenue a été envoyé à <strong style={{ color: "#a5b4fc" }}>{form.email}</strong>.<br />
+            Un email de bienvenue a été envoyé à <strong style={{ color: "#b6a8ff" }}>{form.email}</strong>.<br />
             Nous vous contacterons dès l'ouverture officielle des inscriptions.
           </p>
         </div>
