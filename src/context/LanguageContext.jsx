@@ -33,13 +33,12 @@ export const TRANSLATIONS = {
     },
     // Home Page
     home: {
-      badge: "Data Scientist & ML Engineer · Ouvert aux opportunités",
+      badge: "Statisticien & AI Engineer · Becotrac (Re) Assurances",
       heroTitleLine1: "Concevoir le Futur",
       heroTitleLine2: "avec l'Intelligence Artificielle.",
-      heroSubtitle: "Je conçois des systèmes IA mesurables et déployables : NLP, modélisation prédictive, agents LLM et MLOps. De la donnée brute au service en production.",
+      heroSubtitle: "Statisticien & AI Engineer chez Becotrac (Re) Assurances, Je suis actuellement en Master  Statistiques Appliquées au Vivant. Je transforme les données en décisions : modélisation statistique, machine learning et systèmes IA déployés.",
       btnProjects: "Explorer mes Projets",
       btnContact: "Me Contacter",
-      btnDesktop: "Lancer Ubuntu OS Portfolio",
       skillsTitle: "Domaines d'Expertise & Technologies",
       skillsSubtitle: "Des algorithmes de pointe à l'intégration cloud en production",
       featuredTitle: "Projets à la Une",
@@ -137,10 +136,10 @@ export const TRANSLATIONS = {
       power: "Power Off / Home"
     },
     home: {
-      badge: "Data Scientist & ML Engineer · Open to opportunities",
+      badge: "Statistician & AI Engineer · Becotrac (Re) Assurances",
       heroTitleLine1: "Designing the Future",
       heroTitleLine2: "with Artificial Intelligence.",
-      heroSubtitle: "I build measurable, deployable AI systems: NLP, predictive modeling, LLM agents and MLOps. From raw data to production services.",
+      heroSubtitle: "Statistician & AI Engineer at Becotrac (Re) Assurances, and first-year Master's student in Applied Statistics for Life Sciences. I turn data into decisions: statistical modeling, machine learning and deployed AI systems.",
       btnProjects: "Explore My Projects",
       btnContact: "Contact Me",
       btnDesktop: "Launch Ubuntu OS Portfolio",
@@ -235,10 +234,10 @@ export const TRANSLATIONS = {
       power: "Apagar / Inicio"
     },
     home: {
-      badge: "Data Scientist & ML Engineer · Abierto a oportunidades",
+      badge: "Estadístico & AI Engineer · Becotrac (Re) Assurances",
       heroTitleLine1: "Diseñando el Futuro",
       heroTitleLine2: "con Inteligencia Artificial.",
-      heroSubtitle: "Construyo sistemas de IA medibles y desplegables: NLP, modelado predictivo, agentes LLM y MLOps. Del dato bruto al servicio en producción.",
+      heroSubtitle: "Estadístico & AI Engineer en Becotrac (Re) Assurances y estudiante de Máster 1 en Estadística Aplicada a las Ciencias de la Vida. Convierto los datos en decisiones: modelado estadístico, machine learning y sistemas de IA desplegados.",
       btnProjects: "Explorar Mis Proyectos",
       btnContact: "Contáctame",
       btnDesktop: "Iniciar Ubuntu OS Portfolio",
@@ -333,10 +332,10 @@ export const TRANSLATIONS = {
       power: "電源オフ / ホーム"
     },
     home: {
-      badge: "データサイエンティスト ＆ MLエンジニア · 求職中",
+      badge: "統計家 ＆ AIエンジニア · Becotrac (Re) Assurances",
       heroTitleLine1: "人工知能で",
       heroTitleLine2: "未来をデザインする。",
-      heroSubtitle: "測定可能でデプロイ可能なAIシステムを構築します。NLP、予測モデリング、LLMエージェント、MLOps。生データから本番サービスまで。",
+      heroSubtitle: "Becotrac (Re) Assurances の統計家・AIエンジニア。生命科学応用統計の修士1年に在籍。統計モデリング、機械学習、本番運用のAIシステムで、データを意思決定に変えます。",
       btnProjects: "プロジェクトを見る",
       btnContact: "お問い合わせ",
       btnDesktop: "Ubuntu OS ポートフォリオを起動",

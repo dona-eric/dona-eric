@@ -1,156 +1,144 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Navigation from "./components/Navigation";
-import PageLoader from "./components/PageLoader";
-import ChatWidget from "./components/ChatWidget";
-import { Helmet } from 'react-helmet-async';
-import { AnimatePresence, motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
+import { AnimatePresence } from "framer-motion";
 import { Analytics } from "@vercel/analytics/react";
+
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
+import ChatWidget from "./components/ChatWidget";
 import { LanguageProvider } from "./context/LanguageContext";
-import { ThemeProvider } from "./context/ThemeContext";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import { MotionProvider, useMotion, fieldBus } from "./quantum/MotionContext";
+import PageTransition from "./quantum/PageTransition";
+import Intro from "./quantum/Intro";
+import Cursor from "./quantum/Cursor";
+import "./quantum/quantum.css";
+import "./styles/legacy-align.css";
 
-const TurbojetBg = lazy(() => import("./components/TurbojetBg"));
+const QuantumField = lazy(() => import("./quantum/QuantumField"));
 
+const pages = {
+  Home: () => import("./pages/Home"),
+  About: () => import("./pages/About"),
+  Skills: () => import("./pages/Skills"),
+  Projects: () => import("./pages/Projects"),
+  Contact: () => import("./pages/Contact"),
+  Blog: () => import("./pages/Blog"),
+  MasterclassDetails: () => import("./pages/MasterclassDetails"),
+  NotFound: () => import("./pages/NotFound"),
+  Academy: () => import("./pages/Academy"),
+  Bootcamp: () => import("./pages/Bootcamp"),
+};
 
-// Lazy load pages
-const Home = lazy(() => import("./pages/Home"));
-const About = lazy(() => import("./pages/About"));
-const Skills = lazy(() => import("./pages/Skills"));
-const Projects = lazy(() => import("./pages/Projects"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Blog = lazy(() => import("./pages/Blog"));
-const MasterclassDetails = lazy(() => import("./pages/MasterclassDetails"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const Academy = lazy(() => import("./pages/Academy"));
-const Bootcamp = lazy(() => import("./pages/Bootcamp"));
+const Home = lazy(pages.Home);
+const About = lazy(pages.About);
+const Skills = lazy(pages.Skills);
+const Projects = lazy(pages.Projects);
+const Contact = lazy(pages.Contact);
+const Blog = lazy(pages.Blog);
+const MasterclassDetails = lazy(pages.MasterclassDetails);
+const NotFound = lazy(pages.NotFound);
+const Academy = lazy(pages.Academy);
+const Bootcamp = lazy(pages.Bootcamp);
 
-// Scroll to top on route change
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-}
+const ROUTES = [
+  { path: "/", el: <Home /> },
+  { path: "/projects", el: <Projects /> },
+  { path: "/skills", el: <Skills /> },
+  { path: "/about", el: <About /> },
+  { path: "/contact", el: <Contact /> },
+  { path: "/blog", el: <Blog /> },
+  { path: "/masterclass/:id", el: <MasterclassDetails /> },
+  { path: "/academy", el: <Academy /> },
+  { path: "/academy/bootcamp", el: <Bootcamp /> },
+  { path: "*", el: <NotFound /> },
+];
 
 function AnimatedRoutes() {
   const location = useLocation();
-  
+  const { lenis } = useMotion();
+
+  const onExitComplete = () => {
+    if (lenis.current) lenis.current.scrollTo(0, { immediate: true, force: true });
+    window.scrollTo(0, 0);
+    fieldBus.measure();
+  };
+
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" onExitComplete={onExitComplete}>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <Home />
-          </motion.div>
-        } />
-        <Route path="/about" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <About />
-          </motion.div>
-        } />
-        <Route path="/skills" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <Skills />
-          </motion.div>
-        } />
-        <Route path="/projects" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <Projects />
-          </motion.div>
-        } />
-        <Route path="/contact" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <Contact />
-          </motion.div>
-        } />
-        <Route path="/blog" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <Blog />
-          </motion.div>
-        } />
-        <Route path="/masterclass/:id" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <MasterclassDetails />
-          </motion.div>
-        } />
-        <Route path="/academy" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <Academy />
-          </motion.div>
-        } />
-        <Route path="/academy/bootcamp" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <Bootcamp />
-          </motion.div>
-        } />
-        <Route path="*" element={
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            <NotFound />
-          </motion.div>
-        } />
+        {ROUTES.map((r) => (
+          <Route
+            key={r.path}
+            path={r.path}
+            element={
+              <PageTransition path={location.pathname}>
+                <Suspense fallback={<div className="q-suspense" />}>{r.el}</Suspense>
+              </PageTransition>
+            }
+          />
+        ))}
       </Routes>
     </AnimatePresence>
   );
 }
 
-export default function App() {
-  const [isDesktop, setIsDesktop] = React.useState(window.innerWidth >= 768);
-  const routerLocation = useLocation();
+function Shell() {
+  const { theme } = useTheme();
+  const { reduced, introDone } = useMotion();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
+  // Warm up every route chunk once the first screen is settled.
   useEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    if (!introDone) return;
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1200));
+    const id = idle(() => Object.values(pages).forEach((load) => load().catch(() => {})));
+    return () => (window.cancelIdleCallback || clearTimeout)(id);
+  }, [introDone]);
 
-  const osRoutes = ['/about', '/academy'];
-  const isDesktopOsRoute = osRoutes.some(r => routerLocation.pathname.toLowerCase().startsWith(r));
+  return (
+    <div className="q-app">
+      <Suspense fallback={null}>
+        <QuantumField theme={theme} intensity={isHome ? 1 : 0.42} reduced={reduced} />
+      </Suspense>
+      <Intro />
+      <Cursor />
+      <Navigation />
+      <main className="q-main">
+        <AnimatedRoutes />
+      </main>
+      <Footer />
+      <ChatWidget />
+    </div>
+  );
+}
 
-
+export default function App() {
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col transition-colors duration-300">
+        <MotionProvider>
           <Helmet>
-            <title>Dona Eric KOULODJI | Data Scientist & ML Engineer</title>
-            <meta name="description" content="Portfolio de Dona Eric KOULODJI, Data Scientist & ML Engineer : NLP, modélisation prédictive, agents LLM, RAG et MLOps. Projets déployés, code public et CV." />
+            <title>Dona Eric KOULODJI | Statisticien & AI Engineer</title>
+            <meta name="description" content="Portfolio de Dona Eric KOULODJI, Statisticien & AI Engineer chez Becotrac (Re) Assurances : modélisation statistique, machine learning, agents LLM et MLOps. Projets déployés, code public et CV." />
             <link rel="canonical" href="https://donerick.vercel.app" />
-            
-            {/* Open Graph / Facebook / LinkedIn */}
             <meta property="og:type" content="website" />
             <meta property="og:url" content="https://donerick.vercel.app" />
-            <meta property="og:title" content="Dona Eric KOULODJI | Data Scientist & ML Engineer" />
-            <meta property="og:description" content="Systèmes IA mesurables et déployés : NLP, prédiction, agents LLM et MLOps." />
+            <meta property="og:title" content="Dona Eric KOULODJI | Statisticien & AI Engineer" />
+            <meta property="og:description" content="Statistique appliquée et systèmes IA déployés : modélisation, machine learning, agents LLM et MLOps." />
             <meta property="og:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
             <meta property="og:image:alt" content="Portrait de Dona Eric KOULODJI" />
-
-            {/* Twitter */}
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:site" content="@EricSchrodinger" />
-            <meta name="twitter:title" content="Dona Eric KOULODJI | Data Scientist & ML Engineer" />
+            <meta name="twitter:title" content="Dona Eric KOULODJI | Statisticien & AI Engineer" />
             <meta name="twitter:description" content="Portfolio IA : NLP, modélisation prédictive, LLM/RAG et MLOps." />
             <meta name="twitter:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
           </Helmet>
-
-          <ScrollToTop />
-          {isDesktop && !isDesktopOsRoute && (
-            <Suspense fallback={null}>
-              <TurbojetBg />
-            </Suspense>
-          )}
-          
-          {!isDesktopOsRoute && <Navigation />}
-
-          <main className={`flex-1 ${!isDesktopOsRoute ? 'mt-20' : ''}`}>
-            <Suspense fallback={<PageLoader />}>
-              <AnimatedRoutes />
-            </Suspense>
-          </main>
-
-          {!isDesktopOsRoute && <ChatWidget />}
+          <Shell />
           <Analytics />
-        </div>
+        </MotionProvider>
       </ThemeProvider>
     </LanguageProvider>
   );

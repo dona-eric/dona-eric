@@ -1,11 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { AnimatePresence, motion } from "framer-motion";
 import GravatarQR from "../components/GravatarQR";
+import { Magnetic, Reveal, Roll, SectionHead, SplitText, EASE } from "../quantum/primitives";
+import { fieldBus, useScrollLock } from "../quantum/MotionContext";
+import { SOCIALS } from "../data/profile";
+import "../styles/Contact.css";
 
-export default function Contact({ isWindow }) {
+const MESSAGES = {
+  sending: "Transmission en cours…",
+  success: "Message reçu ✓ Réponse sous 24h.",
+  invalid: "Merci de remplir les trois champs.",
+  error: "L'envoi a échoué. Écrivez-moi directement par email ou WhatsApp.",
+};
+
+function QrModal({ onClose }) {
+  useScrollLock(true);
+  useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <motion.div className="ct-modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
+      <motion.div
+        className="ct-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Profil Gravatar QR"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 30, opacity: 0 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        onClick={(e) => e.stopPropagation()}
+        data-lenis-prevent
+      >
+        <button className="ct-modal-close" onClick={onClose} aria-label="Fermer">×</button>
+        <GravatarQR email="donaerickoulodji@gmail.com" defaultType="gravatar" defaultVersion="3" size={300} />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export default function Contact() {
   const [form, setForm] = useState({ subject: "", message: "", sender: "" });
   const [status, setStatus] = useState(null);
-  const [activeFolder, setActiveFolder] = useState('compose'); // 'compose' | 'gravatar'
+  const [qr, setQr] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,248 +55,140 @@ export default function Contact({ isWindow }) {
       return;
     }
     setStatus("sending");
-    
     try {
       const res = await fetch("https://formspree.io/f/xovkejww", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: form.sender,
-          subject: form.subject,
-          message: form.message
-        }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ email: form.sender, subject: form.subject, message: form.message }),
       });
       if (res.ok) {
         setStatus("success");
         setForm({ subject: "", message: "", sender: "" });
-        setTimeout(() => setStatus(null), 3000);
+        fieldBus.measure();
+        setTimeout(() => setStatus(null), 5000);
       } else {
         setStatus("error");
       }
-    } catch (err) {
+    } catch {
       setStatus("error");
     }
   };
 
-  const content = (
-    <div className="contact-shell" style={{ display: 'flex', width: '100%', minHeight: isWindow ? '100%' : 'calc(100vh - 5rem)', fontFamily: "'Inter', sans-serif", color: '#e2e8f0', background: '#1e1e1e' }}>
-      <style>{`
-        @media (max-width: 720px) {
-          .contact-shell { flex-direction: column !important; }
-          .contact-sidebar { width: 100% !important; border-right: none !important; border-bottom: 1px solid #1a1a1a; }
-        }
-      `}</style>
-      
-      {/* Left Sidebar (Mail Folders) */}
-      <div className="contact-sidebar" style={{
-        width: '240px', 
-        background: '#242424', 
-        borderRight: '1px solid #1a1a1a', 
-        display: 'flex', 
-        flexDirection: 'column',
-        padding: '16px 0'
-      }}>
-        <div style={{ padding: '0 16px', marginBottom: '12px', fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>
-          Réseaux & Contact
-        </div>
-        
-        <button 
-          onClick={() => setActiveFolder('compose')}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '12px',
-            padding: '10px 24px', background: activeFolder === 'compose' ? 'rgba(233, 84, 32, 0.15)' : 'transparent',
-            border: 'none', color: activeFolder === 'compose' ? '#e95420' : '#cbd5e1',
-            cursor: 'pointer', textAlign: 'left',
-            borderLeft: activeFolder === 'compose' ? '3px solid #e95420' : '3px solid transparent',
-            transition: 'background 0.2s',
-            fontWeight: activeFolder === 'compose' ? '600' : '400',
-            fontSize: '14px'
-          }}
-          onMouseOver={(e) => { if (activeFolder !== 'compose') e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
-          onMouseOut={(e) => { if (activeFolder !== 'compose') e.currentTarget.style.background = 'transparent' }}
-        >
-          <span style={{ fontSize: '16px' }}>✉️</span>
-          Nouveau Message
-        </button>
-
-        <button 
-          onClick={() => setActiveFolder('gravatar')}
-          style={{
-            display: 'flex', alignItems: 'center', gap: '12px',
-            padding: '10px 24px', background: activeFolder === 'gravatar' ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
-            border: 'none', color: activeFolder === 'gravatar' ? '#818cf8' : '#cbd5e1',
-            cursor: 'pointer', textAlign: 'left',
-            borderLeft: activeFolder === 'gravatar' ? '3px solid #6366f1' : '3px solid transparent',
-            transition: 'background 0.2s',
-            fontWeight: activeFolder === 'gravatar' ? '600' : '400',
-            fontSize: '14px'
-          }}
-          onMouseOver={(e) => { if (activeFolder !== 'gravatar') e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
-          onMouseOut={(e) => { if (activeFolder !== 'gravatar') e.currentTarget.style.background = 'transparent' }}
-        >
-          <span style={{ fontSize: '16px' }}>🆔</span>
-          Profil Gravatar QR
-        </button>
-
-        <a href="https://linkedin.com/in/dona-erick" target="_blank" rel="noopener noreferrer"
-          style={{
-            display: 'flex', alignItems: 'center', gap: '12px',
-            padding: '10px 24px', background: 'transparent',
-            border: 'none', color: '#cbd5e1', textDecoration: 'none',
-            cursor: 'pointer', textAlign: 'left', borderLeft: '3px solid transparent',
-            transition: 'background 0.2s', fontSize: '14px'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-          onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-        >
-          <span style={{ fontSize: '16px', color: '#0a66c2' }}>in</span>
-          LinkedIn
-        </a>
-
-        <a href="https://github.com/dona-eric" target="_blank" rel="noopener noreferrer"
-          style={{
-            display: 'flex', alignItems: 'center', gap: '12px',
-            padding: '10px 24px', background: 'transparent',
-            border: 'none', color: '#cbd5e1', textDecoration: 'none',
-            cursor: 'pointer', textAlign: 'left', borderLeft: '3px solid transparent',
-            transition: 'background 0.2s', fontSize: '14px'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-          onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-        >
-          <span style={{ fontSize: '16px' }}>💻</span>
-          GitHub
-        </a>
-
-        <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer"
-          style={{
-            display: 'flex', alignItems: 'center', gap: '12px',
-            padding: '10px 24px', background: 'transparent',
-            border: 'none', color: '#cbd5e1', textDecoration: 'none',
-            cursor: 'pointer', textAlign: 'left', borderLeft: '3px solid transparent',
-            transition: 'background 0.2s', fontSize: '14px'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-          onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-        >
-          <span style={{ fontSize: '16px', color: '#25D366' }}>◉</span>
-          WhatsApp direct
-        </a>
-
-        <a href="mailto:donaerickoulodji@gmail.com"
-          style={{
-            display: 'flex', alignItems: 'center', gap: '12px',
-            padding: '10px 24px', background: 'transparent',
-            border: 'none', color: '#cbd5e1', textDecoration: 'none',
-            cursor: 'pointer', textAlign: 'left', borderLeft: '3px solid transparent',
-            transition: 'background 0.2s', fontSize: '14px'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-          onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
-        >
-          <span style={{ fontSize: '16px', color: '#ea4335' }}>G</span>
-          Gmail Direct
-        </a>
-      </div>
-
-      {/* Main Area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#1e1e1e', overflowY: 'auto' }}>
-        {activeFolder === 'gravatar' ? (
-          <div style={{ padding: '40px 24px', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%' }}>
-            <GravatarQR email="donaerickoulodji@gmail.com" defaultType="gravatar" defaultVersion="3" size={350} />
-          </div>
-        ) : (
-          <>
-            {/* Toolbar */}
-            <div style={{ 
-              height: '48px', 
-              borderBottom: '1px solid #1a1a1a', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'space-between',
-              padding: '0 24px',
-              background: '#252525'
-            }}>
-              <div style={{ fontWeight: '600', color: '#fff', fontSize: '14px' }}>Nouveau Message</div>
-              <button 
-                onClick={handleSubmit}
-                disabled={status === "sending"}
-                style={{
-                  background: '#e95420',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '6px 16px',
-                  borderRadius: '4px',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  cursor: status === "sending" ? 'not-allowed' : 'pointer',
-                  opacity: status === "sending" ? 0.7 : 1
-                }}
-              >
-                {status === "sending" ? "Envoi..." : status === "success" ? "Envoyé ✓" : status === "invalid" ? "Champs requis" : status === "error" ? "Erreur" : "Envoyer"}
-              </button>
-            </div>
-
-            {/* Compose Form */}
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
-                <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>De:</div>
-                <input 
-                  type="email" 
-                  required
-                  placeholder="votre.email@entreprise.com" 
-                  value={form.sender}
-                  onChange={e => setForm({...form, sender: e.target.value})}
-                  style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '14px' }}
-                />
-              </div>
-              
-              <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
-                <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>À:</div>
-                <div style={{ flex: 1, color: '#fff', fontSize: '14px', background: 'rgba(255,255,255,0.05)', padding: '4px 8px', borderRadius: '4px', display: 'inline-block', width: 'fit-content', flexGrow: 0 }}>
-                  donaerickoulodji@gmail.com
-                </div>
-              </div>
-              
-              <div style={{ display: 'flex', borderBottom: '1px solid #2a2a2a', padding: '12px 24px', alignItems: 'center' }}>
-                <div style={{ width: '80px', color: '#94a3b8', fontSize: '13px' }}>Objet:</div>
-                <input 
-                  type="text" 
-                  required
-                  placeholder="Proposition de collaboration..." 
-                  value={form.subject}
-                  onChange={e => setForm({...form, subject: e.target.value})}
-                  style={{ flex: 1, background: 'transparent', border: 'none', color: '#fff', outline: 'none', fontSize: '14px', fontWeight: '500' }}
-                />
-              </div>
-
-              <textarea 
-                required
-                placeholder="Écrivez votre message ici..."
-                value={form.message}
-                onChange={e => setForm({...form, message: e.target.value})}
-                style={{ 
-                  flex: 1, background: 'transparent', border: 'none', color: '#cbd5e1', 
-                  padding: '24px', outline: 'none', fontSize: '14px', resize: 'none',
-                  fontFamily: "'Inter', sans-serif", lineHeight: '1.6'
-                }}
-              />
-            </form>
-          </>
-        )}
-      </div>
-    </div>
-  );
-
   return (
-    <>
-      {!isWindow && (
-        <Helmet>
-          <title>Contact — Dona Eric KOULODJI</title>
-          <meta name="description" content="Contactez Dona Eric KOULODJI pour une opportunité en Data Science / Machine Learning, une collaboration ou une mission IA." />
-        </Helmet>
-      )}
-      {content}
-    </>
+    <div className="ct">
+      <Helmet>
+        <title>Contact — Dona Eric KOULODJI</title>
+        <meta name="description" content="Contactez Dona Eric KOULODJI pour une opportunité en Data Science / Machine Learning, une collaboration ou une mission IA." />
+      </Helmet>
+
+      <header className="q-page-hero">
+        <div className="q-container">
+          <span className="q-label"><span className="q-dot" /> (Contact) — réponse sous 24h</span>
+          <h1 className="q-page-hero-title">
+            <SplitText as="span" by="char" stagger={0.03}>Parlons-en.</SplitText>
+          </h1>
+          <div className="q-page-hero-foot">
+            <Reveal>
+              <p className="q-lead">
+                Une opportunité Data / ML, une collaboration ou une mission IA ? Décrivez le problème :
+                je reviens vers vous avec une première approche.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </header>
+
+      <section className="q-container ct-grid">
+        <div className="ct-channels">
+          <SectionHead index="01" label="Canaux directs" />
+          <ul>
+            {SOCIALS.map((s, i) => (
+              <Reveal as="li" key={s.label} delay={i * 0.06}>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="ct-channel">
+                  <span className="q-label">{s.label}</span>
+                  <span className="ct-channel-value">{s.value}</span>
+                  <span className="ct-channel-arrow">↗</span>
+                </a>
+              </Reveal>
+            ))}
+            <Reveal as="li" delay={0.35}>
+              <button className="ct-channel" onClick={() => setQr(true)}>
+                <span className="q-label">Gravatar</span>
+                <span className="ct-channel-value">Profil QR code</span>
+                <span className="ct-channel-arrow">⌗</span>
+              </button>
+            </Reveal>
+          </ul>
+        </div>
+
+        <div className="ct-form-wrap">
+          <SectionHead index="02" label="Message" />
+          <form className="ct-form" onSubmit={handleSubmit} noValidate>
+            <div className="q-field">
+              <label htmlFor="ct-email">Votre email</label>
+              <input
+                id="ct-email"
+                type="email"
+                required
+                autoComplete="email"
+                placeholder="vous@entreprise.com"
+                value={form.sender}
+                onChange={(e) => setForm({ ...form, sender: e.target.value })}
+              />
+            </div>
+            <div className="q-field">
+              <label htmlFor="ct-subject">Objet</label>
+              <input
+                id="ct-subject"
+                type="text"
+                required
+                placeholder="Proposition de collaboration"
+                value={form.subject}
+                onChange={(e) => setForm({ ...form, subject: e.target.value })}
+              />
+            </div>
+            <div className="q-field">
+              <label htmlFor="ct-message">Message</label>
+              <textarea
+                id="ct-message"
+                required
+                rows={5}
+                placeholder="Le contexte, les données disponibles, l'objectif…"
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+              />
+            </div>
+            <div className="ct-form-foot">
+              <Magnetic strength={0.3}>
+                <button type="submit" className="q-btn q-btn--accent" disabled={status === "sending"}>
+                  <Roll>{status === "sending" ? "Envoi…" : "Envoyer le message"}</Roll>
+                  <span className="q-btn-arrow">→</span>
+                </button>
+              </Magnetic>
+              <AnimatePresence mode="wait">
+                {status && (
+                  <motion.span
+                    key={status}
+                    className={`ct-status ct-status--${status}`}
+                    role="status"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.4, ease: EASE }}
+                  >
+                    {MESSAGES[status]}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+            <p className="ct-to">
+              Destinataire : <span>donaerickoulodji@gmail.com</span>
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <AnimatePresence>{qr && <QrModal onClose={() => setQr(false)} />}</AnimatePresence>
+    </div>
   );
 }

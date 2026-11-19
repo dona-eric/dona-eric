@@ -69,26 +69,26 @@ export default function MasterclassHero({ masterclass }) {
         <div style={{ flex: "1 1 400px" }}>
           <div style={{ display: "flex", gap: "12px", marginBottom: "24px", flexWrap: "wrap" }}>
             <Chip bg={`${themeColor}15`} color={themeColor} border={themeColor}>{typeLabel}</Chip>
-            <Chip bg={open ? "rgba(16,185,129,0.1)" : "rgba(239,68,68,0.1)"} color={open ? "#10b981" : "#ef4444"} border={open ? "#10b981" : "#ef4444"}>
+            <Chip bg={open ? "rgba(212,255,58,0.1)" : "rgba(255,93,93,0.1)"} color={open ? "#d4ff3a" : "#ff5d5d"} border={open ? "#d4ff3a" : "#ff5d5d"}>
               {open ? "Ouvert" : "Clos"}
             </Chip>
-            <Chip bg="rgba(255,255,255,0.05)" color="#ffffff" border="#ffffff">{price}</Chip>
+            <Chip bg="color-mix(in srgb, var(--q-ink) 5%, transparent)" color="var(--q-ink)" border="var(--q-ink)">{price}</Chip>
           </div>
 
           <h2 style={{
             margin: "0 0 20px",
             fontSize: "clamp(32px, 5vw, 48px)",
             fontWeight: "800",
-            color: "#ffffff",
+            color: "var(--q-ink)",
             lineHeight: "1.1",
-            fontFamily: "'Space Grotesk', sans-serif"
+            fontFamily: "var(--q-font-display)"
           }}>
             {title}
           </h2>
 
           <p style={{
             margin: "0 0 32px",
-            color: "#94a3b8",
+            color: "var(--q-ink-2)",
             fontSize: "16px",
             lineHeight: "1.7",
             maxWidth: "600px",
@@ -102,10 +102,10 @@ export default function MasterclassHero({ masterclass }) {
             gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", 
             gap: "16px", 
             marginBottom: "40px",
-            background: "rgba(255,255,255,0.02)",
+            background: "color-mix(in srgb, var(--q-ink) 2%, transparent)",
             padding: "20px",
             borderRadius: "12px",
-            border: "1px solid rgba(255,255,255,0.05)"
+            border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)"
           }}>
             {[
               { icon: "📅", val: formatDate(date) },
@@ -115,7 +115,7 @@ export default function MasterclassHero({ masterclass }) {
             ].map(({ icon, val }) => (
               <div key={val} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ opacity: 0.8 }}>{icon}</span>
-                <span style={{ color: "#e2e8f0", fontWeight: "600", fontSize: "14px", fontFamily: "'Inter', sans-serif" }}>{val}</span>
+                <span style={{ color: "var(--text-secondary)", fontWeight: "600", fontSize: "14px", fontFamily: "'Inter', sans-serif" }}>{val}</span>
               </div>
             ))}
           </div>
@@ -143,9 +143,9 @@ export default function MasterclassHero({ masterclass }) {
             <Link
               to={`/formations/${masterclass.id}`}
               style={{ 
-                color: "#64748b", fontWeight: "600", fontFamily: "'Inter', sans-serif", 
-                padding: "16px 36px", background: "rgba(255,255,255,0.03)", 
-                borderRadius: "8px", display: "inline-block", border: "1px solid rgba(255,255,255,0.05)",
+                color: "var(--q-ink-3)", fontWeight: "600", fontFamily: "'Inter', sans-serif", 
+                padding: "16px 36px", background: "color-mix(in srgb, var(--q-ink) 3%, transparent)", 
+                borderRadius: "8px", display: "inline-block", border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)",
                 textDecoration: "none" 
               }}>
               🔒 Inscriptions closes ({seats ? seats.registered : "..."} inscrits)
@@ -164,9 +164,9 @@ export default function MasterclassHero({ masterclass }) {
           {/* Countdown */}
           {open && !countdown.expired && countdown.days !== undefined && (
             <div style={{
-              background: "rgba(255,255,255,0.02)",
+              background: "color-mix(in srgb, var(--q-ink) 2%, transparent)",
               borderRadius: "16px", padding: "24px", textAlign: "center",
-              border: "1px solid rgba(255,255,255,0.05)",
+              border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)",
             }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
                 {[
@@ -177,13 +177,13 @@ export default function MasterclassHero({ masterclass }) {
                 ].map(({ val, label }) => (
                   <div key={label}>
                     <div style={{ 
-                      background: "rgba(255,255,255,0.05)", border: `1px solid ${themeColor}30`, 
+                      background: "color-mix(in srgb, var(--q-ink) 5%, transparent)", border: `1px solid ${themeColor}30`, 
                       color: themeColor, borderRadius: "8px", padding: "12px 0", 
-                      fontSize: "24px", fontWeight: "800", fontFamily: "'Space Grotesk', sans-serif" 
+                      fontSize: "24px", fontWeight: "800", fontFamily: "var(--q-font-display)" 
                     }}>
                       {String(val).padStart(2, "0")}
                     </div>
-                    <div style={{ fontSize: "11px", color: "#64748b", marginTop: "8px", textTransform: "uppercase", fontWeight: "600", letterSpacing: "0.05em" }}>{label}</div>
+                    <div style={{ fontSize: "11px", color: "var(--q-ink-3)", marginTop: "8px", textTransform: "uppercase", fontWeight: "600", letterSpacing: "0.05em" }}>{label}</div>
                   </div>
                 ))}
               </div>
@@ -192,11 +192,11 @@ export default function MasterclassHero({ masterclass }) {
 
           {/* Objectifs */}
           <div style={{
-            background: "rgba(255,255,255,0.02)",
+            background: "color-mix(in srgb, var(--q-ink) 2%, transparent)",
             borderRadius: "16px", padding: "24px",
-            border: "1px solid rgba(255,255,255,0.05)",
+            border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)",
           }}>
-            <p style={{ color: "#00d4ff", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", marginBottom: "16px", letterSpacing: "0.1em", fontFamily: "'Space Grotesk', sans-serif" }}>
+            <p style={{ color: "#5ee6ff", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", marginBottom: "16px", letterSpacing: "0.1em", fontFamily: "var(--q-font-display)" }}>
               // Objectifs d'apprentissage
             </p>
             {objectives.slice(0, 4).map((obj, i) => (
@@ -204,24 +204,24 @@ export default function MasterclassHero({ masterclass }) {
                 <div style={{ width: "20px", height: "20px", borderRadius: "4px", background: themeColor + "20", border: `1px solid ${themeColor}50`, fontSize: "10px", display: "flex", alignItems: "center", justifyContent: "center", color: themeColor, flexShrink: 0, fontWeight: "700" }}>
                   {i + 1}
                 </div>
-                <p style={{ margin: 0, color: "#cbd5e1", fontSize: "14px", lineHeight: "1.5", fontFamily: "'Inter', sans-serif" }}>{obj}</p>
+                <p style={{ margin: 0, color: "var(--text-secondary)", fontSize: "14px", lineHeight: "1.5", fontFamily: "'Inter', sans-serif" }}>{obj}</p>
               </div>
             ))}
           </div>
 
           {/* Speaker */}
           <div style={{
-            background: "rgba(255,255,255,0.02)",
+            background: "color-mix(in srgb, var(--q-ink) 2%, transparent)",
             borderRadius: "16px", padding: "16px 20px",
             display: "flex", alignItems: "center", gap: "16px",
-            border: "1px solid rgba(255,255,255,0.05)"
+            border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)"
           }}>
             <div style={{ width: "48px", height: "48px", borderRadius: "50%", overflow: "hidden", border: `2px solid ${themeColor}` }}>
               <img src={speaker.avatar} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
             <div style={{ overflow: "hidden" }}>
-              <p style={{ margin: 0, color: "#ffffff", fontSize: "15px", fontWeight: "700", fontFamily: "'Space Grotesk', sans-serif" }}>{speaker.name}</p>
-              <p style={{ margin: 0, color: "#64748b", fontSize: "12px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{speaker.title}</p>
+              <p style={{ margin: 0, color: "var(--q-ink)", fontSize: "15px", fontWeight: "700", fontFamily: "var(--q-font-display)" }}>{speaker.name}</p>
+              <p style={{ margin: 0, color: "var(--q-ink-3)", fontSize: "12px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: "'Inter', sans-serif" }}>{speaker.title}</p>
             </div>
           </div>
         </div>

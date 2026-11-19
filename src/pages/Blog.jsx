@@ -10,16 +10,16 @@ import { useFadeIn, useScrollFade } from "../hooks/useAnimations";
 
 // ─── Source config ────────────────────────────────────────────────────────────
 const SOURCE_META = {
-  medium: { label: "Medium", color: "#6366f1", icon: "M" },
+  medium: { label: "Medium", color: "#8f7dff", icon: "M" },
 };
 
 const TYPE_LABELS = {
-  downloadable: { label: "Téléchargeable", color: "#3b82f6" },
-  course: { label: "Formation", color: "#a855f7" },
-  service: { label: "Service", color: "#ec4899" },
-  license: { label: "Licence", color: "#10b981" },
-  bundle: { label: "Pack / Bundle", color: "#f59e0b" },
-  coaching: { label: "Coaching", color: "#06b6d4" },
+  downloadable: { label: "Téléchargeable", color: "#5ee6ff" },
+  course: { label: "Formation", color: "#8f7dff" },
+  service: { label: "Service", color: "#ff7a45" },
+  license: { label: "Licence", color: "#d4ff3a" },
+  bundle: { label: "Pack / Bundle", color: "#ffc94a" },
+  coaching: { label: "Coaching", color: "#5ee6ff" },
 };
 
 const FILTERS = [
@@ -146,7 +146,7 @@ function SkeletonCard() {
 
 // ─── Score badge ──────────────────────────────────────────────────────────────
 function ScoreBadge({ score }) {
-  const color = score >= 60 ? "#22c55e" : score >= 30 ? "#f59e0b" : "#64748b";
+  const color = score >= 60 ? "#d4ff3a" : score >= 30 ? "#ffc94a" : "var(--q-ink-3)";
   return (
     <div className="article-score-badge" style={{
       color, background: color + "10", border: `1px solid ${color}25`
@@ -173,8 +173,8 @@ function ArticleCard({ post, delay, featured }) {
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       className="article-card"
       style={{
-        background: hov ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
-        border: `1px solid ${hov ? src.color + "50" : "rgba(255,255,255,0.07)"}`,
+        background: hov ? "color-mix(in srgb, var(--q-ink) 4%, transparent)" : "color-mix(in srgb, var(--q-ink) 2%, transparent)",
+        border: `1px solid ${hov ? src.color + "50" : "color-mix(in srgb, var(--q-ink) 7%, transparent)"}`,
         transform: hov ? "translateY(-3px)" : "none",
         boxShadow: hov ? `0 16px 48px ${src.color}12` : "none"
       }}>
@@ -202,7 +202,7 @@ function ArticleCard({ post, delay, featured }) {
         {/* Title */}
         <h3 className="article-title" style={{
           fontSize: featured ? 19 : 16,
-          color: hov ? "#f8fafc" : "#e2e8f0"
+          color: hov ? "var(--q-ink)" : "var(--text-secondary)"
         }}>{post.title}</h3>
 
         {/* Excerpt */}
@@ -260,9 +260,9 @@ function FilterBtn({ label, active, onClick }) {
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       className="blog-filter-btn"
       style={{
-        border: `1px solid ${active ? "rgba(0,212,255,0.6)" : hov ? "rgba(0,212,255,0.3)" : "rgba(255,255,255,0.1)"}`,
-        background: active ? "rgba(0,212,255,0.12)" : hov ? "rgba(0,212,255,0.05)" : "transparent",
-        color: active ? "#00d4ff" : hov ? "#94a3b8" : "#64748b",
+        border: `1px solid ${active ? "rgba(94,230,255,0.6)" : hov ? "rgba(94,230,255,0.3)" : "color-mix(in srgb, var(--q-ink) 10%, transparent)"}`,
+        background: active ? "rgba(94,230,255,0.12)" : hov ? "rgba(94,230,255,0.05)" : "transparent",
+        color: active ? "#5ee6ff" : hov ? "var(--q-ink-2)" : "var(--q-ink-3)",
       }}>
       {label}
     </button>
@@ -289,7 +289,7 @@ function StorytellingCard({ mc, index, onClick }) {
         <h3 className="storytelling-event-title">{mc.title}</h3>
         <div className="storytelling-post-text">
           <p style={{ margin: 0 }}>"{cleanSnippet}..."</p>
-          <span className="storytelling-readmore" style={{ display: "block", marginTop: "12px", color: "#6366f1", fontWeight: "600", fontSize: "13px" }}>
+          <span className="storytelling-readmore" style={{ display: "block", marginTop: "12px", color: "#8f7dff", fontWeight: "600", fontSize: "13px" }}>
             Lire le post complet →
           </span>
         </div>
@@ -309,7 +309,7 @@ function ProductCard({ product, index }) {
 
   const { name, description, pricing, pictures, type, category, slug, is_free } = product;
   const imageSrc = pictures?.cover || pictures?.thumbnail;
-  const typeMeta = TYPE_LABELS[type] || { label: type || "Produit", color: "#6366f1" };
+  const typeMeta = TYPE_LABELS[type] || { label: type || "Produit", color: "#8f7dff" };
   const priceDisplay = is_free || pricing?.type === "free" ? "Gratuit" : (pricing?.current_price?.formatted || "Voir offre");
   const categoryLabel = category?.label;
   const buyUrl = product.buy_url || product.url || `https://cykrhzat.mychariow.shop/${slug}`;
@@ -323,8 +323,8 @@ function ProductCard({ product, index }) {
       onMouseLeave={() => setHov(false)}
       className="product-card"
       style={{
-        background: hov ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
-        border: `1px solid ${hov ? typeMeta.color + "60" : "rgba(255,255,255,0.07)"}`,
+        background: hov ? "color-mix(in srgb, var(--q-ink) 4%, transparent)" : "color-mix(in srgb, var(--q-ink) 2%, transparent)",
+        border: `1px solid ${hov ? typeMeta.color + "60" : "color-mix(in srgb, var(--q-ink) 7%, transparent)"}`,
         transform: hov ? "translateY(-4px)" : "none",
         boxShadow: hov ? `0 20px 48px ${typeMeta.color}15` : "none"
       }}
@@ -341,7 +341,7 @@ function ProductCard({ product, index }) {
         </div>
       ) : (
         <div className="product-image-placeholder" style={{
-          background: `radial-gradient(circle at center, ${typeMeta.color}20 0%, rgba(15,23,42,0.8) 100%)`
+          background: `radial-gradient(circle at center, ${typeMeta.color}20 0%, color-mix(in srgb, var(--q-surface) 80%, transparent) 100%)`
         }}>
           <span className="product-placeholder-icon">📦</span>
         </div>
@@ -363,7 +363,7 @@ function ProductCard({ product, index }) {
           )}
         </div>
 
-        <h3 className="product-title" style={{ color: hov ? "#ffffff" : "#f1f5f9" }}>
+        <h3 className="product-title" style={{ color: hov ? "var(--q-ink)" : "var(--q-ink)" }}>
           {name}
         </h3>
 
@@ -376,7 +376,7 @@ function ProductCard({ product, index }) {
         <div className="product-card-footer">
           <div className="product-price-tag">
             <span className="product-price-label">Prix</span>
-            <span className="product-price-value" style={{ color: is_free || pricing?.type === "free" ? "#10b981" : "#00d4ff" }}>
+            <span className="product-price-value" style={{ color: is_free || pricing?.type === "free" ? "#d4ff3a" : "#5ee6ff" }}>
               {priceDisplay}
             </span>
           </div>
@@ -456,10 +456,10 @@ export default function Blog({ isWindow = false }) {
   const totalLikes = posts.reduce((a, p) => a + (p.raw_metrics?.likes || 0), 0);
 
   const STATS = [
-    { value: `${posts.length}`, label: "Articles", color: "#00d4ff" },
-    { value: `${products.length}`, label: "Produits & Livres", color: "#10b981" },
-    { value: totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + "k" : totalViews || "—", label: "Vues totales", color: "#a78bfa" },
-    { value: totalLikes >= 1000 ? (totalLikes / 1000).toFixed(1) + "k" : totalLikes || "—", label: "Likes / Claps", color: "#f59e0b" },
+    { value: `${posts.length}`, label: "Articles", color: "#5ee6ff" },
+    { value: `${products.length}`, label: "Produits & Livres", color: "#d4ff3a" },
+    { value: totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + "k" : totalViews || "—", label: "Vues totales", color: "#b6a8ff" },
+    { value: totalLikes >= 1000 ? (totalLikes / 1000).toFixed(1) + "k" : totalLikes || "—", label: "Likes / Claps", color: "#ffc94a" },
   ];
 
   const showProductsSection = filter === "all" || filter === "products" || filter === "books";
@@ -483,8 +483,8 @@ export default function Blog({ isWindow = false }) {
 
           {/* ══ HERO ══ */}
           <div ref={heroRef} className="blog-hero">
-            <div className="blog-badge" style={{ background: "rgba(99,102,241,0.1)", color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.2)" }}>
-              <span className="blog-badge-dot" style={{ background: "#818cf8", boxShadow: "0 0 8px #818cf8" }} />
+            <div className="blog-badge" style={{ background: "rgba(143,125,255,0.1)", color: "#b6a8ff", border: "1px solid rgba(143,125,255,0.2)" }}>
+              <span className="blog-badge-dot" style={{ background: "#8f7dff", boxShadow: "0 0 8px #8f7dff" }} />
               MLAcademy & Chariow Store
             </div>
             <h1 className="blog-title">
@@ -623,12 +623,12 @@ export default function Blog({ isWindow = false }) {
                 <span className="storytelling-modal-stat-label">Participants inscrits</span>
               </div>
               <div className="storytelling-modal-stat-card">
-                <span className="storytelling-modal-stat-number" style={{ color: "#10b981" }}>100%</span>
+                <span className="storytelling-modal-stat-number" style={{ color: "#d4ff3a" }}>100%</span>
                 <span className="storytelling-modal-stat-label">Gratuit & Ouvert</span>
               </div>
             </div>
             <div className="storytelling-modal-body">
-              <h4 style={{ color: "#a78bfa", margin: "0 0 12px 0", fontSize: "15px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "monospace" }}>
+              <h4 style={{ color: "#b6a8ff", margin: "0 0 12px 0", fontSize: "15px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "monospace" }}>
                 Récit de l'événement
               </h4>
               <div className="storytelling-modal-text" dangerouslySetInnerHTML={{ __html: selectedEvent.storytelling }} />

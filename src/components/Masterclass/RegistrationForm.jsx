@@ -87,15 +87,15 @@ export default function RegistrationForm({ masterclass, onClose }) {
     return (
       <div style={{ textAlign: "center", padding: "40px 20px" }}>
         <div style={{ fontSize: "50px", marginBottom: "16px" }}>✅</div>
-        <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif" }}>Bienvenue à bord !</h3>
-        <p style={{ color: "#94a3b8", fontFamily: "'Inter', sans-serif" }}>Votre inscription pour <strong>{successData.masterclass}</strong> est confirmée.</p>
+        <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>Bienvenue à bord !</h3>
+        <p style={{ color: "var(--q-ink-2)", fontFamily: "'Inter', sans-serif" }}>Votre inscription pour <strong>{successData.masterclass}</strong> est confirmée.</p>
         
         {/* Avertissement si l'email de confirmation n'a pas pu être envoyé */}
         {emailSent === false && (
           <div style={{ 
             marginTop: "20px", padding: "14px 20px", borderRadius: "10px",
-            background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)",
-            color: "#f59e0b", fontSize: "14px", textAlign: "left", lineHeight: "1.5"
+            background: "rgba(255,201,74,0.1)", border: "1px solid rgba(255,201,74,0.3)",
+            color: "#ffc94a", fontSize: "14px", textAlign: "left", lineHeight: "1.5"
           }}>
             <strong>⚠️ Email non envoyé</strong><br />
             Votre inscription est bien enregistrée, mais l'email de confirmation n'a pas pu être envoyé. 
@@ -109,12 +109,12 @@ export default function RegistrationForm({ masterclass, onClose }) {
   }
 
   return (
-    <div style={{ margin: "0 auto", color: "#e2e8f0", fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ margin: "0 auto", color: "var(--text-secondary)", fontFamily: "'Inter', sans-serif" }}>
       <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
         
         {/* Places restantes */}
         {seats && (
-          <div style={{ padding: "12px", borderRadius: "8px", fontSize: "14px", fontWeight: "700", textAlign: "center", background: seats.remaining <= 5 ? "rgba(239,68,68,0.1)" : "rgba(16,185,129,0.1)", color: seats.remaining <= 5 ? "#ef4444" : "#10b981", border: `1px solid ${seats.remaining <= 5 ? "rgba(239,68,68,0.3)" : "rgba(16,185,129,0.3)"}` }}>
+          <div style={{ padding: "12px", borderRadius: "8px", fontSize: "14px", fontWeight: "700", textAlign: "center", background: seats.remaining <= 5 ? "rgba(255,93,93,0.1)" : "rgba(212,255,58,0.1)", color: seats.remaining <= 5 ? "#ff5d5d" : "#d4ff3a", border: `1px solid ${seats.remaining <= 5 ? "rgba(255,93,93,0.3)" : "rgba(212,255,58,0.3)"}` }}>
             {seats.isFull ? "⚠️ Événement Complet" : `🎫 ${seats.remaining} places restantes`}
           </div>
         )}
@@ -127,9 +127,9 @@ export default function RegistrationForm({ masterclass, onClose }) {
 
         {/* Ligne 2 : Email */}
         <div>
-          <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>Email Professionnel *</label>
+          <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Email Professionnel *</label>
           <div style={{ position: "relative" }}>
-            <input type="email" name="email" value={fields.email} onChange={handleChange} placeholder="nom@entreprise.com" style={{ width: "100%", padding: "14px", fontSize: "15px", border: `1px solid ${fieldErrors.email || emailStatus === "taken" ? "#ef4444" : (emailStatus === "ok" ? "#10b981" : "rgba(255,255,255,0.1)")}`, borderRadius: "8px", background: "rgba(255,255,255,0.03)", color: "#ffffff", outline: "none", boxSizing: "border-box" }} />
+            <input type="email" name="email" value={fields.email} onChange={handleChange} placeholder="nom@entreprise.com" style={{ width: "100%", padding: "14px", fontSize: "15px", border: `1px solid ${fieldErrors.email || emailStatus === "taken" ? "#ff5d5d" : (emailStatus === "ok" ? "#d4ff3a" : "color-mix(in srgb, var(--q-ink) 10%, transparent)")}`, borderRadius: "8px", background: "color-mix(in srgb, var(--q-ink) 3%, transparent)", color: "var(--q-ink)", outline: "none", boxSizing: "border-box" }} />
             {emailStatus !== "idle" && <span style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)" }}>{emailStatus === "checking" ? "⏳" : emailStatus === "ok" ? "✅" : "❌"}</span>}
           </div>
           {(fieldErrors.email || emailStatus === "taken") && <ErrorMsg>{fieldErrors.email || "Cet email est déjà inscrit"}</ErrorMsg>}
@@ -139,8 +139,8 @@ export default function RegistrationForm({ masterclass, onClose }) {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
           <Field label="Profession *" name="profession" value={fields.profession} onChange={handleChange} error={fieldErrors.profession} color={color} placeholder="Ex: Data Engineer" />
           <div>
-            <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>Domaine *</label>
-            <select name="domain" value={fields.domain} onChange={handleChange} style={{ width: "100%", padding: "14px", fontSize: "15px", border: `1px solid ${fieldErrors.domain ? "#ef4444" : "rgba(255,255,255,0.1)"}`, borderRadius: "8px", background: "rgba(15,23,42,0.95)", color: "#ffffff", outline: "none", boxSizing: "border-box", appearance: "none" }}>
+            <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Domaine *</label>
+            <select name="domain" value={fields.domain} onChange={handleChange} style={{ width: "100%", padding: "14px", fontSize: "15px", border: `1px solid ${fieldErrors.domain ? "#ff5d5d" : "color-mix(in srgb, var(--q-ink) 10%, transparent)"}`, borderRadius: "8px", background: "color-mix(in srgb, var(--q-surface) 95%, transparent)", color: "var(--q-ink)", outline: "none", boxSizing: "border-box", appearance: "none" }}>
               <option value="">— Sélectionner —</option>
               {DOMAINS.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
@@ -150,20 +150,20 @@ export default function RegistrationForm({ masterclass, onClose }) {
 
         {/* Ligne 4 : Message */}
         <div>
-          <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>Une question pour l'instructeur ?</label>
-          <textarea name="message" value={fields.message} onChange={handleChange} rows={3} style={{ width: "100%", padding: "14px", fontSize: "15px", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", background: "rgba(255,255,255,0.03)", color: "#ffffff", outline: "none", boxSizing: "border-box", resize: "none" }} placeholder="Facultatif..." />
+          <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Une question pour l'instructeur ?</label>
+          <textarea name="message" value={fields.message} onChange={handleChange} rows={3} style={{ width: "100%", padding: "14px", fontSize: "15px", border: "1px solid color-mix(in srgb, var(--q-ink) 10%, transparent)", borderRadius: "8px", background: "color-mix(in srgb, var(--q-ink) 3%, transparent)", color: "var(--q-ink)", outline: "none", boxSizing: "border-box", resize: "none" }} placeholder="Facultatif..." />
         </div>
 
         {/* Ligne 5 : Prérequis */}
-        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "12px", padding: "20px" }}>
+        <div style={{ background: "color-mix(in srgb, var(--q-ink) 2%, transparent)", border: "1px solid color-mix(in srgb, var(--q-ink) 5%, transparent)", borderRadius: "12px", padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px" }}>
-            <span style={{ fontSize: "13px", fontWeight: "700", color: "#e2e8f0" }}>✅ PRÉREQUIS</span>
+            <span style={{ fontSize: "13px", fontWeight: "700", color: "var(--text-secondary)" }}>✅ PRÉREQUIS</span>
             <button type="button" onClick={checkAll} style={{ background: "none", border: "none", color: color, fontSize: "12px", fontWeight: "700", cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>{allReqsChecked ? "Décocher" : "Tout cocher"}</button>
           </div>
           {masterclass.prerequisites.map((req, i) => (
             <label key={i} style={{ display: "flex", gap: "12px", padding: "8px 0", cursor: "pointer", fontSize: "13px", alignItems: "flex-start" }}>
               <input type="checkbox" checked={checkedReqs.includes(req)} onChange={() => toggleReq(req)} style={{ marginTop: "4px", accentColor: color }} />
-              <span style={{ color: "#cbd5e1", lineHeight: "1.5" }}>{req}</span>
+              <span style={{ color: "var(--text-secondary)", lineHeight: "1.5" }}>{req}</span>
             </label>
           ))}
           {fieldErrors.prerequisites && <ErrorMsg>{fieldErrors.prerequisites}</ErrorMsg>}
@@ -171,7 +171,7 @@ export default function RegistrationForm({ masterclass, onClose }) {
 
         <button type="submit" disabled={isLoading || (seats && seats.isFull) || emailStatus === "taken"} 
           style={{ 
-            padding: "16px", background: isLoading ? "rgba(255,255,255,0.1)" : color, color: isLoading ? "#94a3b8" : "#000000", 
+            padding: "16px", background: isLoading ? "color-mix(in srgb, var(--q-ink) 10%, transparent)" : color, color: isLoading ? "var(--q-ink-2)" : "#000000", 
             border: "none", borderRadius: "8px", fontWeight: "700", fontSize: "16px", cursor: (isLoading || emailStatus === "taken" || (seats && seats.isFull)) ? "not-allowed" : "pointer",
             width: "100%", alignSelf: "center", boxShadow: isLoading ? "none" : `0 4px 20px ${color}40`, fontFamily: "'Inter', sans-serif", transition: "all 0.3s ease"
           }}>
@@ -185,13 +185,13 @@ export default function RegistrationForm({ masterclass, onClose }) {
 function Field({ label, name, value, onChange, error, placeholder }) {
   return (
     <div style={{ flex: 1 }}>
-      <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
-      <input type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} style={{ width: "100%", padding: "14px", fontSize: "15px", border: `1px solid ${error ? "#ef4444" : "rgba(255,255,255,0.1)"}`, borderRadius: "8px", background: "rgba(255,255,255,0.03)", color: "#ffffff", outline: "none", boxSizing: "border-box" }} />
+      <label style={{ display: "block", marginBottom: "8px", fontSize: "12px", fontWeight: "600", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+      <input type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} style={{ width: "100%", padding: "14px", fontSize: "15px", border: `1px solid ${error ? "#ff5d5d" : "color-mix(in srgb, var(--q-ink) 10%, transparent)"}`, borderRadius: "8px", background: "color-mix(in srgb, var(--q-ink) 3%, transparent)", color: "var(--q-ink)", outline: "none", boxSizing: "border-box" }} />
       {error && <ErrorMsg>{error}</ErrorMsg>}
     </div>
   );
 }
 
 function ErrorMsg({ children }) {
-  return <p style={{ margin: "6px 0 0", fontSize: "12px", color: "#ef4444", fontWeight: "600" }}>{children}</p>;
+  return <p style={{ margin: "6px 0 0", fontSize: "12px", color: "#ff5d5d", fontWeight: "600" }}>{children}</p>;
 }

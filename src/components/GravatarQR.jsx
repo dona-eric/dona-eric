@@ -52,7 +52,7 @@ export default function GravatarQR({
 
   if (!hash) {
     return (
-      <div style={{ color: "#94a3b8", padding: "20px", textAlign: "center", fontSize: "14px" }}>
+      <div style={{ color: "var(--q-ink-2)", padding: "20px", textAlign: "center", fontSize: "14px" }}>
         Chargement du code QR Gravatar...
       </div>
     );
@@ -60,16 +60,16 @@ export default function GravatarQR({
 
   return (
     <div style={{
-      background: "rgba(15, 23, 42, 0.75)",
-      border: "1px solid rgba(255, 255, 255, 0.1)",
+      background: "color-mix(in srgb, var(--q-surface) 75%, transparent)",
+      border: "1px solid color-mix(in srgb, var(--q-ink) 10%, transparent)",
       borderRadius: "20px",
       padding: "28px 24px",
       maxWidth: "380px",
       margin: "0 auto",
       textAlign: "center",
-      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.15)",
+      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(143,125,255,0.15)",
       backdropFilter: "blur(16px)",
-      color: "#ffffff",
+      color: "var(--q-ink)",
       fontFamily: "'Inter', sans-serif"
     }}>
       {/* Badge Header */}
@@ -78,12 +78,12 @@ export default function GravatarQR({
         alignItems: "center",
         gap: "8px",
         padding: "6px 14px",
-        background: "rgba(99, 102, 241, 0.12)",
-        border: "1px solid rgba(99, 102, 241, 0.3)",
+        background: "rgba(143,125,255,0.12)",
+        border: "1px solid rgba(143,125,255,0.3)",
         borderRadius: "9999px",
         fontSize: "11px",
         fontWeight: "700",
-        color: "#a5b4fc",
+        color: "#b6a8ff",
         letterSpacing: "0.08em",
         textTransform: "uppercase",
         marginBottom: "20px"
@@ -92,18 +92,18 @@ export default function GravatarQR({
       </div>
 
       <h3 style={{
-        fontFamily: "'Space Grotesk', sans-serif",
+        fontFamily: "var(--q-font-display)",
         fontSize: "20px",
         fontWeight: "700",
         marginBottom: "8px",
-        color: "#ffffff"
+        color: "var(--q-ink)"
       }}>
         Scannez mon QR Code
       </h3>
 
       <p style={{
         fontSize: "13px",
-        color: "#94a3b8",
+        color: "var(--q-ink-2)",
         lineHeight: "1.5",
         marginBottom: "20px"
       }}>
@@ -117,7 +117,7 @@ export default function GravatarQR({
         padding: "16px",
         background: "#ffffff",
         borderRadius: "16px",
-        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.1)",
+        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px color-mix(in srgb, var(--q-ink) 10%, transparent)",
         marginBottom: "20px"
       }}>
         <img
@@ -139,13 +139,13 @@ export default function GravatarQR({
           flexWrap: "wrap"
         }}>
           {/* Logo Type Selector */}
-          <div style={{ display: "flex", background: "rgba(255, 255, 255, 0.05)", padding: "4px", borderRadius: "8px", border: "1px solid rgba(255, 255, 255, 0.08)" }}>
+          <div style={{ display: "flex", background: "color-mix(in srgb, var(--q-ink) 5%, transparent)", padding: "4px", borderRadius: "8px", border: "1px solid color-mix(in srgb, var(--q-ink) 8%, transparent)" }}>
             <button
               type="button"
               onClick={() => setType("gravatar")}
               style={{
-                background: type === "gravatar" ? "#6366f1" : "transparent",
-                color: "#ffffff",
+                background: type === "gravatar" ? "#8f7dff" : "transparent",
+                color: "var(--q-ink)",
                 border: "none",
                 padding: "4px 10px",
                 borderRadius: "6px",
@@ -160,8 +160,8 @@ export default function GravatarQR({
               type="button"
               onClick={() => setType("user")}
               style={{
-                background: type === "user" ? "#6366f1" : "transparent",
-                color: "#ffffff",
+                background: type === "user" ? "#8f7dff" : "transparent",
+                color: "var(--q-ink)",
                 border: "none",
                 padding: "4px 10px",
                 borderRadius: "6px",
@@ -175,13 +175,13 @@ export default function GravatarQR({
           </div>
 
           {/* Style Version Selector */}
-          <div style={{ display: "flex", background: "rgba(255, 255, 255, 0.05)", padding: "4px", borderRadius: "8px", border: "1px solid rgba(255, 255, 255, 0.08)" }}>
+          <div style={{ display: "flex", background: "color-mix(in srgb, var(--q-ink) 5%, transparent)", padding: "4px", borderRadius: "8px", border: "1px solid color-mix(in srgb, var(--q-ink) 8%, transparent)" }}>
             <button
               type="button"
               onClick={() => setVersion("3")}
               style={{
-                background: version === "3" ? "#10b981" : "transparent",
-                color: "#ffffff",
+                background: version === "3" ? "#d4ff3a" : "transparent",
+                color: "var(--q-ink)",
                 border: "none",
                 padding: "4px 10px",
                 borderRadius: "6px",
@@ -196,8 +196,8 @@ export default function GravatarQR({
               type="button"
               onClick={() => setVersion("1")}
               style={{
-                background: version === "1" ? "#10b981" : "transparent",
-                color: "#ffffff",
+                background: version === "1" ? "#d4ff3a" : "transparent",
+                color: "var(--q-ink)",
                 border: "none",
                 padding: "4px 10px",
                 borderRadius: "6px",
@@ -225,8 +225,8 @@ export default function GravatarQR({
             justifyContent: "center",
             gap: "8px",
             padding: "10px 16px",
-            background: "#6366f1",
-            color: "#ffffff",
+            background: "#8f7dff",
+            color: "var(--q-ink)",
             borderRadius: "8px",
             fontSize: "13px",
             fontWeight: "600",
@@ -247,9 +247,9 @@ export default function GravatarQR({
           onClick={handleCopyLink}
           style={{
             padding: "10px 14px",
-            background: "rgba(255, 255, 255, 0.06)",
-            border: "1px solid rgba(255, 255, 255, 0.12)",
-            color: copied ? "#10b981" : "#ffffff",
+            background: "color-mix(in srgb, var(--q-ink) 6%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--q-ink) 12%, transparent)",
+            color: copied ? "#d4ff3a" : "var(--q-ink)",
             borderRadius: "8px",
             fontSize: "13px",
             fontWeight: "600",

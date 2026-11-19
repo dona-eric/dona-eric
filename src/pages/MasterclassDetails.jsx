@@ -159,8 +159,8 @@ export default function MasterclassDetails() {
             ) : masterclass.isPast ? (
               <div style={{ textAlign: "center", padding: "40px 20px" }}>
                 <div style={{ fontSize: "50px", marginBottom: "16px" }}>🔒</div>
-                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif" }}>Inscriptions Closes</h3>
-                <p style={{ color: "#94a3b8", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
+                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>Inscriptions Closes</h3>
+                <p style={{ color: "var(--q-ink-2)", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
                   Les inscriptions pour cet événement sont closes car l'événement a déjà eu lieu ou a expiré.
                 </p>
                 <Link to="/formations" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>Retour aux événements</Link>
@@ -168,8 +168,8 @@ export default function MasterclassDetails() {
             ) : (
               <div style={{ textAlign: "center", padding: "40px 20px" }}>
                 <div style={{ fontSize: "50px", marginBottom: "16px" }}>⏳</div>
-                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "#ffffff", fontFamily: "'Space Grotesk', sans-serif" }}>Inscriptions à Venir</h3>
-                <p style={{ color: "#94a3b8", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
+                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>Inscriptions à Venir</h3>
+                <p style={{ color: "var(--q-ink-2)", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
                   Les inscriptions pour cet événement ne sont pas encore ouvertes. Elles débuteront dès la fin de l'événement précédent.
                 </p>
                 <Link to="/formations" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>Retour aux événements</Link>

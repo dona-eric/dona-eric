@@ -3,7 +3,7 @@
 .ms-section {
   padding: 100px 24px;
   font-family: 'Inter', sans-serif;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   position: relative;
   z-index: 1;
 }
@@ -26,8 +26,8 @@
   padding: 8px 20px;
   border-radius: 30px;
   margin-bottom: 24px;
-  background: rgba(59, 130, 246, 0.05);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: rgba(94,230,255,0.05);
+  border: 1px solid rgba(94,230,255,0.3);
   font-size: 11px;
   font-weight: 600;
   color: var(--neon-cyan);
@@ -48,16 +48,16 @@
   margin: 0 0 16px;
   font-size: clamp(40px, 6vw, 64px);
   font-weight: 800;
-  color: #ffffff;
+  color: var(--q-ink);
   line-height: 1.1;
   letter-spacing: -0.02em;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
 }
 
 .ms-description {
   max-width: 640px;
   margin: 0 auto;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   font-size: 17px;
   line-height: 1.8;
 }
@@ -90,14 +90,14 @@
 
 .ms-stat-value {
   font-size: 32px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
   font-weight: 800;
   margin-bottom: 8px;
 }
 
 .ms-stat-label {
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -120,7 +120,7 @@
 }
 
 .ms-filters-subtitle {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
   font-size: 13px;
   font-weight: 600;
   color: var(--neon-purple);
@@ -133,8 +133,8 @@
   margin: 0;
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 800;
-  color: #ffffff;
-  font-family: 'Space Grotesk', sans-serif;
+  color: var(--q-ink);
+  font-family: var(--q-font-display);
 }
 
 .ms-filter-buttons {
@@ -183,7 +183,7 @@
 }
 
 .ms-newsletter-badge {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
   font-size: 13px;
   font-weight: 600;
   color: var(--neon-cyan);
@@ -194,15 +194,15 @@
 
 .ms-newsletter-title {
   margin: 0 0 16px;
-  color: #ffffff;
+  color: var(--q-ink);
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 800;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--q-font-display);
 }
 
 .ms-newsletter-desc {
   margin: 0 auto 40px;
-  color: #94a3b8;
+  color: var(--q-ink-2);
   font-size: 16px;
   max-width: 500px;
 }
@@ -217,12 +217,12 @@
 .ms-newsletter-input {
   padding: 16px 24px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid color-mix(in srgb, var(--q-ink) 10%, transparent);
   font-size: 15px;
   width: 100%;
   max-width: 340px;
-  background: rgba(255, 255, 255, 0.03);
-  color: #ffffff;
+  background: color-mix(in srgb, var(--q-ink) 3%, transparent);
+  color: var(--q-ink);
   font-family: 'Inter', sans-serif;
   outline: none;
   transition: border-color 0.2s;
@@ -231,15 +231,15 @@
 .ms-newsletter-btn {
   padding: 16px 32px;
   border-radius: 8px;
-  background: linear-gradient(135deg, var(--neon-cyan), #4338ca);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--q-violet));
+  color: var(--q-ink);
   border: none;
   font-weight: 600;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 20px rgba(94,230,255,0.2);
 }
 
 .ms-newsletter-btn:hover {
@@ -247,11 +247,11 @@
 }
 
 .ms-newsletter-success {
-  color: #34d399;
+  color: var(--q-accent-text);
   font-weight: 600;
   padding: 16px;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(212,255,58,0.1);
+  border: 1px solid rgba(212,255,58,0.3);
   border-radius: 8px;
   display: inline-block;
 }

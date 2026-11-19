@@ -1,0 +1,144 @@
+/* ═══════════════════════════════════════════════════════════
+   Alignment layer for Blog / Academy / Bootcamp / Masterclass.
+   These pages keep their own markup; this layer gives them the
+   Quantum Lab typography, spacing and surfaces.
+═══════════════════════════════════════════════════════════ */
+
+/* Let the global field show through, clear the fixed nav */
+.blog-main,
+.academy-main,
+.mdetails-main {
+  background: transparent !important;
+  color: var(--q-ink) !important;
+  font-family: var(--q-font-body) !important;
+  padding-top: clamp(110px, 12vw, 150px) !important;
+  overflow: visible !important;
+}
+.blog-grid-bg,
+.blog-blob-top,
+.blog-blob-bottom { display: none !important; }
+
+.blog-container,
+.academy-hero,
+.academy-section {
+  max-width: var(--q-max) !important;
+  padding-left: var(--q-gutter) !important;
+  padding-right: var(--q-gutter) !important;
+}
+.blog-container { padding-top: 0 !important; }
+
+/* Hero titles → display XXL */
+.blog-title,
+.academy-hero h1,
+.mdetails-hero h1 {
+  font-family: var(--q-font-display) !important;
+  font-weight: 650 !important;
+  font-size: clamp(3rem, 9vw, 8.5rem) !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.05em !important;
+  color: var(--q-ink) !important;
+  font-variation-settings: "opsz" 96;
+}
+.academy-hero-content { max-width: 1100px !important; text-align: left !important; margin: 0 !important; }
+.academy-hero-content > p { margin-left: 0 !important; max-width: 60ch; }
+
+.blog-description,
+.academy-section-desc,
+.academy-hero-sub { color: var(--q-ink-2) !important; }
+
+/* Section titles */
+.blog-section-title,
+.academy-section-title,
+.mdetails-subsection-title {
+  font-family: var(--q-font-display) !important;
+  font-weight: 650 !important;
+  font-size: clamp(2rem, 4.6vw, 4rem) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.04em !important;
+  color: var(--q-ink) !important;
+}
+
+/* Labels & badges → mono */
+.blog-badge,
+.academy-badge,
+.academy-section-label,
+.blog-section-subtitle,
+.mdetails-meta-label {
+  font-family: var(--q-font-mono) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  border-radius: 999px !important;
+}
+.academy-section-label,
+.blog-section-subtitle { color: var(--q-accent-text) !important; background: none !important; border: 0 !important; padding: 0 !important; }
+
+/* Dividers */
+.academy-divider {
+  height: 1px !important;
+  background: var(--q-line) !important;
+  max-width: calc(var(--q-max) - 2 * var(--q-gutter));
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Cards & surfaces */
+.academy-deliverable-card,
+.blog-stat-card,
+.academy-form-wrapper,
+.storytelling-modal-stat-card {
+  background: color-mix(in srgb, var(--q-surface) 80%, transparent) !important;
+  border: 1px solid var(--q-line) !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+.blog-stat-value,
+.storytelling-number,
+.storytelling-modal-stat-number {
+  font-family: var(--q-font-display) !important;
+  font-weight: 300 !important;
+  letter-spacing: -0.05em !important;
+}
+
+/* Buttons */
+.academy-cta-primary,
+.mdetails-error-link {
+  border-radius: 999px !important;
+  font-family: var(--q-font-mono) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  background: var(--q-accent) !important;
+  color: var(--q-accent-ink) !important;
+  border: 1px solid var(--q-accent) !important;
+  transition: background-color 0.4s var(--q-ease), color 0.4s var(--q-ease) !important;
+}
+.academy-cta-primary:hover,
+.mdetails-error-link:hover {
+  background: var(--q-ink) !important;
+  color: var(--q-bg) !important;
+  border-color: var(--q-ink) !important;
+}
+
+/* Forms */
+.academy-form-input,
+.academy-form-select {
+  background: color-mix(in srgb, var(--q-ink) 3%, transparent) !important;
+  border: 1px solid var(--q-line-strong) !important;
+  border-radius: 12px !important;
+  color: var(--q-ink) !important;
+}
+.academy-form-input:focus,
+.academy-form-select:focus { border-color: var(--q-accent) !important; box-shadow: none !important; }
+.academy-form-label {
+  font-family: var(--q-font-mono) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--q-ink-3) !important;
+}
+
+/* Modals inside these pages sit above the nav */
+.storytelling-modal-overlay { z-index: 950 !important; }

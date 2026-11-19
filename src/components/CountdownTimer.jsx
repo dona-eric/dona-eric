@@ -47,7 +47,7 @@ export default function CountdownTimer({ compact = false }) {
   if (compact) {
     return (
       <div style={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center" }}>
-        <span style={{ fontSize: "28px", fontWeight: "700", color: "#a855f7", fontFamily: "'Space Grotesk', sans-serif" }}>
+        <span style={{ fontSize: "28px", fontWeight: "700", color: "#8f7dff", fontFamily: "var(--q-font-display)" }}>
           {String(days).padStart(2, '0')}j {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m {String(seconds).padStart(2, '0')}s
         </span>
       </div>
@@ -56,24 +56,24 @@ export default function CountdownTimer({ compact = false }) {
 
   return (
     <div style={{ display: "flex", gap: "12px", justifyContent: "center", alignItems: "center", margin: "12px 0" }}>
-      <div style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
-        <div style={{ fontSize: "24px", fontWeight: "800", color: "#f8fafc", fontFamily: "'Space Grotesk', sans-serif" }}>{String(days).padStart(2, '0')}</div>
-        <div style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.5px" }}>Jours</div>
+      <div style={{ background: "rgba(143,125,255,0.12)", border: "1px solid rgba(143,125,255,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
+        <div style={{ fontSize: "24px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{String(days).padStart(2, '0')}</div>
+        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Jours</div>
       </div>
-      <span style={{ fontSize: "20px", fontWeight: "700", color: "#6366f1" }}>:</span>
-      <div style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
-        <div style={{ fontSize: "24px", fontWeight: "800", color: "#f8fafc", fontFamily: "'Space Grotesk', sans-serif" }}>{String(hours).padStart(2, '0')}</div>
-        <div style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.5px" }}>Heures</div>
+      <span style={{ fontSize: "20px", fontWeight: "700", color: "#8f7dff" }}>:</span>
+      <div style={{ background: "rgba(143,125,255,0.12)", border: "1px solid rgba(143,125,255,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
+        <div style={{ fontSize: "24px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{String(hours).padStart(2, '0')}</div>
+        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Heures</div>
       </div>
-      <span style={{ fontSize: "20px", fontWeight: "700", color: "#6366f1" }}>:</span>
-      <div style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
-        <div style={{ fontSize: "24px", fontWeight: "800", color: "#f8fafc", fontFamily: "'Space Grotesk', sans-serif" }}>{String(minutes).padStart(2, '0')}</div>
-        <div style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.5px" }}>Mins</div>
+      <span style={{ fontSize: "20px", fontWeight: "700", color: "#8f7dff" }}>:</span>
+      <div style={{ background: "rgba(143,125,255,0.12)", border: "1px solid rgba(143,125,255,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
+        <div style={{ fontSize: "24px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{String(minutes).padStart(2, '0')}</div>
+        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Mins</div>
       </div>
-      <span style={{ fontSize: "20px", fontWeight: "700", color: "#6366f1" }}>:</span>
-      <div style={{ background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
-        <div style={{ fontSize: "24px", fontWeight: "800", color: "#ec4899", fontFamily: "'Space Grotesk', sans-serif" }}>{String(seconds).padStart(2, '0')}</div>
-        <div style={{ fontSize: "11px", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.5px" }}>Secs</div>
+      <span style={{ fontSize: "20px", fontWeight: "700", color: "#8f7dff" }}>:</span>
+      <div style={{ background: "rgba(143,125,255,0.12)", border: "1px solid rgba(143,125,255,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
+        <div style={{ fontSize: "24px", fontWeight: "800", color: "#ff7a45", fontFamily: "var(--q-font-display)" }}>{String(seconds).padStart(2, '0')}</div>
+        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Secs</div>
       </div>
     </div>
   );

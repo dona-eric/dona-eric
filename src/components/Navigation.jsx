@@ -1,262 +1,209 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
+import { Magnetic, Roll, EASE, EASE_IO } from "../quantum/primitives";
+import { useScrollLock } from "../quantum/MotionContext";
+import { SOCIALS } from "../data/profile";
 import "../styles/Navigation.css";
 
-const LANG_OPTIONS = [
-  { code: "fr", flag: "🇫🇷", label: "FR" },
-  { code: "en", flag: "🇬🇧", label: "EN" },
-  { code: "es", flag: "🇪🇸", label: "ES" },
-  { code: "ja", flag: "🇯🇵", label: "JA" },
-];
+const LANGS = ["fr", "en", "es", "ja"];
 
-const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [langMenuOpen, setLangMenuOpen] = useState(false);
-
+export default function Navigation() {
   const { lang, changeLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
-  const langDropdownRef = useRef(null);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef(null);
+  const { scrollY } = useScroll();
 
-  useEffect(() => { setIsOpen(false); }, [location]);
+  useScrollLock(menu);
+
+  const LINKS = [
+    { to: "/projects", label: t("nav.projects") },
+    { to: "/skills", label: t("nav.skills") },
+    { to: "/about", label: t("nav.about") },
+    { to: "/blog", label: t("nav.blog") },
+    { to: "/academy", label: t("nav.academy") },
+    { to: "/contact", label: t("nav.contact") },
+  ];
+
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    setScrolled(y > 30);
+    if (menu) return;
+    setHidden(y > 160 && y > prev);
+  });
+
+  useEffect(() => { setMenu(false); setHidden(false); }, [location.pathname]);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
+    const close = (e) => { if (langRef.current && !langRef.current.contains(e.target)) setLangOpen(false); };
+    window.addEventListener("pointerdown", close);
+    return () => window.removeEventListener("pointerdown", close);
   }, []);
 
-  // Close language dropdown on click outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (langDropdownRef.current && !langDropdownRef.current.contains(e.target)) {
-        setLangMenuOpen(false);
-      }
-    };
-    window.addEventListener("mousedown", handleClickOutside);
-    return () => window.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const isActive = (path) => location.pathname === path;
-  const currentLangObj = LANG_OPTIONS.find(l => l.code === lang) || LANG_OPTIONS[0];
+  const isActive = (to) => location.pathname === to || (to !== "/" && location.pathname.startsWith(to + "/"));
 
   return (
     <>
-      <nav className={`nav-main ${scrolled ? "scrolled" : "transparent"}`}>
-        <div className="nav-container">
-          <div className="nav-header">
+      <motion.header
+        className={`qn ${scrolled ? "qn--scrolled" : ""} ${menu ? "qn--menu" : ""}`}
+        animate={{ y: hidden ? "-110%" : "0%" }}
+        transition={{ duration: 0.6, ease: EASE }}
+      >
+        <div className="qn-inner">
+          <Link to="/" className="qn-logo" aria-label="Accueil" data-cursor="label" data-cursor-label="Accueil">
+            <span className="qn-logo-mark">ψ</span>
+            <span className="qn-logo-text">
+              <Roll>Dona Eric</Roll>
+              <small>Statisticien · AI Engineer</small>
+            </span>
+          </Link>
 
-            {/* ── Logo Monogram ── */}
-            <Link to="/" className="nav-logo-link">
-              <div className="nav-logo-monogram">
-                <span className="nav-logo-letter">D</span>
-                <span className="nav-logo-dot" />
-              </div>
-            </Link>
+          <nav className="qn-links" aria-label="Navigation principale">
+            {LINKS.map((l, i) => (
+              <Link key={l.to} to={l.to} className={`qn-link ${isActive(l.to) ? "is-active" : ""}`}>
+                <sup>{String(i + 1).padStart(2, "0")}</sup>
+                <Roll>{l.label}</Roll>
+              </Link>
+            ))}
+          </nav>
 
-            {/* ── Desktop nav ── */}
-            <div className="desktop-nav">
-              <Link to="/" className="nav-link">
-                <span className={`nav-link-text ${isActive('/') ? 'active' : 'inactive'}`}>{t("nav.home")}</span>
-                <div className={`nav-link-bar ${isActive('/') ? 'active' : 'inactive'}`} />
-              </Link>
-              <Link to="/projects" className="nav-link">
-                <span className={`nav-link-text ${isActive('/projects') ? 'active' : 'inactive'}`}>{t("nav.projects")}</span>
-                <div className={`nav-link-bar ${isActive('/projects') ? 'active' : 'inactive'}`} />
-              </Link>
-              <Link to="/skills" className="nav-link">
-                <span className={`nav-link-text ${isActive('/skills') ? 'active' : 'inactive'}`}>{t("nav.skills") || "Skills"}</span>
-                <div className={`nav-link-bar ${isActive('/skills') ? 'active' : 'inactive'}`} />
-              </Link>
-              <Link to="/about" className="nav-link">
-                <span className={`nav-link-text ${isActive('/about') ? 'active' : 'inactive'}`}>{t("nav.about")}</span>
-                <div className={`nav-link-bar ${isActive('/about') ? 'active' : 'inactive'}`} />
-              </Link>
-              <Link to="/contact" className="nav-link">
-                <span className={`nav-link-text ${isActive('/contact') ? 'active' : 'inactive'}`}>{t("nav.contact")}</span>
-                <div className={`nav-link-bar ${isActive('/contact') ? 'active' : 'inactive'}`} />
-              </Link>
-              <Link to="/blog" className="nav-link">
-                <span className={`nav-link-text ${isActive('/blog') ? 'active' : 'inactive'}`}>{t("nav.blog")}</span>
-                <div className={`nav-link-bar ${isActive('/blog') ? 'active' : 'inactive'}`} />
-              </Link>
-              <Link to="/academy" className="nav-link">
-                <span className={`nav-link-text ${isActive('/academy') ? 'active' : 'inactive'}`}>{t("nav.academy")}</span>
-                <div className={`nav-link-bar ${isActive('/academy') ? 'active' : 'inactive'}`} />
-              </Link>
-            </div>
-
-            {/* ── Right Utilities & CTA ── */}
-            <div className="desktop-cta" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <a href="/cv_dona_eric.pdf" target="_blank" rel="noopener noreferrer" className="btn-cv-pill">
-                {t("nav.downloadCv")}
-              </a>
-
-              {/* Language Selector Dropdown */}
-              <div ref={langDropdownRef} style={{ position: "relative" }}>
-                <div 
-                  className="lang-toggle-pill" 
-                  onClick={() => setLangMenuOpen(!langMenuOpen)}
-                  title={t("nav.langSelect")}
-                  style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
-                >
-                  <span>{currentLangObj.flag}</span> {currentLangObj.label} 
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-
-                {langMenuOpen && (
-                  <div style={{
-                    position: "absolute",
-                    top: "calc(100% + 8px)",
-                    right: 0,
-                    background: "var(--bg-secondary)",
-                    border: "1px solid var(--glass-border)",
-                    borderRadius: "10px",
-                    padding: "6px",
-                    boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
-                    zIndex: 200,
-                    minWidth: "110px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "4px"
-                  }}>
-                    {LANG_OPTIONS.map((item) => (
-                      <button
-                        key={item.code}
-                        onClick={() => {
-                          changeLanguage(item.code);
-                          setLangMenuOpen(false);
-                        }}
-                        style={{
-                          background: lang === item.code ? "rgba(99, 102, 241, 0.2)" : "transparent",
-                          border: "none",
-                          borderRadius: "6px",
-                          padding: "8px 10px",
-                          color: "var(--text-primary)",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                          cursor: "pointer",
-                          fontSize: "13px",
-                          fontWeight: lang === item.code ? "700" : "400",
-                          textAlign: "left",
-                          transition: "all 0.2s"
-                        }}
-                      >
-                        <span>{item.flag}</span> {item.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Theme Toggle Button */}
-              <button 
-                onClick={toggleTheme}
-                className="theme-toggle-btn" 
-                aria-label="Toggle theme"
-                title={theme === "dark" ? t("nav.themeDark") : t("nav.themeLight")}
-                style={{ cursor: "pointer" }}
-              >
-                {theme === "dark" ? (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                  </svg>
-                ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                  </svg>
-                )}
+          <div className="qn-tools">
+            <div className="qn-lang" ref={langRef}>
+              <button className="qn-tool" onClick={() => setLangOpen((v) => !v)} aria-label={t("nav.langSelect")} aria-expanded={langOpen}>
+                {lang.toUpperCase()}
+                <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.4" /></svg>
               </button>
+              <AnimatePresence>
+                {langOpen && (
+                  <motion.ul
+                    className="qn-lang-menu"
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    transition={{ duration: 0.25, ease: EASE }}
+                  >
+                    {LANGS.map((code) => (
+                      <li key={code}>
+                        <button
+                          className={lang === code ? "is-active" : ""}
+                          onClick={() => { changeLanguage(code); setLangOpen(false); }}
+                        >
+                          {code.toUpperCase()}
+                        </button>
+                      </li>
+                    ))}
+                  </motion.ul>
+                )}
+              </AnimatePresence>
             </div>
 
-            {/* ── Mobile burger ── */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="mobile-burger"
-              aria-label="Toggle menu"
+              className="qn-tool qn-theme"
+              onClick={toggleTheme}
+              aria-label={theme === "dark" ? t("nav.themeLight") : t("nav.themeDark")}
+              title={theme === "dark" ? t("nav.themeLight") : t("nav.themeDark")}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                {isOpen ? (
-                  <>
-                    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </>
-                ) : (
-                  <>
-                    <line x1="4" y1="6"  x2="20" y2="6"  stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </>
-                )}
-              </svg>
+              <motion.span
+                className="qn-theme-icon"
+                animate={{ rotate: theme === "dark" ? 0 : 180 }}
+                transition={{ duration: 0.8, ease: EASE_IO }}
+              />
+            </button>
+
+            <Magnetic strength={0.25} className="qn-cta-wrap">
+              <Link to="/contact" className="q-btn q-btn--accent q-btn--sm qn-cta">
+                <Roll>{t("home.btnContact")}</Roll>
+              </Link>
+            </Magnetic>
+
+            <button className="qn-burger" onClick={() => setMenu((v) => !v)} aria-label="Menu" aria-expanded={menu}>
+              <span className="qn-burger-label"><Roll>{menu ? "Fermer" : "Menu"}</Roll></span>
+              <span className={`qn-burger-icon ${menu ? "is-open" : ""}`}><i /><i /></span>
             </button>
           </div>
-
-          {/* ── Mobile menu ── */}
-          {isOpen && (
-            <div className="mobile-menu">
-              <div className="mobile-menu-list">
-                <Link to="/" className={`mob-link ${isActive('/') ? "active" : "inactive"}`}>{t("nav.home")}</Link>
-                <Link to="/projects" className={`mob-link ${isActive('/projects') ? "active" : "inactive"}`}>{t("nav.projects")}</Link>
-                <Link to="/skills" className={`mob-link ${isActive('/skills') ? "active" : "inactive"}`}>{t("nav.skills") || "Skills"}</Link>
-                <Link to="/about" className={`mob-link ${isActive('/about') ? "active" : "inactive"}`}>{t("nav.about")}</Link>
-                <Link to="/contact" className={`mob-link ${isActive('/contact') ? "active" : "inactive"}`}>{t("nav.contact")}</Link>
-                <Link to="/blog" className={`mob-link ${isActive('/blog') ? "active" : "inactive"}`}>{t("nav.blog")}</Link>
-                <Link to="/academy" className={`mob-link ${isActive('/academy') ? "active" : "inactive"}`}>{t("nav.academy")}</Link>
-              </div>
-
-              {/* Mobile Language & Theme Selectors */}
-              <div style={{ display: "flex", gap: "10px", marginTop: "16px", justifyContent: "center" }}>
-                {LANG_OPTIONS.map(item => (
-                  <button
-                    key={item.code}
-                    onClick={() => changeLanguage(item.code)}
-                    style={{
-                      background: lang === item.code ? "#6366f1" : "rgba(255,255,255,0.1)",
-                      color: "#fff",
-                      border: "none",
-                      padding: "6px 10px",
-                      borderRadius: "6px",
-                      fontSize: "12px",
-                      cursor: "pointer"
-                    }}
-                  >
-                    {item.flag} {item.label}
-                  </button>
-                ))}
-                <button
-                  onClick={toggleTheme}
-                  style={{
-                    background: "rgba(255,255,255,0.1)",
-                    color: "#fff",
-                    border: "none",
-                    padding: "6px 12px",
-                    borderRadius: "6px",
-                    fontSize: "12px",
-                    cursor: "pointer"
-                  }}
-                >
-                  {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-                </button>
-              </div>
-            </div>
-          )}
         </div>
-      </nav>
+      </motion.header>
+
+      <AnimatePresence>
+        {menu && (
+          <motion.div
+            className="qn-overlay"
+            initial={{ clipPath: "circle(0% at calc(100% - 48px) 38px)" }}
+            animate={{ clipPath: "circle(150% at calc(100% - 48px) 38px)" }}
+            exit={{ clipPath: "circle(0% at calc(100% - 48px) 38px)" }}
+            transition={{ duration: 0.9, ease: EASE_IO }}
+            data-lenis-prevent
+          >
+            <div className="qn-overlay-inner">
+              <span className="q-label">(Navigation)</span>
+              <ul className="qn-overlay-links">
+                <li>
+                  <span className="q-mask">
+                    <motion.span
+                      initial={{ y: "110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.9, ease: EASE, delay: 0.25 }}
+                      style={{ display: "inline-block" }}
+                    >
+                      <Link to="/" className="qn-overlay-link">
+                        <sup>00</sup>{t("nav.home")}
+                      </Link>
+                    </motion.span>
+                  </span>
+                </li>
+                {LINKS.map((l, i) => (
+                  <li key={l.to}>
+                    <span className="q-mask">
+                      <motion.span
+                        initial={{ y: "110%" }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.9, ease: EASE, delay: 0.3 + i * 0.05 }}
+                        style={{ display: "inline-block" }}
+                      >
+                        <Link to={l.to} className={`qn-overlay-link ${isActive(l.to) ? "is-active" : ""}`}>
+                          <sup>{String(i + 1).padStart(2, "0")}</sup>
+                          {l.label}
+                        </Link>
+                      </motion.span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <motion.div
+                className="qn-overlay-foot"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: EASE, delay: 0.6 }}
+              >
+                <div className="qn-overlay-socials">
+                  {SOCIALS.map((s) => (
+                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">
+                      <Roll>{s.label}</Roll>
+                    </a>
+                  ))}
+                </div>
+                <div className="qn-overlay-langs">
+                  {LANGS.map((code) => (
+                    <button key={code} className={lang === code ? "is-active" : ""} onClick={() => changeLanguage(code)}>
+                      {code.toUpperCase()}
+                    </button>
+                  ))}
+                  <a href="/cv_dona_eric.pdf" target="_blank" rel="noopener noreferrer" className="q-btn q-btn--sm">
+                    CV PDF ↗
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
-};
-
-export default Navigation;
+}
