@@ -33,7 +33,7 @@ export const EXPERIENCES = [
     role: "Statisticien & AI Engineer",
     type: "CDD",
     company: "Becotrac (Re) Assurances",
-    location: "Hybride · Bénin",
+    location: "Remote · Bénin",
     period: "Depuis le 11 nov. 2026",
     current: true,
     tasks: [
@@ -102,7 +102,8 @@ export const EXPERIENCES = [
 ];
 
 export const EDUCATION = [
-  { year: "En cours", title: "Master 1 Statistiques Appliquées au Vivant", org: "ICPMA-UAC", field: "Statistique appliquée" },
+  { year: "En cours", title: "Master 1 Statistiques Appliquées", org: "", field: "Statistique appliquée" },
+  { year: "2026", title: "AI Researcher", org: "AIMS South Africa & Google DeepMind", field: "Research Student" },
   { year: "2026", title: "Build RAG Agentic", org: "NVIDIA", field: "Agentic RAG · Vector Search" },
   { year: "2026", title: "Machine Learning Engineer", org: "Isheero / DataCamp", field: "ML Engineering" },
   { year: "2025", title: "Licence en Physique", org: "Université d'Abomey-Calavi", field: "Physique Fondamentale" },
