@@ -5,16 +5,21 @@ import GravatarQR from "../components/GravatarQR";
 import { Magnetic, Reveal, Roll, SectionHead, SplitText, EASE } from "../quantum/primitives";
 import { fieldBus, useScrollLock } from "../quantum/MotionContext";
 import { SOCIALS } from "../data/profile";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/Contact.css";
 
 const MESSAGES = {
-  sending: "Transmission en cours…",
-  success: "Message reçu ✓ Réponse sous 24h.",
-  invalid: "Merci de remplir les trois champs.",
-  error: "L'envoi a échoué. Écrivez-moi directement par email ou WhatsApp.",
+  sending: { en: "Sending…", fr: "Transmission en cours…" },
+  success: { en: "Message received ✓ Reply within 24h.", fr: "Message reçu ✓ Réponse sous 24h." },
+  invalid: { en: "Please fill in all three fields.", fr: "Merci de remplir les trois champs." },
+  error: {
+    en: "Sending failed. Write to me directly by email or WhatsApp.",
+    fr: "L'envoi a échoué. Écrivez-moi directement par email ou WhatsApp.",
+  },
 };
 
 function QrModal({ onClose }) {
+  const { tr } = useLanguage();
   useScrollLock(true);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -28,7 +33,7 @@ function QrModal({ onClose }) {
         className="ct-modal"
         role="dialog"
         aria-modal="true"
-        aria-label="Profil Gravatar QR"
+        aria-label={tr("Gravatar profile QR code", "Profil Gravatar QR")}
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 30, opacity: 0 }}
@@ -36,7 +41,7 @@ function QrModal({ onClose }) {
         onClick={(e) => e.stopPropagation()}
         data-lenis-prevent
       >
-        <button className="ct-modal-close" onClick={onClose} aria-label="Fermer">×</button>
+        <button className="ct-modal-close" onClick={onClose} aria-label={tr("Close", "Fermer")}>×</button>
         <GravatarQR email="donaerickoulodji@gmail.com" defaultType="gravatar" defaultVersion="3" size={300} />
       </motion.div>
     </motion.div>
@@ -44,6 +49,7 @@ function QrModal({ onClose }) {
 }
 
 export default function Contact() {
+  const { tr, tx } = useLanguage();
   const [form, setForm] = useState({ subject: "", message: "", sender: "" });
   const [status, setStatus] = useState(null);
   const [qr, setQr] = useState(false);
@@ -78,20 +84,28 @@ export default function Contact() {
     <div className="ct">
       <Helmet>
         <title>Contact — Dona Eric KOULODJI</title>
-        <meta name="description" content="Contactez Dona Eric KOULODJI pour une opportunité en Data Science / Machine Learning, une collaboration ou une mission IA." />
+        <meta
+          name="description"
+          content={tr(
+            "Contact Dona Eric KOULODJI about a Data Science / Machine Learning opportunity, a collaboration or an AI assignment.",
+            "Contactez Dona Eric KOULODJI pour une opportunité en Data Science / Machine Learning, une collaboration ou une mission IA."
+          )}
+        />
       </Helmet>
 
       <header className="q-page-hero">
         <div className="q-container">
-          <span className="q-label"><span className="q-dot" /> (Contact) — réponse sous 24h</span>
+          <span className="q-label"><span className="q-dot" /> (Contact) — {tr("reply within 24h", "réponse sous 24h")}</span>
           <h1 className="q-page-hero-title">
-            <SplitText as="span" by="char" stagger={0.03}>Parlons-en.</SplitText>
+            <SplitText as="span" by="char" stagger={0.03}>{tr("Let's talk.", "Parlons-en.")}</SplitText>
           </h1>
           <div className="q-page-hero-foot">
             <Reveal>
               <p className="q-lead">
-                Une opportunité Data / ML, une collaboration ou une mission IA ? Décrivez le problème :
-                je reviens vers vous avec une première approche.
+                {tr(
+                  "A Data / ML opportunity, a collaboration or an AI assignment? Describe the problem and I will come back to you with a first approach.",
+                  "Une opportunité Data / ML, une collaboration ou une mission IA ? Décrivez le problème : je reviens vers vous avec une première approche."
+                )}
               </p>
             </Reveal>
           </div>
@@ -100,7 +114,7 @@ export default function Contact() {
 
       <section className="q-container ct-grid">
         <div className="ct-channels">
-          <SectionHead index="01" label="Canaux directs" />
+          <SectionHead index="01" label={tr("Direct channels", "Canaux directs")} />
           <ul>
             {SOCIALS.map((s, i) => (
               <Reveal as="li" key={s.label} delay={i * 0.06}>
@@ -114,7 +128,7 @@ export default function Contact() {
             <Reveal as="li" delay={0.35}>
               <button className="ct-channel" onClick={() => setQr(true)}>
                 <span className="q-label">Gravatar</span>
-                <span className="ct-channel-value">Profil QR code</span>
+                <span className="ct-channel-value">{tr("Profile QR code", "Profil QR code")}</span>
                 <span className="ct-channel-arrow">⌗</span>
               </button>
             </Reveal>
@@ -125,24 +139,24 @@ export default function Contact() {
           <SectionHead index="02" label="Message" />
           <form className="ct-form" onSubmit={handleSubmit} noValidate>
             <div className="q-field">
-              <label htmlFor="ct-email">Votre email</label>
+              <label htmlFor="ct-email">{tr("Your email", "Votre email")}</label>
               <input
                 id="ct-email"
                 type="email"
                 required
                 autoComplete="email"
-                placeholder="vous@entreprise.com"
+                placeholder={tr("you@company.com", "vous@entreprise.com")}
                 value={form.sender}
                 onChange={(e) => setForm({ ...form, sender: e.target.value })}
               />
             </div>
             <div className="q-field">
-              <label htmlFor="ct-subject">Objet</label>
+              <label htmlFor="ct-subject">{tr("Subject", "Objet")}</label>
               <input
                 id="ct-subject"
                 type="text"
                 required
-                placeholder="Proposition de collaboration"
+                placeholder={tr("Collaboration proposal", "Proposition de collaboration")}
                 value={form.subject}
                 onChange={(e) => setForm({ ...form, subject: e.target.value })}
               />
@@ -153,7 +167,7 @@ export default function Contact() {
                 id="ct-message"
                 required
                 rows={5}
-                placeholder="Le contexte, les données disponibles, l'objectif…"
+                placeholder={tr("The context, the available data, the goal…", "Le contexte, les données disponibles, l'objectif…")}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
               />
@@ -161,7 +175,7 @@ export default function Contact() {
             <div className="ct-form-foot">
               <Magnetic strength={0.3}>
                 <button type="submit" className="q-btn q-btn--accent" disabled={status === "sending"}>
-                  <Roll>{status === "sending" ? "Envoi…" : "Envoyer le message"}</Roll>
+                  <Roll>{status === "sending" ? tr("Sending…", "Envoi…") : tr("Send message", "Envoyer le message")}</Roll>
                   <span className="q-btn-arrow">→</span>
                 </button>
               </Magnetic>
@@ -176,13 +190,13 @@ export default function Contact() {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.4, ease: EASE }}
                   >
-                    {MESSAGES[status]}
+                    {tx(MESSAGES[status])}
                   </motion.span>
                 )}
               </AnimatePresence>
             </div>
             <p className="ct-to">
-              Destinataire : <span>donaerickoulodji@gmail.com</span>
+              {tr("Recipient:", "Destinataire :")} <span>donaerickoulodji@gmail.com</span>
             </p>
           </form>
         </div>

@@ -1,12 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { sendToGroq } from "../api/groq";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/ChatWidget.css";
 
+const GREETING = {
+  en: "Hi! I'm Dona's AI assistant. Ask me anything about his background, projects or skills.",
+  fr: "Bonjour ! Je suis l'assistant IA de Dona. Posez-moi une question sur son parcours, ses projets ou ses compétences.",
+};
+
 export default function ChatWidget() {
+  const { tr, tx } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { role: "assistant", content: "Bonjour ! Je suis l'assistant IA de Dona. Posez-moi une question sur son parcours, ses projets ou ses compétences." }
-  ]);
+  // The greeting is rendered in the current language until the conversation starts.
+  const [messages, setMessages] = useState([{ role: "assistant", greeting: true, content: GREETING.en }]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
@@ -36,14 +42,14 @@ export default function ChatWidget() {
     try {
       const history = messages.filter(m => m.role !== "system").map(m => ({
         role: m.role,
-        content: m.content
+        content: m.greeting ? tx(GREETING) : m.content
       }));
       
       const reply = await sendToGroq(userMessage, history);
       
       setMessages([...newMessages, { role: "assistant", content: reply }]);
     } catch (error) {
-      setMessages([...newMessages, { role: "assistant", content: "Désolé, une erreur de connexion est survenue. Veuillez réessayer." }]);
+      setMessages([...newMessages, { role: "assistant", content: tr("Sorry, a connection error occurred. Please try again.", "Désolé, une erreur de connexion est survenue. Veuillez réessayer.") }]);
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +60,7 @@ export default function ChatWidget() {
       <button 
         className={`chat-widget-toggle ${isOpen ? "open" : ""}`}
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle chat"
+        aria-label={isOpen ? tr("Close the assistant", "Fermer l'assistant") : tr("Open the assistant", "Ouvrir l'assistant")}
       >
         {isOpen ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -74,7 +80,7 @@ export default function ChatWidget() {
             <div className="chat-widget-dot"></div>
             <span>Dona.ia</span>
           </div>
-          <button className="chat-widget-close" onClick={() => setIsOpen(false)}>
+          <button className="chat-widget-close" onClick={() => setIsOpen(false)} aria-label={tr("Close", "Fermer")}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -86,7 +92,7 @@ export default function ChatWidget() {
           {messages.map((msg, idx) => (
             <div key={idx} className={`chat-message-wrapper ${msg.role === 'user' ? 'user' : 'assistant'}`}>
               <div className="chat-message-bubble">
-                {msg.content}
+                {msg.greeting ? tx(GREETING) : msg.content}
               </div>
             </div>
           ))}
@@ -105,7 +111,7 @@ export default function ChatWidget() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Posez une question sur mon profil..."
+            placeholder={tr("Ask a question about my profile…", "Posez une question sur mon profil…")}
             className="chat-widget-input"
             disabled={isLoading}
           />

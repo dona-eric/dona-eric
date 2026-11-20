@@ -6,9 +6,11 @@ import "../styles/MasterclassDetails.css";
 
 import { MasterclassService } from "../services/masterclassService";
 import { formatDate, isOpen } from "../config/masterclasses.config";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function MasterclassDetails() {
   const { id } = useParams();
+  const { lang, tr } = useLanguage();
   const [masterclass, setMasterclass] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,11 +35,11 @@ export default function MasterclassDetails() {
             isLocked
           });
         } else {
-          setError("Événement introuvable");
+          setError("notfound");
         }
       } catch (err) {
         console.error("Erreur Fetch:", err);
-        setError("Erreur de connexion");
+        setError("network");
       } finally {
         setLoading(false);
       }
@@ -51,8 +53,10 @@ export default function MasterclassDetails() {
   if (error || !masterclass) {
     return (
       <div className="mdetails-error-container">
-        <h2 className="mdetails-error-title">{error || "Masterclass introuvable"}</h2>
-        <Link to="/formations" className="mdetails-error-link">Retour aux formations</Link>
+        <h2 className="mdetails-error-title">
+          {error === "network" ? tr("Connection error", "Erreur de connexion") : tr("Event not found", "Événement introuvable")}
+        </h2>
+        <Link to="/academy" className="mdetails-error-link">{tr("Back to MLAcademy", "Retour aux formations")}</Link>
       </div>
     );
   }
@@ -67,8 +71,8 @@ export default function MasterclassDetails() {
         background: `linear-gradient(180deg, ${themeColor}15 0%, rgba(0,0,0,0) 100%)`,
       }}>
         <div className="mdetails-hero-content">
-          <Link to="/formations" className="mdetails-back-link">
-            ← Retour aux événements
+          <Link to="/academy" className="mdetails-back-link">
+            ← {tr("Back to events", "Retour aux événements")}
           </Link>
 
           <div className="mdetails-badges">
@@ -91,16 +95,16 @@ export default function MasterclassDetails() {
           <div className="mdetails-meta">
             <div className="mdetails-meta-item">
               <span className="mdetails-meta-label">Date</span>
-              <strong className="mdetails-meta-value">{masterclass.date ? formatDate(masterclass.date) : "À venir"}</strong>
+              <strong className="mdetails-meta-value">{masterclass.date ? formatDate(masterclass.date, lang) : tr("Coming soon", "À venir")}</strong>
             </div>
             <div className="mdetails-meta-divider"></div>
             <div className="mdetails-meta-item">
-              <span className="mdetails-meta-label">Heure</span>
+              <span className="mdetails-meta-label">{tr("Time", "Heure")}</span>
               <strong className="mdetails-meta-value">{masterclass.time}</strong>
             </div>
             <div className="mdetails-meta-divider"></div>
             <div className="mdetails-meta-item">
-              <span className="mdetails-meta-label">Prix</span>
+              <span className="mdetails-meta-label">{tr("Price", "Prix")}</span>
               <strong className="mdetails-meta-value price">{masterclass.price}</strong>
             </div>
           </div>
@@ -111,12 +115,12 @@ export default function MasterclassDetails() {
         
         {/* ── COLONNE GAUCHE (Détails) ── */}
         <div>
-          <h2 className="mdetails-section-title">À propos de cet événement</h2>
+          <h2 className="mdetails-section-title">{tr("About this event", "À propos de cet événement")}</h2>
           <p className="mdetails-description">
             {masterclass.description}
           </p>
 
-          <h3 className="mdetails-subsection-title">🎯 Ce que vous allez apprendre</h3>
+          <h3 className="mdetails-subsection-title">🎯 {tr("What you will learn", "Ce que vous allez apprendre")}</h3>
           <ul className="mdetails-objectives">
             {masterclass.objectives.map((obj, i) => (
               <li key={i}>{obj}</li>
@@ -134,7 +138,7 @@ export default function MasterclassDetails() {
             ))}
           </div>
 
-          <h3 className="mdetails-subsection-title">👤 L'Intervenant</h3>
+          <h3 className="mdetails-subsection-title">👤 {tr("Speaker", "L'Intervenant")}</h3>
           <div className="mdetails-speaker">
             <img src={masterclass.speaker.avatar} alt={masterclass.speaker.name} className="mdetails-speaker-avatar" />
             <div>
@@ -149,30 +153,30 @@ export default function MasterclassDetails() {
           <div className="mdetails-form-card">
             {masterclass.isOpen ? (
               <>
-                <h3 className="mdetails-form-title">Réserver votre place</h3>
-                <p className="mdetails-form-desc">Remplissez le formulaire ci-dessous pour confirmer votre inscription gratuite.</p>
+                <h3 className="mdetails-form-title">{tr("Book your seat", "Réserver votre place")}</h3>
+                <p className="mdetails-form-desc">{tr("Fill in the form below to confirm your free registration.", "Remplissez le formulaire ci-dessous pour confirmer votre inscription gratuite.")}</p>
                 <RegistrationForm 
                   masterclass={masterclass} 
-                  onClose={() => window.location.href = "/formations"} 
+                  onClose={() => (window.location.href = "/academy")} 
                 />
               </>
             ) : masterclass.isPast ? (
               <div style={{ textAlign: "center", padding: "40px 20px" }}>
                 <div style={{ fontSize: "50px", marginBottom: "16px" }}>🔒</div>
-                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>Inscriptions Closes</h3>
+                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{tr("Registration closed", "Inscriptions Closes")}</h3>
                 <p style={{ color: "var(--q-ink-2)", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
-                  Les inscriptions pour cet événement sont closes car l'événement a déjà eu lieu ou a expiré.
+                  {tr("Registration for this event is closed because it has already taken place or expired.", "Les inscriptions pour cet événement sont closes car l'événement a déjà eu lieu ou a expiré.")}
                 </p>
-                <Link to="/formations" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>Retour aux événements</Link>
+                <Link to="/academy" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>{tr("Back to events", "Retour aux événements")}</Link>
               </div>
             ) : (
               <div style={{ textAlign: "center", padding: "40px 20px" }}>
                 <div style={{ fontSize: "50px", marginBottom: "16px" }}>⏳</div>
-                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>Inscriptions à Venir</h3>
+                <h3 style={{ margin: "0 0 10px", fontSize: "22px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{tr("Registration coming soon", "Inscriptions à Venir")}</h3>
                 <p style={{ color: "var(--q-ink-2)", fontFamily: "'Inter', sans-serif", fontSize: "14px", lineHeight: "1.6" }}>
-                  Les inscriptions pour cet événement ne sont pas encore ouvertes. Elles débuteront dès la fin de l'événement précédent.
+                  {tr("Registration for this event is not open yet. It will start as soon as the previous event ends.", "Les inscriptions pour cet événement ne sont pas encore ouvertes. Elles débuteront dès la fin de l'événement précédent.")}
                 </p>
-                <Link to="/formations" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>Retour aux événements</Link>
+                <Link to="/academy" className="mdetails-error-link" style={{ marginTop: "24px", display: "inline-block" }}>{tr("Back to events", "Retour aux événements")}</Link>
               </div>
             )}
           </div>

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import {
-  ACADEMY, TRACKS, MISSION, ADVANTAGES, DELIVERABLES, TIMELINE_STEPS,
-  TARGET_AUDIENCE, SKILLS_OUTCOME, VALUES, FAQ, INSTRUCTOR,
-  COMMUNITY, FORM_OPTIONS,
-} from "../config/academy.config";
+import { academyContent } from "../config/academy.config";
+import { useLanguage } from "../context/LanguageContext";
 import { AcademyService } from "../services/academyService";
 import "../styles/Academy.css";
 
 export default function Bootcamp() {
+  const { lang, tr } = useLanguage();
+  const {
+    ACADEMY, TRACKS, MISSION, ADVANTAGES, DELIVERABLES, TIMELINE_STEPS,
+    TARGET_AUDIENCE, SKILLS_OUTCOME, VALUES, FAQ, INSTRUCTOR, COMMUNITY,
+  } = academyContent(lang);
   const [preRegCount, setPreRegCount] = useState(0);
 
   useEffect(() => {
@@ -25,10 +27,13 @@ export default function Bootcamp() {
         <div className="academy-hero-content">
           <div className="academy-badge">
             <span className="academy-badge-dot" />
-            Pré-inscriptions ouvertes — {ACADEMY.cohort.name}
+            {tr("Pre-registration open", "Pré-inscriptions ouvertes")} — {ACADEMY.cohort.name}
           </div>
 
-          <h1 dangerouslySetInnerHTML={{ __html: "Road to Data Science<br/><span class='gradient-text'>Moderne en 90 Jours</span>" }}>
+          <h1>
+            {tr("Road to Modern Data Science", "Road to Data Science")}
+            <br />
+            <span className="gradient-text">{tr("in 90 Days", "Moderne en 90 Jours")}</span>
           </h1>
 
           <p className="academy-hero-sub" style={{ fontSize: "1.2rem", maxWidth: "600px" }}>
@@ -45,16 +50,16 @@ export default function Bootcamp() {
 
           <div className="academy-cta-group">
             <a href="#inscription" className="academy-cta-primary">
-              🚀 Je réserve ma place
+              🚀 {tr("Book my seat", "Je réserve ma place")}
             </a>
             <a href="#roadmap" className="academy-cta-secondary">
-              📋 Voir le programme
+              📋 {tr("See the programme", "Voir le programme")}
             </a>
           </div>
 
           {preRegCount > 0 && (
             <p className="academy-counter">
-              <strong>{preRegCount}</strong> personnes déjà pré-inscrites
+              <strong>{preRegCount}</strong> {tr("people already pre-registered", "personnes déjà pré-inscrites")}
             </p>
           )}
         </div>
@@ -85,7 +90,7 @@ export default function Bootcamp() {
             {MISSION.problem}
           </p>
           <div className="academy-why-highlight" style={{ marginBottom: "24px" }}>
-            {["Modèles isolés", "Jupyter Notebooks", "Datasets parfaits"].map((t) => (
+            {[tr("Isolated models", "Modèles isolés"), "Jupyter Notebooks", tr("Perfect datasets", "Datasets parfaits")].map((t) => (
               <span key={t} className="academy-why-pill">{t}</span>
             ))}
           </div>
@@ -93,7 +98,7 @@ export default function Bootcamp() {
             {MISSION.vision}
           </p>
           <div className="academy-why-highlight" style={{ marginTop: "24px" }}>
-            {["Déploiement Cloud", "Kubernetes", "Systèmes temps réel", "CI/CD"].map((t) => (
+            {[tr("Cloud deployment", "Déploiement Cloud"), "Kubernetes", tr("Real-time systems", "Systèmes temps réel"), "CI/CD"].map((t) => (
               <span key={t} className="academy-why-pill good">{t}</span>
             ))}
           </div>
@@ -104,9 +109,9 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section">
         <span className="academy-section-label">// target.audience()</span>
-        <h2 className="academy-section-title">Pour qui ?</h2>
+        <h2 className="academy-section-title">{tr("Who is it for?", "Pour qui ?")}</h2>
         <p className="academy-section-desc">
-          Cette académie est conçue pour toute personne motivée, avec ou sans expérience préalable en Data Science.
+          {tr("This academy is designed for anyone motivated, with or without prior data-science experience.", "Cette académie est conçue pour toute personne motivée, avec ou sans expérience préalable en Data Science.")}
         </p>
         <div className="academy-audience-grid">
           {TARGET_AUDIENCE.map((item, i) => (
@@ -121,10 +126,10 @@ export default function Bootcamp() {
       {/* ══════════════════ TIMELINE ══════════════════ */}
       <div className="academy-divider" />
       <section className="academy-section">
-        <span className="academy-section-label">// votre.parcours()</span>
-        <h2 className="academy-section-title">Le parcours en un coup d'œil</h2>
+        <span className="academy-section-label">// {tr("your.journey()", "votre.parcours()")}</span>
+        <h2 className="academy-section-title">{tr("The journey at a glance", "Le parcours en un coup d'œil")}</h2>
         <p className="academy-section-desc">
-          De la pré-inscription à la communauté alumni, voici les étapes qui vous attendent.
+          {tr("From pre-registration to the alumni community, here are the steps ahead.", "De la pré-inscription à la communauté alumni, voici les étapes qui vous attendent.")}
         </p>
         <div className="academy-timeline">
           {TIMELINE_STEPS.map((step, i) => {
@@ -162,10 +167,10 @@ export default function Bootcamp() {
       <section id="roadmap" className="academy-section">
         <span className="academy-section-label">// curriculum.load()</span>
         <h2 className="academy-section-title">
-          La Roadmap des <span className="gradient-text">{ACADEMY.cohort.duration}</span>
+          {tr("The roadmap:", "La Roadmap des")} <span className="gradient-text">{ACADEMY.cohort.duration}</span>
         </h2>
         <p className="academy-section-desc">
-          7 niveaux progressifs, du débutant à l'ingénieur IA opérationnel. Chaque niveau se termine par un projet concret.
+          {tr("Progressive levels, from beginner to job-ready AI engineer. Each level ends with a concrete project.", "7 niveaux progressifs, du débutant à l'ingénieur IA opérationnel. Chaque niveau se termine par un projet concret.")}
         </p>
 
         <div className="academy-levels">
@@ -179,7 +184,7 @@ export default function Bootcamp() {
                   <span className="academy-level-number">MODULE {track.id}</span>
                   <span className="academy-level-title" style={{ color: track.color }}>{track.title}</span>
                   <span className="academy-level-duration">{track.duration}</span>
-                  {track.free && <span className="academy-level-free">GRATUIT</span>}
+                  {track.free && <span className="academy-level-free">{tr("FREE", "GRATUIT")}</span>}
                 </div>
                 
                 {/* Tech Stack */}
@@ -193,7 +198,7 @@ export default function Bootcamp() {
 
                 {/* Outcomes */}
                 <div style={{ marginBottom: "16px" }}>
-                  <div style={{ fontSize: "13px", color: "var(--q-ink-3)", marginBottom: "8px", fontWeight: "600", textTransform: "uppercase" }}>Vous serez capable de :</div>
+                  <div style={{ fontSize: "13px", color: "var(--q-ink-3)", marginBottom: "8px", fontWeight: "600", textTransform: "uppercase" }}>{tr("You will be able to:", "Vous serez capable de :")}</div>
                   <ul style={{ margin: 0, paddingLeft: "16px", color: "var(--q-ink-2)", fontSize: "14px", display: "flex", flexDirection: "column", gap: "6px" }}>
                     {track.learningOutcomes.map((outcome, idx) => (
                       <li key={idx}>{outcome}</li>
@@ -204,7 +209,7 @@ export default function Bootcamp() {
                 {/* Projects */}
                 {track.projects.length > 0 && (
                   <div style={{ background: "rgba(143,125,255,0.05)", border: "1px solid rgba(143,125,255,0.15)", borderRadius: "8px", padding: "12px 16px", marginTop: "16px" }}>
-                    <div style={{ fontSize: "13px", color: "#8f7dff", marginBottom: "6px", fontWeight: "600" }}>🚀 PROJETS :</div>
+                    <div style={{ fontSize: "13px", color: "#8f7dff", marginBottom: "6px", fontWeight: "600" }}>🚀 {tr("PROJECTS:", "PROJETS :")}</div>
                     <ul style={{ margin: 0, paddingLeft: "16px", color: "var(--text-secondary)", fontSize: "14px" }}>
                       {track.projects.map((proj, idx) => (
                         <li key={idx}>{proj}</li>
@@ -222,9 +227,9 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section">
         <span className="academy-section-label">// skills.acquired()</span>
-        <h2 className="academy-section-title">Ce que vous saurez faire</h2>
+        <h2 className="academy-section-title">{tr("What you will be able to do", "Ce que vous saurez faire")}</h2>
         <p className="academy-section-desc">
-          À la fin des 90 jours, vous serez capable de :
+          {tr("By the end of the 90 days, you will be able to:", "À la fin des 90 jours, vous serez capable de :")}
         </p>
         <div className="academy-skills-grid">
           {SKILLS_OUTCOME.map((skill, i) => (
@@ -240,9 +245,9 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section academy-section-center">
         <span className="academy-section-label">// academy.features()</span>
-        <h2 className="academy-section-title">Pourquoi choisir MLAcademy ?</h2>
+        <h2 className="academy-section-title">{tr("Why choose MLAcademy?", "Pourquoi choisir MLAcademy ?")}</h2>
         <p className="academy-section-desc">
-          Une formation pensée pour l'impact, pas pour le volume.
+          {tr("A programme built for impact, not volume.", "Une formation pensée pour l'impact, pas pour le volume.")}
         </p>
         <div className="academy-advantages-grid">
           {ADVANTAGES.map((adv, i) => (
@@ -260,10 +265,10 @@ export default function Bootcamp() {
       <section className="academy-section academy-section-center">
         <span className="academy-section-label">// projects.build()</span>
         <h2 className="academy-section-title">
-          8 projets que vous <span className="gradient-text">construirez</span>
+          {tr("8 projects you will", "8 projets que vous")} <span className="gradient-text">{tr("build", "construirez")}</span>
         </h2>
         <p className="academy-section-desc">
-          Chaque étudiant repart avec un portfolio complet de projets déployés.
+          {tr("Every student leaves with a complete portfolio of deployed projects.", "Chaque étudiant repart avec un portfolio complet de projets déployés.")}
         </p>
         <div className="academy-deliverables-grid">
           {DELIVERABLES.map((d, i) => (
@@ -282,7 +287,7 @@ export default function Bootcamp() {
         <span className="academy-section-label">// certifications.earn()</span>
         <h2 className="academy-section-title">Certifications</h2>
         <p className="academy-section-desc">
-          Un certificat à la fin de chaque module. Une certification finale après validation du projet.
+          {tr("A certificate at the end of each module. A final certification once the project is validated.", "Un certificat à la fin de chaque module. Une certification finale après validation du projet.")}
         </p>
         <div className="academy-deliverables-grid">
           {TRACKS.filter((t) => t.certification).map((t) => (
@@ -299,7 +304,7 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section">
         <span className="academy-section-label">// instructor.profile()</span>
-        <h2 className="academy-section-title">Votre instructeur</h2>
+        <h2 className="academy-section-title">{tr("Your instructor", "Votre instructeur")}</h2>
         <div className="academy-instructor-card">
           <img
             src={INSTRUCTOR.avatar}
@@ -326,17 +331,16 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section academy-section-center">
         <div className="academy-scarcity">
-          <h3>Pourquoi seulement {ACADEMY.cohort.seats} places ?</h3>
+          <h3>{tr(`Why only ${ACADEMY.cohort.seats} seats?`, `Pourquoi seulement ${ACADEMY.cohort.seats} places ?`)}</h3>
           <p>
-            Cette première cohorte sera volontairement limitée.
-            Parce que la qualité d'accompagnement est notre priorité absolue.
+            {tr("This first cohort is deliberately small, because the quality of mentoring is our absolute priority.", "Cette première cohorte sera volontairement limitée. Parce que la qualité d'accompagnement est notre priorité absolue.")}
           </p>
           <div className="academy-scarcity-reasons">
             {[
-              "Répondre personnellement à chaque question",
-              "Corriger chaque projet individuellement",
-              "Accompagner chaque étudiant vers son objectif",
-              "Construire une vraie communauté soudée",
+              tr("Answer every question personally", "Répondre personnellement à chaque question"),
+              tr("Review every project individually", "Corriger chaque projet individuellement"),
+              tr("Guide each student towards their goal", "Accompagner chaque étudiant vers son objectif"),
+              tr("Build a genuinely close-knit community", "Construire une vraie communauté soudée"),
             ].map((r, i) => (
               <div key={i} className="academy-scarcity-reason">
                 <span>✓</span> {r}
@@ -350,7 +354,7 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section academy-section-center">
         <span className="academy-section-label">// values.core()</span>
-        <h2 className="academy-section-title">Nos valeurs</h2>
+        <h2 className="academy-section-title">{tr("Our values", "Nos valeurs")}</h2>
         <div className="academy-values-grid">
           {VALUES.map((v, i) => (
             <div key={i} className="academy-value-card">
@@ -366,9 +370,9 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section">
         <span className="academy-section-label">// community.join()</span>
-        <h2 className="academy-section-title">Rejoignez la communauté</h2>
+        <h2 className="academy-section-title">{tr("Join the community", "Rejoignez la communauté")}</h2>
         <p className="academy-section-desc">
-          MLAcademy, c'est aussi un réseau de passionnés. Rejoignez-nous sur vos plateformes préférées.
+          {tr("MLAcademy is also a network of enthusiasts. Join us on your favourite platforms.", "MLAcademy, c'est aussi un réseau de passionnés. Rejoignez-nous sur vos plateformes préférées.")}
         </p>
         <div className="academy-community-grid">
           {COMMUNITY.map((c, i) => (
@@ -387,7 +391,7 @@ export default function Bootcamp() {
       <div className="academy-divider" />
       <section className="academy-section">
         <span className="academy-section-label">// faq.answers()</span>
-        <h2 className="academy-section-title">Questions fréquentes</h2>
+        <h2 className="academy-section-title">{tr("Frequently asked questions", "Questions fréquentes")}</h2>
         <div className="academy-faq-list">
           {FAQ.map((item, i) => (
             <FaqItem key={i} question={item.q} answer={item.a} />
@@ -400,9 +404,9 @@ export default function Bootcamp() {
       <section id="inscription" className="academy-form-section">
         <div style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center", marginBottom: 48 }}>
           <span className="academy-section-label">// register.now()</span>
-          <h2 className="academy-section-title">Pré-inscription — {ACADEMY.cohort.name}</h2>
+          <h2 className="academy-section-title">{tr("Pre-registration", "Pré-inscription")} — {ACADEMY.cohort.name}</h2>
           <p className="academy-section-desc" style={{ margin: "0 auto" }}>
-            Réservez votre place dès maintenant. Aucun paiement requis à ce stade.
+            {tr("Book your seat now. No payment required at this stage.", "Réservez votre place dès maintenant. Aucun paiement requis à ce stade.")}
           </p>
         </div>
         <RegistrationForm onSuccess={() => setPreRegCount((c) => c + 1)} />
@@ -429,6 +433,8 @@ function FaqItem({ question, answer }) {
 
 /* ── Registration Form ── */
 function RegistrationForm({ onSuccess }) {
+  const { lang, tr } = useLanguage();
+  const { FORM_OPTIONS } = academyContent(lang);
   const [form, setForm] = useState({
     first_name: "", last_name: "", email: "", country: "",
     profession: "", current_level: "", objective: "", motivation: "",
@@ -447,12 +453,12 @@ function RegistrationForm({ onSuccess }) {
     const required = ["first_name", "last_name", "email", "country", "profession", "current_level", "objective"];
     for (const field of required) {
       if (!form[field].trim()) {
-        setError("Veuillez remplir tous les champs obligatoires.");
+        setError(tr("Please fill in all required fields.", "Veuillez remplir tous les champs obligatoires."));
         return;
       }
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setError("Veuillez entrer une adresse email valide.");
+      setError(tr("Please enter a valid email address.", "Veuillez entrer une adresse email valide."));
       return;
     }
 
@@ -462,7 +468,7 @@ function RegistrationForm({ onSuccess }) {
       setStatus("success");
       if (onSuccess) onSuccess();
     } catch (err) {
-      setError(err.message || "Une erreur est survenue. Réessayez.");
+      setError(err.message || tr("Something went wrong. Please try again.", "Une erreur est survenue. Réessayez."));
       setStatus("error");
     }
   };
@@ -472,10 +478,10 @@ function RegistrationForm({ onSuccess }) {
       <div className="academy-form-wrapper">
         <div className="academy-form-success">
           <div className="academy-form-success-icon">🎉</div>
-          <h3>Pré-inscription confirmée !</h3>
+          <h3>{tr("Pre-registration confirmed!", "Pré-inscription confirmée !")}</h3>
           <p>
-            Un email de bienvenue a été envoyé à <strong style={{ color: "#b6a8ff" }}>{form.email}</strong>.<br />
-            Nous vous contacterons dès l'ouverture officielle des inscriptions.
+            {tr("A welcome email has been sent to", "Un email de bienvenue a été envoyé à")} <strong style={{ color: "#b6a8ff" }}>{form.email}</strong>.<br />
+            {tr("We will contact you as soon as registration officially opens.", "Nous vous contacterons dès l'ouverture officielle des inscriptions.")}
           </p>
         </div>
       </div>
@@ -487,55 +493,55 @@ function RegistrationForm({ onSuccess }) {
       <form onSubmit={handleSubmit}>
         <div className="academy-form-grid">
           <div className="academy-form-field">
-            <label className="academy-form-label">Prénom *</label>
+            <label className="academy-form-label">{tr("First name *", "Prénom *")}</label>
             <input name="first_name" value={form.first_name} onChange={handleChange}
-              placeholder="Jean" className="academy-form-input" />
+              placeholder={tr("Jane", "Jean")} className="academy-form-input" />
           </div>
           <div className="academy-form-field">
-            <label className="academy-form-label">Nom *</label>
+            <label className="academy-form-label">{tr("Last name *", "Nom *")}</label>
             <input name="last_name" value={form.last_name} onChange={handleChange}
-              placeholder="DUPONT" className="academy-form-input" />
+              placeholder={tr("DOE", "DUPONT")} className="academy-form-input" />
           </div>
           <div className="academy-form-field full">
             <label className="academy-form-label">Email *</label>
             <input name="email" type="email" value={form.email} onChange={handleChange}
-              placeholder="jean.dupont@email.com" className="academy-form-input" />
+              placeholder={tr("jane.doe@email.com", "jean.dupont@email.com")} className="academy-form-input" />
           </div>
           <div className="academy-form-field">
-            <label className="academy-form-label">Pays *</label>
+            <label className="academy-form-label">{tr("Country *", "Pays *")}</label>
             <select name="country" value={form.country} onChange={handleChange} className="academy-form-select">
-              <option value="">Sélectionnez</option>
-              {FORM_OPTIONS.countries.map((c) => <option key={c} value={c}>{c}</option>)}
+              <option value="">{tr("Select", "Sélectionnez")}</option>
+              {FORM_OPTIONS.countries.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
             </select>
           </div>
           <div className="academy-form-field">
             <label className="academy-form-label">Profession *</label>
             <input name="profession" value={form.profession} onChange={handleChange}
-              placeholder="Étudiant, Développeur..." className="academy-form-input" />
+              placeholder={tr("Student, developer…", "Étudiant, Développeur...")} className="academy-form-input" />
           </div>
           <div className="academy-form-field full">
-            <label className="academy-form-label">Niveau actuel *</label>
+            <label className="academy-form-label">{tr("Current level *", "Niveau actuel *")}</label>
             <select name="current_level" value={form.current_level} onChange={handleChange} className="academy-form-select">
-              <option value="">Sélectionnez votre niveau</option>
-              {FORM_OPTIONS.levels.map((l) => <option key={l} value={l}>{l}</option>)}
+              <option value="">{tr("Select your level", "Sélectionnez votre niveau")}</option>
+              {FORM_OPTIONS.levels.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
             </select>
           </div>
           <div className="academy-form-field full">
-            <label className="academy-form-label">Votre objectif *</label>
+            <label className="academy-form-label">{tr("Your goal *", "Votre objectif *")}</label>
             <select name="objective" value={form.objective} onChange={handleChange} className="academy-form-select">
-              <option value="">Que souhaitez-vous devenir ?</option>
-              {FORM_OPTIONS.objectives.map((o) => <option key={o} value={o}>{o}</option>)}
+              <option value="">{tr("What do you want to become?", "Que souhaitez-vous devenir ?")}</option>
+              {FORM_OPTIONS.objectives.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
           <div className="academy-form-field full">
-            <label className="academy-form-label">Pourquoi souhaitez-vous intégrer MLAcademy ? (optionnel)</label>
+            <label className="academy-form-label">{tr("Why do you want to join MLAcademy? (optional)", "Pourquoi souhaitez-vous intégrer MLAcademy ? (optionnel)")}</label>
             <textarea name="motivation" value={form.motivation} onChange={handleChange}
-              placeholder="Votre motivation, vos attentes..." className="academy-form-textarea" />
+              placeholder={tr("Your motivation, your expectations…", "Votre motivation, vos attentes...")} className="academy-form-textarea" />
           </div>
           {error && <div className="academy-form-error">{error}</div>}
         </div>
         <button type="submit" className="academy-form-submit" disabled={status === "loading"}>
-          {status === "loading" ? "⏳ Inscription en cours..." : "🚀 Je réserve ma place"}
+          {status === "loading" ? tr("⏳ Registering…", "⏳ Inscription en cours...") : tr("🚀 Book my seat", "🚀 Je réserve ma place")}
         </button>
       </form>
     </div>

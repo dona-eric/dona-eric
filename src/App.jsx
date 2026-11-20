@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ChatWidget from "./components/ChatWidget";
-import { LanguageProvider } from "./context/LanguageContext";
+import { LanguageProvider, useLanguage } from "./context/LanguageContext";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { MotionProvider, useMotion, fieldBus } from "./quantum/MotionContext";
 import PageTransition from "./quantum/PageTransition";
@@ -84,6 +84,39 @@ function AnimatedRoutes() {
   );
 }
 
+function SiteMeta() {
+  const { tr, lang } = useLanguage();
+  const title = `Dona Eric KOULODJI | ${tr("Statistician & AI Engineer", "Statisticien & AI Engineer")}`;
+  const description = tr(
+    "Portfolio of Dona Eric KOULODJI, Statistician & AI Engineer at Becotrac (Re) Assurances: statistical modelling, machine learning, LLM agents and MLOps. Deployed projects, public code and CV.",
+    "Portfolio de Dona Eric KOULODJI, Statisticien & AI Engineer chez Becotrac (Re) Assurances : modélisation statistique, machine learning, agents LLM et MLOps. Projets déployés, code public et CV."
+  );
+  const short = tr(
+    "Applied statistics and deployed AI systems: modelling, machine learning, LLM agents and MLOps.",
+    "Statistique appliquée et systèmes IA déployés : modélisation, machine learning, agents LLM et MLOps."
+  );
+  return (
+    <Helmet>
+      <html lang={lang} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href="https://donerick.vercel.app" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://donerick.vercel.app" />
+      <meta property="og:locale" content={lang === "fr" ? "fr_FR" : "en_US"} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={short} />
+      <meta property="og:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
+      <meta property="og:image:alt" content={tr("Portrait of Dona Eric KOULODJI", "Portrait de Dona Eric KOULODJI")} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@EricSchrodinger" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={short} />
+      <meta name="twitter:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
+    </Helmet>
+  );
+}
+
 function Shell() {
   const { theme } = useTheme();
   const { reduced, introDone } = useMotion();
@@ -100,6 +133,7 @@ function Shell() {
 
   return (
     <div className="q-app">
+      <SiteMeta />
       <Suspense fallback={null}>
         <QuantumField theme={theme} intensity={isHome ? 1 : 0.42} reduced={reduced} />
       </Suspense>
@@ -120,22 +154,6 @@ export default function App() {
     <LanguageProvider>
       <ThemeProvider>
         <MotionProvider>
-          <Helmet>
-            <title>Dona Eric KOULODJI | Statisticien & AI Engineer</title>
-            <meta name="description" content="Portfolio de Dona Eric KOULODJI, Statisticien & AI Engineer chez Becotrac (Re) Assurances : modélisation statistique, machine learning, agents LLM et MLOps. Projets déployés, code public et CV." />
-            <link rel="canonical" href="https://donerick.vercel.app" />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content="https://donerick.vercel.app" />
-            <meta property="og:title" content="Dona Eric KOULODJI | Statisticien & AI Engineer" />
-            <meta property="og:description" content="Statistique appliquée et systèmes IA déployés : modélisation, machine learning, agents LLM et MLOps." />
-            <meta property="og:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
-            <meta property="og:image:alt" content="Portrait de Dona Eric KOULODJI" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:site" content="@EricSchrodinger" />
-            <meta name="twitter:title" content="Dona Eric KOULODJI | Statisticien & AI Engineer" />
-            <meta name="twitter:description" content="Portfolio IA : NLP, modélisation prédictive, LLM/RAG et MLOps." />
-            <meta name="twitter:image" content="https://donerick.vercel.app/eric-donerick.jpg" />
-          </Helmet>
           <Shell />
           <Analytics />
         </MotionProvider>

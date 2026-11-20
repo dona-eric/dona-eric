@@ -4,6 +4,7 @@ import { ProductService, FALLBACK_PRODUCTS } from "../services/productService";
 import React, { useEffect, useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/Blog.css";
+import { useLanguage } from "../context/LanguageContext";
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 import { useFadeIn, useScrollFade } from "../hooks/useAnimations";
@@ -14,19 +15,21 @@ const SOURCE_META = {
 };
 
 const TYPE_LABELS = {
-  downloadable: { label: "Téléchargeable", color: "#5ee6ff" },
-  course: { label: "Formation", color: "#8f7dff" },
+  downloadable: { label: { en: "Downloadable", fr: "Téléchargeable" }, color: "#5ee6ff" },
+  course: { label: { en: "Course", fr: "Formation" }, color: "#8f7dff" },
   service: { label: "Service", color: "#ff7a45" },
-  license: { label: "Licence", color: "#d4ff3a" },
+  license: { label: { en: "Licence", fr: "Licence" }, color: "#d4ff3a" },
   bundle: { label: "Pack / Bundle", color: "#ffc94a" },
   coaching: { label: "Coaching", color: "#5ee6ff" },
 };
 
 const FILTERS = [
-  { key: "all", label: "Tous" },
-  { key: "products", label: "🛍️ Produits & Livres" },
+  { key: "all", label: { en: "All", fr: "Tous" } },
+  { key: "products", label: { en: "🛍️ Products & Books", fr: "🛍️ Produits & Livres" } },
   { key: "medium", label: "Medium" },
 ];
+
+const dateLocale = (lang) => (lang === "fr" ? "fr-FR" : "en-GB");
 
 const FALLBACK_POSTS = [
   {
@@ -161,8 +164,9 @@ function ArticleCard({ post, delay, featured }) {
   const ref = useScrollFade(delay);
   const [hov, setHov] = useState(false);
   const src = SOURCE_META[post.source] || SOURCE_META.medium;
+  const { lang, tr } = useLanguage();
 
-  const pubDate = new Date(post.pub_date * 1000).toLocaleDateString("fr-FR", {
+  const pubDate = new Date(post.pub_date * 1000).toLocaleDateString(dateLocale(lang), {
     day: "numeric", month: "short", year: "numeric"
   });
 
@@ -245,7 +249,7 @@ function ArticleCard({ post, delay, featured }) {
           border: `1px solid ${hov ? src.color + "50" : src.color + "25"}`,
           color: src.color
         }}>
-          Lire sur {src.label} ↗
+          {tr("Read on", "Lire sur")} {src.label} ↗
         </a>
       </div>
     </div>
@@ -272,7 +276,8 @@ function FilterBtn({ label, active, onClick }) {
 // ─── Storytelling Card ─────────────────────────────────────────────────────────
 function StorytellingCard({ mc, index, onClick }) {
   const ref = useScrollFade(index * 0.1);
-  const dateStr = new Date(mc.date).toLocaleDateString("fr-FR", {
+  const { lang, tr } = useLanguage();
+  const dateStr = new Date(mc.date).toLocaleDateString(dateLocale(lang), {
     month: "long",
     year: "numeric"
   });
@@ -290,11 +295,11 @@ function StorytellingCard({ mc, index, onClick }) {
         <div className="storytelling-post-text">
           <p style={{ margin: 0 }}>"{cleanSnippet}..."</p>
           <span className="storytelling-readmore" style={{ display: "block", marginTop: "12px", color: "#8f7dff", fontWeight: "600", fontSize: "13px" }}>
-            Lire le post complet →
+            {tr("Read the full post →", "Lire le post complet →")}
           </span>
         </div>
         <div className="storytelling-meta">
-          <span>{mc.type === "webinaire" ? "Webinaire" : "Masterclass"}</span>
+          <span>{mc.type === "webinaire" ? tr("Webinar", "Webinaire") : "Masterclass"}</span>
           <span style={{ textTransform: "capitalize" }}>{dateStr}</span>
         </div>
       </div>
@@ -306,11 +311,12 @@ function StorytellingCard({ mc, index, onClick }) {
 function ProductCard({ product, index }) {
   const ref = useScrollFade(index * 0.1);
   const [hov, setHov] = useState(false);
+  const { tr, tx } = useLanguage();
 
   const { name, description, pricing, pictures, type, category, slug, is_free } = product;
   const imageSrc = pictures?.cover || pictures?.thumbnail;
-  const typeMeta = TYPE_LABELS[type] || { label: type || "Produit", color: "#8f7dff" };
-  const priceDisplay = is_free || pricing?.type === "free" ? "Gratuit" : (pricing?.current_price?.formatted || "Voir offre");
+  const typeMeta = TYPE_LABELS[type] || { label: type || tr("Product", "Produit"), color: "#8f7dff" };
+  const priceDisplay = is_free || pricing?.type === "free" ? tr("Free", "Gratuit") : (pricing?.current_price?.formatted || tr("See offer", "Voir offre"));
   const categoryLabel = category?.label;
   const buyUrl = product.buy_url || product.url || `https://cykrhzat.mychariow.shop/${slug}`;
 
@@ -354,7 +360,7 @@ function ProductCard({ product, index }) {
             background: typeMeta.color + "15",
             border: `1px solid ${typeMeta.color}35`
           }}>
-            {typeMeta.label}
+            {tx(typeMeta.label)}
           </span>
           {categoryLabel && (
             <span className="product-category-badge">
@@ -375,7 +381,7 @@ function ProductCard({ product, index }) {
 
         <div className="product-card-footer">
           <div className="product-price-tag">
-            <span className="product-price-label">Prix</span>
+            <span className="product-price-label">{tr("Price", "Prix")}</span>
             <span className="product-price-value" style={{ color: is_free || pricing?.type === "free" ? "#d4ff3a" : "#5ee6ff" }}>
               {priceDisplay}
             </span>
@@ -391,7 +397,7 @@ function ProductCard({ product, index }) {
               boxShadow: hov ? `0 4px 20px ${typeMeta.color}50` : "none"
             }}
           >
-            Obtenir ↗
+            {tr("Get it", "Obtenir")} ↗
           </a>
         </div>
       </div>
@@ -402,6 +408,7 @@ function ProductCard({ product, index }) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function Blog({ isWindow = false }) {
   const heroRef = useFadeIn(0.1);
+  const { lang, tr, tx } = useLanguage();
 
   const [posts, setPosts] = useState(FALLBACK_POSTS);
   const [loading, setLoading] = useState(false);
@@ -457,8 +464,8 @@ export default function Blog({ isWindow = false }) {
 
   const STATS = [
     { value: `${posts.length}`, label: "Articles", color: "#5ee6ff" },
-    { value: `${products.length}`, label: "Produits & Livres", color: "#d4ff3a" },
-    { value: totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + "k" : totalViews || "—", label: "Vues totales", color: "#b6a8ff" },
+    { value: `${products.length}`, label: tr("Products & Books", "Produits & Livres"), color: "#d4ff3a" },
+    { value: totalViews >= 1000 ? (totalViews / 1000).toFixed(1) + "k" : totalViews || "—", label: tr("Total views", "Vues totales"), color: "#b6a8ff" },
     { value: totalLikes >= 1000 ? (totalLikes / 1000).toFixed(1) + "k" : totalLikes || "—", label: "Likes / Claps", color: "#ffc94a" },
   ];
 
@@ -469,8 +476,14 @@ export default function Blog({ isWindow = false }) {
     <>
       {!isWindow && (
         <Helmet>
-          <title>Blog & Produits — Dona Eric KOULODJI</title>
-          <meta name="description" content="Articles Medium, livres et produits numériques sur l'IA, le Machine Learning, les LLM et le déploiement cloud, par Dona Eric KOULODJI." />
+          <title>{tr("Blog & Products", "Blog & Produits")} — Dona Eric KOULODJI</title>
+          <meta
+            name="description"
+            content={tr(
+              "Medium articles, books and digital products on AI, machine learning, LLMs and cloud deployment, by Dona Eric KOULODJI.",
+              "Articles Medium, livres et produits numériques sur l'IA, le Machine Learning, les LLM et le déploiement cloud, par Dona Eric KOULODJI."
+            )}
+          />
         </Helmet>
       )}
       <div className="blog-main">
@@ -488,11 +501,10 @@ export default function Blog({ isWindow = false }) {
               MLAcademy & Chariow Store
             </div>
             <h1 className="blog-title">
-              Écrits, Livres & <span className="gradient-text">Produits.</span>
+              {tr("Writing, Books &", "Écrits, Livres &")} <span className="gradient-text">{tr("Products.", "Produits.")}</span>
             </h1>
             <p className="blog-description">
-              Découvrez mes articles techniques pointus publiés sur Medium, mes livres électroniques et l'ensemble
-              de nos produits numériques sur Chariow pour maîtriser l'Ingénierie IA & le Machine Learning.
+              {tr("In-depth technical articles published on Medium (in French), my e-books and all our digital products on Chariow to master AI engineering and machine learning.", "Découvrez mes articles techniques pointus publiés sur Medium, mes livres électroniques et l'ensemble de nos produits numériques sur Chariow pour maîtriser l'Ingénierie IA & le Machine Learning.")}
             </p>
           </div>
 
@@ -515,12 +527,12 @@ export default function Blog({ isWindow = false }) {
           <div className="blog-filters-container">
             <div className="blog-filter-row">
               {FILTERS.map(f => (
-                <FilterBtn key={f.key} label={f.label} active={filter === f.key} onClick={() => setFilter(f.key)} />
+                <FilterBtn key={f.key} label={tx(f.label)} active={filter === f.key} onClick={() => setFilter(f.key)} />
               ))}
             </div>
             {cachedAt && (
               <span className="blog-sync-info">
-                sync: {new Date(cachedAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+                sync: {new Date(cachedAt).toLocaleTimeString(dateLocale(lang), { hour: "2-digit", minute: "2-digit" })}
               </span>
             )}
           </div>
@@ -532,7 +544,7 @@ export default function Blog({ isWindow = false }) {
                 <span>// </span>products.chariow_store[]
               </div>
               <h2 className="blog-section-title">
-                {filter === "all" ? "Produits & Livres Numériques" : "Tous mes Produits & Livres"}
+                {filter === "all" ? tr("Digital Products & Books", "Produits & Livres Numériques") : tr("All my Products & Books", "Tous mes Produits & Livres")}
               </h2>
 
               {loadingProducts && products.length === 0 ? (
@@ -545,7 +557,7 @@ export default function Blog({ isWindow = false }) {
                 </div>
               ) : (
                 <div className="blog-empty-state">
-                  // Aucun produit disponible pour le moment.
+                  // {tr("No products available yet.", "Aucun produit disponible pour le moment.")}
                 </div>
               )}
             </div>
@@ -558,7 +570,7 @@ export default function Blog({ isWindow = false }) {
                 <span>// </span>posts.top_scored[]
               </div>
               <h2 className="blog-section-title">
-                Les Articles les plus populaires sur Medium
+                {tr("Most popular articles on Medium", "Les Articles les plus populaires sur Medium")}
               </h2>
               <div className="blog-featured-grid">
                 {featured.map((p, i) => <ArticleCard key={p.id || i} post={p} delay={i * 0.1} featured />)}
@@ -573,7 +585,7 @@ export default function Blog({ isWindow = false }) {
                 <span>// </span>community.impact_storytelling()
               </div>
               <h2 className="blog-section-title">
-                L'Impact de Nos Événements
+                {tr("The impact of our events", "L'Impact de Nos Événements")}
               </h2>
               <div className="blog-storytelling-grid">
                 {completedEvents.map((mc, i) => (
@@ -590,7 +602,7 @@ export default function Blog({ isWindow = false }) {
                 <span>// </span>posts.recent[]
               </div>
               <h2 className="blog-section-title">
-                Tous les Articles Medium Récentes
+                {tr("All recent Medium articles", "Tous les Articles Medium Récents")}
               </h2>
               <div className="blog-others-grid">
                 {others.map((p, i) => <ArticleCard key={p.id || i} post={p} delay={i * 0.07} featured={false} />)}
@@ -605,36 +617,36 @@ export default function Blog({ isWindow = false }) {
       {selectedEvent && (
         <div className="storytelling-modal-overlay" onClick={() => setSelectedEvent(null)}>
           <div className="storytelling-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="storytelling-modal-close" onClick={() => setSelectedEvent(null)}>
+            <button className="storytelling-modal-close" onClick={() => setSelectedEvent(null)} aria-label={tr("Close", "Fermer")}>
               &times;
             </button>
             <div className="storytelling-modal-header">
               <span className="storytelling-modal-badge" style={{ borderColor: selectedEvent.themeColor, color: selectedEvent.themeColor, background: `${selectedEvent.themeColor}15` }}>
-                {selectedEvent.type === "webinaire" ? "Webinaire" : "Masterclass"}
+                {selectedEvent.type === "webinaire" ? tr("Webinar", "Webinaire") : "Masterclass"}
               </span>
               <span className="storytelling-modal-date">
-                {new Date(selectedEvent.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+                {new Date(selectedEvent.date).toLocaleDateString(dateLocale(lang), { day: "numeric", month: "long", year: "numeric" })}
               </span>
             </div>
             <h3 className="storytelling-modal-title">{selectedEvent.title}</h3>
             <div className="storytelling-modal-stats">
               <div className="storytelling-modal-stat-card">
                 <span className="storytelling-modal-stat-number">{selectedEvent.registrantsCount}</span>
-                <span className="storytelling-modal-stat-label">Participants inscrits</span>
+                <span className="storytelling-modal-stat-label">{tr("Registered participants", "Participants inscrits")}</span>
               </div>
               <div className="storytelling-modal-stat-card">
                 <span className="storytelling-modal-stat-number" style={{ color: "#d4ff3a" }}>100%</span>
-                <span className="storytelling-modal-stat-label">Gratuit & Ouvert</span>
+                <span className="storytelling-modal-stat-label">{tr("Free & open", "Gratuit & Ouvert")}</span>
               </div>
             </div>
             <div className="storytelling-modal-body">
               <h4 style={{ color: "#b6a8ff", margin: "0 0 12px 0", fontSize: "15px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.05em", fontFamily: "monospace" }}>
-                Récit de l'événement
+                {tr("Event story", "Récit de l'événement")}
               </h4>
               <div className="storytelling-modal-text" dangerouslySetInnerHTML={{ __html: selectedEvent.storytelling }} />
             </div>
             <div className="storytelling-modal-footer">
-              <span className="storytelling-modal-speaker">Présenté par {selectedEvent.speaker?.name || "DTech-Africa"}</span>
+              <span className="storytelling-modal-speaker">{tr("Presented by", "Présenté par")} {selectedEvent.speaker?.name || "DTech-Africa"}</span>
             </div>
           </div>
         </div>
