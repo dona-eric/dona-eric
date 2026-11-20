@@ -302,7 +302,7 @@ const CONTENT = {
     socials: {
       linkedin: "https://linkedin.com/in/dona-erick",
       github: "https://github.com/dona-eric",
-      youtube: "https://www.youtube.com/@mlacademy",
+      youtube: "https://www.youtube.com/@mlacademie",
     },
   },
 
