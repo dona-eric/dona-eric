@@ -2,36 +2,38 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useMotion } from "./MotionContext";
 import { EASE_IO } from "./primitives";
+import { useLanguage } from "../context/LanguageContext";
 
 /*
   Route transition: a panel rises to cover the page on exit,
   then a second panel lifts away on enter, carrying the route label.
 */
 const ROUTE_LABELS = {
-  "/": "Accueil",
-  "/projects": "Projets",
-  "/skills": "Compétences",
-  "/about": "Profil",
+  "/": { en: "Home", fr: "Accueil" },
+  "/projects": { en: "Projects", fr: "Projets" },
+  "/skills": { en: "Skills", fr: "Compétences" },
+  "/about": { en: "About", fr: "Profil" },
   "/contact": "Contact",
   "/blog": "Blog",
   "/academy": "MLAcademy",
   "/academy/bootcamp": "Bootcamp",
 };
 
-export function routeLabel(path) {
-  if (ROUTE_LABELS[path]) return ROUTE_LABELS[path];
+function routeLabel(path, tx) {
+  if (ROUTE_LABELS[path]) return tx(ROUTE_LABELS[path]);
   if (path.startsWith("/masterclass")) return "Masterclass";
   return "404";
 }
 
 export default function PageTransition({ children, path }) {
   const { reduced, introDone } = useMotion();
+  const { tx } = useLanguage();
 
   if (reduced) {
     return <div>{children}</div>;
   }
 
-  const label = routeLabel(path);
+  const label = routeLabel(path, tx);
 
   return (
     <motion.div

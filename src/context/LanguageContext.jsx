@@ -405,42 +405,69 @@ export const TRANSLATIONS = {
   }
 };
 
+// English is the default language. A visitor's explicit choice is remembered.
+export const DEFAULT_LANG = "en";
+const STORAGE_KEY = "dona_lang";
+
+function readStoredLang() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && TRANSLATIONS[saved]) return saved;
+  } catch {
+    /* storage unavailable (private mode…) */
+  }
+  return DEFAULT_LANG;
+}
+
+function lookup(dict, keys) {
+  let cur = dict;
+  for (const k of keys) {
+    if (cur == null || cur[k] === undefined) return undefined;
+    cur = cur[k];
+  }
+  return cur;
+}
+
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState(() => {
-    return localStorage.getItem("dona_lang") || "fr";
-  });
+  const [lang, setLang] = useState(readStoredLang);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const changeLanguage = (newLang) => {
-    if (TRANSLATIONS[newLang]) {
-      setLang(newLang);
-      localStorage.setItem("dona_lang", newLang);
+    if (!TRANSLATIONS[newLang]) return;
+    setLang(newLang);
+    try {
+      localStorage.setItem(STORAGE_KEY, newLang);
+    } catch {
+      /* ignore */
     }
   };
 
+  // Dictionary lookup: current language → English → French → key.
   const t = (path) => {
     const keys = path.split(".");
-    let current = TRANSLATIONS[lang] || TRANSLATIONS.fr;
-    for (const key of keys) {
-      if (current[key] !== undefined) {
-        current = current[key];
-      } else {
-        // Fallback to French if translation key missing
-        let fallback = TRANSLATIONS.fr;
-        for (const fKey of keys) {
-          if (fallback && fallback[fKey] !== undefined) {
-            fallback = fallback[fKey];
-          } else {
-            return path;
-          }
-        }
-        return fallback;
-      }
-    }
-    return current;
+    return (
+      lookup(TRANSLATIONS[lang], keys) ??
+      lookup(TRANSLATIONS.en, keys) ??
+      lookup(TRANSLATIONS.fr, keys) ??
+      path
+    );
+  };
+
+  // Inline copy: tr("English", "Français"). Other languages fall back to English.
+  const tr = (en, fr) => (lang === "fr" && fr !== undefined ? fr : en);
+
+  // Localised data values: tx({ en, fr }) or a plain string.
+  const tx = (value) => {
+    if (value == null) return "";
+    if (typeof value !== "object") return value;
+    return value[lang] ?? value.en ?? value.fr ?? "";
   };
 
   return (
-    <LanguageContext.Provider value={{ lang, changeLanguage, t }}>
+    <LanguageContext.Provider value={{ lang, changeLanguage, t, tr, tx }}>
       {children}
     </LanguageContext.Provider>
   );

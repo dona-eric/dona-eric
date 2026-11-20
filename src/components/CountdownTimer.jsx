@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLanguage } from "../context/LanguageContext";
 
 // Target date set to 1 month and 1 week (37 days) from launch date (2026-07-27)
 const TARGET_DATE = (() => {
@@ -42,6 +43,7 @@ export function useCountdown(targetTimestamp = TARGET_DATE) {
 }
 
 export default function CountdownTimer({ compact = false }) {
+  const { tr } = useLanguage();
   const { days, hours, minutes, seconds } = useCountdown();
 
   if (compact) {
@@ -58,12 +60,12 @@ export default function CountdownTimer({ compact = false }) {
     <div style={{ display: "flex", gap: "12px", justifyContent: "center", alignItems: "center", margin: "12px 0" }}>
       <div style={{ background: "rgba(143,125,255,0.12)", border: "1px solid rgba(143,125,255,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
         <div style={{ fontSize: "24px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{String(days).padStart(2, '0')}</div>
-        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Jours</div>
+        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{tr("Days", "Jours")}</div>
       </div>
       <span style={{ fontSize: "20px", fontWeight: "700", color: "#8f7dff" }}>:</span>
       <div style={{ background: "rgba(143,125,255,0.12)", border: "1px solid rgba(143,125,255,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>
         <div style={{ fontSize: "24px", fontWeight: "800", color: "var(--q-ink)", fontFamily: "var(--q-font-display)" }}>{String(hours).padStart(2, '0')}</div>
-        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>Heures</div>
+        <div style={{ fontSize: "11px", color: "var(--q-ink-2)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{tr("Hours", "Heures")}</div>
       </div>
       <span style={{ fontSize: "20px", fontWeight: "700", color: "#8f7dff" }}>:</span>
       <div style={{ background: "rgba(143,125,255,0.12)", border: "1px solid rgba(143,125,255,0.3)", borderRadius: "12px", padding: "10px 16px", minWidth: "64px", textAlign: "center" }}>

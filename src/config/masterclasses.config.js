@@ -34,13 +34,9 @@ export const isOpen = (mc, allEvents = []) => {
   return true;
 };
 
-/** Retourne le masterclass actif le plus récent */
-export const getFeatured = () =>
-  MASTERCLASSES.find((mc) => isOpen(mc)) ?? MASTERCLASSES[0];
-
-/** Formate la date en français */
-export const formatDate = (dateStr) => {
-  return new Date(dateStr).toLocaleDateString("fr-FR", {
+/** Formats a date for the current language (French by default for legacy callers) */
+export const formatDate = (dateStr, lang = "fr") => {
+  return new Date(dateStr).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", {
     weekday: "long",
     year: "numeric",
     month: "long",

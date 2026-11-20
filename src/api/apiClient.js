@@ -1,5 +1,9 @@
 export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://donerick.onrender.com/api";
 
+// Client-side error messages follow the page language (set on <html lang> by LanguageProvider).
+const fr = () => typeof document !== "undefined" && document.documentElement.lang === "fr";
+const msg = (en, frText) => (fr() ? frText : en);
+
 export async function request(endpoint, method = "GET", data = null) {
   const config = {
     method,
@@ -23,16 +27,16 @@ export async function request(endpoint, method = "GET", data = null) {
         errData = await response.json();
       } catch (e) {
         if (response.status === 429) {
-          throw new Error("Trop de requêtes effectuées. Veuillez repatienter 2 à 3 minutes avant de réessayer.");
+          throw new Error(msg("Too many requests. Please wait 2–3 minutes before trying again.", "Trop de requêtes effectuées. Veuillez repatienter 2 à 3 minutes avant de réessayer."));
         }
-        throw new Error(`Erreur serveur (${response.status}). Réessayez ultérieurement.`);
+        throw new Error(msg(`Server error (${response.status}). Please try again later.`, `Erreur serveur (${response.status}). Réessayez ultérieurement.`));
       }
 
       if (response.status === 429) {
-        throw new Error(errData?.error || "Limite de tentatives atteinte. Veuillez patienter quelques minutes.");
+        throw new Error(errData?.error || msg("Too many attempts. Please wait a few minutes.", "Limite de tentatives atteinte. Veuillez patienter quelques minutes."));
       }
 
-      throw new Error(errData?.error || errData?.message || errData?.detail || "Une erreur est survenue.");
+      throw new Error(errData?.error || errData?.message || errData?.detail || msg("Something went wrong.", "Une erreur est survenue."));
     }
     return await response.json();
   } catch (err) {

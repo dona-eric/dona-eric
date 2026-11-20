@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { fieldBus, useMotion } from "./MotionContext";
 import { EASE, EASE_IO } from "./primitives";
+import { useLanguage } from "../context/LanguageContext";
 
 const NAME = "DONA ERIC KOULODJI";
 const GLYPHS = "ψΦΣΩλ∂∇∫≈ħ01⟩⟨";
@@ -9,6 +10,7 @@ const DURATION = 2300;
 
 /* First-visit sequence: the name sits in superposition, then collapses. */
 export default function Intro() {
+  const { tr } = useLanguage();
   const { introDone, setIntroDone } = useMotion();
   const [visible, setVisible] = useState(!introDone);
   const [progress, setProgress] = useState(0);
@@ -70,7 +72,7 @@ export default function Intro() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: EASE }}
             >
-              |ψ⟩ = α<span className="q-accent">|statistique⟩</span> + β<span style={{ color: "var(--q-violet)" }}>|IA⟩</span>
+              |ψ⟩ = α<span className="q-accent">|{tr("statistics", "statistique")}⟩</span> + β<span style={{ color: "var(--q-violet)" }}>|{tr("AI", "IA")}⟩</span>
             </motion.div>
             <div className="q-intro-name">{name}</div>
             <motion.div
@@ -80,7 +82,7 @@ export default function Intro() {
               transition={{ duration: 0.2, ease: "linear" }}
             />
             <div className="q-intro-sub q-label">
-              {progress < 100 ? "état superposé — mesure en cours" : "fonction d'onde mesurée ✓"}
+              {progress < 100 ? tr("superposed state — measuring", "état superposé — mesure en cours") : tr("wavefunction measured ✓", "fonction d'onde mesurée ✓")}
             </div>
           </div>
 

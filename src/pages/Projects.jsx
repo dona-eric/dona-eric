@@ -6,6 +6,7 @@ import PulsarGlyph from "../quantum/PulsarGlyph";
 import { Magnetic, Reveal, Roll, SplitText, EASE } from "../quantum/primitives";
 import { useScrollLock } from "../quantum/MotionContext";
 import { PROJECTS, CATEGORIES, STATUS } from "../data/projects";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/Projects.css";
 
 /* Cursor-following preview (fine pointers only) */
@@ -15,6 +16,7 @@ function FloatingPreview({ project }) {
   const sx = useSpring(x, { stiffness: 160, damping: 22, mass: 0.6 });
   const sy = useSpring(y, { stiffness: 160, damping: 22, mass: 0.6 });
   const [fine, setFine] = useState(false);
+  const { tx } = useLanguage();
 
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return;
@@ -39,7 +41,7 @@ function FloatingPreview({ project }) {
             transition={{ duration: 0.45, ease: EASE }}
           >
             <PulsarGlyph seed={project.id} color={project.accent} active lines={22} />
-            <span className="pj-float-impact q-serif">{project.impact}</span>
+            <span className="pj-float-impact q-serif">{tx(project.impact)}</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -48,6 +50,7 @@ function FloatingPreview({ project }) {
 }
 
 function Drawer({ project, onClose }) {
+  const { tr, tx } = useLanguage();
   useScrollLock(true);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -57,9 +60,9 @@ function Drawer({ project, onClose }) {
 
   const status = STATUS[project.status] || STATUS.done;
   const blocks = [
-    { k: "Problème", v: project.problem },
-    { k: "Solution", v: project.solution },
-    { k: "Résultats", v: project.results },
+    { k: tr("Problem", "Problème"), v: tx(project.problem) },
+    { k: "Solution", v: tx(project.solution) },
+    { k: tr("Results", "Résultats"), v: tx(project.results) },
   ];
 
   return (
@@ -78,16 +81,16 @@ function Drawer({ project, onClose }) {
       >
         <div className="pj-drawer-visual">
           <PulsarGlyph seed={project.id} color={project.accent} active lines={30} />
-          <button className="pj-drawer-close" onClick={onClose} aria-label="Fermer">×</button>
+          <button className="pj-drawer-close" onClick={onClose} aria-label={tr("Close", "Fermer")}>×</button>
         </div>
         <div className="pj-drawer-body">
           <div className="pj-drawer-meta">
-            <span className={`pj-status tone-${status.tone}`}><i />{status.label}</span>
+            <span className={`pj-status tone-${status.tone}`}><i />{tx(status.label)}</span>
             <span className="q-label">{project.category}</span>
           </div>
           <h2 id="pj-drawer-title" className="pj-drawer-title">{project.title}</h2>
-          <p className="pj-drawer-sub">{project.subtitle}</p>
-          <p className="pj-drawer-impact q-serif">{project.impact} — {project.impactDetail}</p>
+          <p className="pj-drawer-sub">{tx(project.subtitle)}</p>
+          <p className="pj-drawer-impact q-serif">{tx(project.impact)} — {tx(project.impactDetail)}</p>
 
           <dl className="pj-drawer-blocks">
             {blocks.map((b, i) => (
@@ -110,14 +113,14 @@ function Drawer({ project, onClose }) {
 
           <div className="pj-drawer-links">
             <a href={project.github} target="_blank" rel="noopener noreferrer" className="q-btn">
-              <Roll>Code source</Roll> <span className="q-btn-arrow">↗</span>
+              <Roll>{tr("Source code", "Code source")}</Roll> <span className="q-btn-arrow">↗</span>
             </a>
             {project.demo ? (
               <a href={project.demo} target="_blank" rel="noopener noreferrer" className="q-btn q-btn--accent">
-                <Roll>Démo en ligne</Roll> <span className="q-btn-arrow">↗</span>
+                <Roll>{tr("Live demo", "Démo en ligne")}</Roll> <span className="q-btn-arrow">↗</span>
               </a>
             ) : (
-              <span className="q-label">{project.status === "wip" ? "En cours de développement" : "Pas de démo publique"}</span>
+              <span className="q-label">{project.status === "wip" ? tr("In development", "En cours de développement") : tr("No public demo", "Pas de démo publique")}</span>
             )}
           </div>
         </div>
@@ -129,6 +132,7 @@ function Drawer({ project, onClose }) {
 export default function Projects() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { tr, tx } = useLanguage();
   const [filter, setFilter] = useState("all");
   const [hovered, setHovered] = useState(null);
   const selectedId = location.hash.replace("#", "");
@@ -143,28 +147,36 @@ export default function Projects() {
   return (
     <div className="pj">
       <Helmet>
-        <title>Projets IA — Dona Eric KOULODJI | Statisticien & AI Engineer</title>
-        <meta name="description" content="8 projets IA : NLP, agents LLM/RAG, scoring crédit explicable, qualité de l'air et MLOps. Code public, démos et résultats documentés." />
+        <title>{tr("AI Projects", "Projets IA")} — Dona Eric KOULODJI | {tr("Statistician & AI Engineer", "Statisticien & AI Engineer")}</title>
+        <meta
+          name="description"
+          content={tr(
+            "8 AI projects: NLP, LLM/RAG agents, explainable credit scoring, air quality and MLOps. Public code, demos and documented results.",
+            "8 projets IA : NLP, agents LLM/RAG, scoring crédit explicable, qualité de l'air et MLOps. Code public, démos et résultats documentés."
+          )}
+        />
       </Helmet>
 
       <header className="q-page-hero">
         <div className="q-container">
-          <span className="q-label"><span className="q-dot" /> (Index) — code public · résultats mesurés</span>
+          <span className="q-label"><span className="q-dot" /> (Index) — {tr("public code · measured results", "code public · résultats mesurés")}</span>
           <h1 className="q-page-hero-title">
-            <SplitText as="span" by="char" stagger={0.04}>Projets</SplitText>
+            <SplitText as="span" by="char" stagger={0.04}>{tr("Projects", "Projets")}</SplitText>
             <sup>({String(PROJECTS.length).padStart(2, "0")})</sup>
           </h1>
           <div className="q-page-hero-foot">
             <Reveal>
               <p className="q-lead">
-                Chaque projet part d'un besoin concret et va jusqu'à un livrable testable : notebook, API,
-                démo ou outil open source.
+                {tr(
+                  "Every project starts from a concrete need and goes all the way to a testable deliverable: notebook, API, demo or open-source tool.",
+                  "Chaque projet part d'un besoin concret et va jusqu'à un livrable testable : notebook, API, démo ou outil open source."
+                )}
               </p>
             </Reveal>
             <Reveal delay={0.1} className="pj-kpis">
-              <span><b>{PROJECTS.filter((p) => p.status === "production").length}</b> en production</span>
-              <span><b>{PROJECTS.filter((p) => p.demo).length}</b> démos publiques</span>
-              <span><b>1</b> prix de hackathon</span>
+              <span><b>{PROJECTS.filter((p) => p.status === "production").length}</b> {tr("in production", "en production")}</span>
+              <span><b>{PROJECTS.filter((p) => p.demo).length}</b> {tr("public demos", "démos publiques")}</span>
+              <span><b>1</b> {tr("hackathon prize", "prix de hackathon")}</span>
             </Reveal>
           </div>
         </div>
@@ -172,7 +184,7 @@ export default function Projects() {
 
       <section className="q-container">
         <LayoutGroup>
-          <div className="pj-filters" role="tablist" aria-label="Filtrer par domaine">
+          <div className="pj-filters" role="tablist" aria-label={tr("Filter by domain", "Filtrer par domaine")}>
             {CATEGORIES.map((c) => (
               <button
                 key={c.id}
@@ -184,14 +196,14 @@ export default function Projects() {
                 {filter === c.id && (
                   <motion.span layoutId="pj-filter-pill" className="pj-filter-pill" transition={{ duration: 0.5, ease: EASE }} />
                 )}
-                <span className="pj-filter-label">{c.label}</span>
+                <span className="pj-filter-label">{tx(c.label)}</span>
                 <sup>{count(c.id)}</sup>
               </button>
             ))}
           </div>
 
           <div className="pj-head-row" aria-hidden="true">
-            <span>N°</span><span>Projet</span><span>Domaine</span><span>Statut</span><span />
+            <span>{tr("No.", "N°")}</span><span>{tr("Project", "Projet")}</span><span>{tr("Domain", "Domaine")}</span><span>{tr("Status", "Statut")}</span><span />
           </div>
 
           <motion.ul layout className="pj-list" onMouseLeave={() => setHovered(null)}>
@@ -214,15 +226,15 @@ export default function Projects() {
                       onFocus={() => setHovered(p)}
                       onClick={() => open(p)}
                       data-cursor="label"
-                      data-cursor-label="Détails"
+                      data-cursor-label={tr("Details", "Détails")}
                     >
                       <span className="pj-row-n">{String(n).padStart(2, "0")}</span>
                       <span className="pj-row-main">
                         <span className="pj-row-title">{p.title}</span>
-                        <span className="pj-row-sub">{p.subtitle}</span>
+                        <span className="pj-row-sub">{tx(p.subtitle)}</span>
                       </span>
                       <span className="pj-row-cat q-label">{p.category}</span>
-                      <span className={`pj-status tone-${status.tone}`}><i />{status.label}</span>
+                      <span className={`pj-status tone-${status.tone}`}><i />{tx(status.label)}</span>
                       <span className="pj-row-arrow">→</span>
                     </button>
                   </motion.li>
@@ -233,10 +245,10 @@ export default function Projects() {
         </LayoutGroup>
 
         <Reveal className="pj-cta">
-          <p className="q-lead">Vous avez un défi data ou IA ? Construisons-le ensemble.</p>
+          <p className="q-lead">{tr("Got a data or AI challenge? Let's build it together.", "Vous avez un défi data ou IA ? Construisons-le ensemble.")}</p>
           <Magnetic strength={0.3}>
             <a href="https://wa.me/2290151344289" target="_blank" rel="noopener noreferrer" className="q-btn q-btn--accent">
-              <Roll>Démarrer un projet</Roll> <span className="q-btn-arrow">→</span>
+              <Roll>{tr("Start a project", "Démarrer un projet")}</Roll> <span className="q-btn-arrow">→</span>
             </a>
           </Magnetic>
         </Reveal>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLanguage } from "../context/LanguageContext";
 
 // Default email from portfolio configuration
 const DEFAULT_EMAIL = "donaerickoulodji@gmail.com";
@@ -21,6 +22,7 @@ export default function GravatarQR({
   defaultVersion = "3",
   showControls = true 
 }) {
+  const { tr } = useLanguage();
   const [hash, setHash] = useState("");
   const [type, setType] = useState(defaultType); // 'gravatar' | 'user' | ''
   const [version, setVersion] = useState(defaultVersion); // '3' | '1'
@@ -53,7 +55,7 @@ export default function GravatarQR({
   if (!hash) {
     return (
       <div style={{ color: "var(--q-ink-2)", padding: "20px", textAlign: "center", fontSize: "14px" }}>
-        Chargement du code QR Gravatar...
+        {tr("Loading Gravatar QR code…", "Chargement du code QR Gravatar...")}
       </div>
     );
   }
@@ -88,7 +90,7 @@ export default function GravatarQR({
         textTransform: "uppercase",
         marginBottom: "20px"
       }}>
-        <span>🆔 Profil Gravatar Officiel</span>
+        <span>🆔 {tr("Official Gravatar profile", "Profil Gravatar Officiel")}</span>
       </div>
 
       <h3 style={{
@@ -98,7 +100,7 @@ export default function GravatarQR({
         marginBottom: "8px",
         color: "var(--q-ink)"
       }}>
-        Scannez mon QR Code
+        {tr("Scan my QR code", "Scannez mon QR Code")}
       </h3>
 
       <p style={{
@@ -107,7 +109,7 @@ export default function GravatarQR({
         lineHeight: "1.5",
         marginBottom: "20px"
       }}>
-        Utilisez l'appareil photo de votre smartphone pour accéder directement à mon profil et portfolio Gravatar.
+        {tr("Use your phone camera to open my Gravatar profile and portfolio directly.", "Utilisez l'appareil photo de votre smartphone pour accéder directement à mon profil et portfolio Gravatar.")}
       </p>
 
       {/* QR Code Container */}
@@ -234,7 +236,7 @@ export default function GravatarQR({
             transition: "background 0.2s"
           }}
         >
-          <span>Ouvrir Profil</span>
+          <span>{tr("Open profile", "Ouvrir Profil")}</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
             <polyline points="15 3 21 3 21 9"></polyline>
@@ -257,7 +259,7 @@ export default function GravatarQR({
             transition: "all 0.2s"
           }}
         >
-          {copied ? "Lien copié ! ✓" : "Copier lien"}
+          {copied ? tr("Link copied ✓", "Lien copié ! ✓") : tr("Copy link", "Copier lien")}
         </button>
       </div>
     </div>

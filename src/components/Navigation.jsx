@@ -8,10 +8,10 @@ import { useScrollLock } from "../quantum/MotionContext";
 import { SOCIALS } from "../data/profile";
 import "../styles/Navigation.css";
 
-const LANGS = ["fr", "en", "es", "ja"];
+const LANGS = ["en", "fr", "es", "ja"];
 
 export default function Navigation() {
-  const { lang, changeLanguage, t } = useLanguage();
+  const { lang, changeLanguage, t, tr } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [hidden, setHidden] = useState(false);
@@ -57,15 +57,15 @@ export default function Navigation() {
         transition={{ duration: 0.6, ease: EASE }}
       >
         <div className="qn-inner">
-          <Link to="/" className="qn-logo" aria-label="Accueil" data-cursor="label" data-cursor-label="Accueil">
+          <Link to="/" className="qn-logo" aria-label={t("nav.home")} data-cursor="label" data-cursor-label={t("nav.home")}>
             <span className="qn-logo-mark">ψ</span>
             <span className="qn-logo-text">
               <Roll>Dona Eric</Roll>
-              <small>Statisticien · AI Engineer</small>
+              <small>{tr("Statistician · AI Engineer", "Statisticien · AI Engineer")}</small>
             </span>
           </Link>
 
-          <nav className="qn-links" aria-label="Navigation principale">
+          <nav className="qn-links" aria-label={tr("Main navigation", "Navigation principale")}>
             {LINKS.map((l, i) => (
               <Link key={l.to} to={l.to} className={`qn-link ${isActive(l.to) ? "is-active" : ""}`}>
                 <sup>{String(i + 1).padStart(2, "0")}</sup>
@@ -124,7 +124,7 @@ export default function Navigation() {
             </Magnetic>
 
             <button className="qn-burger" onClick={() => setMenu((v) => !v)} aria-label="Menu" aria-expanded={menu}>
-              <span className="qn-burger-label"><Roll>{menu ? "Fermer" : "Menu"}</Roll></span>
+              <span className="qn-burger-label"><Roll>{menu ? tr("Close", "Fermer") : "Menu"}</Roll></span>
               <span className={`qn-burger-icon ${menu ? "is-open" : ""}`}><i /><i /></span>
             </button>
           </div>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
 /*
@@ -11,6 +12,11 @@ export default function Cursor() {
   const [enabled, setEnabled] = useState(false);
   const [mode, setMode] = useState("default"); // default | link | label | text | hidden
   const [label, setLabel] = useState("");
+  const { tr } = useLanguage();
+  const fallbackLabel = useRef("View");
+  useEffect(() => {
+    fallbackLabel.current = tr("View", "Voir");
+  });
   const [down, setDown] = useState(false);
 
   const x = useMotionValue(-100);
@@ -36,7 +42,7 @@ export default function Cursor() {
       if (!el) { setMode("default"); return; }
       const c = el.getAttribute("data-cursor");
       if (c === "label") {
-        setLabel(el.getAttribute("data-cursor-label") || "Voir");
+        setLabel(el.getAttribute("data-cursor-label") || fallbackLabel.current);
         setMode("label");
       } else if (c === "hide") {
         setMode("hidden");

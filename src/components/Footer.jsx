@@ -6,18 +6,18 @@ import { useLanguage } from "../context/LanguageContext";
 import { SOCIALS } from "../data/profile";
 import "../styles/Footer.css";
 
-function CotonouClock() {
+function CotonouClock({ locale }) {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
-  const time = now.toLocaleTimeString("fr-FR", { timeZone: "Africa/Porto-Novo", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  const time = now.toLocaleTimeString(locale, { timeZone: "Africa/Porto-Novo", hour: "2-digit", minute: "2-digit", second: "2-digit" });
   return <span className="qf-clock">{time} <em>GMT+1</em></span>;
 }
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, tr, lang } = useLanguage();
   const { lenis } = useMotion();
 
   const toTop = () => {
@@ -31,8 +31,8 @@ export default function Footer() {
         <div className="qf-cta">
           <span className="q-label"><span className="q-dot" /> {t("home.badge")}</span>
           <Magnetic strength={0.12} className="qf-cta-magnet">
-            <Link to="/contact" className="qf-cta-link" data-cursor="label" data-cursor-label="Écrire">
-              <SplitText as="span" className="qf-cta-text">Parlons-en.</SplitText>
+            <Link to="/contact" className="qf-cta-link" data-cursor="label" data-cursor-label={tr("Write", "Écrire")}>
+              <SplitText as="span" className="qf-cta-text">{tr("Let's talk.", "Parlons-en.")}</SplitText>
               <span className="qf-cta-arrow" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="40%" height="40%"><path d="M6 18L18 6M8 6h10v10" stroke="currentColor" strokeWidth="1.6" fill="none" /></svg>
               </span>
@@ -50,19 +50,19 @@ export default function Footer() {
             <Link to="/academy"><Roll>{t("nav.academy")}</Roll></Link>
           </div>
           <div className="qf-col">
-            <span className="q-label">Réseaux</span>
+            <span className="q-label">{tr("Social", "Réseaux")}</span>
             {SOCIALS.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"><Roll>{s.label} ↗</Roll></a>
             ))}
           </div>
           <div className="qf-col">
-            <span className="q-label">Heure locale · Cotonou</span>
-            <CotonouClock />
-            <span className="q-label" style={{ marginTop: 18 }}>Fichiers</span>
+            <span className="q-label">{tr("Local time · Cotonou", "Heure locale · Cotonou")}</span>
+            <CotonouClock locale={lang === "fr" ? "fr-FR" : "en-GB"} />
+            <span className="q-label" style={{ marginTop: 18 }}>{tr("Files", "Fichiers")}</span>
             <a href="/cv_dona_eric.pdf" target="_blank" rel="noopener noreferrer"><Roll>CV PDF ↗</Roll></a>
           </div>
           <div className="qf-col qf-col--end">
-            <button className="qf-top" onClick={toTop} data-cursor="label" data-cursor-label="Haut">
+            <button className="qf-top" onClick={toTop} data-cursor="label" data-cursor-label={tr("Top", "Haut")} aria-label={tr("Back to top", "Retour en haut")}>
               <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" strokeWidth="1.6" fill="none" /></svg>
             </button>
           </div>
@@ -70,7 +70,7 @@ export default function Footer() {
 
         <div className="qf-bottom">
           <span>© {new Date().getFullYear()} Dona Eric KOULODJI</span>
-          <span>Conçu &amp; codé à Cotonou — <span className="q-serif">iħ ∂ψ/∂t = Ĥψ</span></span>
+          <span>{tr("Designed & built in Cotonou", "Conçu & codé à Cotonou")} — <span className="q-serif">iħ ∂ψ/∂t = Ĥψ</span></span>
         </div>
       </div>
     </footer>

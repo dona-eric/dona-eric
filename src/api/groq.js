@@ -8,12 +8,14 @@ import { request } from "./apiClient";
  * @param {Array} history - Previous conversation messages [{role, content}]
  * @returns {Promise<string>} The assistant's reply
  */
+const isFr = () => typeof document !== "undefined" && document.documentElement.lang === "fr";
+
 export async function sendToGroq(message, history = []) {
   try {
     const data = await request("chat", "POST", { message, history });
-    return data.reply || "⚠️ Aucune réponse disponible.";
+    return data.reply || (isFr() ? "⚠️ Aucune réponse disponible." : "⚠️ No answer available.");
   } catch (err) {
     console.error("❌ Erreur Chat API:", err.message);
-    return "Erreur, veuillez réessayer plus tard.";
+    return isFr() ? "Erreur, veuillez réessayer plus tard." : "Something went wrong, please try again later.";
   }
 }

@@ -7,19 +7,23 @@ import { Magnetic, Roll, SplitText, EASE } from "../quantum/primitives";
 import "../styles/Hero.css";
 
 const EQUATIONS = [
-  { tex: "y = Xβ + ε", note: "modèle linéaire · expliquer avant de prédire" },
-  { tex: "P(y|x) ∝ P(x|y)·P(y)", note: "Bayes · raisonner sous incertitude" },
-  { tex: "S/P = Σ sinistres / Σ primes", note: "assurance · piloter le risque par la donnée" },
-  { tex: "L(θ) = −Σ y·log ŷ", note: "apprentissage · mesurer l'erreur" },
-  { tex: "agent.invoke(query)", note: "IA · réponses sourcées en production" },
-  { tex: "iħ ∂ψ/∂t = Ĥψ", note: "physique théorique · là où tout a commencé" },
+  { tex: "y = Xβ + ε", note: { en: "linear model · explain before predicting", fr: "modèle linéaire · expliquer avant de prédire" } },
+  { tex: "P(y|x) ∝ P(x|y)·P(y)", note: { en: "Bayes · reasoning under uncertainty", fr: "Bayes · raisonner sous incertitude" } },
+  {
+    tex: { en: "L/P = Σ claims / Σ premiums", fr: "S/P = Σ sinistres / Σ primes" },
+    note: { en: "insurance · steering risk with data", fr: "assurance · piloter le risque par la donnée" },
+  },
+  { tex: "L(θ) = −Σ y·log ŷ", note: { en: "learning · measuring the error", fr: "apprentissage · mesurer l'erreur" } },
+  { tex: "agent.invoke(query)", note: { en: "AI · sourced answers in production", fr: "IA · réponses sourcées en production" } },
+  { tex: "iħ ∂ψ/∂t = Ĥψ", note: { en: "theoretical physics · where it all began", fr: "physique théorique · là où tout a commencé" } },
 ];
 const GLYPHS = "ψΦΣΩλ∂∇∫≈ħ01<>{}";
 
 function EquationMorph({ play }) {
-  const [idx, setIdx] = useState(0);
-  const [out, setOut] = useState(EQUATIONS[0].tex);
+  const { tx } = useLanguage();
   const { reduced } = useMotion();
+  const [idx, setIdx] = useState(0);
+  const [out, setOut] = useState(() => tx(EQUATIONS[0].tex));
   const raf = useRef(0);
 
   useEffect(() => {
@@ -28,8 +32,10 @@ function EquationMorph({ play }) {
     return () => clearInterval(id);
   }, [play, reduced]);
 
+  const current = tx(EQUATIONS[idx].tex);
+
   useEffect(() => {
-    const target = EQUATIONS[idx].tex;
+    const target = current;
     if (reduced) { setOut(target); return; }
     const start = performance.now();
     const dur = 700;
@@ -46,7 +52,7 @@ function EquationMorph({ play }) {
     };
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
-  }, [idx, reduced]);
+  }, [current, reduced]);
 
   return (
     <div className="hq-eq" aria-live="off">
@@ -58,14 +64,14 @@ function EquationMorph({ play }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: EASE, delay: 0.3 }}
       >
-        {EQUATIONS[idx].note}
+        {tx(EQUATIONS[idx].note)}
       </motion.span>
     </div>
   );
 }
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, tr } = useLanguage();
   const { introDone } = useMotion();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -90,7 +96,7 @@ export default function Hero() {
       <motion.div className="q-container hq-inner" style={{ y, opacity, scale }}>
         <motion.div className="hq-top" {...fade(0.1)}>
           <span className="q-label"><span className="q-dot" /> {t("home.badge")}</span>
-          <span className="q-label hq-coords">Cotonou, Bénin — 6.37°N · 2.39°E</span>
+          <span className="q-label hq-coords">{tr("Cotonou, Benin", "Cotonou, Bénin")} — 6.37°N · 2.39°E</span>
         </motion.div>
 
         <h1 className="hq-name" aria-label="Dona Eric Koulodji">
@@ -106,14 +112,14 @@ export default function Hero() {
         </h1>
 
         <motion.div className="hq-role" {...fade(0.55)}>
-          <span className="q-serif">Statisticien</span>
+          <span className="q-serif">{tr("Statistician", "Statisticien")}</span>
           <span className="hq-role-amp">&amp;</span>
           <span>AI Engineer</span>
         </motion.div>
 
         <div className="hq-bottom">
           <motion.div className="hq-eq-wrap" {...fade(0.7)}>
-            <span className="q-label">// statistique · machine learning · IA</span>
+            <span className="q-label">{tr("// statistics · machine learning · AI", "// statistique · machine learning · IA")}</span>
             <EquationMorph play={introDone} />
           </motion.div>
 
@@ -139,13 +145,13 @@ export default function Hero() {
         <motion.div className="hq-foot" {...fade(1)}>
           <span className="hq-scroll">
             <span className="hq-scroll-line" />
-            <span className="q-label">Défiler</span>
+            <span className="q-label">{tr("Scroll", "Défiler")}</span>
           </span>
           <span className="q-label hq-measure">
             {measured === 0 ? (
-              <>Cliquez n'importe où pour mesurer <span className="q-accent">ψ</span></>
+              <>{tr("Click anywhere to measure", "Cliquez n'importe où pour mesurer")} <span className="q-accent">ψ</span></>
             ) : (
-              <>Mesures effectuées : <span className="q-accent">{String(measured).padStart(2, "0")}</span></>
+              <>{tr("Measurements taken:", "Mesures effectuées :")} <span className="q-accent">{String(measured).padStart(2, "0")}</span></>
             )}
           </span>
         </motion.div>
